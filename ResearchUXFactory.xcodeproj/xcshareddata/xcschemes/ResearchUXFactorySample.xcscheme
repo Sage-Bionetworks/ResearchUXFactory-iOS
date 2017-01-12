@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "161479BF1BD6CE8F0099A068"
-               BuildableName = "BridgeAppSDKSample.app"
-               BlueprintName = "BridgeAppSDKSample"
-               ReferencedContainer = "container:BridgeAppSDK.xcodeproj">
+               BuildableName = "ResearchUXFactorySample.app"
+               BlueprintName = "ResearchUXFactorySample"
+               ReferencedContainer = "container:ResearchUXFactory.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "801040BA1C5A843D00D26E19"
-               BuildableName = "BridgeAppSDKTests.xctest"
-               BlueprintName = "BridgeAppSDKTests"
-               ReferencedContainer = "container:BridgeAppSDK.xcodeproj">
+               BuildableName = "ResearchUXFactoryTests.xctest"
+               BlueprintName = "ResearchUXFactoryTests"
+               ReferencedContainer = "container:ResearchUXFactory.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "161479BF1BD6CE8F0099A068"
-            BuildableName = "BridgeAppSDKSample.app"
-            BlueprintName = "BridgeAppSDKSample"
-            ReferencedContainer = "container:BridgeAppSDK.xcodeproj">
+            BuildableName = "ResearchUXFactorySample.app"
+            BlueprintName = "ResearchUXFactorySample"
+            ReferencedContainer = "container:ResearchUXFactory.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "161479BF1BD6CE8F0099A068"
-            BuildableName = "BridgeAppSDKSample.app"
-            BlueprintName = "BridgeAppSDKSample"
-            ReferencedContainer = "container:BridgeAppSDK.xcodeproj">
+            BuildableName = "ResearchUXFactorySample.app"
+            BlueprintName = "ResearchUXFactorySample"
+            ReferencedContainer = "container:ResearchUXFactory.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -92,9 +92,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "161479BF1BD6CE8F0099A068"
-            BuildableName = "BridgeAppSDKSample.app"
-            BlueprintName = "BridgeAppSDKSample"
-            ReferencedContainer = "container:BridgeAppSDK.xcodeproj">
+            BuildableName = "ResearchUXFactorySample.app"
+            BlueprintName = "ResearchUXFactorySample"
+            ReferencedContainer = "container:ResearchUXFactory.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
