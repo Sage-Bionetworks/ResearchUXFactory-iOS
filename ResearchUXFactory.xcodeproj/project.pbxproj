@@ -178,6 +178,7 @@
 		FF92A6441DBFE16C00614D1F /* SBALearnInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF92A6431DBFE16C00614D1F /* SBALearnInfo.swift */; };
 		FF92A6C71DC026AC00614D1F /* Withdraw.json in Resources */ = {isa = PBXBuildFile; fileRef = FF92A6C91DC026AC00614D1F /* Withdraw.json */; };
 		FF9312391DC93327001A9F86 /* SBAPermissionObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9312381DC93327001A9F86 /* SBAPermissionObjectType.swift */; };
+		FF9424EB1E28096000FD8C24 /* PermissionsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF9424EA1E28096000FD8C24 /* PermissionsInfo.plist */; };
 		FF9634C71C9A0A6600D07595 /* SBASurveyItem+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9634C61C9A0A6600D07595 /* SBASurveyItem+Bridge.swift */; };
 		FF9707F61DA6D5DB006E8252 /* SBAConsentSharingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9707F51DA6D5DB006E8252 /* SBAConsentSharingStep.swift */; };
 		FF9708041DA7104F006E8252 /* SBAConsentSubtaskStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9708031DA7104F006E8252 /* SBAConsentSubtaskStep.swift */; };
@@ -536,6 +537,7 @@
 		FF92A6801DBFF14000614D1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Withdrawal.html; sourceTree = "<group>"; };
 		FF92A6C81DC026AC00614D1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Withdraw.json; sourceTree = "<group>"; };
 		FF9312381DC93327001A9F86 /* SBAPermissionObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionObjectType.swift; sourceTree = "<group>"; };
+		FF9424EA1E28096000FD8C24 /* PermissionsInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PermissionsInfo.plist; sourceTree = "<group>"; };
 		FF9634C61C9A0A6600D07595 /* SBASurveyItem+Bridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBASurveyItem+Bridge.swift"; sourceTree = "<group>"; };
 		FF9707F51DA6D5DB006E8252 /* SBAConsentSharingStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAConsentSharingStep.swift; sourceTree = "<group>"; };
 		FF9708031DA7104F006E8252 /* SBAConsentSubtaskStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAConsentSubtaskStep.swift; sourceTree = "<group>"; };
@@ -574,7 +576,6 @@
 		FFBBED8F1DA5C68B0010AA83 /* consent_overview_to_understanding@3x.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "consent_overview_to_understanding@3x.m4v"; sourceTree = "<group>"; };
 		FFBBED901DA5C68B0010AA83 /* consent_sensorData_to_dataGathering@3x.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "consent_sensorData_to_dataGathering@3x.m4v"; sourceTree = "<group>"; };
 		FFBBED911DA5C68B0010AA83 /* consent_understanding_to_activities@3x.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "consent_understanding_to_activities@3x.m4v"; sourceTree = "<group>"; };
-		FFC15FD91CFE4E8700C29AF7 /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
 		FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ColorInfo.plist; sourceTree = "<group>"; };
 		FFC15FDE1CFE513200C29AF7 /* sample-study.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sample-study.pem"; sourceTree = "<group>"; };
 		FFC41F4B1E025DBC0057526E /* SBAKeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAKeychainWrapper.h; sourceTree = "<group>"; };
@@ -785,8 +786,8 @@
 		801040F41C5AD55800D26E19 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FF9424EA1E28096000FD8C24 /* PermissionsInfo.plist */,
 				FF5C26731E28060900A1D9E0 /* Info.plist */,
-				FFC15FD91CFE4E8700C29AF7 /* BridgeInfo.plist */,
 				FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */,
 			);
 			name = "Supporting Files";
@@ -1659,6 +1660,7 @@
 				FF5C26441E28039000A1D9E0 /* LaunchScreen.storyboard in Resources */,
 				FF5C26761E2806A100A1D9E0 /* Assets.xcassets in Resources */,
 				FF5C263F1E28039000A1D9E0 /* Main.storyboard in Resources */,
+				FF9424EB1E28096000FD8C24 /* PermissionsInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
