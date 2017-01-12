@@ -1,5 +1,5 @@
 //
-//  SBAConsentDocument.swift
+//  SBABaseConsentDocumentFactory.swift
 //  BridgeAppSDK
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -39,7 +39,7 @@ import ResearchKit
  the consent document. The `ORKConsentDocument` is used by the `ORKVisualConsentStep` and the 
  `ORKConsentReviewStep` to display the consent document.
  */
-open class SBAConsentDocumentFactory: SBASurveyFactory {
+open class SBABaseConsentDocumentFactory: SBASurveyFactory {
     
     lazy open var consentDocument: ORKConsentDocument = {
         
@@ -95,75 +95,30 @@ open class SBAConsentDocumentFactory: SBASurveyFactory {
             return ORKVisualConsentStep(identifier: inputItem.identifier,
                 document: self.consentDocument)
             
-        case .sharingOptions:
-            return SBAConsentSharingStep(inputItem: inputItem)
+        case .SharingOptions:
+            let share = inputItem as! SBAConsentSharingOptions
+            let step = ORKConsentSharingStep(identifier: inputItem.identifier,
+                investigatorShortDescription: share.investigatorShortDescription,
+                investigatorLongDescription: share.investigatorLongDescription,
+                localizedLearnMoreHTMLContent: share.localizedLearnMoreHTMLContent)
+            
+            if let additionalText = inputItem.stepText, let text = step.text {
+                step.text = "\(text)\n\n\(additionalText)"
+            }
+            if let form = inputItem as? SBAFormStepSurveyItem,
+                let textChoices = form.items?.map({form.createTextChoice($0)}) {
+                    step.answerFormat = ORKTextChoiceAnswerFormat(style: .SingleChoice, textChoices: textChoices)
+            }
+            
+            return step;
             
         case .review:
-            if let consentReview = inputItem as? SBAConsentReviewOptions
-                , consentReview.usesDeprecatedOnboarding {
-                // If this uses the deprecated onboarding (consent review defined by ORKConsentReviewStep)
-                // then return that object type.
-                let signature = self.consentDocument.signatures?.first
-                signature?.requiresName = consentReview.requiresSignature
-                signature?.requiresSignatureImage = consentReview.requiresSignature
-                return ORKConsentReviewStep(identifier: inputItem.identifier,
-                                            signature: signature,
-                                            in: self.consentDocument)
-            }
-            else {
-                let review = inputItem as! SBAFormStepSurveyItem
-                let step = SBAConsentReviewStep(inputItem: review, inDocument: self.consentDocument, factory: self)
-                return step;
-            }
+            let step = ORKConsentReviewStep(identifier: inputItem.identifier,
+                signature: self.consentDocument.signatures?.first,
+                inDocument: self.consentDocument)
+            step.reasonForConsent = Localization.localizedString("SBA_CONSENT_SIGNATURE_CONTENT")
+            return step;
         }
     }
     
-    /**
-     Return visual consent step
-     */
-    open func visualConsentStep() -> ORKVisualConsentStep {
-        return self.steps?.find({ $0 is ORKVisualConsentStep }) as? ORKVisualConsentStep ??
-            ORKVisualConsentStep(identifier: SBAOnboardingSectionBaseType.consent.rawValue, document: self.consentDocument)
-    }
-    
-    /**
-    Return subtask step with only the steps required for reconsent
-    */
-    open func reconsentStep() -> SBASubtaskStep {
-        // Strip out the registration steps
-        let steps = self.steps?.filter({ !isRegistrationStep($0) })
-        let task = SBANavigableOrderedTask(identifier: SBAOnboardingSectionBaseType.consent.rawValue, steps: steps)
-        return SBASubtaskStep(subtask: task)
-    }
-    
-    /**
-     Return subtask step with only the steps required for consent or reconsent on login
-     */
-    open func loginConsentStep() -> SBASubtaskStep {
-        // Strip out the registration steps
-        let steps = self.steps?.filter({ !isRegistrationStep($0) })
-        let task = SBANavigableOrderedTask(identifier: SBAOnboardingSectionBaseType.consent.rawValue, steps: steps)
-        return SBAConsentSubtaskStep(subtask: task)
-    }
-    
-    private func isRegistrationStep(_ step: ORKStep) -> Bool {
-        return (step is SBARegistrationStep) || (step is ORKRegistrationStep) || (step is SBAExternalIDStep)
-    }
-    
-    /**
-     Return subtask step with only the steps required for initial registration
-    */
-    open func registrationConsentStep() -> SBASubtaskStep {
-        // Strip out the reconsent steps
-        let steps = self.steps?.filter({ (step) -> Bool in
-            // If this is a step that conforms to the custom step protocol and the custom step type is 
-            // a reconsent subtype, then this is not to be included in the registration steps
-            if let customStep = step as? SBACustomTypeStep, let customType = customStep.customTypeIdentifier, customType.hasPrefix("reconsent") {
-                return false
-            }
-            return true
-        })
-        let task = SBANavigableOrderedTask(identifier: SBAOnboardingSectionBaseType.consent.rawValue, steps: steps)
-        return SBASubtaskStep(subtask: task)
-    }
 }

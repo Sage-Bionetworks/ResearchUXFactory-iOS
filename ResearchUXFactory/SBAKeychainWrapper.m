@@ -30,7 +30,7 @@
 
 
 #import "SBAKeychainWrapper.h"
-#import <BridgeAppSDK/BridgeAppSDK-Swift.h>
+#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
 
 static NSString *SBAKeychainWrapperDefaultService() {
     static NSString *defaultService;

@@ -33,7 +33,7 @@
  
 #import <UIKit/UIKit.h>
 #import <HealthKit/HealthKit.h>
-#import <BridgeAppSDK/SBADefines.h>
+#import "SBADefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

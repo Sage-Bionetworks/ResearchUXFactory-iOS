@@ -32,7 +32,7 @@
 //
  
 #import "SBAPermissionsManager.h"
-#import <BridgeAppSDK/BridgeAppSDK-Swift.h>
+#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>

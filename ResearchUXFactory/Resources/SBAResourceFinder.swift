@@ -33,12 +33,33 @@
 
 import UIKit
 
-public final class SBAResourceFinder: NSObject {
+/**
+ The SBAResourceFinderDelegate delegate is used to define additional functionality on the app delegate
+ related to finding resources.
+ */
+@objc
+public protocol SBAResourceFinderDelegate: class {
+    
+    /**
+     @return Default resource bundle
+    */
+    func resourceBundle() -> Bundle
+    
+    /**
+     Path to a given resource.
+     @param resourceName    The name of the resource
+     @param resourceType    The type of the resource
+     @return                The path to the resource (if applicable)
+    */
+    func path(forResource resourceName: String, ofType resourceType: String) -> String?
+}
+
+open class SBAResourceFinder: NSObject {
     
     public static let shared = SBAResourceFinder()
     
-    private func sharedResourceDelegate() -> SBABridgeAppSDKDelegate? {
-        return UIApplication.shared.delegate as? SBABridgeAppSDKDelegate
+    private func sharedResourceDelegate() -> SBAResourceFinderDelegate? {
+        return UIApplication.shared.delegate as? SBAResourceFinderDelegate
     }
     
     public func path(forResource resourceNamed: String, ofType: String) -> String? {
@@ -134,6 +155,16 @@ public final class SBAResourceFinder: NSObject {
                 return dictionary as? [String : Any]
         }
         return nil
+    }
+    
+    public func infoPlist(forResource resourceNamed: String) -> [String : Any]? {
+        guard let dictionary = self.plist(forResource: resourceName) else { return nil }
+        var plist = dictionary
+        // Look to see if there is a second plist source that includes private keys
+        if let additionalInfo = self.plist(forResource: "\(resourceName)-private") {
+            plist = plist.merge(from: additionalInfo)
+        }
+        return plist
     }
     
     public func url(forResource resourceNamed: String, withExtension: String) -> URL? {

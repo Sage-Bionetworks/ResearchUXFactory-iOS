@@ -33,7 +33,7 @@
 
 #import "SBATrackedDataStore.h"
 #import "SBATrackedDataObject.h"
-#import <BridgeAppSDK/BridgeAppSDK-Swift.h>
+#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
 
 @interface SBATrackedDataStore ()
 

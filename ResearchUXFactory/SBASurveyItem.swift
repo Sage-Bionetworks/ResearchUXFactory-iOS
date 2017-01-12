@@ -103,7 +103,7 @@ extension ORKPasscodeType {
  List of all the currently supported step types with the key name for each class type.
  This is used by the `SBASurveyFactory` to determine which subclass of `ORKStep` to return
  for a given `SBASurveyItem`.
- */
+*/
 public enum SBASurveyItemType {
     
     case custom(String?)
@@ -144,14 +144,12 @@ public enum SBASurveyItemType {
     
     case account(AccountSubtype)
     public enum AccountSubtype: String {
-        case registration       = "registration"            // SBARegistrationStep
-        case login              = "login"                   // SBALoginStep
-        case emailVerification  = "emailVerification"       // SBAEmailVerificationStep
-        case externalID         = "externalID"              // SBAExternalIDStep
+        case registration       = "registration"            // ORKRegistrationStep
+        case login              = "login"                   // ORKLoginStep
+        case emailVerification  = "emailVerification"       // ORKVerificationStep
         case permissions        = "permissions"             // SBAPermissionsStep
-        case completion         = "onboardingCompletion"    // SBAOnboardingCompletionStep
         case dataGroups         = "dataGroups"              // SBADataGroupsStep
-        case profile            = "profile"                 // SBAProfileQuestionStep or ORKProfileFormStep
+        case profile            = "profile"                 // SBAProfileFormStep
     }
     
     case passcode(ORKPasscodeType)
@@ -193,6 +191,13 @@ public enum SBASurveyItemType {
     
     func consentSubtype() -> ConsentSubtype? {
         if case .consent(let subtype) = self {
+            return subtype
+        }
+        return nil
+    }
+    
+    func accountSubtype() -> AccountSubtype? {
+        if case .account(let subtype) = self {
             return subtype
         }
         return nil
