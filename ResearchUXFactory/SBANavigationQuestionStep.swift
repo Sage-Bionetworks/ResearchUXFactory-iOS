@@ -82,7 +82,7 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBANavigationRule {
         super.init(identifier: identifier)
     }
     
-    init(inputItem: SBAFormStepSurveyItem, factory: SBASurveyFactory? = nil) {
+    init(inputItem: SBAFormStepSurveyItem, factory: SBABaseSurveyFactory? = nil) {
         super.init(identifier: inputItem.identifier)
         inputItem.mapStepValues(with: self)
         let subtype = inputItem.surveyItemType.formSubtype()

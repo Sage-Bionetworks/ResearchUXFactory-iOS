@@ -259,7 +259,7 @@ class SBADataGroupsStepTests: XCTestCase {
                   "exclusive" : true]]
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBADataGroupsStep else {

@@ -210,7 +210,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
             "optional"     : true,
             ]
         
-        let step = SBASurveyFactory().createSurveyStep(inputItem, trackingType: .selection, trackedItems: dataCollection.items)
+        let step = SBABaseSurveyFactory().createSurveyStep(inputItem, trackingType: .selection, trackedItems: dataCollection.items)
         let (selectionStep, _) = splitMedicationSelectionStep(step)
         
         checkMedicationSelectionStep(selectionStep, optional: true)
@@ -561,7 +561,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         let dataStore = self.dataStoreForMedicationTracking()
         dataCollection.dataStore = dataStore
         
-        let step = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: true)
+        let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: true)
         
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
             XCTAssert(false, "\(step) not of expected class type")
@@ -580,7 +580,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         dataStore.selectedItems = []
         dataStore.commitChanges()
         
-        let step = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: false)
+        let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         
         // The moment in day results should have default values
         XCTAssert(checkDefaultMomentInDayResults(dataStore))
@@ -604,7 +604,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         dataStore.selectedItems = dataCollection.items.filter({ !$0.usesFrequencyRange })
         dataStore.commitChanges()
         
-        let step = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: false)
+        let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         
         // The moment in day results should have default values
         XCTAssert(checkDefaultMomentInDayResults(dataStore))
@@ -629,7 +629,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         dataStore.commitChanges()
         dataStore.lastTrackingSurveyDate = Date()
         
-        let step = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: false)
+        let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
             XCTAssert(false, "\(step) not of expected class type")
@@ -649,7 +649,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         dataStore.selectedItems = dataCollection.items.filter({ $0.identifier == "Levodopa" })
         dataStore.commitChanges()
         dataStore.lastTrackingSurveyDate = Date(timeIntervalSinceNow: -40*24*60*60)
-        let step = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: false)
+        let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         
         // The moment in day results should have steps for creating default results
         XCTAssertNil(dataStore.momentInDayResults)
@@ -674,7 +674,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         dataStore.commitChanges()
         dataStore.lastTrackingSurveyDate = Date(timeIntervalSinceNow: -40*24*60*60)
         
-        let step = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: false)
+        let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         
         // The moment in day results should have default values
         XCTAssert(checkDefaultMomentInDayResults(dataStore))
@@ -1116,7 +1116,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         dataStore.lastTrackingSurveyDate = Date(timeIntervalSinceNow: -40*24*60*60)
         
         // Create a task
-        let factory = SBASurveyFactory()
+        let factory = SBABaseSurveyFactory()
         let introStep = ORKInstructionStep(identifier: "intro")
         let surveyStep = dataCollection.transformToStep(with: factory, isLastStep: false)!
         let questionStep = ORKQuestionStep(identifier: "booleanQuestion", title: nil, answer: ORKAnswerFormat.booleanAnswerFormat())
@@ -1163,7 +1163,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         let dataStore = self.dataStoreForMedicationTracking()
         dataCollection.dataStore = dataStore
         
-        let transformedStep = dataCollection.transformToStep(with: SBASurveyFactory(), isLastStep: false)
+        let transformedStep = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         guard let subtaskStep = transformedStep as? SBASubtaskStep
             else {
                 XCTAssert(false, "\(transformedStep) not of expected type")

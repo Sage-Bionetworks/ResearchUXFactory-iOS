@@ -38,7 +38,7 @@ extension NSDictionary: SBAStepTransformer {
     
     // Because an NSDictionary could be used to create both an SBASurveyItem *and* an SBAActiveTask
     // need to look to see which is the more likely form to result in a valid result.
-    public func transformToStep(with factory: SBASurveyFactory, isLastStep: Bool) -> ORKStep? {
+    public func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep? {
         if (self.surveyItemType.isNilType()) {
             guard let subtask = self.transformToTask(with: factory, isLastStep: isLastStep) else {
                 return nil

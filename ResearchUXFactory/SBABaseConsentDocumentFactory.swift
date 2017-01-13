@@ -39,7 +39,7 @@ import ResearchKit
  the consent document. The `ORKConsentDocument` is used by the `ORKVisualConsentStep` and the 
  `ORKConsentReviewStep` to display the consent document.
  */
-open class SBABaseConsentDocumentFactory: SBASurveyFactory {
+open class SBABaseConsentDocumentFactory: SBABaseSurveyFactory {
     
     lazy open var consentDocument: ORKConsentDocument = {
         

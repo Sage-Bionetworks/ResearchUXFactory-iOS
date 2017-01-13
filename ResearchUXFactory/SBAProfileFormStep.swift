@@ -54,7 +54,7 @@ open class SBAProfileFormStep: ORKFormStep, SBAProfileInfoForm {
         commonInit(inputItem: nil, factory:nil)
     }
     
-    public init(inputItem: SBASurveyItem, factory: SBASurveyFactory? = nil) {
+    public init(inputItem: SBASurveyItem, factory: SBABaseSurveyFactory? = nil) {
         super.init(identifier: inputItem.identifier)
         commonInit(inputItem: inputItem, factory:factory)
     }

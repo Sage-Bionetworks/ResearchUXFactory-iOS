@@ -34,7 +34,7 @@
 import ResearchKit
 
 public protocol SBATaskTransformable: class {
-    func transformToTask(with factory: SBASurveyFactory, isLastStep: Bool) -> (ORKTask & NSCopying & NSSecureCoding)?
+    func transformToTask(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> (ORKTask & NSCopying & NSSecureCoding)?
 }
 
 public protocol SBATaskReference: SBATaskTransformable {
@@ -57,7 +57,7 @@ public protocol SBABridgeTask: class {
 
 public extension SBABridgeTask {
     
-    public func createORKTask(with factory: SBASurveyFactory = SBAInfoManager.shared.defaultSurveyFactory) -> (ORKTask & NSCopying & NSSecureCoding)? {
+    public func createORKTask(with factory: SBABaseSurveyFactory = SBAInfoManager.shared.defaultSurveyFactory) -> (ORKTask & NSCopying & NSSecureCoding)? {
 
         guard let steps = transformTaskSteps(factory) else { return nil }
         
@@ -73,7 +73,7 @@ public extension SBABridgeTask {
         }
     }
     
-    fileprivate func transformTaskSteps(_ factory: SBASurveyFactory) -> [ORKStep]? {
+    fileprivate func transformTaskSteps(_ factory: SBABaseSurveyFactory) -> [ORKStep]? {
         let transformableSteps = self.taskSteps
         guard transformableSteps.count > 0 else { return nil }
         
@@ -109,7 +109,7 @@ public extension SBABridgeTask {
         return subtaskSteps
     }
     
-    fileprivate func addInsertSteps(_ subtaskSteps: [ORKStep], factory: SBASurveyFactory) -> [ORKStep] {
+    fileprivate func addInsertSteps(_ subtaskSteps: [ORKStep], factory: SBABaseSurveyFactory) -> [ORKStep] {
         
         // Map the insert steps
         guard let insertSteps = self.insertSteps?.mapAndFilter({ $0.transformToStep(with: factory, isLastStep: false) })

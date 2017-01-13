@@ -59,7 +59,7 @@ static id __instance;
     self = [super init];
     if (self) {
         _plist = [[SBAResourceFinder shared] infoPlistForResource:@"BridgeInfo"] ?: @{};
-        _defaultSurveyFactory = [[SBASurveyFactory alloc] init];
+        _defaultSurveyFactory = [[SBABaseSurveyFactory alloc] init];
         _resourceBundles = @[[NSBundle mainBundle],
                              [NSBundle bundleForClass:[SBAInfoManager class]],
                              [NSBundle bundleForClass:[ORKStep class]]];

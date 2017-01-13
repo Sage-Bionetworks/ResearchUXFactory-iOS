@@ -126,7 +126,7 @@ class SBAAccountTests: XCTestCase {
             "title"         : "Registration"
         ]
         
-        let result = SBASurveyFactory().createSurveyStepWithDictionary(input)
+        let result = SBABaseSurveyFactory().createSurveyStepWithDictionary(input)
         
         XCTAssertNotNil(result)
         guard let step = result as? ORKRegistrationStep else {

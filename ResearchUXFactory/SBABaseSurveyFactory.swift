@@ -1,5 +1,5 @@
 //
-//  SBASurveyFactory.swift
+//  SBABaseSurveyFactory.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -38,7 +38,7 @@ import ResearchKit
  that are not recognized by this factory and to allow usage by Obj-c classes that
  do not recognize protocol extensions.
  */
-open class SBASurveyFactory : NSObject {
+open class SBABaseSurveyFactory : NSObject {
     
     open var steps: [ORKStep]?
     
@@ -269,7 +269,7 @@ extension SBAFormStepSurveyItem {
         return isBooleanToggle || (SBASurveyItemType.form(.compound) == self.surveyItemType)
     }
     
-    func createSubtaskStep(with factory:SBASurveyFactory) -> SBASubtaskStep {
+    func createSubtaskStep(with factory:SBABaseSurveyFactory) -> SBASubtaskStep {
         assert((self.items?.count ?? 0) > 0, "A subtask step requires items")
         let steps = self.items?.mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
         let step = self.usesNavigation() ?
@@ -287,7 +287,7 @@ extension SBAFormStepSurveyItem {
         }
     }
     
-    func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBASurveyFactory? = nil) {
+    func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
         
         if self.isCompoundStep {
             let factory = factory ?? SBAInfoManager.shared.defaultSurveyFactory
@@ -301,7 +301,7 @@ extension SBAFormStepSurveyItem {
         }
     }
         
-    func createFormItem(text: String?, subtype: SBASurveyItemType.FormSubtype?, factory: SBASurveyFactory? = nil) -> ORKFormItem {
+    func createFormItem(text: String?, subtype: SBASurveyItemType.FormSubtype?, factory: SBABaseSurveyFactory? = nil) -> ORKFormItem {
         let answerFormat = factory?.createAnswerFormat(self, subtype: subtype) ?? self.createAnswerFormat(subtype)
         if let rulePredicate = self.rules?.first?.rulePredicate {
             // If there is a rule predicate then return a survey form item

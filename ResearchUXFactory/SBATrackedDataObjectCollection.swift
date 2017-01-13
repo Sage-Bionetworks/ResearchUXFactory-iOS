@@ -47,7 +47,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
     
     // MARK: SBAStepTransformer
     
-    func transformToTaskAndIncludes(_ factory: SBASurveyFactory, isLastStep: Bool) -> (task: SBANavigableOrderedTask?, include: SBATrackingStepIncludes?)  {
+    func transformToTaskAndIncludes(_ factory: SBABaseSurveyFactory, isLastStep: Bool) -> (task: SBANavigableOrderedTask?, include: SBATrackingStepIncludes?)  {
         
         // Build the approproate steps
         var include: SBATrackingStepIncludes = .None
@@ -89,7 +89,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         return (task, include)
     }
     
-    public func transformToStep(with factory: SBASurveyFactory, isLastStep: Bool) -> ORKStep? {
+    public func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep? {
         let (retTask, retInclude) = transformToTaskAndIncludes(factory, isLastStep: isLastStep)
         guard let task = retTask, let include = retInclude else { return nil }
         
@@ -143,7 +143,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         return steps
     }
     
-    fileprivate func filteredSteps(_ include: SBATrackingStepIncludes, factory: SBASurveyFactory) -> (steps: [ORKStep],trackedResults: [ORKStepResult]) {
+    fileprivate func filteredSteps(_ include: SBATrackingStepIncludes, factory: SBABaseSurveyFactory) -> (steps: [ORKStep],trackedResults: [ORKStepResult]) {
         
         var firstActivityStepIdentifier: String?
         var trackedResults:[ORKStepResult] = []

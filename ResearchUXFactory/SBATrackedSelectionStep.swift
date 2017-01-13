@@ -46,7 +46,7 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
     Define a non-generic factory-style initializer to hide the implementation details of creating the 
     default selection/frequency steps in the owning class.
     */
-    init(inputItem: SBAFormStepSurveyItem, trackedItems: [SBATrackedDataObject], factory: SBASurveyFactory) {
+    init(inputItem: SBAFormStepSurveyItem, trackedItems: [SBATrackedDataObject], factory: SBABaseSurveyFactory) {
         
         // Set the tracked items pointer
         _trackedItems = trackedItems

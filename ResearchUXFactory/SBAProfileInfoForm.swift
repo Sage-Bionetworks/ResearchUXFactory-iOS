@@ -96,7 +96,7 @@ extension SBAProfileInfoForm {
         return self.formItems?.find({ $0.identifier == profileInfoOption.rawValue })
     }
     
-    func commonInit(inputItem: SBASurveyItem?, factory: SBASurveyFactory?) {
+    func commonInit(inputItem: SBASurveyItem?, factory: SBABaseSurveyFactory?) {
         self.title = inputItem?.stepTitle
         self.text = inputItem?.stepText
         if let formStep = self as? ORKFormStep {
@@ -183,7 +183,7 @@ public struct SBAProfileInfoOptions {
     /**
      Factory method for converting to `ORKFormItem` array.
     */
-    func makeFormItems(shouldConfirmPassword: Bool, factory:SBASurveyFactory? = nil) -> [ORKFormItem] {
+    func makeFormItems(shouldConfirmPassword: Bool, factory:SBABaseSurveyFactory? = nil) -> [ORKFormItem] {
         
         var formItems: [ORKFormItem] = []
         

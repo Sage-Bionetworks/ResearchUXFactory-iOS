@@ -40,7 +40,7 @@ public protocol SBATrackedActivitySurveyItem: SBAFormStepSurveyItem, SBATrackedS
 
 extension SBATrackedActivitySurveyItem {
     
-    public func createTrackedActivityStep(_ items:[SBATrackedDataObject], factory: SBASurveyFactory) -> ORKStep {
+    public func createTrackedActivityStep(_ items:[SBATrackedDataObject], factory: SBABaseSurveyFactory) -> ORKStep {
         
         // Create a base form step
         let baseStep = SBATrackedActivityFormStep(identifier: self.identifier)

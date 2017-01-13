@@ -34,7 +34,7 @@
 import ResearchKit
 
 public protocol SBAStepTransformer: class {
-    func transformToStep(with factory: SBASurveyFactory, isLastStep: Bool) -> ORKStep?
+    func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep?
 }
 
 public protocol SBASurveyItem: SBAStepTransformer {
@@ -100,7 +100,7 @@ extension ORKPasscodeType {
 
 /**
  List of all the currently supported step types with the key name for each class type.
- This is used by the `SBASurveyFactory` to determine which subclass of `ORKStep` to return
+ This is used by the `SBABaseSurveyFactory` to determine which subclass of `ORKStep` to return
  for a given `SBASurveyItem`.
 */
 public enum SBASurveyItemType {

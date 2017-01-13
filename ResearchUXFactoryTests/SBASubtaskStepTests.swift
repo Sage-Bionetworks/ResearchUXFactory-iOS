@@ -136,7 +136,7 @@ class SBASubtaskStepTests: XCTestCase {
             "prompt" : "You are done.",
             "type"  : "completion"]
         
-        let factory = SBASurveyFactory()
+        let factory = SBABaseSurveyFactory()
         let items = [inputIntro, inputQ1, inputQ2, conclusion]
         let steps = items.mapAndFilter({ factory.createSurveyStepWithDictionary($0) })
         let task = MutatedResultTask(identifier: "Mutating Task", steps: steps)

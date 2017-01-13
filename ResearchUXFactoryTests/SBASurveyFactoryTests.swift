@@ -1,5 +1,5 @@
 //
-//  SBASurveyFactoryTests.swift
+//  SBABaseSurveyFactoryTests.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -35,7 +35,7 @@ import XCTest
 import ResearchUXFactory
 import ResearchKit
 
-class SBASurveyFactoryTests: XCTestCase {
+class SBABaseSurveyFactoryTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -59,7 +59,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "text"          : "Text for this step",
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBAInstructionStep else {
@@ -95,7 +95,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "skipIfPassed" : true
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationFormStep else {
@@ -132,7 +132,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "skipIfPassed" : true
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBAToggleFormStep else {
@@ -180,7 +180,7 @@ class SBASurveyFactoryTests: XCTestCase {
             ],
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {
@@ -222,7 +222,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "skipIfPassed" : true
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationSubtaskStep else {
@@ -252,7 +252,7 @@ class SBASurveyFactoryTests: XCTestCase {
         ]
         
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBAInstructionStep else {
@@ -277,7 +277,7 @@ class SBASurveyFactoryTests: XCTestCase {
         ]
         
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKInstructionStep else {
@@ -300,7 +300,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "expectedAnswer" : true
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {
@@ -342,7 +342,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "expectedAnswer" : "b"
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {
@@ -393,7 +393,7 @@ class SBASurveyFactoryTests: XCTestCase {
                 ["prompt" : "c", "value" : 2, "exclusive": true]],
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {
@@ -445,7 +445,7 @@ class SBASurveyFactoryTests: XCTestCase {
             "expectedAnswer": true,
         ]
         
-        let step = SBASurveyFactory().createSurveyStepWithDictionary(inputStep)
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {

@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@class SBASurveyFactory;
+@class SBABaseSurveyFactory;
 
 /**
  `SBAInfoManager` serves as a singleton manager for the singletons included in this class.
@@ -105,10 +105,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSDictionary <NSString*, id> *plist;
 
 /**
- A reference to the default instance of an `SBASurveyFactory` to be used to build
- surveys.  By default, an instance of the base class `SBASurveyFactory` is instantiated.
+ A reference to the default instance of an `SBABaseSurveyFactory` to be used to build
+ surveys.  By default, an instance of the base class `SBABaseSurveyFactory` is instantiated.
  */
-@property (nonatomic, strong) SBASurveyFactory *defaultSurveyFactory;
+@property (nonatomic, strong) SBABaseSurveyFactory *defaultSurveyFactory;
 
 /**
  A list of the resource bundles to search for localized strings and files.
