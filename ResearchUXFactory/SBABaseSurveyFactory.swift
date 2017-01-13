@@ -262,7 +262,11 @@ open class SBABaseSurveyFactory : NSObject {
             return SBAPermissionsStep(inputItem: inputItem)
         case .dataGroups:
             return SBADataGroupsStep(inputItem: inputItem)
-        default:
+        case .emailVerification:
+            let step = SBAInstructionStep(inputItem: inputItem)
+            step.customTypeIdentifier = subtype.rawValue
+            return step
+        case .profile, .login, .externalID:
             return SBAProfileFormStep(inputItem: inputItem, factory: self)
         }
     }

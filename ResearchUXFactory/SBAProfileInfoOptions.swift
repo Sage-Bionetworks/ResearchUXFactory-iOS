@@ -103,6 +103,16 @@ public struct SBAProfileInfoOptions {
         self.customItems = customItems
     }
     
+    public init(include: SBAProfileInfoOption, surveyItemType: SBASurveyItemType = .custom(nil), extendedOption: Any? = nil) {
+        self.surveyItemType = surveyItemType
+        self.includes = [include]
+        self.extendedOptions = {
+            guard let ops = extendedOption else { return [:] }
+            return [include:ops]
+        }()
+        self.customItems = []
+    }
+    
     public init(inputItem: SBASurveyItem?, defaultIncludes: [SBAProfileInfoOption] = []) {
         
         // If the inputItem does not match the protocol for a form step item
