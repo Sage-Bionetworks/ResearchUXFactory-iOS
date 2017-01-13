@@ -254,7 +254,7 @@ public struct SBAProfileInfoOptions {
             }
         }
         
-        let surveyFactory = factory ?? SBASurveyFactory()
+        let surveyFactory = factory ?? SBAInfoManager.shared.defaultSurveyFactory
         for item in customOptions {
             if let surveyItem = item as? SBAFormStepSurveyItem, surveyItem.isValidFormItem {
                 let formItem = surveyFactory.createFormItem(surveyItem)

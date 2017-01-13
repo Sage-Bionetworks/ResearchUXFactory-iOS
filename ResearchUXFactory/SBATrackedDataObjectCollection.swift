@@ -139,7 +139,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
     // MARK: Functions for transforming and recording results
     
     public func filteredSteps(_ include: SBATrackingStepIncludes) -> [ORKStep] {
-        let (steps, _) = filteredSteps(include, factory: SBASurveyFactory())
+        let (steps, _) = filteredSteps(include, factory: SBAInfoManager.shared.defaultSurveyFactory)
         return steps
     }
     

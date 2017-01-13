@@ -177,7 +177,6 @@
 		FF94251F1E280A6C00FD8C24 /* CombinedTask.json in Resources */ = {isa = PBXBuildFile; fileRef = FF3E30C31D62CF7100347165 /* CombinedTask.json */; };
 		FF9425201E280A7900FD8C24 /* Consent.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF4E1D00B6C9002C456D /* Consent.json */; };
 		FF9425211E280A7900FD8C24 /* Memory.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF601D00C125002C456D /* Memory.json */; };
-		FF9425221E280A7900FD8C24 /* Onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = FFDECDF91D0774EE00434001 /* Onboarding.json */; };
 		FF9425231E280A7900FD8C24 /* Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF631D00C12A002C456D /* Tapping.json */; };
 		FF9425241E280A7900FD8C24 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = FF35B9351D9EEC2000E0DF23 /* Tremor.json */; };
 		FF9425251E280A7900FD8C24 /* Voice.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF661D00C130002C456D /* Voice.json */; };
@@ -185,7 +184,6 @@
 		FF9425271E280A7900FD8C24 /* MedicalSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF531D00BDAE002C456D /* MedicalSurvey.json */; };
 		FF9425281E280A7A00FD8C24 /* Consent.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF4E1D00B6C9002C456D /* Consent.json */; };
 		FF9425291E280A7A00FD8C24 /* Memory.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF601D00C125002C456D /* Memory.json */; };
-		FF94252A1E280A7A00FD8C24 /* Onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = FFDECDF91D0774EE00434001 /* Onboarding.json */; };
 		FF94252B1E280A7A00FD8C24 /* Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF631D00C12A002C456D /* Tapping.json */; };
 		FF94252C1E280A7A00FD8C24 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = FF35B9351D9EEC2000E0DF23 /* Tremor.json */; };
 		FF94252D1E280A7A00FD8C24 /* Voice.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF661D00C130002C456D /* Voice.json */; };
@@ -528,7 +526,6 @@
 		FFCF37DF1CDA99120090452F /* UIView+LayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutExtensions.swift"; sourceTree = "<group>"; };
 		FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Utilities.swift"; sourceTree = "<group>"; };
 		FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SBATrackedActivityStep.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FFDECDFA1D0774EE00434001 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Onboarding.json; sourceTree = "<group>"; };
 		FFDECDFC1D077C2000434001 /* SBAConsentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAConsentTests.swift; sourceTree = "<group>"; };
 		FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionsManager.swift; sourceTree = "<group>"; };
@@ -678,8 +675,8 @@
 		801040F41C5AD55800D26E19 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */,
 				FF5C26731E28060900A1D9E0 /* Info.plist */,
+				FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */,
 				FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */,
 			);
 			name = "Supporting Files";
@@ -1011,9 +1008,9 @@
 		FF9425921E28593600FD8C24 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */,
 				FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */,
 				FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */,
-				FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -1134,7 +1131,6 @@
 				FF3E30C31D62CF7100347165 /* CombinedTask.json */,
 				FF78CF4E1D00B6C9002C456D /* Consent.json */,
 				FF78CF601D00C125002C456D /* Memory.json */,
-				FFDECDF91D0774EE00434001 /* Onboarding.json */,
 				FF78CF631D00C12A002C456D /* Tapping.json */,
 				FF35B9351D9EEC2000E0DF23 /* Tremor.json */,
 				FF78CF661D00C130002C456D /* Voice.json */,
@@ -1403,7 +1399,6 @@
 				FF9425081E280A3E00FD8C24 /* consent_18researchers.html in Resources */,
 				FF5C26741E28060900A1D9E0 /* Info.plist in Resources */,
 				FF9424F21E280A0D00FD8C24 /* consent_2quiz_headsup.html in Resources */,
-				FF9425221E280A7900FD8C24 /* Onboarding.json in Resources */,
 				FF9425261E280A7900FD8C24 /* Walking.json in Resources */,
 				FF9425211E280A7900FD8C24 /* Memory.json in Resources */,
 				FF94251C1E280A6B00FD8C24 /* EligibilityRequirements.json in Resources */,
@@ -1448,7 +1443,6 @@
 				FF9425141E280A3F00FD8C24 /* consent_18researchers.html in Resources */,
 				FF5C26641E28043900A1D9E0 /* LaunchScreen.storyboard in Resources */,
 				FF9424F31E280A0F00FD8C24 /* consent_2quiz_headsup.html in Resources */,
-				FF94252A1E280A7A00FD8C24 /* Onboarding.json in Resources */,
 				FF94252E1E280A7A00FD8C24 /* Walking.json in Resources */,
 				FF9425291E280A7A00FD8C24 /* Memory.json in Resources */,
 				FF94251E1E280A6C00FD8C24 /* EligibilityRequirements.json in Resources */,
@@ -1916,14 +1910,6 @@
 				FF78CF681D00C135002C456D /* Base */,
 			);
 			name = Walking.json;
-			sourceTree = "<group>";
-		};
-		FFDECDF91D0774EE00434001 /* Onboarding.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FFDECDFA1D0774EE00434001 /* Base */,
-			);
-			name = Onboarding.json;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

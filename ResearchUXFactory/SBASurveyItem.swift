@@ -144,8 +144,6 @@ public enum SBASurveyItemType {
     case account(AccountSubtype)
     public enum AccountSubtype: String {
         case registration       = "registration"            // ORKRegistrationStep
-        case login              = "login"                   // ORKLoginStep
-        case emailVerification  = "emailVerification"       // ORKVerificationStep
         case permissions        = "permissions"             // SBAPermissionsStep
         case dataGroups         = "dataGroups"              // SBADataGroupsStep
         case profile            = "profile"                 // SBAProfileFormStep

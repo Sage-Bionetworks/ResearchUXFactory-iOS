@@ -237,10 +237,6 @@ open class SBASurveyFactory : NSObject {
         switch (subtype) {
         case .registration:
             return ORKRegistrationStep(identifier: inputItem.identifier, title: inputItem.stepTitle, text: inputItem.stepText)
-        case .login:
-            return nil  // Requires override if used.
-        case .emailVerification:
-            return nil  // Requires override if used.
         case .permissions:
             return SBAPermissionsStep(inputItem: inputItem)
         case .dataGroups:
@@ -250,8 +246,6 @@ open class SBASurveyFactory : NSObject {
             
         }
     }
-    
-
 
 }
 
@@ -296,7 +290,7 @@ extension SBAFormStepSurveyItem {
     func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBASurveyFactory? = nil) {
         
         if self.isCompoundStep {
-            let factory = factory ?? SBASurveyFactory()
+            let factory = factory ?? SBAInfoManager.shared.defaultSurveyFactory
             step.formItems = self.items?.map({
                 return factory.createFormItem($0 as! SBAFormStepSurveyItem)
             })

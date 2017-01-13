@@ -57,7 +57,7 @@ public protocol SBABridgeTask: class {
 
 public extension SBABridgeTask {
     
-    public func createORKTask(with factory: SBASurveyFactory = SBASurveyFactory()) -> (ORKTask & NSCopying & NSSecureCoding)? {
+    public func createORKTask(with factory: SBASurveyFactory = SBAInfoManager.shared.defaultSurveyFactory) -> (ORKTask & NSCopying & NSSecureCoding)? {
 
         guard let steps = transformTaskSteps(factory) else { return nil }
         
