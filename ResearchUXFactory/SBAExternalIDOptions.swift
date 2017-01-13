@@ -36,39 +36,39 @@ import Foundation
 /**
  Object with the options for the external ID form item `ORKAnswerFormat`
  */
-struct SBAExternalIDOptions {
+public struct SBAExternalIDOptions {
     
     /**
      By default, the autocapitalization type is all characters
      */
-    static let defaultAutocapitalizationType: UITextAutocapitalizationType = .allCharacters
+    public static let defaultAutocapitalizationType: UITextAutocapitalizationType = .allCharacters
     
     /**
      By default, the keyboard type is ASCII
      */
-    static let defaultKeyboardType: UIKeyboardType = .asciiCapable
+    public static let defaultKeyboardType: UIKeyboardType = .asciiCapable
     
     /**
      Auto-capitalization type for the text field
      */
-    let autocapitalizationType: UITextAutocapitalizationType
+    public let autocapitalizationType: UITextAutocapitalizationType
     
     /**
      Keyboard type for the text field
      */
-    let keyboardType: UIKeyboardType
+    public let keyboardType: UIKeyboardType
     
-    init() {
+    public init() {
         self.autocapitalizationType = SBAExternalIDOptions.defaultAutocapitalizationType
         self.keyboardType = SBAExternalIDOptions.defaultKeyboardType
     }
     
-    init(autocapitalizationType: UITextAutocapitalizationType, keyboardType: UIKeyboardType) {
+    public init(autocapitalizationType: UITextAutocapitalizationType, keyboardType: UIKeyboardType) {
         self.autocapitalizationType = autocapitalizationType
         self.keyboardType = keyboardType
     }
     
-    init(options: [AnyHashable: Any]?) {
+    public init(options: [AnyHashable: Any]?) {
         self.autocapitalizationType = {
             if let autocap = options?["autocapitalizationType"] as? String {
                 return UITextAutocapitalizationType(key: autocap)

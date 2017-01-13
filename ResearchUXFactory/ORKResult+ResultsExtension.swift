@@ -89,11 +89,11 @@ private let QuestionResultSurveyAnswerKey = "answer"
 private let NumericResultUnitKey = "unit"
 private let DateAndTimeResultTimeZoneKey = "timeZone"
 
-open class ArchiveableResult : NSObject {
-    open let result: AnyObject
-    open let filename: String
+public final class ArchiveableResult : NSObject {
+    public let result: AnyObject
+    public let filename: String
     
-    init(result: AnyObject, filename: String) {
+    public init(result: AnyObject, filename: String) {
         self.result = result
         self.filename = filename
         super.init()
@@ -339,12 +339,12 @@ extension ORKTrailmakingResult {
 }
 
 public final class SBAAnswerKeyAndValue: NSObject {
-    let key: String
-    let value: NSSecureCoding
-    let questionType: ORKQuestionType
-    var unit: String?
+    public let key: String
+    public let value: NSSecureCoding
+    public let questionType: ORKQuestionType
+    public var unit: String?
     
-    init(key: String, value: NSSecureCoding, questionType: ORKQuestionType) {
+    public init(key: String, value: NSSecureCoding, questionType: ORKQuestionType) {
         self.key = key
         self.value = value
         self.questionType = questionType

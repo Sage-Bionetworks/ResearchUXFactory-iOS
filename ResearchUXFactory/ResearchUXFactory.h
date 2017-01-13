@@ -44,7 +44,6 @@ FOUNDATION_EXPORT const unsigned char ResearchUXFactoryVersionString[];
 #import <ResearchUXFactory/SBAInfoManager.h>
 #import <ResearchUXFactory/SBAJSONObject.h>
 #import <ResearchUXFactory/SBAKeychainWrapper.h>
-#import <ResearchUXFactory/SBALog.h>
 #import <ResearchUXFactory/SBAMedication.h>
 #import <ResearchUXFactory/SBAPDFPrintPageRenderer.h>
 #import <ResearchUXFactory/SBAPermissionsManager.h>

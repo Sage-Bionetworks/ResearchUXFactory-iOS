@@ -75,9 +75,9 @@ class SBAConsentDocumentFactoryTests: ResourceTestCase {
     
     // MARK: helper methods
     
-    func createConsentFactory() -> SBABaseConsentDocumentFactory? {
+    func createConsentFactory() -> SBABaseSurveyFactory? {
         guard let input = jsonForResource("Consent") else { return nil }
-        return SBABaseConsentDocumentFactory(dictionary: input)
+        return SBABaseSurveyFactory(dictionary: input)
     }
 
 }

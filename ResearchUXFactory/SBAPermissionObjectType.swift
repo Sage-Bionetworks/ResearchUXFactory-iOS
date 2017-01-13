@@ -192,7 +192,7 @@ extension UIUserNotificationType {
  */
 public final class SBANotificationPermissionObjectType: SBAPermissionObjectType {
     
-    class func localNotifications() -> SBANotificationPermissionObjectType {
+    public class func localNotifications() -> SBANotificationPermissionObjectType {
         return SBANotificationPermissionObjectType(permissionType: .notifications)
     }
     

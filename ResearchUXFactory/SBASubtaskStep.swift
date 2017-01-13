@@ -84,7 +84,7 @@ open class SBASubtaskStep: ORKStep {
         return subtaskResult;
     }
     
-    internal func filteredStepResults(_ inputResults: [ORKStepResult]) -> (subtaskResults:[ORKStepResult], remainingResults:[ORKStepResult]) {
+    public func filteredStepResults(_ inputResults: [ORKStepResult]) -> (subtaskResults:[ORKStepResult], remainingResults:[ORKStepResult]) {
         let prefix = "\(self.subtask.identifier)."
         let predicate = NSPredicate(format: "identifier BEGINSWITH %@", prefix)
         var subtaskResults:[ORKStepResult] = []
@@ -109,7 +109,7 @@ open class SBASubtaskStep: ORKStep {
         return (subtaskResults, remainingResults)
     }
     
-    internal func step(withIdentifier identifier: String) -> ORKStep? {
+    public func step(withIdentifier identifier: String) -> ORKStep? {
         guard let stepIdentifier = substepIdentifier(identifier),
             let step = self.subtask.step?(withIdentifier: stepIdentifier) else {
                 return nil
@@ -117,7 +117,7 @@ open class SBASubtaskStep: ORKStep {
         return replacementStep(step)
     }
     
-    internal func stepAfterStep(_ step: ORKStep?, withResult result: ORKTaskResult) -> ORKStep? {
+    public func stepAfterStep(_ step: ORKStep?, withResult result: ORKTaskResult) -> ORKStep? {
         guard let step = step else {
             return replacementStep(self.subtask.step(after: nil, with: result))
         }
@@ -140,7 +140,7 @@ open class SBASubtaskStep: ORKStep {
         return replacementStep(nextStep)
     }
     
-    internal func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {
+    public func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {
         guard let substepIdentifier = substepIdentifier(stepIdentifier),
             let resultSource = self.subtask as? ORKTaskResultSource
         else {

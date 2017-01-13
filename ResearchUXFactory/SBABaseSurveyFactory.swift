@@ -53,6 +53,24 @@ open class SBABaseSurveyFactory : NSObject {
     
     public convenience init(dictionary: NSDictionary) {
         self.init()
+        
+        // Load the sections
+        var previousSectionType: SBAConsentSectionType?
+        if let sections = dictionary["sections"] as? [NSDictionary] {
+            self.consentDocument.sections = sections.map({ (dictionarySection) -> ORKConsentSection in
+                let consentSection = dictionarySection.createConsentSection(previous: previousSectionType)
+                previousSectionType = dictionarySection.consentSectionType
+                return consentSection
+            })
+        }
+        
+        // Load the document for the HTML content
+        if let properties = dictionary["documentProperties"] as? NSDictionary,
+            let documentHtmlContent = properties["htmlDocument"] as? String {
+            self.consentDocument.htmlReviewContent = SBAResourceFinder.shared.html(forResource: documentHtmlContent)
+        }
+        
+        // After loading the consentDocument, map the steps
         self.mapSteps(dictionary)
     }
     
@@ -101,6 +119,9 @@ open class SBABaseSurveyFactory : NSObject {
             step.text = inputItem.stepText
             step.passcodeType = passcodeType
             return step
+            
+        case .consent(let subtype):
+            return createConsentStep(inputItem: inputItem, subtype: subtype)
             
         default:
             break
@@ -246,6 +267,56 @@ open class SBABaseSurveyFactory : NSObject {
             
         }
     }
+    
+    lazy open var consentDocument: ORKConsentDocument = {
+        
+        // Setup the consent document
+        let consentDocument = ORKConsentDocument()
+        consentDocument.title = Localization.localizedString("SBA_CONSENT_TITLE")
+        consentDocument.signaturePageTitle = Localization.localizedString("SBA_CONSENT_TITLE")
+        consentDocument.signaturePageContent = Localization.localizedString("SBA_CONSENT_SIGNATURE_CONTENT")
+        
+        // Add the signature
+        let signature = ORKConsentSignature(forPersonWithTitle: Localization.localizedString("SBA_CONSENT_PERSON_TITLE"), dateFormatString: nil, identifier: "participant")
+        consentDocument.addSignature(signature)
+        
+        return consentDocument
+    }()
+
+    
+    // Override the base class to implement creating consent steps
+    open func createConsentStep(inputItem: SBASurveyItem, subtype: SBASurveyItemType.ConsentSubtype) -> ORKStep? {
+        switch (subtype) {
+            
+        case .visual:
+            return ORKVisualConsentStep(identifier: inputItem.identifier,
+                                        document: self.consentDocument)
+            
+        case .sharingOptions:
+            let share = inputItem as! SBAConsentSharingOptions
+            let step = ORKConsentSharingStep(identifier: inputItem.identifier,
+                                             investigatorShortDescription: share.investigatorShortDescription,
+                                             investigatorLongDescription: share.investigatorLongDescription,
+                                             localizedLearnMoreHTMLContent: share.localizedLearnMoreHTMLContent)
+            
+            if let additionalText = inputItem.stepText, let text = step.text {
+                step.text = "\(text)\n\n\(additionalText)"
+            }
+            if let form = inputItem as? SBAFormStepSurveyItem,
+                let textChoices = form.items?.map({form.createTextChoice(from: $0)}) {
+                step.answerFormat = ORKTextChoiceAnswerFormat(style: .singleChoice, textChoices: textChoices)
+            }
+            
+            return step;
+            
+        case .review:
+            let step = ORKConsentReviewStep(identifier: inputItem.identifier,
+                                            signature: self.consentDocument.signatures?.first,
+                                            in: self.consentDocument)
+            step.reasonForConsent = Localization.localizedString("SBA_CONSENT_SIGNATURE_CONTENT")
+            return step;
+        }
+    }
 
 }
 
@@ -269,7 +340,7 @@ extension SBAFormStepSurveyItem {
         return isBooleanToggle || (SBASurveyItemType.form(.compound) == self.surveyItemType)
     }
     
-    func createSubtaskStep(with factory:SBABaseSurveyFactory) -> SBASubtaskStep {
+    public func createSubtaskStep(with factory:SBABaseSurveyFactory) -> SBASubtaskStep {
         assert((self.items?.count ?? 0) > 0, "A subtask step requires items")
         let steps = self.items?.mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
         let step = self.usesNavigation() ?
@@ -278,7 +349,7 @@ extension SBAFormStepSurveyItem {
         return step
     }
     
-    func mapStepValues(with step: ORKStep) {
+    public func mapStepValues(with step: ORKStep) {
         step.title = self.stepTitle?.trim()
         step.text = self.stepText?.trim()
         step.isOptional = self.optional
@@ -287,7 +358,7 @@ extension SBAFormStepSurveyItem {
         }
     }
     
-    func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
+    public func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
         
         if self.isCompoundStep {
             let factory = factory ?? SBAInfoManager.shared.defaultSurveyFactory
@@ -315,7 +386,7 @@ extension SBAFormStepSurveyItem {
         }
     }
     
-    func createAnswerFormat(_ subtype: SBASurveyItemType.FormSubtype?) -> ORKAnswerFormat? {
+    public func createAnswerFormat(_ subtype: SBASurveyItemType.FormSubtype?) -> ORKAnswerFormat? {
         let subtype = subtype ?? SBASurveyItemType.FormSubtype.boolean
         switch(subtype) {
         case .boolean:
@@ -353,7 +424,7 @@ extension SBAFormStepSurveyItem {
         }
     }
     
-    func createTextChoice(from obj: Any) -> ORKTextChoice {
+    public func createTextChoice(from obj: Any) -> ORKTextChoice {
         guard let textChoice = obj as? SBATextChoice else {
             assertionFailure("Passing object \(obj) does not match expected protocol SBATextChoice")
             return ORKTextChoice(text: "", detailText: nil, value: NSNull(), exclusive: false)

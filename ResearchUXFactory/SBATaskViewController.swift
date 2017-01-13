@@ -33,7 +33,7 @@
 
 import UIKit
 
-protocol SBATaskViewControllerStrongReference: class, NSSecureCoding {
+public protocol SBATaskViewControllerStrongReference: class, NSSecureCoding {
     func attachTaskViewController(_ taskViewController: SBATaskViewController)
 }
 
@@ -45,7 +45,7 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
      hold a weak reference to this view controller or else this will result in a
      retain loop. Please excercise caution when using this reference.
      */
-    var strongReference: SBATaskViewControllerStrongReference?
+    public var strongReference: SBATaskViewControllerStrongReference?
     
     /**
      A completion handler that can be called instead of using the delegate pattern.

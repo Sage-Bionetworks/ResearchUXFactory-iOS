@@ -153,7 +153,7 @@ public enum SBASurveyItemType {
     public static let passcodeType6Digit = "passcodeType6Digit"
     public static let passcodeType4Digit = "passcodeType4Digit"
     
-    init(rawValue: String?) {
+    public init(rawValue: String?) {
         guard let type = rawValue else { self = .custom(nil); return }
         
         if let subtype = InstructionSubtype(rawValue: type) {
@@ -179,28 +179,28 @@ public enum SBASurveyItemType {
         }
     }
         
-    func formSubtype() -> FormSubtype? {
+    public func formSubtype() -> FormSubtype? {
         if case .form(let subtype) = self {
             return subtype
         }
         return nil
     }
     
-    func consentSubtype() -> ConsentSubtype? {
+    public func consentSubtype() -> ConsentSubtype? {
         if case .consent(let subtype) = self {
             return subtype
         }
         return nil
     }
     
-    func accountSubtype() -> AccountSubtype? {
+    public func accountSubtype() -> AccountSubtype? {
         if case .account(let subtype) = self {
             return subtype
         }
         return nil
     }
     
-    func isNilType() -> Bool {
+    public func isNilType() -> Bool {
         if case .custom(let customType) = self {
             return (customType == nil)
         }

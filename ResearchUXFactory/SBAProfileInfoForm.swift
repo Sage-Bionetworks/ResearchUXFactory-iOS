@@ -57,7 +57,7 @@ public enum SBAProfileInfoOption : String {
 /**
  List of possible errors for a given stage of onboarding
  */
-enum SBAProfileInfoOptionsError: Error {
+public enum SBAProfileInfoOptionsError: Error {
     case missingRequiredOptions
     case missingEmail
     case missingExternalID
@@ -96,7 +96,7 @@ extension SBAProfileInfoForm {
         return self.formItems?.find({ $0.identifier == profileInfoOption.rawValue })
     }
     
-    func commonInit(inputItem: SBASurveyItem?, factory: SBABaseSurveyFactory?) {
+    public func commonInit(inputItem: SBASurveyItem?, factory: SBABaseSurveyFactory?) {
         self.title = inputItem?.stepTitle
         self.text = inputItem?.stepText
         if let formStep = self as? ORKFormStep {
@@ -126,12 +126,12 @@ public struct SBAProfileInfoOptions {
     /**
      The Auto-capitalization and Keyboard for entering the external ID (if applicable)
     */
-    let externalIDOptions: SBAExternalIDOptions
+    public let externalIDOptions: SBAExternalIDOptions
     
     /**
      The type of survey step being created.
     */
-    var surveyItemType: SBASurveyItemType = .custom(nil)
+    public var surveyItemType: SBASurveyItemType = .custom(nil)
     
     static let confirmationIdentifier = "passwordConfirmation"
     
@@ -141,7 +141,7 @@ public struct SBAProfileInfoOptions {
         self.customOptions = []
     }
     
-    init(externalIDOptions: SBAExternalIDOptions) {
+    public init(externalIDOptions: SBAExternalIDOptions) {
         self.includes = [.externalID]
         self.externalIDOptions = externalIDOptions
         self.customOptions = []
@@ -183,7 +183,7 @@ public struct SBAProfileInfoOptions {
     /**
      Factory method for converting to `ORKFormItem` array.
     */
-    func makeFormItems(shouldConfirmPassword: Bool, factory:SBABaseSurveyFactory? = nil) -> [ORKFormItem] {
+    public func makeFormItems(shouldConfirmPassword: Bool, factory:SBABaseSurveyFactory? = nil) -> [ORKFormItem] {
         
         var formItems: [ORKFormItem] = []
         

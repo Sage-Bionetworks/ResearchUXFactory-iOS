@@ -187,7 +187,6 @@
 		FF94252D1E280A7A00FD8C24 /* Voice.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF661D00C130002C456D /* Voice.json */; };
 		FF94252E1E280A7A00FD8C24 /* Walking.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF691D00C135002C456D /* Walking.json */; };
 		FF94252F1E280A7A00FD8C24 /* MedicalSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF531D00BDAE002C456D /* MedicalSurvey.json */; };
-		FF9425401E2812F100FD8C24 /* SBABaseConsentDocumentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94253B1E2812F100FD8C24 /* SBABaseConsentDocumentFactory.swift */; };
 		FF9425411E2812F100FD8C24 /* SBAConsentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94253C1E2812F100FD8C24 /* SBAConsentSection.swift */; };
 		FF9425421E2812F100FD8C24 /* SBAConsentSection+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94253D1E2812F100FD8C24 /* SBAConsentSection+Dictionary.swift */; };
 		FF9425431E2812F100FD8C24 /* SBAConsentSharingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94253E1E2812F100FD8C24 /* SBAConsentSharingOptions.swift */; };
@@ -477,7 +476,6 @@
 		FF9055EB1CE527890049D12A /* SBAProgressStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProgressStep.swift; sourceTree = "<group>"; };
 		FF9312381DC93327001A9F86 /* SBAPermissionObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionObjectType.swift; sourceTree = "<group>"; };
 		FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
-		FF94253B1E2812F100FD8C24 /* SBABaseConsentDocumentFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBABaseConsentDocumentFactory.swift; sourceTree = "<group>"; };
 		FF94253C1E2812F100FD8C24 /* SBAConsentSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAConsentSection.swift; sourceTree = "<group>"; };
 		FF94253D1E2812F100FD8C24 /* SBAConsentSection+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBAConsentSection+Dictionary.swift"; sourceTree = "<group>"; };
 		FF94253E1E2812F100FD8C24 /* SBAConsentSharingOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAConsentSharingOptions.swift; sourceTree = "<group>"; };
@@ -981,7 +979,6 @@
 		FF94253A1E2812B500FD8C24 /* Consent */ = {
 			isa = PBXGroup;
 			children = (
-				FF94253B1E2812F100FD8C24 /* SBABaseConsentDocumentFactory.swift */,
 				FF94253C1E2812F100FD8C24 /* SBAConsentSection.swift */,
 				FF94253D1E2812F100FD8C24 /* SBAConsentSection+Dictionary.swift */,
 				FF94253E1E2812F100FD8C24 /* SBAConsentSharingOptions.swift */,
@@ -1554,7 +1551,6 @@
 				FF2729131D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift in Sources */,
 				FF9425441E2812F100FD8C24 /* SBAConsentSharingOptions+Dictionary.swift in Sources */,
 				FF80920F1D01FD35003FF617 /* ORKAnswerFormat+KeyboardUtilities.swift in Sources */,
-				FF9425401E2812F100FD8C24 /* SBABaseConsentDocumentFactory.swift in Sources */,
 				FF9425961E28594B00FD8C24 /* SBAProfileInfoForm.swift in Sources */,
 				FF2729091D92003700956CFB /* SBATextChoice+String.swift in Sources */,
 				FFA8E4AF1CBD7CDA00ED5399 /* SBALoadingViewPresenter.swift in Sources */,
