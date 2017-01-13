@@ -2,6 +2,13 @@
     "steps":
     [
          {
+             "identifier": "reconsentIntroduction",
+             "title": "Thank you for participating in the SAMPLE study.",
+             "text": "We heard your requests and updated the study. We added new features, new surveys and new activities.",
+             "detailText": "The next screens describe the study. Please review the study information and re-affirm that you want to participate.",
+             "type": "reconsent.instruction",
+         },
+         {
              "identifier": "consentVisual",
              "type": "consentVisual",
          },

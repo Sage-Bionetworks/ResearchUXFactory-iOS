@@ -162,11 +162,6 @@ class SBAAccountTests: XCTestCase {
         let password = passwordItem?.answerFormat as? ORKTextAnswerFormat
         XCTAssertNotNil(passwordItem)
         XCTAssertNotNil(password, "\(passwordItem?.answerFormat)")
-        
-        let confirmationItem = step.formItem(for:"confirmation")
-        let confirmation = confirmationItem?.answerFormat as? ORKTextAnswerFormat
-        XCTAssertNotNil(confirmationItem)
-        XCTAssertNotNil(confirmation, "\(confirmationItem?.answerFormat)")
 
         let externalIDItem = step.formItem(for:"externalID")
         let externalID = externalIDItem?.answerFormat as? ORKTextAnswerFormat

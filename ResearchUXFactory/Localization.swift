@@ -35,12 +35,8 @@ import UIKit
 
 open class Localization: NSObject {
     
-    static let localeMainBundle = Bundle.main
-    static let localeBundle = Bundle(for: Localization.classForCoder())
-    static let localeORKBundle = Bundle(for: ORKStep.classForCoder())
-    
     open class var allBundles: [Bundle] {
-        return [localeMainBundle, localeBundle, localeORKBundle]
+        return SBAInfoManager.shared.resourceBundles
     }
         
     open class func localizedString(_ key: String) -> String {
@@ -58,9 +54,7 @@ open class Localization: NSObject {
     }
     
     open class func defaultTableNameForBundle(_ bundle: Bundle) -> String? {
-        if (bundle == localeORKBundle) { return "ResearchKit" }
-        if (bundle == localeBundle) { return "ResearchUXFactory" }
-        return nil
+        return bundle.bundleIdentifier?.components(separatedBy: ".").last
     }
     
     public static func localizedStringWithFormatKey(_ key: String, _ arguments: CVarArg...) -> String {
@@ -92,15 +86,9 @@ open class Localization: NSObject {
         }
     }
     
-    public static func localizedBundleString(_ bundleKey: String, localizedKey: String) -> String {
-        guard let info = Bundle.main.localizedInfoDictionary ?? Bundle.main.infoDictionary,
-              let str = info[bundleKey] as? String
-        else {
-            // The calling app is expected to include these keys so assert if missing
-            assertionFailure("Missing required main bundle info.plist key \(bundleKey)")
-            return self.localizedString(localizedKey)
-        }
-        return str
+    public static func localizedBundleString(_ bundleKey: String) -> String? {
+        let info = Bundle.main.localizedInfoDictionary ?? Bundle.main.infoDictionary
+        return info?[bundleKey] as? String
     }
             
     // MARK: Localized App Name

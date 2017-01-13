@@ -430,24 +430,33 @@ extension SBAPermissionTypeIdentifier {
             return Localization.localizedString("SBA_HEALTHKIT_PERMISSIONS_DESCRIPTION")
             
         case SBAPermissionTypeIdentifier.location:
-            return Localization.localizedBundleString("NSLocationWhenInUseUsageDescription",
+            return privacyString("NSLocationWhenInUseUsageDescription",
                                                       localizedKey: "SBA_LOCATION_PERMISSIONS_DESCRIPTION")
         case SBAPermissionTypeIdentifier.coremotion:
-            return Localization.localizedBundleString("NSMotionUsageDescription",
+            return privacyString("NSMotionUsageDescription",
                                                       localizedKey: "SBA_COREMOTION_PERMISSIONS_DESCRIPTION")
         case SBAPermissionTypeIdentifier.notifications:
             return Localization.localizedString("SBA_NOTIFICATIONS_PERMISSIONS_DESCRIPTION")
         case SBAPermissionTypeIdentifier.microphone:
-            return Localization.localizedBundleString("NSMicrophoneUsageDescription",
+            return privacyString("NSMicrophoneUsageDescription",
                                                       localizedKey: "SBA_MICROPHONE_PERMISSIONS_DESCRIPTION")
         case SBAPermissionTypeIdentifier.camera:
-            return Localization.localizedBundleString("NSCameraUsageDescription",
+            return privacyString("NSCameraUsageDescription",
                                                       localizedKey: "SBA_CAMERA_PERMISSIONS_TITLE")
         case SBAPermissionTypeIdentifier.photoLibrary:
-            return Localization.localizedBundleString("NSPhotoLibraryUsageDescription",
+            return privacyString("NSPhotoLibraryUsageDescription",
                                                       localizedKey: "SBA_PHOTOLIBRARY_PERMISSIONS_TITLE")
         default:
             return ""
         }
+    }
+    
+    public func privacyString(_ bundleKey: String, localizedKey: String) -> String {
+        guard let str = Localization.localizedBundleString(bundleKey) else {
+            // The calling app is expected to include these keys so assert if missing
+            assertionFailure("Missing required main bundle Info.plist key \(bundleKey).")
+            return Localization.localizedString(localizedKey)
+        }
+        return str
     }
 }

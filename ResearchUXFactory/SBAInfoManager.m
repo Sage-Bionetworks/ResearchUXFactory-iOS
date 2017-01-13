@@ -33,6 +33,7 @@
 
 
 #import "SBAInfoManager.h"
+#import <ResearchKit/ResearchKit.h>
 #import <ResearchUXFactory/ResearchUXFactory-Swift.h>
 
 @implementation SBAInfoManager
@@ -59,6 +60,9 @@ static id __instance;
     if (self) {
         _plist = [[SBAResourceFinder shared] infoPlistForResource:@"BridgeInfo"] ?: @{};
         _defaultSurveyFactory = [[SBASurveyFactory alloc] init];
+        _resourceBundles = @[[NSBundle mainBundle],
+                             [NSBundle bundleForClass:[SBAInfoManager class]],
+                             [NSBundle bundleForClass:[ORKStep class]]];
     }
     return self;
 }
