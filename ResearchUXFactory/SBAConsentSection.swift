@@ -1,6 +1,6 @@
 //
 //  SBAConsentSection.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -62,8 +62,8 @@ public enum SBAConsentSectionType: String {
     case studyTasks
     case onlyInDocument
     
-    // Maps to BridgeAppSDK resources
-    // These cases use images and animations baked into BridgeAppSDK
+    // Maps to ResearchUXFactory resources
+    // These cases use images and animations baked into ResearchUXFactory
     case understanding
     case activities
     case sensorData

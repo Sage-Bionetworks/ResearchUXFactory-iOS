@@ -1,6 +1,6 @@
 //
 //  SBASubtaskStepTests.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import BridgeAppSDK
+@testable import ResearchUXFactory
 import ResearchKit
 
 class SBASubtaskStepTests: XCTestCase {
@@ -85,8 +85,6 @@ class SBASubtaskStepTests: XCTestCase {
         XCTAssertEqual(stepResult!.results!.count, 2)
         
     }
-    
-
     
     func testFilteredStepResults() {
         

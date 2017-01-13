@@ -1,6 +1,6 @@
 //
 //  SBAClassTypeMap.m
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -59,8 +59,8 @@ static NSString * const kClassTypeMapPListName = @"ClassTypeMap";
         // Look in all the bundles that we know about
         [self addObjectsFromPList:[[NSBundle mainBundle] pathForResource:kClassTypeMapPListName ofType:@"plist"]];
         [self addObjectsFromPList:[[NSBundle bundleForClass:[self class]] pathForResource:kClassTypeMapPListName ofType:@"plist"]];
-        id <SBABridgeAppSDKDelegate> appDelegate = (id <SBABridgeAppSDKDelegate>) [[UIApplication sharedApplication] delegate];
-        if ([appDelegate conformsToProtocol:@protocol(SBABridgeAppSDKDelegate)]) {
+        id <SBAResearchUXFactoryDelegate> appDelegate = (id <SBAResearchUXFactoryDelegate>) [[UIApplication sharedApplication] delegate];
+        if ([appDelegate conformsToProtocol:@protocol(SBAResearchUXFactoryDelegate)]) {
             [self addObjectsFromPList:[appDelegate pathForResource:kClassTypeMapPListName ofType:@"plist"]];
             [self addObjectsFromPList:[[appDelegate resourceBundle] pathForResource:kClassTypeMapPListName ofType:@"plist"]];
         }

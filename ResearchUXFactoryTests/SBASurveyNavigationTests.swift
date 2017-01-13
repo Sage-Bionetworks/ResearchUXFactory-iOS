@@ -1,6 +1,6 @@
 //
 //  SBASurveyNavigationTests.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-import BridgeAppSDK
+import ResearchUXFactory
 import ResearchKit
 
 class SBASurveyNavigationTests: XCTestCase {

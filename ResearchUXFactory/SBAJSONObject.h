@@ -1,6 +1,6 @@
 //
 //  SBAJSONObject.h
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <BridgeSDK/BridgeSDK.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

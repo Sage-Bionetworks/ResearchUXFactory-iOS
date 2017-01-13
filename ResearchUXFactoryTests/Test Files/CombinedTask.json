@@ -11,7 +11,7 @@
      },
      {
      "resourceName"            : "MedicationTracking",
-     "resourceBundle"          : "org.sagebase.BridgeAppSDKTests",
+     "resourceBundle"          : "org.sagebase.ResearchUXFactoryTests",
      "classType"               : "TrackedDataObjectCollection",
      },
      {

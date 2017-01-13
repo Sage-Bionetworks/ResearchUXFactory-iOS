@@ -1,6 +1,6 @@
 //
 //  SBAAnswerFormatFinderTests.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import BridgeAppSDK
+@testable import ResearchUXFactory
 
 class SBAAnswerFormatFinderTests: XCTestCase {
     

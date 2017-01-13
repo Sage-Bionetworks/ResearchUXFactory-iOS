@@ -1,6 +1,6 @@
 //
 //  Localization.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -59,7 +59,7 @@ open class Localization: NSObject {
     
     open class func defaultTableNameForBundle(_ bundle: Bundle) -> String? {
         if (bundle == localeORKBundle) { return "ResearchKit" }
-        if (bundle == localeBundle) { return "BridgeAppSDK" }
+        if (bundle == localeBundle) { return "ResearchUXFactory" }
         return nil
     }
     

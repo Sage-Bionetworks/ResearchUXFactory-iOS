@@ -1,6 +1,6 @@
 //
 //  SBATrackedDataStore.h
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 // Copyright (c) 2016, Sage Bionetworks. All rights reserved.
 //

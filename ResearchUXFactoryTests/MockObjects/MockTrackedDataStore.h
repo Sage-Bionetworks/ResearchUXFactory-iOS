@@ -1,6 +1,6 @@
 //
 //  MockTrackedDataStore.h
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -33,7 +33,7 @@
 
 
 #import <UIKit/UIKit.h>
-@import BridgeAppSDK;
+@import ResearchUXFactory;
 
 @interface MockTrackedDataStore : SBATrackedDataStore
 

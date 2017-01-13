@@ -1,6 +1,6 @@
 //
 //  SBAActiveTaskFactory.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,6 @@
 //
 
 import ResearchKit
-import BridgeSDK
 import AVFoundation
 
 public enum SBAActiveTaskType {

@@ -13,7 +13,6 @@
 		80A27B011CE6E32000E3419B /* SBAJSONObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6410FD1CB2DC21007FB9E1 /* SBAJSONObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB0C9EF31CAA52F700BA5B44 /* NSDate+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C9EF21CAA52F700BA5B44 /* NSDate+Utilities.swift */; };
 		FB14FFE71C7686EB00E0D5AF /* SBAResourceFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB14FFE61C7686EB00E0D5AF /* SBAResourceFinder.swift */; };
-		FB1BBBA61D8B5844009F765E /* SBBScheduledActivity+Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BBBA51D8B5844009F765E /* SBBScheduledActivity+Filters.swift */; };
 		FB68173A1C6B0307006C8FC9 /* SBANavigableOrderedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6817391C6B0307006C8FC9 /* SBANavigableOrderedTask.swift */; };
 		FB6BA0951C7CDA6000C9903F /* SBAInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BA0941C7CDA6000C9903F /* SBAInstructionStep.swift */; };
 		FB6BA0971C7CDB2600C9903F /* SBASubtaskStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BA0961C7CDB2600C9903F /* SBASubtaskStep.swift */; };
@@ -58,7 +57,6 @@
 		FF2729131D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2729121D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift */; };
 		FF2729151D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2729141D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift */; };
 		FF2729171D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2729161D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift */; };
-		FF3075551DF6209800F2B3EA /* SBAUserProfileControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3075541DF6209800F2B3EA /* SBAUserProfileControllerTests.swift */; };
 		FF3075701DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF30756F1DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift */; };
 		FF35B8EC1D9DA93C00E0DF23 /* SBADataGroupsStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF35B8EB1D9DA93C00E0DF23 /* SBADataGroupsStep.swift */; };
 		FF35B9051D9DABC800E0DF23 /* SBADataGroupsStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF35B9041D9DABC800E0DF23 /* SBADataGroupsStepTests.swift */; };
@@ -69,9 +67,6 @@
 		FF3A359D1CBEB2D400F44E6E /* SBASharedInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A359C1CBEB2D400F44E6E /* SBASharedInfoController.swift */; };
 		FF3B16291E0CD47C0037D1D0 /* SBADefines.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3B16111E0CD44B0037D1D0 /* SBADefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF3B16301E1314A30037D1D0 /* SBANavigationQuestionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3B162F1E1314A30037D1D0 /* SBANavigationQuestionStep.swift */; };
-		FF3E30381D5A7A2E00347165 /* SBABridgeTask+SBBSurveyReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E30371D5A7A2E00347165 /* SBABridgeTask+SBBSurveyReference.swift */; };
-		FF3E30551D5A806C00347165 /* SBASurveyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E30541D5A806C00347165 /* SBASurveyTask.swift */; };
-		FF3E30831D5CE85D00347165 /* SBAActivityArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E30821D5CE85D00347165 /* SBAActivityArchiveTests.swift */; };
 		FF4F06D21CEED20D007BD273 /* SBATrackedDataSelectionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4F06D11CEED20D007BD273 /* SBATrackedDataSelectionResult.swift */; };
 		FF4F06E81CEF7DE5007BD273 /* SBASubtaskStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4F06E71CEF7DE5007BD273 /* SBASubtaskStepTests.swift */; };
 		FF5C26361E28039000A1D9E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C26351E28038F00A1D9E0 /* main.m */; };
@@ -121,12 +116,8 @@
 		FF8359231D6FACED0028B899 /* SBADirectNavigationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8359221D6FACED0028B899 /* SBADirectNavigationRule.swift */; };
 		FF882F091E16FC0F002CFB63 /* ORKTask+SBAExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF882F081E16FC0F002CFB63 /* ORKTask+SBAExtensions.swift */; };
 		FF882F221E173DB7002CFB63 /* SBAFormProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF882F211E173DB7002CFB63 /* SBAFormProtocol.swift */; };
-		FF89975A1D0B3B9800B26051 /* MockAppInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8997591D0B3B9800B26051 /* MockAppInfoDelegate.m */; };
-		FF8997791D0B585600B26051 /* MockBridgeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8997781D0B585600B26051 /* MockBridgeInfo.m */; };
-		FF8997931D0B589500B26051 /* MockUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8997921D0B589500B26051 /* MockUser.m */; };
 		FF8DDFD51CB62280006D1AFA /* SBATrackedDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = FF8DDFD31CB62280006D1AFA /* SBATrackedDataStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8DDFD61CB62280006D1AFA /* SBATrackedDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8DDFD41CB62280006D1AFA /* SBATrackedDataStore.m */; };
-		FF9055A11CE287BB0049D12A /* SBBScheduledActivity+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9055A01CE287BB0049D12A /* SBBScheduledActivity+Utilities.swift */; };
 		FF9055CA1CE3A8860049D12A /* CombinedTask.json in Resources */ = {isa = PBXBuildFile; fileRef = FF9055C91CE3A8860049D12A /* CombinedTask.json */; };
 		FF9055D91CE3B1880049D12A /* TappingTask.json in Resources */ = {isa = PBXBuildFile; fileRef = FF9055D81CE3B1880049D12A /* TappingTask.json */; };
 		FF9055DB1CE3E09C0049D12A /* NSUserDefaults+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9055DA1CE3E09C0049D12A /* NSUserDefaults+Utilities.swift */; };
@@ -218,7 +209,6 @@
 		FF9F4B581CEA735F00B5343B /* TaskResult_Combo.archive in Resources */ = {isa = PBXBuildFile; fileRef = FF9F4B571CEA735F00B5343B /* TaskResult_Combo.archive */; };
 		FFA391AD1D7F3C4E000957E1 /* CatastrophicError.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFA391AA1D7F3C4E000957E1 /* CatastrophicError.storyboard */; };
 		FFA391B11D7F3DA6000957E1 /* SBACatastrophicErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA391B01D7F3DA6000957E1 /* SBACatastrophicErrorViewController.swift */; };
-		FFA8E4931CBD56F200ED5399 /* SBAUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA8E4921CBD56F200ED5399 /* SBAUserTests.swift */; };
 		FFA8E4AA1CBD6E0B00ED5399 /* NSError+SBBTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA8E4A91CBD6E0B00ED5399 /* NSError+SBBTranslation.swift */; };
 		FFA8E4AF1CBD7CDA00ED5399 /* SBALoadingViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA8E4AE1CBD7CDA00ED5399 /* SBALoadingViewPresenter.swift */; };
 		FFAAF61E1CC0267E00500929 /* SBAPermissionsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFAAF61C1CC0267E00500929 /* SBAPermissionsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -247,7 +237,6 @@
 		FFC41F4D1E025DBC0057526E /* SBAKeychainWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC41F4B1E025DBC0057526E /* SBAKeychainWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFC41F4E1E025DBC0057526E /* SBAKeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC41F4C1E025DBC0057526E /* SBAKeychainWrapper.m */; };
 		FFCB98871CAC9000005078EF /* DeprecationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCB98861CAC9000005078EF /* DeprecationTests.swift */; };
-		FFCF37741CD41A920090452F /* SBAScheduledActivityManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37731CD41A920090452F /* SBAScheduledActivityManagerTests.swift */; };
 		FFCF37B21CD94EC80090452F /* ORKOrderedTask+SBAExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FFCF37B01CD94EC80090452F /* ORKOrderedTask+SBAExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFCF37B31CD94EC80090452F /* ORKOrderedTask+SBAExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37B11CD94EC80090452F /* ORKOrderedTask+SBAExtension.m */; };
 		FFCF37DE1CDA91520090452F /* SBALearnMoreAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37DD1CDA91520090452F /* SBALearnMoreAction.swift */; };
@@ -255,7 +244,6 @@
 		FFCF385D1CE1172A0090452F /* NSPredicate+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */; };
 		FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */; };
 		FFDECDFD1D077C2000434001 /* SBAConsentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECDFC1D077C2000434001 /* SBAConsentTests.swift */; };
-		FFDECDFF1D0796D200434001 /* SBAOnboardingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECDFE1D0796D200434001 /* SBAOnboardingManagerTests.swift */; };
 		FFDECE011D07DDED00434001 /* Dictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */; };
 		FFF05FAB1D5A4FCC007304FF /* SBAPermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */; };
 /* End PBXBuildFile section */
@@ -348,7 +336,6 @@
 		801040F21C5AD2D700D26E19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB0C9EF21CAA52F700BA5B44 /* NSDate+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Utilities.swift"; sourceTree = "<group>"; };
 		FB14FFE61C7686EB00E0D5AF /* SBAResourceFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAResourceFinder.swift; sourceTree = "<group>"; };
-		FB1BBBA51D8B5844009F765E /* SBBScheduledActivity+Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBBScheduledActivity+Filters.swift"; sourceTree = "<group>"; };
 		FB6817391C6B0307006C8FC9 /* SBANavigableOrderedTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigableOrderedTask.swift; sourceTree = "<group>"; };
 		FB6BA0941C7CDA6000C9903F /* SBAInstructionStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAInstructionStep.swift; sourceTree = "<group>"; };
 		FB6BA0961C7CDB2600C9903F /* SBASubtaskStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASubtaskStep.swift; sourceTree = "<group>"; };
@@ -397,7 +384,6 @@
 		FF2729121D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBATextChoice+SBATrackedDataObject.swift"; sourceTree = "<group>"; };
 		FF2729141D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBATrackedStepSurveyItem+Dictionary.swift"; sourceTree = "<group>"; };
 		FF2729161D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBATrackedActivitySurveyItem+Dictionary.swift"; sourceTree = "<group>"; };
-		FF3075541DF6209800F2B3EA /* SBAUserProfileControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAUserProfileControllerTests.swift; sourceTree = "<group>"; };
 		FF30756F1DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAStepViewControllerProtocol.swift; sourceTree = "<group>"; };
 		FF35B8EB1D9DA93C00E0DF23 /* SBADataGroupsStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBADataGroupsStep.swift; sourceTree = "<group>"; };
 		FF35B9041D9DABC800E0DF23 /* SBADataGroupsStepTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBADataGroupsStepTests.swift; sourceTree = "<group>"; };
@@ -409,9 +395,6 @@
 		FF3A359C1CBEB2D400F44E6E /* SBASharedInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASharedInfoController.swift; sourceTree = "<group>"; };
 		FF3B16111E0CD44B0037D1D0 /* SBADefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBADefines.h; sourceTree = "<group>"; };
 		FF3B162F1E1314A30037D1D0 /* SBANavigationQuestionStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationQuestionStep.swift; sourceTree = "<group>"; };
-		FF3E30371D5A7A2E00347165 /* SBABridgeTask+SBBSurveyReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBABridgeTask+SBBSurveyReference.swift"; sourceTree = "<group>"; };
-		FF3E30541D5A806C00347165 /* SBASurveyTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyTask.swift; sourceTree = "<group>"; };
-		FF3E30821D5CE85D00347165 /* SBAActivityArchiveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAActivityArchiveTests.swift; sourceTree = "<group>"; };
 		FF3E30C31D62CF7100347165 /* CombinedTask.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CombinedTask.json; sourceTree = "<group>"; };
 		FF4F06D11CEED20D007BD273 /* SBATrackedDataSelectionResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBATrackedDataSelectionResult.swift; sourceTree = "<group>"; };
 		FF4F06E71CEF7DE5007BD273 /* SBASubtaskStepTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASubtaskStepTests.swift; sourceTree = "<group>"; };
@@ -486,15 +469,8 @@
 		FF84AB651D90A7D900ABD54C /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		FF882F081E16FC0F002CFB63 /* ORKTask+SBAExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ORKTask+SBAExtensions.swift"; sourceTree = "<group>"; };
 		FF882F211E173DB7002CFB63 /* SBAFormProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAFormProtocol.swift; sourceTree = "<group>"; };
-		FF8997581D0B3B9800B26051 /* MockAppInfoDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockAppInfoDelegate.h; sourceTree = "<group>"; };
-		FF8997591D0B3B9800B26051 /* MockAppInfoDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockAppInfoDelegate.m; sourceTree = "<group>"; };
-		FF8997771D0B585600B26051 /* MockBridgeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockBridgeInfo.h; sourceTree = "<group>"; };
-		FF8997781D0B585600B26051 /* MockBridgeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockBridgeInfo.m; sourceTree = "<group>"; };
-		FF8997911D0B589500B26051 /* MockUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockUser.h; sourceTree = "<group>"; };
-		FF8997921D0B589500B26051 /* MockUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockUser.m; sourceTree = "<group>"; };
 		FF8DDFD31CB62280006D1AFA /* SBATrackedDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBATrackedDataStore.h; sourceTree = "<group>"; };
 		FF8DDFD41CB62280006D1AFA /* SBATrackedDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBATrackedDataStore.m; sourceTree = "<group>"; };
-		FF9055A01CE287BB0049D12A /* SBBScheduledActivity+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBBScheduledActivity+Utilities.swift"; sourceTree = "<group>"; };
 		FF9055C91CE3A8860049D12A /* CombinedTask.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CombinedTask.json; sourceTree = "<group>"; };
 		FF9055D81CE3B1880049D12A /* TappingTask.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingTask.json; sourceTree = "<group>"; };
 		FF9055DA1CE3E09C0049D12A /* NSUserDefaults+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Utilities.swift"; sourceTree = "<group>"; };
@@ -518,7 +494,6 @@
 		FF9F4B571CEA735F00B5343B /* TaskResult_Combo.archive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = TaskResult_Combo.archive; sourceTree = "<group>"; };
 		FFA391AA1D7F3C4E000957E1 /* CatastrophicError.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CatastrophicError.storyboard; sourceTree = "<group>"; };
 		FFA391B01D7F3DA6000957E1 /* SBACatastrophicErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBACatastrophicErrorViewController.swift; sourceTree = "<group>"; };
-		FFA8E4921CBD56F200ED5399 /* SBAUserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAUserTests.swift; sourceTree = "<group>"; };
 		FFA8E4A91CBD6E0B00ED5399 /* NSError+SBBTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+SBBTranslation.swift"; sourceTree = "<group>"; };
 		FFA8E4AE1CBD7CDA00ED5399 /* SBALoadingViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBALoadingViewPresenter.swift; sourceTree = "<group>"; };
 		FFAAF61C1CC0267E00500929 /* SBAPermissionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAPermissionsManager.h; sourceTree = "<group>"; };
@@ -547,7 +522,6 @@
 		FFC41F4B1E025DBC0057526E /* SBAKeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAKeychainWrapper.h; sourceTree = "<group>"; };
 		FFC41F4C1E025DBC0057526E /* SBAKeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAKeychainWrapper.m; sourceTree = "<group>"; };
 		FFCB98861CAC9000005078EF /* DeprecationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecationTests.swift; sourceTree = "<group>"; };
-		FFCF37731CD41A920090452F /* SBAScheduledActivityManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAScheduledActivityManagerTests.swift; sourceTree = "<group>"; };
 		FFCF37B01CD94EC80090452F /* ORKOrderedTask+SBAExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ORKOrderedTask+SBAExtension.h"; sourceTree = "<group>"; };
 		FFCF37B11CD94EC80090452F /* ORKOrderedTask+SBAExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ORKOrderedTask+SBAExtension.m"; sourceTree = "<group>"; };
 		FFCF37DD1CDA91520090452F /* SBALearnMoreAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBALearnMoreAction.swift; sourceTree = "<group>"; };
@@ -556,7 +530,6 @@
 		FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SBATrackedActivityStep.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FFDECDFA1D0774EE00434001 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Onboarding.json; sourceTree = "<group>"; };
 		FFDECDFC1D077C2000434001 /* SBAConsentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAConsentTests.swift; sourceTree = "<group>"; };
-		FFDECDFE1D0796D200434001 /* SBAOnboardingManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAOnboardingManagerTests.swift; sourceTree = "<group>"; };
 		FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -685,8 +658,6 @@
 				FFDECDFC1D077C2000434001 /* SBAConsentTests.swift */,
 				FF64113B1CB43EC6007FB9E1 /* SBADataObjectTests.swift */,
 				FF73B5721D38402E00E9D4BD /* SBAEqualityTests.m */,
-				FFDECDFE1D0796D200434001 /* SBAOnboardingManagerTests.swift */,
-				FFA8E4921CBD56F200ED5399 /* SBAUserTests.swift */,
 				FF08C92F1DEE1EBC00235711 /* UtilityExtensionTests.swift */,
 			);
 			path = ResearchUXFactoryTests;
@@ -781,7 +752,6 @@
 		FBC45E711C758DBA007AA424 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				FF90559E1CE286EA0049D12A /* BridgeExtensions */,
 				FBAD114E1CADA34C005611D0 /* DataModel */,
 				FF9055DC1CE500D40049D12A /* RKExtensions */,
 				FFA8E4AD1CBD7CB700ED5399 /* UI */,
@@ -817,9 +787,7 @@
 				FFBB57251CACEAA00041F120 /* SBAActiveTask+Dictionary.swift */,
 				FBAD116D1CADE55C005611D0 /* SBABridgeTask.swift */,
 				FBAD116F1CADE79E005611D0 /* SBABridgeTask+Dictionary.swift */,
-				FF3E30371D5A7A2E00347165 /* SBABridgeTask+SBBSurveyReference.swift */,
 				FB6817391C6B0307006C8FC9 /* SBANavigableOrderedTask.swift */,
-				FF3E30541D5A806C00347165 /* SBASurveyTask.swift */,
 				FF5E56E71D6F8941008BA2A8 /* SBATaskViewController.swift */,
 			);
 			name = Task;
@@ -850,12 +818,6 @@
 				FBE5515C1C6D267100C9E1AA /* MockORKTask.m */,
 				FF2498121CB6C1F0002DD05F /* MockTrackedDataStore.h */,
 				FF2498131CB6C1F0002DD05F /* MockTrackedDataStore.m */,
-				FF8997581D0B3B9800B26051 /* MockAppInfoDelegate.h */,
-				FF8997591D0B3B9800B26051 /* MockAppInfoDelegate.m */,
-				FF8997771D0B585600B26051 /* MockBridgeInfo.h */,
-				FF8997781D0B585600B26051 /* MockBridgeInfo.m */,
-				FF8997911D0B589500B26051 /* MockUser.h */,
-				FF8997921D0B589500B26051 /* MockUser.m */,
 			);
 			path = MockObjects;
 			sourceTree = "<group>";
@@ -863,17 +825,14 @@
 		FF2046481DDE989500A33572 /* TasksAndSteps */ = {
 			isa = PBXGroup;
 			children = (
-				FF3E30821D5CE85D00347165 /* SBAActivityArchiveTests.swift */,
 				FFBB57301CACEADF0041F120 /* SBAActiveTaskTests.swift */,
 				FF35B9041D9DABC800E0DF23 /* SBADataGroupsStepTests.swift */,
 				FBE551581C6D204B00C9E1AA /* SBANavigableOrderedTaskTests.m */,
-				FFCF37731CD41A920090452F /* SBAScheduledActivityManagerTests.swift */,
 				FF4F06E71CEF7DE5007BD273 /* SBASubtaskStepTests.swift */,
 				FB84391F1C7315030086E961 /* SBASurveyFactoryTests.swift */,
 				FB8439121C6E9C2A0086E961 /* SBASurveyNavigationTests.swift */,
 				FF2498241CB78972002DD05F /* SBATrackedDataTests.swift */,
 				FF0158701DF6047600F417E1 /* SBAAnswerFormatFinderTests.swift */,
-				FF3075541DF6209800F2B3EA /* SBAUserProfileControllerTests.swift */,
 			);
 			name = TasksAndSteps;
 			sourceTree = "<group>";
@@ -983,15 +942,6 @@
 				FF2729161D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift */,
 			);
 			name = "Data Tracking";
-			sourceTree = "<group>";
-		};
-		FF90559E1CE286EA0049D12A /* BridgeExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				FB1BBBA51D8B5844009F765E /* SBBScheduledActivity+Filters.swift */,
-				FF9055A01CE287BB0049D12A /* SBBScheduledActivity+Utilities.swift */,
-			);
-			name = BridgeExtensions;
 			sourceTree = "<group>";
 		};
 		FF9055DC1CE500D40049D12A /* RKExtensions */ = {
@@ -1539,7 +1489,6 @@
 				FF2729071D91FF3000956CFB /* SBATextChoice+ORKTextChoice.swift in Sources */,
 				FF4F06D21CEED20D007BD273 /* SBATrackedDataSelectionResult.swift in Sources */,
 				FF24981F1CB6DC13002DD05F /* SBATrackedStep.swift in Sources */,
-				FF3E30551D5A806C00347165 /* SBASurveyTask.swift in Sources */,
 				FF882F091E16FC0F002CFB63 /* ORKTask+SBAExtensions.swift in Sources */,
 				FF94256D1E281BC000FD8C24 /* SBAResearchKitResultConverter.swift in Sources */,
 				FBAD11671CADCFE5005611D0 /* SBATrackedDataObjectCollection.swift in Sources */,
@@ -1552,10 +1501,8 @@
 				FF94254A1E28164B00FD8C24 /* SBAProfileInfoForm.swift in Sources */,
 				FF2729171D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift in Sources */,
 				FBAE3CF41C8615DF003CEC4A /* SBAPDFPrintPageRenderer.m in Sources */,
-				FB1BBBA61D8B5844009F765E /* SBBScheduledActivity+Filters.swift in Sources */,
 				FF27290D1D92036A00956CFB /* SBAPopUpLearnMoreAction.swift in Sources */,
 				FB84392D1C7518FE0086E961 /* SBATextChoice.swift in Sources */,
-				FF9055A11CE287BB0049D12A /* SBBScheduledActivity+Utilities.swift in Sources */,
 				FF36DC6F1DB68F230034C85D /* SBAToggleFormStep.swift in Sources */,
 				FB68173A1C6B0307006C8FC9 /* SBANavigableOrderedTask.swift in Sources */,
 				FF23799F1CBC2E5900F3A943 /* NSDictionary+Utilities.swift in Sources */,
@@ -1614,7 +1561,6 @@
 				FF64111C1CB34766007FB9E1 /* SBAMedication.m in Sources */,
 				FF9055EC1CE527890049D12A /* SBAProgressStep.swift in Sources */,
 				FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */,
-				FF3E30381D5A7A2E00347165 /* SBABridgeTask+SBBSurveyReference.swift in Sources */,
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
 				FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */,
 				FF2729151D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift in Sources */,
@@ -1639,26 +1585,18 @@
 			files = (
 				FF35B9051D9DABC800E0DF23 /* SBADataGroupsStepTests.swift in Sources */,
 				FBE551591C6D204B00C9E1AA /* SBANavigableOrderedTaskTests.m in Sources */,
-				FFDECDFF1D0796D200434001 /* SBAOnboardingManagerTests.swift in Sources */,
-				FF89975A1D0B3B9800B26051 /* MockAppInfoDelegate.m in Sources */,
-				FFA8E4931CBD56F200ED5399 /* SBAUserTests.swift in Sources */,
 				FF4F06E81CEF7DE5007BD273 /* SBASubtaskStepTests.swift in Sources */,
 				FF2498251CB78972002DD05F /* SBATrackedDataTests.swift in Sources */,
 				FF64113C1CB43EC6007FB9E1 /* SBADataObjectTests.swift in Sources */,
-				FFCF37741CD41A920090452F /* SBAScheduledActivityManagerTests.swift in Sources */,
 				FF0158711DF6047600F417E1 /* SBAAnswerFormatFinderTests.swift in Sources */,
 				FFB30E5D1D49537400D175D2 /* SBAAccountTests.swift in Sources */,
 				FF08C9301DEE1EBC00235711 /* UtilityExtensionTests.swift in Sources */,
 				FF73B5731D38402E00E9D4BD /* SBAEqualityTests.m in Sources */,
-				FF3075551DF6209800F2B3EA /* SBAUserProfileControllerTests.swift in Sources */,
-				FF8997931D0B589500B26051 /* MockUser.m in Sources */,
 				FFBB57311CACEADF0041F120 /* SBAActiveTaskTests.swift in Sources */,
 				FB8439201C7315030086E961 /* SBASurveyFactoryTests.swift in Sources */,
 				FFDECDFD1D077C2000434001 /* SBAConsentTests.swift in Sources */,
-				FF3E30831D5CE85D00347165 /* SBAActivityArchiveTests.swift in Sources */,
 				FB8439131C6E9C2A0086E961 /* SBASurveyNavigationTests.swift in Sources */,
 				FF6484151CB5E9BF0055B9E7 /* ResourceTestCase.swift in Sources */,
-				FF8997791D0B585600B26051 /* MockBridgeInfo.m in Sources */,
 				FBE5515D1C6D267100C9E1AA /* MockORKTask.m in Sources */,
 				FF2498141CB6C1F0002DD05F /* MockTrackedDataStore.m in Sources */,
 				FFB30D621D40891400D175D2 /* ORKFormStep+Result.swift in Sources */,

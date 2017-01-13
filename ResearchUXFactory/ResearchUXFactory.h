@@ -1,6 +1,6 @@
 //
-//  BridgeAppSDK.h
-//  BridgeAppSDK
+//  ResearchUXFactory.h
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -33,26 +33,20 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for BridgeAppSDK.
-FOUNDATION_EXPORT double BridgeAppSDKVersionNumber;
+//! Project version number for ResearchUXFactory.
+FOUNDATION_EXPORT double ResearchUXFactoryVersionNumber;
 
-//! Project version string for BridgeAppSDK.
-FOUNDATION_EXPORT const unsigned char BridgeAppSDKVersionString[];
+//! Project version string for ResearchUXFactory.
+FOUNDATION_EXPORT const unsigned char ResearchUXFactoryVersionString[];
 
-#import <BridgeAppSDK/SBAActivityResult.h>
-#import <BridgeAppSDK/SBABridgeManager.h>
-#import <BridgeAppSDK/SBADataArchive.h>
-#import <BridgeAppSDK/SBADataObject.h>
-#import <BridgeAppSDK/SBADefines.h>
-#import <BridgeAppSDK/SBADemographicDataObjectType.h>
-#import <BridgeAppSDK/SBAJSONObject.h>
-#import <BridgeAppSDK/SBAKeychainWrapper.h>
-#import <BridgeAppSDK/SBALog.h>
-#import <BridgeAppSDK/SBAMedication.h>
-#import <BridgeAppSDK/SBANewsFeedItem.h>
-#import <BridgeAppSDK/SBANewsFeedManager.h>
-#import <BridgeAppSDK/SBAPDFPrintPageRenderer.h>
-#import <BridgeAppSDK/SBAPermissionsManager.h>
-#import <BridgeAppSDK/SBATrackedDataStore.h>
-#import <BridgeAppSDK/ORKCollectionResult+SBAExtensions.h>
-#import <BridgeAppSDK/ORKOrderedTask+SBAExtension.h>
+#import <ResearchUXFactory/SBADataObject.h>
+#import <ResearchUXFactory/SBADefines.h>
+#import <ResearchUXFactory/SBAJSONObject.h>
+#import <ResearchUXFactory/SBAKeychainWrapper.h>
+#import <ResearchUXFactory/SBALog.h>
+#import <ResearchUXFactory/SBAMedication.h>
+#import <ResearchUXFactory/SBAPDFPrintPageRenderer.h>
+#import <ResearchUXFactory/SBAPermissionsManager.h>
+#import <ResearchUXFactory/SBATrackedDataStore.h>
+#import <ResearchUXFactory/ORKCollectionResult+SBAExtensions.h>
+#import <ResearchUXFactory/ORKOrderedTask+SBAExtension.h>

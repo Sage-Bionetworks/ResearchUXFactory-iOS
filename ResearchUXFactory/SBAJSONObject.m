@@ -1,6 +1,6 @@
 //
 //  SBAJSONObject.m
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,6 @@
 //
 
 #import "SBAJSONObject.h"
-@import BridgeSDK;
 
 @implementation NSString (SBAJSONObject)
 

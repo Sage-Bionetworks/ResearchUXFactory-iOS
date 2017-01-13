@@ -1,6 +1,6 @@
 //
 //  SBASurveyFactory.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,6 @@
 //
 
 import ResearchKit
-import BridgeSDK
 
 /**
  The purpose of the Survey Factory is to allow subclassing for custom types of steps
@@ -61,10 +60,56 @@ open class SBASurveyFactory : NSObject, SBASharedInfoController {
         self.mapSteps(dictionary)
     }
     
-    func mapSteps(_ dictionary: NSDictionary) {
+    /**
+     Convenience method for mapping the steps from the given dictionary into this instance
+     of the factory.
+     
+     @param dictionary  dictionary with the steps to map
+    */
+    public func mapSteps(_ dictionary: NSDictionary) {
         if let steps = dictionary["steps"] as? [NSDictionary] {
             self.steps = steps.mapAndFilter({ self.createSurveyStepWithDictionary($0) })
         }
+    }
+    
+    /**
+     In general, do not override this method. Instead, override the method for injection of the steps
+     for a given subgroup type. This is the base-level factory method used to vend the step appropriate
+     to the given `surveyItemType` for this `SBASurveyItem`.
+     @param inputItem       A model object that matches the protocol for an `SBASurveyItem`
+     @param isSubtaskStep   `YES` if this is called as a sub-step element of another step, otherwise `NO`
+     @return                An `ORKStep` or nil
+    */
+    open func createSurveyStep(_ inputItem: SBASurveyItem, isSubtaskStep: Bool = false) -> ORKStep? {
+        switch (inputItem.surveyItemType) {
+            
+        case .instruction(_):
+            return SBAInstructionStep(inputItem: inputItem)
+            
+        case .subtask:
+            if let form = inputItem as? SBAFormStepSurveyItem {
+                return form.createSubtaskStep(with: self)
+            } else { break }
+            
+        case .form(_):
+            if let form = inputItem as? SBAFormStepSurveyItem {
+                return createFormStep(form, isSubtaskStep: isSubtaskStep)
+            } else { break }
+            
+        case .account(let subtype):
+            return createAccountStep(inputItem: inputItem, subtype: subtype)
+            
+        case .passcode(let passcodeType):
+            let step = ORKPasscodeStep(identifier: inputItem.identifier)
+            step.title = inputItem.stepTitle
+            step.text = inputItem.stepText
+            step.passcodeType = passcodeType
+            return step
+            
+        default:
+            break
+        }
+        return createSurveyStepWithCustomType(inputItem)
     }
     
     /**
@@ -74,20 +119,6 @@ open class SBASurveyFactory : NSObject, SBASharedInfoController {
      */
     open func createTaskWithIdentifier(_ identifier: String) -> SBANavigableOrderedTask {
         return SBANavigableOrderedTask(identifier: identifier, steps: steps)
-    }
-    
-    /**
-     Factory method for creating an ORKTask from an SBBSurvey
-     @param survey      An `SBBSurvey` bridge model object
-     @return            Task created with this survey
-     */
-    open func createTaskWithSurvey(_ survey: SBBSurvey) -> SBANavigableOrderedTask {
-        let lastStepIndex = survey.elements.count - 1
-        let steps: [ORKStep] = survey.elements.enumerated().mapAndFilter({ (offset: Int, element: Any) -> ORKStep? in
-            guard let surveyItem = element as? SBBSurveyElement else { return nil }
-            return createSurveyStepWithSurveyElement(surveyItem, isLastStep: (offset == lastStepIndex))
-        })
-        return SBANavigableOrderedTask(identifier: survey.identifier, steps: steps)
     }
     
     /**
@@ -108,29 +139,6 @@ open class SBASurveyFactory : NSObject, SBASharedInfoController {
      */
     open func createSurveyStepWithDictionary(_ dictionary: NSDictionary) -> ORKStep? {
         return self.createSurveyStep(dictionary)
-    }
-    
-    /**
-     Factory method for creating a survey step with an SBBSurveyElement
-     @param inputItem       A `SBBSurveyElement` bridge model object
-     @return                An `ORKStep`
-     */
-    open func createSurveyStepWithSurveyElement(_ inputItem: SBBSurveyElement, isLastStep:Bool = false) -> ORKStep? {
-        guard let surveyItem = inputItem as? SBASurveyItem else { return nil }
-        let step = self.createSurveyStep(surveyItem)
-        if isLastStep, let instructionStep = step as? SBAInstructionStep {
-            instructionStep.isCompletionStep = true
-            // For the last step of a survey, put the detail text in a popup and assume that it
-            // is copyright information
-            if let detailText = instructionStep.detailText {
-                let popAction = SBAPopUpLearnMoreAction(identifier: "learnMore")
-                popAction.learnMoreText = detailText
-                popAction.learnMoreButtonText = Localization.localizedString("SBA_COPYRIGHT")
-                instructionStep.detailText = nil
-                instructionStep.learnMoreAction = popAction
-            }
-        }
-        return step
     }
     
     /**
@@ -225,39 +233,11 @@ open class SBASurveyFactory : NSObject, SBASharedInfoController {
         return step
     }
     
-    internal final func createSurveyStep(_ inputItem: SBASurveyItem, isSubtaskStep: Bool = false) -> ORKStep? {
-        switch (inputItem.surveyItemType) {
-            
-        case .instruction(_):
-            return SBAInstructionStep(inputItem: inputItem)
-            
-        case .subtask:
-            if let form = inputItem as? SBAFormStepSurveyItem {
-                return form.createSubtaskStep(with: self)
-            } else { break }
-            
-        case .form(_):
-            if let form = inputItem as? SBAFormStepSurveyItem {
-                return createFormStep(form, isSubtaskStep: isSubtaskStep)
-            } else { break }
-            
-        case .account(let subtype):
-            return createAccountStep(inputItem: inputItem, subtype: subtype)
-            
-        case .passcode(let passcodeType):
-            let step = ORKPasscodeStep(identifier: inputItem.identifier)
-            step.title = inputItem.stepTitle
-            step.text = inputItem.stepText
-            step.passcodeType = passcodeType
-            return step
-            
-        default:
-            break
-        }
-        return createSurveyStepWithCustomType(inputItem)
-    }
-    
-    fileprivate func createAccountStep(inputItem: SBASurveyItem, subtype: SBASurveyItemType.AccountSubtype) -> ORKStep? {
+    /**
+     Factory method for injecting an override of the functionality specific to account handling.
+     This allows for custom steps to be returned.
+    */
+    open func createAccountStep(inputItem: SBASurveyItem, subtype: SBASurveyItemType.AccountSubtype) -> ORKStep? {
         switch (subtype) {
         case .registration:
             return SBARegistrationStep(inputItem: inputItem, factory: self)
@@ -279,6 +259,8 @@ open class SBASurveyFactory : NSObject, SBASharedInfoController {
         }
     }
     
+
+
 }
 
 extension SBASurveyItem {

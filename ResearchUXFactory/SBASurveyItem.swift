@@ -1,6 +1,6 @@
 //
 //  SBASurveyItem.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,6 @@
 //
 
 import ResearchKit
-import BridgeSDK
 
 public protocol SBAStepTransformer: class {
     func transformToStep(with factory: SBASurveyFactory, isLastStep: Bool) -> ORKStep?

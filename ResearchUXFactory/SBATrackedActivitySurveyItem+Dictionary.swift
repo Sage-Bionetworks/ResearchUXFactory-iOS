@@ -1,6 +1,6 @@
 //
 //  SBATrackedActivitySurveyItem+Dictionary.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //

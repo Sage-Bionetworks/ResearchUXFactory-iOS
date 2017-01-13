@@ -1,6 +1,6 @@
 //
 //  SBAAccountTests.swift
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright (c) 2016 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import BridgeAppSDK
+@testable import ResearchUXFactory
 
 class SBAAccountTests: XCTestCase {
 

@@ -1,6 +1,6 @@
 // 
 //  SBALog.h
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 // Copyright © 2016 Sage Bionetworks.
 // Copyright (c) 2015, Apple Inc. All rights reserved. 

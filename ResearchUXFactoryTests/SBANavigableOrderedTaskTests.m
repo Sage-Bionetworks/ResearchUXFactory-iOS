@@ -1,6 +1,6 @@
 //
 //  SBANavigableOrderedTaskTests.m
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //
@@ -33,7 +33,7 @@
 
 #import <XCTest/XCTest.h>
 #import <ResearchKit/ResearchKit.h>
-@import BridgeAppSDK;
+@import ResearchUXFactory;
 
 #import "MockORKTask.h"
 

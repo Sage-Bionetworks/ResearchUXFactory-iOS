@@ -1,6 +1,6 @@
 //
 //  SBAEqualityTests.m
-//  BridgeAppSDK
+//  ResearchUXFactory
 //
 //  Copyright (c) 2015, Apple Inc.
 //  Copyright (c) 2016 Sage Bionetworks. All rights reserved.
@@ -41,7 +41,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import <HealthKit/HealthKit.h>
 #import <MapKit/MapKit.h>
-@import BridgeAppSDK;
+@import ResearchUXFactory;
 
 @interface ClassProperty : NSObject
 
@@ -119,8 +119,6 @@ MAKE_TEST_INIT(ORKQuestionResult, ^{return [self initWithIdentifier:[NSUUID UUID
              [SBAMedication class],
              [SBATrackedDataObject class],
              [SBADataObject class],
-             //[SBAActivityResult class], TODO: FIXME!! syoung 07/15/2016 BridgeSDK objects do not implement Equality or Encoding
-             [SBAConsentSignature class],
              [SBANavigableOrderedTask class],
              [SBAInstructionStep class],
              [SBASubtaskStep class],
@@ -130,7 +128,6 @@ MAKE_TEST_INIT(ORKQuestionResult, ^{return [self initWithIdentifier:[NSUUID UUID
              [SBATrackedSelectionStep class],
              [SBATrackedDataSelectionResult class],
              [SBATrackedActivityFormStep class],
-             [SBAExternalIDStep class],
              [SBAPermissionsStep class],
              ];
 }
