@@ -1,5 +1,5 @@
 //
-//  SBAInfoManager.m
+//  MockInfoManager.m
 //  ResearchUXFactory
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,66 +31,38 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import "MockInfoManager.h"
 
-#import "SBAInfoManager.h"
-#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
-
-@implementation SBAInfoManager
-
-// Get singleton
-static id __instance;
-+ (instancetype)sharedManager {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (__instance == nil) {
-            __instance = [[self alloc] init];
-        }
-    });
-    return __instance;
-}
-
-// Set singleton
-+ (void)setInfoManager:(SBAInfoManager *)infoManager {
-    __instance = infoManager;
-}
+@implementation MockInfoManager
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _plist = [[SBAResourceFinder shared] infoPlistForResource:@"BridgeInfo"] ?: @{};
-        _defaultSurveyFactory = [[SBASurveyFactory alloc] init];
+        self.plist = @{};
+        self.appGroupIdentifier = [[NSUUID UUID] UUIDString];
+        [SBAInfoManager setInfoManager:self];
     }
     return self;
 }
 
-#pragma mark - SBASharedAppInfo
-
 - (NSArray *)permissionTypeItems {
-    return self.plist[NSStringFromSelector(@selector(permissionTypeItems))];
+    return [super permissionTypeItems];
 }
 
-- (NSString *)logoImageName {
-    return [self stringForKey:NSStringFromSelector(@selector(logoImageName))];
-}
-
-- (NSString *)keychainService {
-    return [self stringForKey:NSStringFromSelector(@selector(keychainService))];
-}
-
-- (NSString *)keychainAccessGroup {
-    return [self stringForKey:NSStringFromSelector(@selector(keychainAccessGroup))];
+- (void)setPermissionTypeItems:(NSArray *)permissionTypeItems {
+    NSMutableDictionary *plist = [self.plist mutableCopy];
+    [plist setValue:permissionTypeItems forKey:@"permissionTypeItems"];
+    self.plist = plist;
 }
 
 - (NSString *)appGroupIdentifier {
-    return [self stringForKey:NSStringFromSelector(@selector(appGroupIdentifier))];
+    return [super appGroupIdentifier];
 }
 
-- (NSString *)stringForKey:(NSString *)key {
-    NSString *str = self.plist[key];
-    if (![str isKindOfClass:[NSString class]] || str.length == 0) {
-        return nil;
-    }
-    return str;
+- (void)setAppGroupIdentifier:(NSString *)appGroupIdentifier {
+    NSMutableDictionary *plist = [self.plist mutableCopy];
+    [plist setValue:appGroupIdentifier forKey:@"appGroupIdentifier"];
+    self.plist = plist;
 }
 
 @end

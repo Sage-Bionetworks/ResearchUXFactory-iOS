@@ -103,7 +103,6 @@ return block(); \
 MAKE_TEST_INIT(ORKStep, ^{return [self initWithIdentifier:[NSUUID UUID].UUIDString];});
 MAKE_TEST_INIT(SBADataObject, ^{return [self initWithIdentifier:[NSUUID UUID].UUIDString];});
 MAKE_TEST_INIT(ORKOrderedTask, ^{return [self initWithIdentifier:@"test1" steps:nil];});
-MAKE_TEST_INIT(SBAConsentSignature, ^{return [self initWithIdentifier:[NSUUID UUID].UUIDString];});
 MAKE_TEST_INIT(ORKFormItem, ^{return [self initWithIdentifier:[NSUUID UUID].UUIDString text:[NSUUID UUID].UUIDString answerFormat:nil];});
 MAKE_TEST_INIT(ORKQuestionResult, ^{return [self initWithIdentifier:[NSUUID UUID].UUIDString];});
 

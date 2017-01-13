@@ -4,4 +4,4 @@
 
 #import "MockORKTask.h"
 #import "MockTrackedDataStore.h"
-#import "MockAppInfoDelegate.h"
+#import "MockInfoManager.h"

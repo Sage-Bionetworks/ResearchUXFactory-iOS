@@ -1,5 +1,5 @@
 //
-//  SBAInfoManager.m
+//  MockInfoManager.h
 //  ResearchUXFactory
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,66 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import <ResearchUXFactory/ResearchUXFactory.h>
 
-#import "SBAInfoManager.h"
-#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
+@interface MockInfoManager : SBAInfoManager
 
-@implementation SBAInfoManager
-
-// Get singleton
-static id __instance;
-+ (instancetype)sharedManager {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (__instance == nil) {
-            __instance = [[self alloc] init];
-        }
-    });
-    return __instance;
-}
-
-// Set singleton
-+ (void)setInfoManager:(SBAInfoManager *)infoManager {
-    __instance = infoManager;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _plist = [[SBAResourceFinder shared] infoPlistForResource:@"BridgeInfo"] ?: @{};
-        _defaultSurveyFactory = [[SBASurveyFactory alloc] init];
-    }
-    return self;
-}
-
-#pragma mark - SBASharedAppInfo
-
-- (NSArray *)permissionTypeItems {
-    return self.plist[NSStringFromSelector(@selector(permissionTypeItems))];
-}
-
-- (NSString *)logoImageName {
-    return [self stringForKey:NSStringFromSelector(@selector(logoImageName))];
-}
-
-- (NSString *)keychainService {
-    return [self stringForKey:NSStringFromSelector(@selector(keychainService))];
-}
-
-- (NSString *)keychainAccessGroup {
-    return [self stringForKey:NSStringFromSelector(@selector(keychainAccessGroup))];
-}
-
-- (NSString *)appGroupIdentifier {
-    return [self stringForKey:NSStringFromSelector(@selector(appGroupIdentifier))];
-}
-
-- (NSString *)stringForKey:(NSString *)key {
-    NSString *str = self.plist[key];
-    if (![str isKindOfClass:[NSString class]] || str.length == 0) {
-        return nil;
-    }
-    return str;
-}
+@property (nonatomic, readwrite, copy) NSArray * _Nullable permissionTypeItems;
+@property (nonatomic, readwrite, copy) NSString * _Nullable appGroupIdentifier;
 
 @end

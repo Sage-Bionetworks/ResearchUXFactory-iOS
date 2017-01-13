@@ -45,112 +45,7 @@ class SBAAccountTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    // MARK: External ID
-    
-    func testExternalIdRegistrationStep_Navigation() {
-        let registrationStep = SBAExternalIDStep(identifier: "registration")
         
-        let taskResult = ORKTaskResult(identifier: "registration")
-        
-        let firstStep = registrationStep.stepAfterStep(withIdentifier: nil, with: taskResult)
-        XCTAssertNotNil(firstStep)
-        
-        guard let firstStepIdentifier = firstStep?.identifier else { return }
-        
-        let secondStep = registrationStep.stepAfterStep(withIdentifier: firstStepIdentifier, with: taskResult)
-        XCTAssertNotNil(secondStep)
-        
-        guard let secondStepIdentifier = secondStep?.identifier else { return }
-        
-        let thirdStep = registrationStep.stepAfterStep(withIdentifier: secondStepIdentifier, with: taskResult)
-        XCTAssertNil(thirdStep)
-        
-        let backStep = registrationStep.stepBeforeStep(withIdentifier: secondStepIdentifier, with: taskResult)
-        XCTAssertEqual(backStep?.identifier, firstStepIdentifier)
-        
-    }
-    
-    func testExternalIDRegistrationStepViewController_ExternalId_Valid() {
-        
-        let registrationStep = SBAExternalIDStep(identifier: "registration")
-        
-        let vc = MockExternalIDRegistrationStepViewController(step: registrationStep)
-        vc.firstAnswer = "ABC123"
-        vc.secondAnswer = "ABC123"
-        
-        do {
-            let externalId = try vc.externalId()
-            XCTAssertEqual(externalId, "ABC123")
-        }
-        catch let error as NSError {
-            XCTAssert(false, "Unexpected error: \(error)")
-        }
-    }
-    
-    func testExternalIDRegistrationStepViewController_ExternalId_Invalid() {
-        
-        let registrationStep = SBAExternalIDStep(identifier: "registration")
-        
-        let vc = MockExternalIDRegistrationStepViewController(step: registrationStep)
-        vc.firstAnswer = "ABC123*"
-        vc.secondAnswer = "ABC123*"
-        
-        do {
-            let externalId = try vc.externalId()
-            XCTAssert(false, "Should throw error")
-            XCTAssertNil(externalId)
-        }
-        catch SBAExternalIDError.invalid(let reason) {
-            XCTAssertNil(reason)
-        }
-        catch let error as NSError {
-            XCTAssert(false, "Should throw invalid error: \(error)" )
-        }
-    }
-    
-    func testExternalIDRegistrationStepViewController_ExternalId_Empty() {
-        
-        let registrationStep = SBAExternalIDStep(identifier: "registration")
-        
-        let vc = MockExternalIDRegistrationStepViewController(step: registrationStep)
-        vc.firstAnswer = ""
-        vc.secondAnswer = ""
-        
-        do {
-            let externalId = try vc.externalId()
-            XCTAssert(false, "Should throw error")
-            XCTAssertNil(externalId)
-        }
-        catch SBAExternalIDError.invalid(let reason) {
-            XCTAssertNil(reason)
-        }
-        catch let error as NSError {
-            XCTAssert(false, "Should throw invalid error: \(error)" )
-        }
-    }
-    
-    func testExternalIDRegistrationStepViewController_ExternalId_Mismatch() {
-        
-        let registrationStep = SBAExternalIDStep(identifier: "registration")
-        
-        let vc = MockExternalIDRegistrationStepViewController(step: registrationStep)
-        vc.firstAnswer = "ABC123"
-        vc.secondAnswer = "ABC12"
-        
-        do {
-            let externalId = try vc.externalId()
-            XCTAssert(false, "Should throw error")
-            XCTAssertNil(externalId)
-        }
-        catch SBAExternalIDError.notMatching {
-            // Expected error
-        }
-        catch let error as NSError {
-            XCTAssert(false, "Should throw invalid error: \(error)" )
-        }
-    }
-    
     // MARK: Permissions
     
     func testPermssionsType_Some() {
@@ -222,20 +117,41 @@ class SBAAccountTests: XCTestCase {
         XCTAssertEqual(actualItems!, expectedItems)
     }
     
-    // Mark: SBAProfileInfoForm
+    // Mark: .registration
     
-    func testCreateProfileInfoForm_RegistrationStep() {
+    func testCreateRegistrationStep() {
         let input: NSDictionary = [
             "identifier"    : "registration",
             "type"          : "registration",
-            "title"         : "Registration",
-            "items"         : ["email", "password", "externalID", "name", "birthdate", "gender", "bloodType", "fitzpatrickSkinType", "wheelchairUse", "height", "weight", "wakeTime", "sleepTime"]
+            "title"         : "Registration"
         ]
         
-        let step = SBARegistrationStep(inputItem: input)
+        let result = SBASurveyFactory().createSurveyStepWithDictionary(input)
+        
+        XCTAssertNotNil(result)
+        guard let step = result as? ORKRegistrationStep else {
+            XCTAssert(false, "\(result) not of expected type.")
+            return
+        }
+        
         XCTAssertEqual(step.identifier, "registration")
-        XCTAssertFalse(step.isOptional)
         XCTAssertEqual(step.title, "Registration")
+    }
+    
+    
+    // Mark: SBAProfileInfoForm
+    
+    func testCreateProfileFormStep() {
+        let input: NSDictionary = [
+            "identifier"    : "profile",
+            "type"          : "profile",
+            "title"         : "Profile",
+            "items"         : ["email", "password", "externalID", "name", "birthdate", "gender", "bloodType", "fitzpatrickSkinType", "wheelchairUse", "height", "weight", "wakeTime", "sleepTime", ["identifier" : "chocolate", "type" : "boolean","text" : "Do you like chocolate?"]]
+        ]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "profile")
+        XCTAssertEqual(step.title, "Profile")
         
         let emailItem = step.formItem(for:"email")
         let email = emailItem?.answerFormat as? ORKEmailAnswerFormat
@@ -325,34 +241,6 @@ class SBAAccountTests: XCTestCase {
         let sleepHour = sleepTime?.defaultComponents?.hour
         XCTAssertNotNil(sleepHour)
         XCTAssertEqual(sleepHour!, 10)
-    }
-    
-    func testCreateProfileInfoForm_ProfileStep() {
-        let input: NSDictionary = [
-            "identifier"    : "profile",
-            "type"          : "profile",
-            "title"         : "Profile Info",
-            "items"         : ["height", "weight",
-                               ["identifier" : "chocolate",
-                                "type" : "boolean",
-                                "text" : "Do you like chocolate?"]]
-        ]
-        
-        let step = SBAProfileFormStep(inputItem: input)
-        XCTAssertEqual(step.identifier, "profile")
-        XCTAssertEqual(step.title, "Profile Info")
-        
-        let heightItem = step.formItem(for:"height")
-        let height = heightItem?.answerFormat as? ORKHealthKitQuantityTypeAnswerFormat
-        XCTAssertNotNil(heightItem)
-        XCTAssertNotNil(height, "\(heightItem?.answerFormat)")
-        XCTAssertEqual(height!.quantityType.identifier, HKQuantityTypeIdentifier.height.rawValue)
-        
-        let weightItem = step.formItem(for:"weight")
-        let weight = weightItem?.answerFormat as? ORKHealthKitQuantityTypeAnswerFormat
-        XCTAssertNotNil(weightItem)
-        XCTAssertNotNil(weight, "\(weightItem?.answerFormat)")
-        XCTAssertEqual(weight!.quantityType.identifier, HKQuantityTypeIdentifier.bodyMass.rawValue)
         
         let chocolateItem = step.formItem(for:"chocolate")
         let chocolate = chocolateItem?.answerFormat as? ORKBooleanAnswerFormat
@@ -361,26 +249,4 @@ class SBAAccountTests: XCTestCase {
         XCTAssertEqual(chocolateItem?.text, "Do you like chocolate?")
     }
 
-}
-
-class MockExternalIDRegistrationStepViewController : SBAExternalIDStepViewController {
-    
-    var firstAnswer: String?
-    var secondAnswer: String?
-    
-    override var result: ORKStepResult? {
-        
-        var results: [ORKResult] = []
-        if let first = firstAnswer {
-            let firstResult = ORKTextQuestionResult(identifier: "externalId.externalId")
-            firstResult.textAnswer = first
-            results.append(firstResult)
-        }
-        if let second = secondAnswer {
-            let secondResult = ORKTextQuestionResult(identifier: "externalId.externalId")
-            secondResult.textAnswer = second
-            results.append(secondResult)
-        }
-        return ORKStepResult(stepIdentifier: self.step!.identifier, results: results)
-    }
 }

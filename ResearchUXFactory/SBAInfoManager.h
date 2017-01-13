@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
  The merged dictionary is then used to get the properties defined by `SBASharedAppInfo`
  where the property names are the keys into the dictionary.
  */
-@property (nonatomic, copy, nullable) NSDictionary <NSString*, id> *plist;
+@property (nonatomic, copy) NSDictionary <NSString*, id> *plist;
 
 /**
  A reference to the default instance of an `SBASurveyFactory` to be used to build
