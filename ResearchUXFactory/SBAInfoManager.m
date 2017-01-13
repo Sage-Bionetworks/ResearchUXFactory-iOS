@@ -54,21 +54,14 @@ static id __instance;
     __instance = infoManager;
 }
 
-//
-///**
-// A dictionary of key/value pairs used to store information about this application.
-// */
-//@property (nonatomic, copy, nullable) NSDictionary <NSString*, id> *sharedAppInfo;
-//
-
-// Make sure that the factory is non-nil
-- (SBASurveyFactory *)defaultSurveyFactory {
-    if (_defaultSurveyFactory == nil) {
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _plist = [[SBAResourceFinder shared] infoPlistForResource:@"BridgeInfo"];
         _defaultSurveyFactory = [[SBASurveyFactory alloc] init];
     }
-    return _defaultSurveyFactory;
+    return self;
 }
-
 
 #pragma mark - SBASharedAppInfo
 
