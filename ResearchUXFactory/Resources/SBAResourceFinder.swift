@@ -38,7 +38,7 @@ import UIKit
  related to finding resources.
  */
 @objc
-public protocol SBAResourceFinderDelegate: class {
+public protocol SBAResourceFinderDelegate: class, NSObjectProtocol {
     
     /**
      @return Default resource bundle
@@ -158,10 +158,10 @@ open class SBAResourceFinder: NSObject {
     }
     
     public func infoPlist(forResource resourceNamed: String) -> [String : Any]? {
-        guard let dictionary = self.plist(forResource: resourceName) else { return nil }
+        guard let dictionary = self.plist(forResource: resourceNamed) else { return nil }
         var plist = dictionary
         // Look to see if there is a second plist source that includes private keys
-        if let additionalInfo = self.plist(forResource: "\(resourceName)-private") {
+        if let additionalInfo = self.plist(forResource: "\(resourceNamed)-private") {
             plist = plist.merge(from: additionalInfo)
         }
         return plist

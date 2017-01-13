@@ -51,6 +51,7 @@ public enum SBAProfileInfoOption : String {
     case weight                 = "weight"
     case wakeTime               = "wakeTime"
     case sleepTime              = "sleepTime"
+    
 }
 
 /**
@@ -127,6 +128,13 @@ public struct SBAProfileInfoOptions {
     */
     let externalIDOptions: SBAExternalIDOptions
     
+    /**
+     The type of survey step being created.
+    */
+    var surveyItemType: SBASurveyItemType = .custom(nil)
+    
+    static let confirmationIdentifier = "passwordConfirmation"
+    
     public init(includes: [SBAProfileInfoOption]) {
         self.includes = includes
         self.externalIDOptions = SBAExternalIDOptions()
@@ -144,6 +152,9 @@ public struct SBAProfileInfoOptions {
             let items = surveyForm.items else {
             return nil
         }
+        
+        // Set the item type
+        self.surveyItemType = surveyForm.surveyItemType
         
         // Map the includes, and if it is an external ID then also map the keyboard options
         var externalIDOptions = SBAExternalIDOptions(autocapitalizationType: .none, keyboardType: .default)
@@ -186,6 +197,10 @@ public struct SBAProfileInfoOptions {
             case .password:
                 let (formItem, answerFormat) = makePasswordFormItem(with: option.rawValue)
                 formItems.append(formItem)
+                
+                if self.surveyItemType == .account(.registration) {
+                    setupPasswordValidation(answerFormat: answerFormat)
+                }
                 
                 // confirmation
                 if (shouldConfirmPassword) {
@@ -268,6 +283,8 @@ public struct SBAProfileInfoOptions {
         answerFormat.autocorrectionType = .no
         answerFormat.spellCheckingType = .no
         
+
+        
         let formItem = ORKFormItem(identifier: identifier,
                                    text: Localization.localizedString("PASSWORD_FORM_ITEM_TITLE"),
                                    answerFormat: answerFormat,
@@ -277,15 +294,27 @@ public struct SBAProfileInfoOptions {
         return (formItem, answerFormat)
     }
     
+    func setupPasswordValidation(answerFormat: ORKTextAnswerFormat) {
+        // TODO: FIXME!!! syoung 01/12/2017
+//        if let validationRegEx = SBAInfoManager.shared.passwordValidationRegEx,
+//            let invalidMessage = SBAInfoManager.shared.passwordInvalidMessage {
+//            answerFormat.validationRegex = validationRegEx
+//            answerFormat.invalidMessage = invalidMessage
+//        }
+//        else {
+//            // If this is a registration, go ahead and set the default password verification
+//            let minLength = 2
+//            let maxLength = 16
+//            answerFormat.validationRegex = "[[:ascii:]]{\(minLength),\(maxLength)}"
+//            answerFormat.invalidMessage = Localization.localizedStringWithFormatKey("SBA_REGISTRATION_INVALID_PASSWORD_LENGTH_%@_TO_%@", NSNumber(value: minLength), NSNumber(value: maxLength))
+//            
+//        }
+    }
+    
     func makeConfirmationFormItem(formItem: ORKFormItem, answerFormat: ORKTextAnswerFormat) -> ORKFormItem {
-        // If this is a registration, go ahead and set the default password verification
-        let minLength = SBARegistrationStep.defaultPasswordMinLength
-        let maxLength = SBARegistrationStep.defaultPasswordMaxLength
-        answerFormat.validationRegex = "[[:ascii:]]{\(minLength),\(maxLength)}"
-        answerFormat.invalidMessage = Localization.localizedStringWithFormatKey("SBA_REGISTRATION_INVALID_PASSWORD_LENGTH_%@_TO_%@", NSNumber(value: minLength), NSNumber(value: maxLength))
         
         // Add a confirmation field
-        let confirmIdentifier = SBARegistrationStep.confirmationIdentifier
+        let confirmIdentifier = SBAProfileInfoOptions.confirmationIdentifier
         let confirmText = Localization.localizedString("CONFIRM_PASSWORD_FORM_ITEM_TITLE")
         let confirmError = Localization.localizedString("CONFIRM_PASSWORD_ERROR_MESSAGE")
         let confirmFormItem = formItem.confirmationAnswer(withIdentifier: confirmIdentifier, text: confirmText,

@@ -89,254 +89,254 @@ private let QuestionResultSurveyAnswerKey = "answer"
 private let NumericResultUnitKey = "unit"
 private let DateAndTimeResultTimeZoneKey = "timeZone"
 
-//open class ArchiveableResult : NSObject {
-//    open let result: AnyObject
-//    open let filename: String
-//    
-//    init(result: AnyObject, filename: String) {
-//        self.result = result
-//        self.filename = filename
-//        super.init()
-//    }
-//}
-//
-//public protocol BridgeUploadableData {
-//    // returns result object, result type, and filename
-//    func bridgeData(_ stepIdentifier: String) -> ArchiveableResult?
-//}
-//
-//extension ORKResult: BridgeUploadableData {
-//    
-//    func dataFromFile(_ fileURL: NSURL) -> NSData? {
-//        return NSData.init(contentsOf: fileURL as URL)
-//    }
-//    
-//    func dataFromDictionary(_ dictionary: Dictionary<String, AnyObject>) -> NSData? {
-//        let jsonData: NSData
-//        do {
-//            jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: JSONSerialization.WritingOptions.init(rawValue: 0)) as NSData
-//        } catch let error as NSError {
-//            fatalError("Failed to serialize JSON dictionary:\n\(error)")
-//        }
-//        
-//        return jsonData
-//    }
-//    
-//    func resultAsDictionary() -> NSMutableDictionary {
-//        let asDict = NSMutableDictionary()
-//        
-//        asDict[kIdentifierKey] = self.identifier
-//        asDict[kStartDateKey]  = self.startDate
-//        asDict[kEndDateKey]    = self.endDate
-//
-//        return asDict
-//    }
-//    
-//    func bridgifyFilename(_ filename: String) -> String {
-//        return filename.replacingOccurrences(of: ".", with: "_")
-//    }
-//    
-//    func filenameForArchive() -> String {
-//        return bridgifyFilename(self.identifier) + ".json"
-//    }
-//    
-//    public func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
-//        // extend subclasses individually to override this as needed
-//        return ArchiveableResult(result: self.resultAsDictionary().jsonObject() as AnyObject, filename: self.filenameForArchive())
-//    }
-//    
-//}
-//
-//extension ORKStepResult {
-//    override func resultAsDictionary() -> NSMutableDictionary {
-//        let stepResult = super.resultAsDictionary()
-//        guard let results = self.results  else { return stepResult }
-//        stepResult[kAnswerMapKey] = results.filteredDictionary({ (result) -> (String?, AnyObject?) in
-//            guard let questionResult = result as? ORKQuestionResultAnswerJSON,
-//                let answer = questionResult.jsonSerializedAnswer() else {
-//                    return (result.identifier, self.resultAsDictionary().jsonObject() as AnyObject)
-//            }
-//            return (result.identifier, answer.value)
-//        })
-//        return stepResult;
-//    }
-//}
-//
-//extension ORKStep {
-//    @objc(stepResultWithBridgeDictionary:)
-//    public func stepResult(with bridgeDictionary: [String: AnyObject]) -> ORKStepResult {
-//        
-//        // Populate the result using the answer map
-//        let stepResult = self.stepResult(with: bridgeDictionary[kAnswerMapKey] as? [String: AnyObject])
-//        
-//        // Add the start/end date
-//        if let startDateString = bridgeDictionary[kStartDateKey] as? String {
-//            stepResult.startDate = NSDate(iso8601String: startDateString) as Date
-//        }
-//        if let endDateString = bridgeDictionary[kEndDateKey] as? String {
-//            stepResult.endDate = NSDate(iso8601String: endDateString) as Date
-//        }
-//        
-//        return stepResult
-//    }
-//}
-//
-//extension ORKFileResult {
-//    
-//    override public func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
-//        guard let url = self.fileURL else {
-//            return nil
-//        }
-//        var ext = url.pathExtension
-//        if ext == "" {
-//            ext = "json"
-//        }
-//        let filename = bridgifyFilename(self.identifier + "_" + stepIdentifier) + "." + ext
-//        return ArchiveableResult(result: url as AnyObject, filename: filename)
-//    }
-//    
-//}
-//
-//extension ORKTappingIntervalResult {
-//    
-//    override func resultAsDictionary() -> NSMutableDictionary {
-//        let tappingResults = super.resultAsDictionary()
-//    
-//        let tappingViewSize = NSStringFromCGSize(self.stepViewSize)
-//        tappingResults[kTappingViewSizeKey] = tappingViewSize
-//    
-//        let leftButtonRect = NSStringFromCGRect(self.buttonRect1)
-//        tappingResults[kButtonRectLeftKey] = leftButtonRect;
-//    
-//        let rightButtonRect = NSStringFromCGRect(self.buttonRect2)
-//        tappingResults[kButtonRectRightKey] = rightButtonRect
-//    
-//        let sampleResults = self.samples?.map({ (sample) -> [String: AnyObject] in
-//            var aSampleDictionary = [String: AnyObject]();
-//            
-//            aSampleDictionary[kTapTimeStampKey]     = sample.timestamp as AnyObject?
-//            
-//            aSampleDictionary[kTapCoordinateKey]   = NSStringFromCGPoint(sample.location) as AnyObject?
-//            
-//            if (sample.buttonIdentifier == ORKTappingButtonIdentifier.none) {
-//                aSampleDictionary[kTappedButtonIdKey] = kTappedButtonNoneKey as AnyObject?
-//            } else if (sample.buttonIdentifier == ORKTappingButtonIdentifier.left) {
-//                aSampleDictionary[kTappedButtonIdKey] = kTappedButtonLeftKey as AnyObject?
-//            } else if (sample.buttonIdentifier == ORKTappingButtonIdentifier.right) {
-//                aSampleDictionary[kTappedButtonIdKey] = kTappedButtonRightKey as AnyObject?
-//            }
-//            return aSampleDictionary
-//        }) ?? []
-//        
-//        tappingResults[kTappingSamplesKey] = sampleResults
-//        tappingResults[kItemKey] = self.filenameForArchive()
-//        
-//        return tappingResults
-//    }
-//    
-//}
-//
-//extension ORKSpatialSpanMemoryResult {
-//    
-//    override func resultAsDictionary() -> NSMutableDictionary {
-//        let gameStatusKeys = [ kSpatialSpanMemoryGameStatusUnknownKey, kSpatialSpanMemoryGameStatusSuccessKey, kSpatialSpanMemoryGameStatusFailureKey, kSpatialSpanMemoryGameStatusTimeoutKey ]
-//        
-//        let memoryGameResults = super.resultAsDictionary()
-//        
-//        //
-//        //    ORK ORKSpatialSpanMemoryResult
-//        //
-//        memoryGameResults[kSpatialSpanMemorySummaryNumberOfGamesKey]    = self.numberOfGames
-//        memoryGameResults[kSpatialSpanMemorySummaryNumberOfFailuresKey] = self.numberOfFailures
-//        memoryGameResults[kSpatialSpanMemorySummaryOverallScoreKey]     = self.score
-//        
-//        //
-//        //    Memory Game Records
-//        //
-//        var gameRecords = [[String: AnyObject]]()
-//        
-//        for aRecord: ORKSpatialSpanMemoryGameRecord in self.gameRecords! {
-//            
-//            var aGameRecord = [String: AnyObject]()
-//            
-//            aGameRecord[kSpatialSpanMemoryGameRecordSeedKey]      = NSNumber(value: aRecord.seed)
-//            aGameRecord[kSpatialSpanMemoryGameRecordGameSizeKey]  = aRecord.gameSize as AnyObject?
-//            aGameRecord[kSpatialSpanMemoryGameRecordGameScoreKey] = aRecord.score as AnyObject?
-//            aGameRecord[kSpatialSpanMemoryGameRecordSequenceKey]  = aRecord.sequence as AnyObject?
-//            aGameRecord[kSpatialSpanMemoryGameStatusKey]          = gameStatusKeys[aRecord.gameStatus.rawValue] as AnyObject?
-//            
-//            let touchSamples = makeTouchSampleRecords(aRecord.touchSamples)
-//            aGameRecord[kSpatialSpanMemoryGameRecordTouchSamplesKey] = touchSamples
-//            
-//            let rectangles = makeTargetRectangleRecords(aRecord.targetRects!)
-//            aGameRecord[kSpatialSpanMemoryGameRecordTargetRectsKey] = rectangles
-//            
-//            gameRecords += [aGameRecord]
-//        }
-//        memoryGameResults[kSpatialSpanMemorySummaryGameRecordsKey] = gameRecords
-//        memoryGameResults[kItemKey] = self.filenameForArchive()
-//        return memoryGameResults
-//    }
-//    
-//    func makeTouchSampleRecords(_ touchSamples: [ORKSpatialSpanMemoryGameTouchSample]?) -> NSArray
-//    {
-//        var samples = [[String: AnyObject]]()
-//        
-//        guard touchSamples != nil else {
-//            return samples as NSArray
-//        }
-//        for sample: ORKSpatialSpanMemoryGameTouchSample in touchSamples! {
-//            
-//            var aTouchSample = [String: AnyObject]()
-//            
-//            aTouchSample[kSpatialSpanMemoryTouchSampleTimeStampKey]   = sample.timestamp as AnyObject?
-//            aTouchSample[kSpatialSpanMemoryTouchSampleTargetIndexKey] = sample.targetIndex as AnyObject?
-//            aTouchSample[kSpatialSpanMemoryTouchSampleLocationKey]    = NSStringFromCGPoint(sample.location) as AnyObject?
-//            aTouchSample[kSpatialSpanMemoryTouchSampleIsCorrectKey]   = sample.isCorrect as AnyObject?
-//            
-//            samples += [aTouchSample]
-//        }
-//        return  samples as NSArray
-//    }
-//    
-//    func makeTargetRectangleRecords(_ targetRectangles: [NSValue]) -> NSArray
-//    {
-//        var rectangles = [String]()
-//        
-//        for value: NSValue in targetRectangles {
-//            let rectangle = value.cgRectValue
-//            let stringified = NSStringFromCGRect(rectangle)
-//            rectangles += [stringified]
-//        }
-//        return  rectangles as NSArray
-//    }
-//    
-//}
-//
-//extension ORKTrailmakingResult {
-//    
-//    // Schema mapping in the Researcher UI
-//    // trailmaking.json.taps                JSON Table
-//    // trailmaking.json.timestamp           Decimal
-//    // trailmaking.json.index               Integer
-//    // trailmaking.json.numberOfErrors      Integer
-//    
-//    override func resultAsDictionary() -> NSMutableDictionary {
-//        let result = super.resultAsDictionary()
-//        
-//        let resultTaps = self.taps.map ({ (tap) -> [String: AnyObject] in
-//            return [kTrailmakingTapTimestampKey : NSNumber(value: tap.timestamp),
-//                    kTrailmakingTapIndexKey     : NSNumber(value: tap.index),
-//                    kTrailmakingTapIncorrectKey : NSNumber(value: tap.incorrect)]
-//        })
-//        
-//        result[kTrailmakingTapsKey] = resultTaps
-//        result[kTrailmakingNumberOfErrorsKey] = NSNumber(value: self.numberOfErrors)
-//        result[kItemKey] = self.filenameForArchive()
-//        
-//        return result
-//    }
-//}
+open class ArchiveableResult : NSObject {
+    open let result: AnyObject
+    open let filename: String
+    
+    init(result: AnyObject, filename: String) {
+        self.result = result
+        self.filename = filename
+        super.init()
+    }
+}
+
+public protocol BridgeUploadableData {
+    // returns result object, result type, and filename
+    func bridgeData(_ stepIdentifier: String) -> ArchiveableResult?
+}
+
+extension ORKResult: BridgeUploadableData {
+    
+    func dataFromFile(_ fileURL: NSURL) -> NSData? {
+        return NSData.init(contentsOf: fileURL as URL)
+    }
+    
+    func dataFromDictionary(_ dictionary: Dictionary<String, AnyObject>) -> NSData? {
+        let jsonData: NSData
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: JSONSerialization.WritingOptions.init(rawValue: 0)) as NSData
+        } catch let error as NSError {
+            fatalError("Failed to serialize JSON dictionary:\n\(error)")
+        }
+        
+        return jsonData
+    }
+    
+    func resultAsDictionary() -> NSMutableDictionary {
+        let asDict = NSMutableDictionary()
+        
+        asDict[kIdentifierKey] = self.identifier
+        asDict[kStartDateKey]  = self.startDate
+        asDict[kEndDateKey]    = self.endDate
+
+        return asDict
+    }
+    
+    func bridgifyFilename(_ filename: String) -> String {
+        return filename.replacingOccurrences(of: ".", with: "_")
+    }
+    
+    func filenameForArchive() -> String {
+        return bridgifyFilename(self.identifier) + ".json"
+    }
+    
+    public func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
+        // extend subclasses individually to override this as needed
+        return ArchiveableResult(result: self.resultAsDictionary().jsonObject() as AnyObject, filename: self.filenameForArchive())
+    }
+    
+}
+
+extension ORKStepResult {
+    override func resultAsDictionary() -> NSMutableDictionary {
+        let stepResult = super.resultAsDictionary()
+        guard let results = self.results  else { return stepResult }
+        stepResult[kAnswerMapKey] = results.filteredDictionary({ (result) -> (String?, AnyObject?) in
+            guard let questionResult = result as? ORKQuestionResultAnswerJSON,
+                let answer = questionResult.jsonSerializedAnswer() else {
+                    return (result.identifier, self.resultAsDictionary().jsonObject() as AnyObject)
+            }
+            return (result.identifier, answer.value)
+        })
+        return stepResult;
+    }
+}
+
+extension ORKStep {
+    @objc(stepResultWithBridgeDictionary:)
+    public func stepResult(with bridgeDictionary: [String: AnyObject]) -> ORKStepResult {
+        
+        // Populate the result using the answer map
+        let stepResult = self.stepResult(with: bridgeDictionary[kAnswerMapKey] as? [String: AnyObject])
+        
+        // Add the start/end date
+        if let startDateString = bridgeDictionary[kStartDateKey] as? String {
+            stepResult.startDate = NSDate(iso8601String: startDateString) as Date
+        }
+        if let endDateString = bridgeDictionary[kEndDateKey] as? String {
+            stepResult.endDate = NSDate(iso8601String: endDateString) as Date
+        }
+        
+        return stepResult
+    }
+}
+
+extension ORKFileResult {
+    
+    override public func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
+        guard let url = self.fileURL else {
+            return nil
+        }
+        var ext = url.pathExtension
+        if ext == "" {
+            ext = "json"
+        }
+        let filename = bridgifyFilename(self.identifier + "_" + stepIdentifier) + "." + ext
+        return ArchiveableResult(result: url as AnyObject, filename: filename)
+    }
+    
+}
+
+extension ORKTappingIntervalResult {
+    
+    override func resultAsDictionary() -> NSMutableDictionary {
+        let tappingResults = super.resultAsDictionary()
+    
+        let tappingViewSize = NSStringFromCGSize(self.stepViewSize)
+        tappingResults[kTappingViewSizeKey] = tappingViewSize
+    
+        let leftButtonRect = NSStringFromCGRect(self.buttonRect1)
+        tappingResults[kButtonRectLeftKey] = leftButtonRect;
+    
+        let rightButtonRect = NSStringFromCGRect(self.buttonRect2)
+        tappingResults[kButtonRectRightKey] = rightButtonRect
+    
+        let sampleResults = self.samples?.map({ (sample) -> [String: AnyObject] in
+            var aSampleDictionary = [String: AnyObject]();
+            
+            aSampleDictionary[kTapTimeStampKey]     = sample.timestamp as AnyObject?
+            
+            aSampleDictionary[kTapCoordinateKey]   = NSStringFromCGPoint(sample.location) as AnyObject?
+            
+            if (sample.buttonIdentifier == ORKTappingButtonIdentifier.none) {
+                aSampleDictionary[kTappedButtonIdKey] = kTappedButtonNoneKey as AnyObject?
+            } else if (sample.buttonIdentifier == ORKTappingButtonIdentifier.left) {
+                aSampleDictionary[kTappedButtonIdKey] = kTappedButtonLeftKey as AnyObject?
+            } else if (sample.buttonIdentifier == ORKTappingButtonIdentifier.right) {
+                aSampleDictionary[kTappedButtonIdKey] = kTappedButtonRightKey as AnyObject?
+            }
+            return aSampleDictionary
+        }) ?? []
+        
+        tappingResults[kTappingSamplesKey] = sampleResults
+        tappingResults[kItemKey] = self.filenameForArchive()
+        
+        return tappingResults
+    }
+    
+}
+
+extension ORKSpatialSpanMemoryResult {
+    
+    override func resultAsDictionary() -> NSMutableDictionary {
+        let gameStatusKeys = [ kSpatialSpanMemoryGameStatusUnknownKey, kSpatialSpanMemoryGameStatusSuccessKey, kSpatialSpanMemoryGameStatusFailureKey, kSpatialSpanMemoryGameStatusTimeoutKey ]
+        
+        let memoryGameResults = super.resultAsDictionary()
+        
+        //
+        //    ORK ORKSpatialSpanMemoryResult
+        //
+        memoryGameResults[kSpatialSpanMemorySummaryNumberOfGamesKey]    = self.numberOfGames
+        memoryGameResults[kSpatialSpanMemorySummaryNumberOfFailuresKey] = self.numberOfFailures
+        memoryGameResults[kSpatialSpanMemorySummaryOverallScoreKey]     = self.score
+        
+        //
+        //    Memory Game Records
+        //
+        var gameRecords = [[String: AnyObject]]()
+        
+        for aRecord: ORKSpatialSpanMemoryGameRecord in self.gameRecords! {
+            
+            var aGameRecord = [String: AnyObject]()
+            
+            aGameRecord[kSpatialSpanMemoryGameRecordSeedKey]      = NSNumber(value: aRecord.seed)
+            aGameRecord[kSpatialSpanMemoryGameRecordGameSizeKey]  = aRecord.gameSize as AnyObject?
+            aGameRecord[kSpatialSpanMemoryGameRecordGameScoreKey] = aRecord.score as AnyObject?
+            aGameRecord[kSpatialSpanMemoryGameRecordSequenceKey]  = aRecord.sequence as AnyObject?
+            aGameRecord[kSpatialSpanMemoryGameStatusKey]          = gameStatusKeys[aRecord.gameStatus.rawValue] as AnyObject?
+            
+            let touchSamples = makeTouchSampleRecords(aRecord.touchSamples)
+            aGameRecord[kSpatialSpanMemoryGameRecordTouchSamplesKey] = touchSamples
+            
+            let rectangles = makeTargetRectangleRecords(aRecord.targetRects!)
+            aGameRecord[kSpatialSpanMemoryGameRecordTargetRectsKey] = rectangles
+            
+            gameRecords += [aGameRecord]
+        }
+        memoryGameResults[kSpatialSpanMemorySummaryGameRecordsKey] = gameRecords
+        memoryGameResults[kItemKey] = self.filenameForArchive()
+        return memoryGameResults
+    }
+    
+    func makeTouchSampleRecords(_ touchSamples: [ORKSpatialSpanMemoryGameTouchSample]?) -> NSArray
+    {
+        var samples = [[String: AnyObject]]()
+        
+        guard touchSamples != nil else {
+            return samples as NSArray
+        }
+        for sample: ORKSpatialSpanMemoryGameTouchSample in touchSamples! {
+            
+            var aTouchSample = [String: AnyObject]()
+            
+            aTouchSample[kSpatialSpanMemoryTouchSampleTimeStampKey]   = sample.timestamp as AnyObject?
+            aTouchSample[kSpatialSpanMemoryTouchSampleTargetIndexKey] = sample.targetIndex as AnyObject?
+            aTouchSample[kSpatialSpanMemoryTouchSampleLocationKey]    = NSStringFromCGPoint(sample.location) as AnyObject?
+            aTouchSample[kSpatialSpanMemoryTouchSampleIsCorrectKey]   = sample.isCorrect as AnyObject?
+            
+            samples += [aTouchSample]
+        }
+        return  samples as NSArray
+    }
+    
+    func makeTargetRectangleRecords(_ targetRectangles: [NSValue]) -> NSArray
+    {
+        var rectangles = [String]()
+        
+        for value: NSValue in targetRectangles {
+            let rectangle = value.cgRectValue
+            let stringified = NSStringFromCGRect(rectangle)
+            rectangles += [stringified]
+        }
+        return  rectangles as NSArray
+    }
+    
+}
+
+extension ORKTrailmakingResult {
+    
+    // Schema mapping in the Researcher UI
+    // trailmaking.json.taps                JSON Table
+    // trailmaking.json.timestamp           Decimal
+    // trailmaking.json.index               Integer
+    // trailmaking.json.numberOfErrors      Integer
+    
+    override func resultAsDictionary() -> NSMutableDictionary {
+        let result = super.resultAsDictionary()
+        
+        let resultTaps = self.taps.map ({ (tap) -> [String: AnyObject] in
+            return [kTrailmakingTapTimestampKey : NSNumber(value: tap.timestamp),
+                    kTrailmakingTapIndexKey     : NSNumber(value: tap.index),
+                    kTrailmakingTapIncorrectKey : NSNumber(value: tap.incorrect)]
+        })
+        
+        result[kTrailmakingTapsKey] = resultTaps
+        result[kTrailmakingNumberOfErrorsKey] = NSNumber(value: self.numberOfErrors)
+        result[kItemKey] = self.filenameForArchive()
+        
+        return result
+    }
+}
 
 public final class SBAAnswerKeyAndValue: NSObject {
     let key: String
@@ -356,68 +356,68 @@ public protocol ORKQuestionResultAnswerJSON {
     func jsonSerializedAnswer() -> SBAAnswerKeyAndValue?
 }
 
-//extension ORKQuestionType {
-//    public var nameValue: String {
-//        switch self {
-//        case .none:
-//            return "None"
-//        case .scale:
-//            return "Scale"
-//        case .singleChoice:
-//            return "SingleChoice"
-//        case .multipleChoice:
-//            return "MultipleChoice"
-//        case .decimal:
-//            return "Decimal"
-//        case .integer:
-//            return "Integer"
-//        case .boolean:
-//            return "Boolean"
-//        case .text:
-//            return "Text"
-//        case .timeOfDay:
-//            return "TimeOfDay"
-//        case .dateAndTime:
-//            return "Date"
-//        case .date:
-//            return "Date"
-//        case .timeInterval:
-//            return "TimeInterval"
-//        case .location:
-//            return "Location"
-//        case .height:
-//            return "Height"
-//        }
-//    }
-//}
+extension ORKQuestionType {
+    public var nameValue: String {
+        switch self {
+        case .none:
+            return "None"
+        case .scale:
+            return "Scale"
+        case .singleChoice:
+            return "SingleChoice"
+        case .multipleChoice:
+            return "MultipleChoice"
+        case .decimal:
+            return "Decimal"
+        case .integer:
+            return "Integer"
+        case .boolean:
+            return "Boolean"
+        case .text:
+            return "Text"
+        case .timeOfDay:
+            return "TimeOfDay"
+        case .dateAndTime:
+            return "Date"
+        case .date:
+            return "Date"
+        case .timeInterval:
+            return "TimeInterval"
+        case .location:
+            return "Location"
+        case .height:
+            return "Height"
+        }
+    }
+}
 
 extension ORKQuestionResult: ORKQuestionResultAnswerJSON {
     
-//    override func resultAsDictionary() -> NSMutableDictionary {
-//        let choiceQuestionResult = super.resultAsDictionary()
-//        choiceQuestionResult[kItemKey] = self.identifier
-//        choiceQuestionResult[QuestionResultUserInfoKey] = self.userInfo
-//        if let answer = self.jsonSerializedAnswer() {
-//            choiceQuestionResult[answer.key] = answer.value
-//            // special-case the answer field to return *only* the single-choice answer
-//            // if this is a singleChoice type and the key is an array.
-//            // This is for reverse-compatibility to older schemas. syoung 10/17/2016
-//            choiceQuestionResult[QuestionResultSurveyAnswerKey] = {
-//                if answer.questionType == .singleChoice, let answerValue = answer.value as? [Any] {
-//                    return answerValue.first ?? NSNull()
-//                }
-//                else {
-//                    return answer.value
-//                }
-//            }()
-//            choiceQuestionResult[QuestionResultQuestionTypeKey] = answer.questionType.rawValue
-//            choiceQuestionResult[QuestionResultQuestionTypeNameKey] = answer.questionType.nameValue
-//            if let unit = answer.unit {
-//                choiceQuestionResult[NumericResultUnitKey] = unit
-//            }
-//        }
-//        return choiceQuestionResult
-//    }
+    override func resultAsDictionary() -> NSMutableDictionary {
+        let choiceQuestionResult = super.resultAsDictionary()
+        choiceQuestionResult[kItemKey] = self.identifier
+        choiceQuestionResult[QuestionResultUserInfoKey] = self.userInfo
+        if let answer = self.jsonSerializedAnswer() {
+            choiceQuestionResult[answer.key] = answer.value
+            // special-case the answer field to return *only* the single-choice answer
+            // if this is a singleChoice type and the key is an array.
+            // This is for reverse-compatibility to older schemas. syoung 10/17/2016
+            choiceQuestionResult[QuestionResultSurveyAnswerKey] = {
+                if answer.questionType == .singleChoice, let answerValue = answer.value as? [Any] {
+                    return answerValue.first ?? NSNull()
+                }
+                else {
+                    return answer.value
+                }
+            }()
+            choiceQuestionResult[QuestionResultQuestionTypeKey] = answer.questionType.rawValue
+            choiceQuestionResult[QuestionResultQuestionTypeNameKey] = answer.questionType.nameValue
+            if let unit = answer.unit {
+                choiceQuestionResult[NumericResultUnitKey] = unit
+            }
+        }
+        return choiceQuestionResult
+    }
     
     public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         let className = NSStringFromClass(self.classForCoder)

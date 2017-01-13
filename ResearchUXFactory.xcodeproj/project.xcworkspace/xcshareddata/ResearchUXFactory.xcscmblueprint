@@ -7,6 +7,7 @@
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++6A484C0" : 9223372036854775807,
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++264F2B0" : 9223372036854775807,
     "9CF6181E3789E3853840089C16D4B9FDDB9B31E2+++21CFD0F" : 9223372036854775807,
+    "CEE2E2DA3B415DB70C257504A5BA6B611A730B63+++B9FA055" : 9223372036854775807,
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++EADBB69" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "59195287-9619-4B8C-BC31-D47C98546DC9",
@@ -14,6 +15,7 @@
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++6A484C0" : "",
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++264F2B0" : "ResearchUXFactory\/",
     "9CF6181E3789E3853840089C16D4B9FDDB9B31E2+++21CFD0F" : "ResearchUXFactory\/ResearchKit\/",
+    "CEE2E2DA3B415DB70C257504A5BA6B611A730B63+++B9FA055" : "BridgeSDK\/",
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++EADBB69" : ""
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "ResearchUXFactory",
@@ -39,6 +41,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Sage-Bionetworks\/BridgeAppSDK.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++EADBB69"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Sage-Bionetworks\/Bridge-iOS-SDK.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CEE2E2DA3B415DB70C257504A5BA6B611A730B63+++B9FA055"
     }
   ]
 }

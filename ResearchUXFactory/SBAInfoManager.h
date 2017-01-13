@@ -36,12 +36,35 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ This protocol is used as the mapping for information used to customize the study.
+ The default implementation maps each key using the property name to a value
+ defined in a plist dictionary included in the app resource bundle.
+ 
+ See `BridgeInfo.plist` in the Shared SampleApp Resources included in this project
+ for an example.
+ */
 @protocol SBASharedAppInfo <NSObject>
 
 /**
  Array of objects that can be converted into `SBAPermissionObjectType` objects.
  */
 @property (nonatomic, readonly, copy) NSArray * _Nullable permissionTypeItems;
+
+/**
+ The Logo image to use for this app.
+ */
+@property (nonatomic, readonly, copy) NSString * _Nullable logoImageName;
+
+/**
+ Keychain service name.
+ */
+@property (nonatomic, readonly, copy) NSString * _Nullable keychainService;
+
+/**
+ Keychain access group name.
+ */
+@property (nonatomic, readonly, copy) NSString * _Nullable keychainAccessGroup;
 
 /**
  App group identifier used for the suite name of NSUserDefaults (if provided).
@@ -57,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
  It also provides a default implementation for accessing shared information about the 
  application that is used by this framework.
  */
-@interface SBAInfoManager : NSObject
+@interface SBAInfoManager : NSObject <SBASharedAppInfo>
 
 /**
  Main entry point for the shared info manager.
@@ -93,6 +116,11 @@ NS_ASSUME_NONNULL_BEGIN
  and `ResearchKit` in that order.
  */
 @property (nonatomic, copy) NSArray <NSBundle *> *resourceBundles;
+
+/**
+ A list of data groups that can be assigned to a user to subcategorize them.
+ */
+@property (nonatomic, copy, nullable) NSSet <NSString *> *currentDataGroups;
 
 @end
 

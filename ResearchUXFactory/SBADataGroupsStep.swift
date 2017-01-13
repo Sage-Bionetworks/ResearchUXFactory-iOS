@@ -70,7 +70,7 @@ public class SBADataGroupsStep: SBANavigationFormStep {
      Create an `ORKStepResult` from the given set of data groups.
      @return    Step result for this step.
      */
-    public func stepResult(currentGroups: [String]?) -> ORKStepResult? {
+    public func stepResult(currentGroups: Set<String>?) -> ORKStepResult? {
         
         // Look for a current choice from the input groups
         let currentChoices: [Any]? = {
@@ -80,7 +80,7 @@ public class SBADataGroupsStep: SBANavigationFormStep {
                 return nil
             }
             // Create the intersection set that is the values from the current group that are in this steps subset of data groups
-            let currentSet = Set(currentGroups!).intersection(self.dataGroups)
+            let currentSet = currentGroups!.intersection(self.dataGroups)
             // If there is no overlap then return nil
             guard currentSet.count > 0 else { return nil }
             // Otherwise, look for an answer that maps to the current set

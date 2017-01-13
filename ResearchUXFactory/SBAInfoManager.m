@@ -33,6 +33,7 @@
 
 
 #import "SBAInfoManager.h"
+#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
 
 @implementation SBAInfoManager
 
@@ -59,10 +60,8 @@ static id __instance;
 // */
 //@property (nonatomic, copy, nullable) NSDictionary <NSString*, id> *sharedAppInfo;
 //
-///**
-// A reference to the default instance of an `SBASurveyFactory` to be used to build
-// surveys.  By default, an instance of the base class `SBASurveyFactory` is instantiated.
-// */
+
+// Make sure that the factory is non-nil
 - (SBASurveyFactory *)defaultSurveyFactory {
     if (_defaultSurveyFactory == nil) {
         _defaultSurveyFactory = [[SBASurveyFactory alloc] init];
@@ -71,5 +70,34 @@ static id __instance;
 }
 
 
+#pragma mark - SBASharedAppInfo
+
+- (NSArray *)permissionTypeItems {
+    return self.plist[NSStringFromSelector(@selector(permissionTypeItems))];
+}
+
+- (NSString *)logoImageName {
+    return [self stringForKey:NSStringFromSelector(@selector(logoImageName))];
+}
+
+- (NSString *)keychainService {
+    return [self stringForKey:NSStringFromSelector(@selector(keychainService))];
+}
+
+- (NSString *)keychainAccessGroup {
+    return [self stringForKey:NSStringFromSelector(@selector(keychainAccessGroup))];
+}
+
+- (NSString *)appGroupIdentifier {
+    return [self stringForKey:NSStringFromSelector(@selector(appGroupIdentifier))];
+}
+
+- (NSString *)stringForKey:(NSString *)key {
+    NSString *str = self.plist[key];
+    if (![str isKindOfClass:[NSString class]] || str.length == 0) {
+        return nil;
+    }
+    return str;
+}
 
 @end

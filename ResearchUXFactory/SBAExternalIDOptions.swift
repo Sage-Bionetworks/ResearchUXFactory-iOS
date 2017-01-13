@@ -1,5 +1,5 @@
 //
-//  SBAInfoManager.swift
+//  SBAExternalIDOptions.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,29 +33,57 @@
 
 import Foundation
 
-extension SBAInfoManager {
-    
-    public static var shared: SBAInfoManager {
-        return __shared()
-    }
-}
-
-extension SBASharedAppInfo {
+/**
+ Object with the options for the external ID form item `ORKAnswerFormat`
+ */
+struct SBAExternalIDOptions {
     
     /**
-     Logo image for this App. This is potentially different from the AppIcon and it can
-     be defined in the asset catalog as a scalable vector image.
-    */
-    public var logoImage: UIImage? {
-        guard let imageName = logoImageName else { return nil }
-        return UIImage(named: imageName)
-    }
+     By default, the autocapitalization type is all characters
+     */
+    static let defaultAutocapitalizationType: UITextAutocapitalizationType = .allCharacters
     
     /**
-     The shared user defaults for this application. This will check for a shared app group
-     identifier and will use the standard user defaults if not found.
-    */
-    public var userDefaults: UserDefaults {
-        return UserDefaults(suiteName: self.appGroupIdentifier) ?? UserDefaults.standard
+     By default, the keyboard type is ASCII
+     */
+    static let defaultKeyboardType: UIKeyboardType = .asciiCapable
+    
+    /**
+     Auto-capitalization type for the text field
+     */
+    let autocapitalizationType: UITextAutocapitalizationType
+    
+    /**
+     Keyboard type for the text field
+     */
+    let keyboardType: UIKeyboardType
+    
+    init() {
+        self.autocapitalizationType = SBAExternalIDOptions.defaultAutocapitalizationType
+        self.keyboardType = SBAExternalIDOptions.defaultKeyboardType
+    }
+    
+    init(autocapitalizationType: UITextAutocapitalizationType, keyboardType: UIKeyboardType) {
+        self.autocapitalizationType = autocapitalizationType
+        self.keyboardType = keyboardType
+    }
+    
+    init(options: [AnyHashable: Any]?) {
+        self.autocapitalizationType = {
+            if let autocap = options?["autocapitalizationType"] as? String {
+                return UITextAutocapitalizationType(key: autocap)
+            }
+            else {
+                return SBAExternalIDOptions.defaultAutocapitalizationType
+            }
+        }()
+        self.keyboardType = {
+            if let keyboard = options?["keyboardType"] as? String {
+                return UIKeyboardType(key: keyboard)
+            }
+            else {
+                return SBAExternalIDOptions.defaultKeyboardType
+            }
+        }()
     }
 }

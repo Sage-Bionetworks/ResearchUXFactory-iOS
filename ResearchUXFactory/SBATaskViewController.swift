@@ -37,7 +37,7 @@ protocol SBATaskViewControllerStrongReference: class, NSSecureCoding {
     func attachTaskViewController(_ taskViewController: SBATaskViewController)
 }
 
-open class SBATaskViewController: ORKTaskViewController, SBASharedInfoController, ORKTaskViewControllerDelegate, ORKTaskResultSource {
+open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDelegate, ORKTaskResultSource {
     
     /**
      A strongly held reference to a delegate or result source that is used by the
@@ -173,12 +173,6 @@ open class SBATaskViewController: ORKTaskViewController, SBASharedInfoController
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    // MARK: SBASharedInfoController
-    
-    lazy public var sharedAppDelegate: SBAAppInfoDelegate = {
-        return UIApplication.shared.delegate as! SBAAppInfoDelegate
-    }()
-    
     // MARK: NSCoding
     
     public required init(coder aDecoder: NSCoder) {
@@ -220,7 +214,8 @@ open class SBATaskViewController: ORKTaskViewController, SBASharedInfoController
         // Finally, look at the step and special-case certain steps
         else if let step = self.task?.step?(withIdentifier: stepIdentifier) {
             // Special-case the data groups step
-            if let result = (step as? SBADataGroupsStep)?.stepResult(currentGroups: sharedUser.dataGroups) {
+            let dataGroups = SBAInfoManager.shared.currentDataGroups
+            if let result = (step as? SBADataGroupsStep)?.stepResult(currentGroups: dataGroups) {
                 return result
             }
         }

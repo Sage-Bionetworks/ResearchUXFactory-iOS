@@ -51,6 +51,14 @@ SBAPermissionTypeIdentifier const SBAPermissionTypeIdentifierPhotoLibrary = @"ph
 
 static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManagerErrorDomain";
 
+@protocol Deprecated_AppInfoDelegate <UIApplicationDelegate>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+- (SBAPermissionsType)requiredPermissions;
+#pragma clang diagnostic pop
+
+@end
+
 @interface SBAPermissionsManager () <CLLocationManagerDelegate>
 
 @property (nonatomic, readwrite) HKHealthStore * healthStore;
@@ -114,16 +122,17 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
 
 - (NSArray<SBAPermissionObjectType *> *)defaultPermissionTypes {
     if (_defaultPermissionTypes == nil) {
-        id appDelegate = [[UIApplication sharedApplication] delegate];
-        if ([appDelegate conformsToProtocol:@protocol(SBAAppInfoDelegate)]) {
-            // First look for the permissions in the bridge info
-            NSArray *items = [[appDelegate bridgeInfo] permissionTypeItems];
-            if ((items == nil) && [appDelegate respondsToSelector:@selector(requiredPermissions)]) {
+
+        // First look for the permissions in the bridge info
+        NSArray *items = [[SBAInfoManager sharedManager] permissionTypeItems];
+        if (items == nil) {
+            id appDelegate = [[UIApplication sharedApplication] delegate];
+            if ([appDelegate respondsToSelector:@selector(requiredPermissions)]) {
                 // If not found, check the required permissions
                 items = [self typeIdentifiersForPermissionCode:[appDelegate requiredPermissions]];
             }
-            _defaultPermissionTypes = [self.permissionsTypeFactory permissionTypesFor:items];
         }
+        _defaultPermissionTypes = [self.permissionsTypeFactory permissionTypesFor:items];
     }
     return _defaultPermissionTypes;
 }

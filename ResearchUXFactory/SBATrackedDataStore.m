@@ -34,6 +34,8 @@
 #import "SBATrackedDataStore.h"
 #import "SBATrackedDataObject.h"
 #import <ResearchUXFactory/ResearchUXFactory-Swift.h>
+#import "SBAInfoManager.h"
+
 
 @interface SBATrackedDataStore ()
 
@@ -59,17 +61,12 @@
 }
 
 - (instancetype)init {
-    NSString *suiteName = nil;
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    if ([appDelegate conformsToProtocol:@protocol(SBAAppInfoDelegate)]) {
-        suiteName = [[appDelegate bridgeInfo] appGroupIdentifier];
-    }
-    return [self initWithUserDefaultsWithSuiteName:suiteName];
+    return [self initWithUserDefaultsWithSuiteName:[SBAInfoManager sharedManager].appGroupIdentifier];
 }
 
 - (instancetype)initWithUserDefaultsWithSuiteName:(NSString * _Nullable)suiteName {
     if ((self = [super init])) {
-        _storedDefaults = [[NSUserDefaults alloc] initWithSuiteName:suiteName];
+        _storedDefaults = [[NSUserDefaults alloc] initWithSuiteName:suiteName] ?: [NSUserDefaults standardUserDefaults];
         _changesDictionary = [NSMutableDictionary new];
     }
     return self;

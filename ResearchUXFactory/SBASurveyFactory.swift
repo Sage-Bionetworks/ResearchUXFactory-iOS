@@ -38,13 +38,9 @@ import ResearchKit
  that are not recognized by this factory and to allow usage by Obj-c classes that
  do not recognize protocol extensions.
  */
-open class SBASurveyFactory : NSObject, SBASharedInfoController {
+open class SBASurveyFactory : NSObject {
     
     open var steps: [ORKStep]?
-    
-    lazy open var sharedAppDelegate: SBAAppInfoDelegate = {
-        return UIApplication.shared.delegate as! SBAAppInfoDelegate
-    }()
     
     public override init() {
         super.init()
@@ -240,17 +236,13 @@ open class SBASurveyFactory : NSObject, SBASharedInfoController {
     open func createAccountStep(inputItem: SBASurveyItem, subtype: SBASurveyItemType.AccountSubtype) -> ORKStep? {
         switch (subtype) {
         case .registration:
-            return SBARegistrationStep(inputItem: inputItem, factory: self)
+            return ORKRegistrationStep(identifier: inputItem.identifier, title: inputItem.stepTitle, text: inputItem.stepText)
         case .login:
-            return SBALoginStep(inputItem: inputItem, factory: self)
+            return nil  // Requires override if used.
         case .emailVerification:
-            return SBAEmailVerificationStep(inputItem: inputItem, appInfo: self.sharedAppDelegate)
-        case .externalID:
-            return SBAExternalIDStep(inputItem: inputItem)
+            return nil  // Requires override if used.
         case .permissions:
             return SBAPermissionsStep(inputItem: inputItem)
-        case .completion:
-            return SBAOnboardingCompleteStep(inputItem: inputItem)
         case .dataGroups:
             return SBADataGroupsStep(inputItem: inputItem)
         case .profile:

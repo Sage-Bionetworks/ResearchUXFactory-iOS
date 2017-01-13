@@ -95,7 +95,7 @@ open class SBABaseConsentDocumentFactory: SBASurveyFactory {
             return ORKVisualConsentStep(identifier: inputItem.identifier,
                 document: self.consentDocument)
             
-        case .SharingOptions:
+        case .sharingOptions:
             let share = inputItem as! SBAConsentSharingOptions
             let step = ORKConsentSharingStep(identifier: inputItem.identifier,
                 investigatorShortDescription: share.investigatorShortDescription,
@@ -106,8 +106,8 @@ open class SBABaseConsentDocumentFactory: SBASurveyFactory {
                 step.text = "\(text)\n\n\(additionalText)"
             }
             if let form = inputItem as? SBAFormStepSurveyItem,
-                let textChoices = form.items?.map({form.createTextChoice($0)}) {
-                    step.answerFormat = ORKTextChoiceAnswerFormat(style: .SingleChoice, textChoices: textChoices)
+                let textChoices = form.items?.map({form.createTextChoice(from: $0)}) {
+                    step.answerFormat = ORKTextChoiceAnswerFormat(style: .singleChoice, textChoices: textChoices)
             }
             
             return step;
@@ -115,7 +115,7 @@ open class SBABaseConsentDocumentFactory: SBASurveyFactory {
         case .review:
             let step = ORKConsentReviewStep(identifier: inputItem.identifier,
                 signature: self.consentDocument.signatures?.first,
-                inDocument: self.consentDocument)
+                in: self.consentDocument)
             step.reasonForConsent = Localization.localizedString("SBA_CONSENT_SIGNATURE_CONTENT")
             return step;
         }

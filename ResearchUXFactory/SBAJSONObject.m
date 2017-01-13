@@ -32,6 +32,7 @@
 //
 
 #import "SBAJSONObject.h"
+#import "NSDate+ISO8601Format.h"
 
 @implementation NSString (SBAJSONObject)
 

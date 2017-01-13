@@ -41,6 +41,7 @@ FOUNDATION_EXPORT const unsigned char ResearchUXFactoryVersionString[];
 
 #import <ResearchUXFactory/SBADataObject.h>
 #import <ResearchUXFactory/SBADefines.h>
+#import <ResearchUXFactory/SBAInfoManager.h>
 #import <ResearchUXFactory/SBAJSONObject.h>
 #import <ResearchUXFactory/SBAKeychainWrapper.h>
 #import <ResearchUXFactory/SBALog.h>
@@ -50,3 +51,4 @@ FOUNDATION_EXPORT const unsigned char ResearchUXFactoryVersionString[];
 #import <ResearchUXFactory/SBATrackedDataStore.h>
 #import <ResearchUXFactory/ORKCollectionResult+SBAExtensions.h>
 #import <ResearchUXFactory/ORKOrderedTask+SBAExtension.h>
+#import <ResearchUXFactory/NSDate+ISO8601Format.h>
