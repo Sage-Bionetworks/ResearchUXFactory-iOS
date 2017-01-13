@@ -46,51 +46,17 @@ class SBAAccountTests: XCTestCase {
         super.tearDown()
     }
     
-    // Mark: .registration
-    
-    func testCreateRegistrationStep() {
-        let input: NSDictionary = [
-            "identifier"    : "registration",
-            "type"          : "registration",
-            "title"         : "Registration"
-        ]
-        
-        let result = SBABaseSurveyFactory().createSurveyStepWithDictionary(input)
-        
-        XCTAssertNotNil(result)
-        guard let step = result as? ORKRegistrationStep else {
-            XCTAssert(false, "\(result) not of expected type.")
-            return
-        }
-        
-        XCTAssertEqual(step.identifier, "registration")
-        XCTAssertEqual(step.title, "Registration")
-    }
-    
-    
-    // Mark: SBAProfileInfoForm
-    
     func testCreateProfileFormStep() {
         let input: NSDictionary = [
             "identifier"    : "profile",
             "type"          : "profile",
             "title"         : "Profile",
-            "items"         : ["email", "password", "externalID", "name", "birthdate", "gender", "bloodType", "fitzpatrickSkinType", "wheelchairUse", "height", "weight", "wakeTime", "sleepTime", ["identifier" : "chocolate", "type" : "boolean","text" : "Do you like chocolate?"]]
+            "items"         : ["externalID", "name", "birthdate", "gender", "bloodType", "fitzpatrickSkinType", "wheelchairUse", "height", "weight", "wakeTime", "sleepTime", ["identifier" : "chocolate", "type" : "boolean", "text" : "Do you like chocolate?"]]
         ]
         
         let step = SBAProfileFormStep(inputItem: input)
         XCTAssertEqual(step.identifier, "profile")
         XCTAssertEqual(step.title, "Profile")
-        
-        let emailItem = step.formItem(for:"email")
-        let email = emailItem?.answerFormat as? ORKEmailAnswerFormat
-        XCTAssertNotNil(emailItem)
-        XCTAssertNotNil(email, "\(emailItem?.answerFormat)")
-        
-        let passwordItem = step.formItem(for:"password")
-        let password = passwordItem?.answerFormat as? ORKTextAnswerFormat
-        XCTAssertNotNil(passwordItem)
-        XCTAssertNotNil(password, "\(passwordItem?.answerFormat)")
 
         let externalIDItem = step.formItem(for:"externalID")
         let externalID = externalIDItem?.answerFormat as? ORKTextAnswerFormat
@@ -172,5 +138,185 @@ class SBAAccountTests: XCTestCase {
         XCTAssertNotNil(chocolate, "\(chocolateItem?.answerFormat)")
         XCTAssertEqual(chocolateItem?.text, "Do you like chocolate?")
     }
+    
+    func testProfileForm_DefaultRegistration() {
+        let input: NSDictionary = [
+            "identifier"    : "registration",
+            "type"          : "registration",
+            "title"         : "Registration",
+        ]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "registration")
+        XCTAssertEqual(step.title, "Registration")
+        
+        let emailItem = step.formItem(for:"email")
+        let email = emailItem?.answerFormat as? ORKEmailAnswerFormat
+        XCTAssertNotNil(emailItem)
+        XCTAssertNotNil(email, "\(emailItem?.answerFormat)")
+        
+        let passwordItem = step.formItem(for:"password")
+        let password = passwordItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(passwordItem)
+        XCTAssertNotNil(password, "\(passwordItem?.answerFormat)")
+        
+        guard let passwordFormat = password else {
+            return
+        }
+        
+        XCTAssertEqual(passwordFormat.validationRegex, "[[:ascii:]]{2,24}")
+        XCTAssertEqual(passwordFormat.invalidMessage, "Passwords must be between 2 and 24 characters long.")
+        XCTAssertEqual(passwordFormat.maximumLength, 24)
+        XCTAssertFalse(passwordFormat.multipleLines)
+        XCTAssertEqual(passwordFormat.autocapitalizationType, UITextAutocapitalizationType.none)
+        XCTAssertEqual(passwordFormat.autocorrectionType, UITextAutocorrectionType.no)
+        XCTAssertEqual(passwordFormat.spellCheckingType, UITextSpellCheckingType.no)
+        XCTAssertEqual(passwordFormat.keyboardType, UIKeyboardType.default)
+        XCTAssertTrue(passwordFormat.isSecureTextEntry)
+        
+        let confirmationItem = step.formItem(for:"passwordConfirmation")
+        let confirmation = confirmationItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(confirmationItem)
+        XCTAssertNotNil(confirmation, "\(confirmationItem?.answerFormat)")
+        
+        guard let confirmationFormat = confirmation else {
+            return
+        }
+        
+        XCTAssertEqual(confirmationFormat.maximumLength, 24)
+        XCTAssertFalse(confirmationFormat.multipleLines)
+        XCTAssertEqual(confirmationFormat.autocapitalizationType, UITextAutocapitalizationType.none)
+        XCTAssertEqual(confirmationFormat.autocorrectionType, UITextAutocorrectionType.no)
+        XCTAssertEqual(confirmationFormat.spellCheckingType, UITextSpellCheckingType.no)
+        XCTAssertEqual(confirmationFormat.keyboardType, UIKeyboardType.default)
+        XCTAssertTrue(confirmationFormat.isSecureTextEntry)
 
+    }
+    
+    func testProfileForm_RegistrationWithMinMax() {
+        let input: NSDictionary = [
+            "identifier"    : "registration",
+            "type"          : "registration",
+            "title"         : "Registration",
+            "items"         : ["email",
+                               ["identifier" : "password",
+                                "minimumLength" : 4,
+                                "maximumLength" : 16,
+                                "shouldConfirm" : false
+                ]]]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "registration")
+        XCTAssertEqual(step.title, "Registration")
+        
+        let emailItem = step.formItem(for:"email")
+        let email = emailItem?.answerFormat as? ORKEmailAnswerFormat
+        XCTAssertNotNil(emailItem)
+        XCTAssertNotNil(email, "\(emailItem?.answerFormat)")
+        
+        let passwordItem = step.formItem(for:"password")
+        let password = passwordItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(passwordItem)
+        XCTAssertNotNil(password, "\(passwordItem?.answerFormat)")
+        
+        guard let passwordFormat = password else {
+            return
+        }
+        
+        XCTAssertEqual(passwordFormat.validationRegex, "[[:ascii:]]{4,16}")
+        XCTAssertEqual(passwordFormat.invalidMessage, "Passwords must be between 4 and 16 characters long.")
+        XCTAssertEqual(passwordFormat.maximumLength, 16)
+        XCTAssertFalse(passwordFormat.multipleLines)
+        XCTAssertEqual(passwordFormat.autocapitalizationType, UITextAutocapitalizationType.none)
+        XCTAssertEqual(passwordFormat.autocorrectionType, UITextAutocorrectionType.no)
+        XCTAssertEqual(passwordFormat.spellCheckingType, UITextSpellCheckingType.no)
+        XCTAssertEqual(passwordFormat.keyboardType, UIKeyboardType.default)
+        XCTAssertTrue(passwordFormat.isSecureTextEntry)
+        
+        let confirmationItem = step.formItem(for:"passwordConfirmation")
+        XCTAssertNil(confirmationItem)
+    }
+    
+    func testProfileForm_RegistrationWithRegex() {
+        let input: NSDictionary = [
+            "identifier"    : "registration",
+            "type"          : "registration",
+            "title"         : "Registration",
+            "items"         : ["email",
+                               ["identifier" : "password",
+                                "validationRegex" : "abc",
+                                "invalidMessage" : "ABC 123",
+                                "shouldConfirm" : false
+                ]]]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "registration")
+        XCTAssertEqual(step.title, "Registration")
+        
+        let emailItem = step.formItem(for:"email")
+        let email = emailItem?.answerFormat as? ORKEmailAnswerFormat
+        XCTAssertNotNil(emailItem)
+        XCTAssertNotNil(email, "\(emailItem?.answerFormat)")
+        
+        let passwordItem = step.formItem(for:"password")
+        let password = passwordItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(passwordItem)
+        XCTAssertNotNil(password, "\(passwordItem?.answerFormat)")
+        
+        guard let passwordFormat = password else {
+            return
+        }
+        
+        XCTAssertEqual(passwordFormat.validationRegex, "abc")
+        XCTAssertEqual(passwordFormat.invalidMessage, "ABC 123")
+        XCTAssertEqual(passwordFormat.maximumLength, 24)
+        XCTAssertFalse(passwordFormat.multipleLines)
+        XCTAssertEqual(passwordFormat.autocapitalizationType, UITextAutocapitalizationType.none)
+        XCTAssertEqual(passwordFormat.autocorrectionType, UITextAutocorrectionType.no)
+        XCTAssertEqual(passwordFormat.spellCheckingType, UITextSpellCheckingType.no)
+        XCTAssertEqual(passwordFormat.keyboardType, UIKeyboardType.default)
+        XCTAssertTrue(passwordFormat.isSecureTextEntry)
+        
+        let confirmationItem = step.formItem(for:"passwordConfirmation")
+        XCTAssertNil(confirmationItem)
+    }
+    
+    func testProfileForm_DefaultLogin() {
+        let input: NSDictionary = [
+            "identifier"    : "login",
+            "type"          : "login",
+            "title"         : "Login",
+            ]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "login")
+        XCTAssertEqual(step.title, "Login")
+        
+        let emailItem = step.formItem(for:"email")
+        let email = emailItem?.answerFormat as? ORKEmailAnswerFormat
+        XCTAssertNotNil(emailItem)
+        XCTAssertNotNil(email, "\(emailItem?.answerFormat)")
+        
+        let passwordItem = step.formItem(for:"password")
+        let password = passwordItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(passwordItem)
+        XCTAssertNotNil(password, "\(passwordItem?.answerFormat)")
+        
+        guard let passwordFormat = password else {
+            return
+        }
+        
+        XCTAssertNil(passwordFormat.validationRegex)
+        XCTAssertNil(passwordFormat.invalidMessage)
+        XCTAssertEqual(passwordFormat.maximumLength, 0)
+        XCTAssertFalse(passwordFormat.multipleLines)
+        XCTAssertEqual(passwordFormat.autocapitalizationType, UITextAutocapitalizationType.none)
+        XCTAssertEqual(passwordFormat.autocorrectionType, UITextAutocorrectionType.no)
+        XCTAssertEqual(passwordFormat.spellCheckingType, UITextSpellCheckingType.no)
+        XCTAssertEqual(passwordFormat.keyboardType, UIKeyboardType.default)
+        XCTAssertTrue(passwordFormat.isSecureTextEntry)
+        
+        let confirmationItem = step.formItem(for:"passwordConfirmation")
+        XCTAssertNil(confirmationItem)
+    }
 }

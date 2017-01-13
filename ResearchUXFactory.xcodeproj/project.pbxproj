@@ -70,6 +70,8 @@
 		FF4F06E81CEF7DE5007BD273 /* SubtaskStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4F06E71CEF7DE5007BD273 /* SubtaskStepTests.swift */; };
 		FF5544951E29611600A8E189 /* SBAPasswordOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */; };
 		FF55449A1E2961F900A8E189 /* PermissionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544991E2961F900A8E189 /* PermissionsTests.swift */; };
+		FF55449F1E296C6A00A8E189 /* SBAProfileInfoOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */; };
+		FF5544A11E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */; };
 		FF5C26361E28039000A1D9E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C26351E28038F00A1D9E0 /* main.m */; };
 		FF5C26391E28039000A1D9E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C26381E28039000A1D9E0 /* AppDelegate.m */; };
 		FF5C263C1E28039000A1D9E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C263B1E28039000A1D9E0 /* ViewController.m */; };
@@ -402,6 +404,8 @@
 		FF4F06E71CEF7DE5007BD273 /* SubtaskStepTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtaskStepTests.swift; sourceTree = "<group>"; };
 		FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPasswordOptions.swift; sourceTree = "<group>"; };
 		FF5544991E2961F900A8E189 /* PermissionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsTests.swift; sourceTree = "<group>"; };
+		FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileInfoOptions.swift; sourceTree = "<group>"; };
+		FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAHealthKitCharacteristicTypeAnswerFormat.swift; sourceTree = "<group>"; };
 		FF5C26321E28038F00A1D9E0 /* ObjCSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjCSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF5C26351E28038F00A1D9E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FF5C26371E28039000A1D9E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1001,10 +1005,12 @@
 		FF9425921E28593600FD8C24 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */,
 				FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */,
 				FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */,
 				FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */,
 				FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */,
+				FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -1490,6 +1496,7 @@
 				FBAE3CF41C8615DF003CEC4A /* SBAPDFPrintPageRenderer.m in Sources */,
 				FF27290D1D92036A00956CFB /* SBAPopUpLearnMoreAction.swift in Sources */,
 				FB84392D1C7518FE0086E961 /* SBATextChoice.swift in Sources */,
+				FF55449F1E296C6A00A8E189 /* SBAProfileInfoOptions.swift in Sources */,
 				FF36DC6F1DB68F230034C85D /* SBAToggleFormStep.swift in Sources */,
 				FB68173A1C6B0307006C8FC9 /* SBANavigableOrderedTask.swift in Sources */,
 				FF23799F1CBC2E5900F3A943 /* NSDictionary+Utilities.swift in Sources */,
@@ -1499,6 +1506,7 @@
 				FF9312391DC93327001A9F86 /* SBAPermissionObjectType.swift in Sources */,
 				FF9E48961CF3A2F1005EE7E0 /* StaticUtilities.swift in Sources */,
 				FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */,
+				FF5544A11E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift in Sources */,
 				FB84392F1C7519340086E961 /* SBASurveyItem.swift in Sources */,
 				FFB30EB11D4A8AB000D175D2 /* SBAPermissionsStep.swift in Sources */,
 				FF08E0C01C9A6A120082D530 /* SBASurveyItem+Dictionary.swift in Sources */,

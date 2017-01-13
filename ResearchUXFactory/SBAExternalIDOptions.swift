@@ -68,7 +68,7 @@ public struct SBAExternalIDOptions {
         self.keyboardType = keyboardType
     }
     
-    public init(options: [AnyHashable: Any]?) {
+    public init(options: [String : AnyObject]?) {
         self.autocapitalizationType = {
             if let autocap = options?["autocapitalizationType"] as? String {
                 return UITextAutocapitalizationType(key: autocap)

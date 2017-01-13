@@ -492,6 +492,25 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
     }
     
+    func testFactory_RegistrationStep() {
+        let input: NSDictionary = [
+            "identifier"    : "registration",
+            "type"          : "registration",
+            "title"         : "Registration"
+        ]
+        
+        let result = SBABaseSurveyFactory().createSurveyStepWithDictionary(input)
+        
+        XCTAssertNotNil(result)
+        guard let step = result as? ORKRegistrationStep else {
+            XCTAssert(false, "\(result) not of expected type.")
+            return
+        }
+        
+        XCTAssertEqual(step.identifier, "registration")
+        XCTAssertEqual(step.title, "Registration")
+    }
+    
     
     // MARK: Helper methods
 

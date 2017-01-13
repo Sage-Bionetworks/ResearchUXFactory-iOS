@@ -1,5 +1,5 @@
 //
-//  SBARegistrationForm.swift
+//  SBAHealthKitCharacteristicTypeAnswerFormat.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -34,39 +34,17 @@
 import ResearchKit
 
 /**
- Protocol for extending all the profile info steps (used by the factory to create the
- appropriate default form items).
+ `SBAHealthKitCharacteristicTypeAnswerFormat` is used to override the default implied
+ answer format for a given HealthKit characteristic.
  */
-public protocol SBAProfileInfoForm: SBAFormProtocol {
-    
-    /**
-     Used in common initialization to get the default options if the included options are nil.
-     */
-    func defaultOptions(_ inputItem: SBASurveyItem?) -> [SBAProfileInfoOption]
-}
-
-/**
- Shared factory methods for creating profile form steps.
- */
-extension SBAProfileInfoForm {
-    
-    public var options: [SBAProfileInfoOption]? {
-        return self.formItems?.mapAndFilter({ SBAProfileInfoOption(rawValue: $0.identifier) })
-    }
-    
-    public func formItemForProfileInfoOption(_ profileInfoOption: SBAProfileInfoOption) -> ORKFormItem? {
-        return self.formItems?.find({ $0.identifier == profileInfoOption.rawValue })
-    }
-    
-    public func commonInit(inputItem: SBASurveyItem?, factory: SBABaseSurveyFactory?) {
-        self.title = inputItem?.stepTitle
-        self.text = inputItem?.stepText
-        if let formStep = self as? ORKFormStep {
-            formStep.footnote = inputItem?.stepFootnote
+open class SBAHealthKitCharacteristicTypeAnswerFormat: ORKHealthKitCharacteristicTypeAnswerFormat {
+    override open func implied() -> ORKAnswerFormat {
+        let answerFormat = super.implied()
+        if let choiceFormat = answerFormat as? ORKTextChoiceAnswerFormat {
+            return ORKValuePickerAnswerFormat(textChoices: choiceFormat.textChoices)
         }
-        let options = SBAProfileInfoOptions(inputItem: inputItem, defaultIncludes: defaultOptions(inputItem))
-        self.formItems = options.makeFormItems(factory: factory)
+        else {
+            return answerFormat
+        }
     }
 }
-
-

@@ -262,9 +262,8 @@ open class SBABaseSurveyFactory : NSObject {
             return SBAPermissionsStep(inputItem: inputItem)
         case .dataGroups:
             return SBADataGroupsStep(inputItem: inputItem)
-        case .profile:
+        default:
             return SBAProfileFormStep(inputItem: inputItem, factory: self)
-            
         }
     }
     

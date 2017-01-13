@@ -41,12 +41,16 @@ import ResearchKit
  */
 open class SBAProfileFormStep: ORKFormStep, SBAProfileInfoForm {
     
-    open var shouldConfirmPassword: Bool {
-        return false
-    }
-    
     open func defaultOptions(_ inputItem: SBASurveyItem?) -> [SBAProfileInfoOption] {
-        return []
+        guard let subtype = inputItem?.surveyItemType.accountSubtype() else { return [] }
+        switch (subtype) {
+        case .registration:
+            return [.email, .password]
+        case .login:
+            return [.email, .password]
+        default:
+            return []
+        }
     }
     
     public override required init(identifier: String) {
