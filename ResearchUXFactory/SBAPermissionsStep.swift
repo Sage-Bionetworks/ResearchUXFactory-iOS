@@ -75,7 +75,7 @@ open class SBAPermissionsStep: ORKTableStep, SBANavigationSkipRule {
         commonInit()
     }
     
-    convenience init?(inputItem: SBASurveyItem) {
+    public convenience init?(inputItem: SBASurveyItem) {
         guard let survey = inputItem as? SBAFormStepSurveyItem else { return nil }
         self.init(identifier: inputItem.identifier)
         survey.mapStepValues(with: self)
