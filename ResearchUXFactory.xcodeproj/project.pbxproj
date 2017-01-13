@@ -94,8 +94,6 @@
 		FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5E56E51D6F8469008BA2A8 /* SBACheckmarkView.swift */; };
 		FF5E56E81D6F8941008BA2A8 /* SBATaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5E56E71D6F8941008BA2A8 /* SBATaskViewController.swift */; };
 		FF63D0CA1CCFF517007ADEE5 /* SBAWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63D0C91CCFF517007ADEE5 /* SBAWebViewController.swift */; };
-		FF63D0F81CD032B4007ADEE5 /* SBALog.h in Headers */ = {isa = PBXBuildFile; fileRef = FF63D0F61CD032B4007ADEE5 /* SBALog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF63D0F91CD032B4007ADEE5 /* SBALog.m in Sources */ = {isa = PBXBuildFile; fileRef = FF63D0F71CD032B4007ADEE5 /* SBALog.m */; };
 		FF6410FA1CAF39B4007FB9E1 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6410F91CAF39B4007FB9E1 /* String+Utilities.swift */; };
 		FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6411151CB341D0007FB9E1 /* SBATrackedDataObject.m */; };
 		FF6411181CB341EC007FB9E1 /* SBATrackedDataObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6411171CB341EC007FB9E1 /* SBATrackedDataObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -420,8 +418,6 @@
 		FF5E56E51D6F8469008BA2A8 /* SBACheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBACheckmarkView.swift; sourceTree = "<group>"; };
 		FF5E56E71D6F8941008BA2A8 /* SBATaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBATaskViewController.swift; sourceTree = "<group>"; };
 		FF63D0C91CCFF517007ADEE5 /* SBAWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAWebViewController.swift; sourceTree = "<group>"; };
-		FF63D0F61CD032B4007ADEE5 /* SBALog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBALog.h; sourceTree = "<group>"; };
-		FF63D0F71CD032B4007ADEE5 /* SBALog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBALog.m; sourceTree = "<group>"; };
 		FF6410F91CAF39B4007FB9E1 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		FF6410FD1CB2DC21007FB9E1 /* SBAJSONObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAJSONObject.h; sourceTree = "<group>"; };
 		FF6410FE1CB2DC21007FB9E1 /* SBAJSONObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAJSONObject.m; sourceTree = "<group>"; };
@@ -741,7 +737,6 @@
 				FF9E48951CF3A2F1005EE7E0 /* StaticUtilities.swift */,
 				FBF1B6B21CAAF6FC007C1082 /* UIAlertController+Utilities.swift */,
 				FFC41F331E025DA50057526E /* Keychain */,
-				FF63D0F51CD03297007ADEE5 /* Logging */,
 				FBAE3CF01C861587003CEC4A /* PDF */,
 			);
 			name = Utilities;
@@ -915,15 +910,6 @@
 				FF63D0C91CCFF517007ADEE5 /* SBAWebViewController.swift */,
 			);
 			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		FF63D0F51CD03297007ADEE5 /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				FF63D0F61CD032B4007ADEE5 /* SBALog.h */,
-				FF63D0F71CD032B4007ADEE5 /* SBALog.m */,
-			);
-			path = Logging;
 			sourceTree = "<group>";
 		};
 		FF6410ED1CAF3795007FB9E1 /* Data Tracking */ = {
@@ -1192,7 +1178,6 @@
 				FF6411181CB341EC007FB9E1 /* SBATrackedDataObject.h in Headers */,
 				FF94259F1E28606300FD8C24 /* NSDate+ISO8601Format.h in Headers */,
 				FF6411391CB436B6007FB9E1 /* SBAClassTypeMap.h in Headers */,
-				FF63D0F81CD032B4007ADEE5 /* SBALog.h in Headers */,
 				80A27B011CE6E32000E3419B /* SBAJSONObject.h in Headers */,
 				FF2379AB1CBC41C000F3A943 /* SBATrackedDataObjectCollection.h in Headers */,
 				FBAD11591CADB2F0005611D0 /* SBADataObject.h in Headers */,
@@ -1566,7 +1551,6 @@
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
 				FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */,
 				FF2729151D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift in Sources */,
-				FF63D0F91CD032B4007ADEE5 /* SBALog.m in Sources */,
 				FF2729131D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift in Sources */,
 				FF9425441E2812F100FD8C24 /* SBAConsentSharingOptions+Dictionary.swift in Sources */,
 				FF80920F1D01FD35003FF617 /* ORKAnswerFormat+KeyboardUtilities.swift in Sources */,
