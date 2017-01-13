@@ -283,8 +283,6 @@ public struct SBAProfileInfoOptions {
         answerFormat.autocorrectionType = .no
         answerFormat.spellCheckingType = .no
         
-
-        
         let formItem = ORKFormItem(identifier: identifier,
                                    text: Localization.localizedString("PASSWORD_FORM_ITEM_TITLE"),
                                    answerFormat: answerFormat,
