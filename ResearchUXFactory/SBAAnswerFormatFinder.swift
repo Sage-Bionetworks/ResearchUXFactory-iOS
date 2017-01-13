@@ -59,9 +59,15 @@ public protocol SBAAnswerFormatFinder: class {
  The `SBAResultIdentifier` includes a pointer to the identifier for the `ORKStepResult` 
  and the `ORKResult` that is a member of the `ORKStepResult.results` collection.
  */
-public struct SBAResultIdentifier {
+public final class SBAResultIdentifier: NSObject {
     public let identifier: String
     public let stepIdentifier: String
+    
+    public init(identifier: String, stepIdentifier: String) {
+        self.identifier = identifier
+        self.stepIdentifier = stepIdentifier
+        super.init()
+    }
 }
 
 extension ORKOrderedTask: SBAAnswerFormatFinder {
