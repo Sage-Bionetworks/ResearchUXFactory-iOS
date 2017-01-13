@@ -495,8 +495,8 @@
 		FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileFormStep.swift; sourceTree = "<group>"; };
 		FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileInfoForm.swift; sourceTree = "<group>"; };
 		FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAExternalIDOptions.swift; sourceTree = "<group>"; };
-		FF94259D1E28606300FD8C24 /* NSDate+ISO8601Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+ISO8601Format.h"; path = "../../BridgeSDK/BridgeSDK/BridgeAPI/Categories/NSDate+ISO8601Format.h"; sourceTree = "<group>"; };
-		FF94259E1E28606300FD8C24 /* NSDate+ISO8601Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+ISO8601Format.m"; path = "../../BridgeSDK/BridgeSDK/BridgeAPI/Categories/NSDate+ISO8601Format.m"; sourceTree = "<group>"; };
+		FF94259D1E28606300FD8C24 /* NSDate+ISO8601Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601Format.h"; sourceTree = "<group>"; };
+		FF94259E1E28606300FD8C24 /* NSDate+ISO8601Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601Format.m"; sourceTree = "<group>"; };
 		FF9425B01E2898C600FD8C24 /* MockInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockInfoManager.h; sourceTree = "<group>"; };
 		FF9425B11E2898C600FD8C24 /* MockInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockInfoManager.m; sourceTree = "<group>"; };
 		FF9E48951CF3A2F1005EE7E0 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
