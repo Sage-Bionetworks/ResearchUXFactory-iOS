@@ -124,7 +124,7 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
     if (_defaultPermissionTypes == nil) {
 
         // First look for the permissions in the bridge info
-        NSArray *items = [[SBAInfoManager sharedManager] permissionTypeItems];
+        NSArray *items = [[SBAInfoManager sharedManager] permissionTypes];
         if (items == nil) {
             id appDelegate = [[UIApplication sharedApplication] delegate];
             if ([appDelegate respondsToSelector:@selector(requiredPermissions)]) {

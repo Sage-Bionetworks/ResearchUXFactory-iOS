@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Array of objects that can be converted into `SBAPermissionObjectType` objects.
  */
-@property (nonatomic, readonly, copy) NSArray * _Nullable permissionTypeItems;
+@property (nonatomic, readonly, copy) NSArray * _Nullable permissionTypes;
 
 /**
  The Logo image to use for this app.

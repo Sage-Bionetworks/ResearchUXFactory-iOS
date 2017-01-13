@@ -69,8 +69,8 @@ static id __instance;
 
 #pragma mark - SBASharedAppInfo
 
-- (NSArray *)permissionTypeItems {
-    return self.plist[NSStringFromSelector(@selector(permissionTypeItems))];
+- (NSArray *)permissionTypes {
+    return self.plist[NSStringFromSelector(@selector(permissionTypes))];
 }
 
 - (NSString *)logoImageName {
