@@ -143,6 +143,12 @@ public class SBADataGroupsStep: SBANavigationFormStep {
 
 extension ORKTask {
     
+    /**
+     Union the current data groups with the task result to get the new data groups and whether or not they have changed.
+     @param currentGroups   List of the current data groups
+     @param taskResult      The task result for this run of the task
+     @return                dataGroups: New unioned data groups, changed: whether or not the data groups have changed.
+    */
     public func union(currentGroups: [String]?, with taskResult: ORKTaskResult) -> (dataGroups: [String]?, changed: Bool)  {
         let previousGroups: Set<String> = Set(currentGroups ?? [])
         let groups = recursiveUnionDataGroups(previousGroups: previousGroups, taskResult: taskResult)
