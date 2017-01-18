@@ -83,8 +83,21 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = createResult(choices: ["groupC"])
         
         let dataGroups = surveyStep.union(previousGroups: nil, stepResult: stepResult)
-        XCTAssertEqual(["groupC"], dataGroups)
+        let expectedSet = Set(["groupC"])
+        XCTAssertEqual(expectedSet, dataGroups)
+    }
+    
+    func testUnion_CurrentNil_NewGroupAandC() {
+        guard let surveyStep = createDataGroupsStep() else {
+            XCTAssert(false, "could not create step")
+            return
+        }
         
+        let stepResult = createResult(choices: ["groupA", "groupC"])
+        
+        let dataGroups = surveyStep.union(previousGroups: nil, stepResult: stepResult)
+        let expectedSet = Set(["groupA", "groupC"])
+        XCTAssertEqual(expectedSet, dataGroups)
     }
     
     func testUnion_CurrentNil_NewGroupAandB() {
@@ -93,10 +106,11 @@ class SBADataGroupsStepTests: XCTestCase {
             return
         }
         
-        let stepResult = createResult(choices: [["groupA", "groupB"]])
+        let stepResult = createResult(choices: ["groupA", ["groupB"]])
         
         let dataGroups = surveyStep.union(previousGroups: nil, stepResult: stepResult)
-        XCTAssertEqual(["groupA", "groupB"], dataGroups)
+        let expectedSet = Set(["groupA", "groupB"])
+        XCTAssertEqual(expectedSet, dataGroups)
     }
     
     func testUnion_CurrentNil_NewEmpty() {
@@ -108,7 +122,8 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = createResult(choices: [""])
         
         let dataGroups = surveyStep.union(previousGroups: nil, stepResult: stepResult)
-        XCTAssertEqual([], dataGroups)
+        let expectedSet = Set<String>()
+        XCTAssertEqual(expectedSet, dataGroups)
     }
     
     func testUnion_CurrentGroupD_NewGroupC() {
@@ -120,7 +135,8 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = createResult(choices: ["groupC"])
         
         let dataGroups = surveyStep.union(previousGroups: ["groupD", "test_user"], stepResult: stepResult)
-        XCTAssertEqual(Set(["groupC", "test_user"]), Set(dataGroups))
+        let expectedSet = Set(["groupC", "test_user"])
+        XCTAssertEqual(expectedSet, dataGroups)
     }
     
     func testUnion_CurrentGroupD_NewGroupAandB() {
@@ -129,10 +145,11 @@ class SBADataGroupsStepTests: XCTestCase {
             return
         }
         
-        let stepResult = createResult(choices: [["groupA", "groupB"]])
+        let stepResult = createResult(choices: ["groupA", ["groupB"]])
         
         let dataGroups = surveyStep.union(previousGroups: ["groupD", "test_user"], stepResult: stepResult)
-        XCTAssertEqual(Set(["groupA", "groupB", "test_user"]), Set(dataGroups))
+        let expectedSet = Set(["groupA", "groupB", "test_user"])
+        XCTAssertEqual(expectedSet, dataGroups)
     }
     
     func testUnion_CurrentGroupD_NewEmpty() {
@@ -144,7 +161,8 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = createResult(choices: [""])
         
         let dataGroups = surveyStep.union(previousGroups: ["groupD", "test_user"], stepResult: stepResult)
-        XCTAssertEqual(["test_user"], dataGroups)
+        let expectedSet = Set(["test_user"])
+        XCTAssertEqual(expectedSet, dataGroups)
     }
     
     // MARK: Step result

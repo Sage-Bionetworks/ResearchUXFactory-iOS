@@ -113,15 +113,18 @@ public class SBADataGroupsStep: SBANavigationFormStep {
      @param  stepResult     The step result to use to get the new selection
      @return                The set of data groups based on the current and step result
      */
-    public func union(previousGroups: Set<String>?, stepResult: ORKStepResult) -> Set<String> {
+    public func union(previousGroups: [String]?, stepResult: ORKStepResult) -> Set<String> {
+        let previous = Set(previousGroups ?? [])
+        return union(previous: previous, with: stepResult)
+    }
+    
+    fileprivate func union(previous previousGroups: Set<String>, with stepResult: ORKStepResult) -> Set<String> {
         let questionResult = stepResult.results?.first as? ORKChoiceQuestionResult
-        let choices = convertValueToArray(questionResult?.choiceAnswers?.first)
-        
-        // Return the choices if there isn't a minus set
-        guard previousGroups != nil else { return Set(choices) }
+        let choiceAnswers = questionResult?.choiceAnswers ?? []
+        let choices = choiceAnswers.map({convertValueToArray($0)}).flatMap({$0})
         
         // Create a set with only the groups that are *not* selected as a part of this step
-        let minusSet = Set(previousGroups!).subtracting(self.dataGroups)
+        let minusSet = previousGroups.subtracting(self.dataGroups)
         
         // And the union that minus set with the new choices
         return minusSet.union(choices)
@@ -148,13 +151,13 @@ extension ORKTask {
     }
     
     // recursively search for a data group step
-    private func recursiveUnionDataGroups(previousGroups: Set<String>, taskResult: ORKTaskResult) -> Set<String> {
+    fileprivate func recursiveUnionDataGroups(previousGroups: Set<String>, taskResult: ORKTaskResult) -> Set<String> {
         guard let navTask = self as? ORKOrderedTask else { return previousGroups }
         var dataGroups = previousGroups
         for step in navTask.steps {
             if let dataGroupsStep = step as? SBADataGroupsStep,
                 let result = taskResult.stepResult(forStepIdentifier: dataGroupsStep.identifier) {
-                dataGroups = dataGroupsStep.union(previousGroups: dataGroups, stepResult: result)
+                dataGroups = dataGroupsStep.union(previous: dataGroups, with: result)
             }
             else if let subtaskStep = step as? SBASubtaskStep {
                 let subtaskResult = ORKTaskResult(identifier: subtaskStep.subtask.identifier)
