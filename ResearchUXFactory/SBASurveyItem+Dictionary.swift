@@ -202,7 +202,7 @@ extension NSDictionary: SBANumberRange {
         return self["unit"] as? String
     }
 
-    public var stepInterval: Int {
-        return self["stepInterval"] as? Int ?? 1
+    public var stepInterval: Double {
+        return self["stepInterval"] as? Double ?? 1
     }
 }

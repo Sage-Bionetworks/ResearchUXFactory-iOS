@@ -82,7 +82,7 @@ public protocol SBANumberRange: class {
     var minNumber: NSNumber? { get }
     var maxNumber: NSNumber? { get }
     var unitLabel: String? { get }
-    var stepInterval: Int { get }
+    var stepInterval: Double { get }
 }
 
 extension ORKPasscodeType {
@@ -131,6 +131,7 @@ public enum SBASurveyItemType {
         case integer            = "numericInteger"      // ORKNumericAnswerFormat of style Integer
         case decimal            = "numericDecimal"      // ORKNumericAnswerFormat of style Decimal
         case scale              = "scaleInteger"        // ORKScaleAnswerFormat
+        case continuousScale    = "continuousScale"     // ORKContinuousScaleAnswerFormat
         case timingRange        = "timingRange"         // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
     }
 

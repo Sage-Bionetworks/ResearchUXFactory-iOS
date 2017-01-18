@@ -408,7 +408,7 @@ extension SBAFormStepSurveyItem {
             return ORKTimeOfDayAnswerFormat()
         case .duration:
             return ORKTimeIntervalAnswerFormat()
-        case .integer, .decimal, .scale:
+        case .integer, .decimal, .scale, .continuousScale:
             guard let range = self.range as? SBANumberRange else {
                 assertionFailure("\(subtype) requires a valid number range")
                 return nil
@@ -454,24 +454,37 @@ extension SBANumberRange {
     
     func createAnswerFormat(with subtype: SBASurveyItemType.FormSubtype) -> ORKAnswerFormat {
         
-        if (subtype == .scale) && self.stepInterval >= 1,
+        if (subtype == .scale) || (subtype == .continuousScale), self.stepInterval >= 0,
             // If this is a scale subtype then check that the max, min and step interval are valid
             let min = self.minNumber?.doubleValue, let max = self.maxNumber?.doubleValue, (max > min)
         {
-            // ResearchKit will throw an assertion if the number of steps is greater than 13 so 
-            // hardcode a check for whether or not to use a continuous scale based on that number
-            let interval = Double(self.stepInterval)
-            let numberOfSteps = floor((max - min) / interval)
-            if (numberOfSteps > 13) || (numberOfSteps * interval != (max - min)) {
-                return ORKContinuousScaleAnswerFormat(maximumValue: max, minimumValue: min, defaultValue: 0.0, maximumFractionDigits: 0)
+            if (subtype == .scale)  {
+                // ResearchKit will throw an assertion if the number of steps is greater than 13 so
+                // hardcode a check for whether or not to use a continuous scale based on that number
+                let interval = Double(self.stepInterval)
+                let numberOfSteps = floor((max - min) / interval)
+                if (numberOfSteps > 13) || (numberOfSteps * interval != (max - min)) {
+                    return ORKContinuousScaleAnswerFormat(maximumValue: max, minimumValue: min, defaultValue: 0.0, maximumFractionDigits: 0)
+                }
+                else {
+                    return ORKScaleAnswerFormat(maximumValue: self.maxNumber!.intValue, minimumValue: self.minNumber!.intValue, defaultValue: 0, step: Int(self.stepInterval))
+                }
             }
             else {
-                return ORKScaleAnswerFormat(maximumValue: self.maxNumber!.intValue, minimumValue: self.minNumber!.intValue, defaultValue: 0, step: self.stepInterval)
+                // Calculate the number of digits to use based on the step interval
+                var digits: Int = 0
+                var pow: Double = 1.0
+                let step = self.stepInterval
+                while (step < pow) {
+                    pow = pow / 10.0
+                    digits = digits + 1
+                }
+                return ORKContinuousScaleAnswerFormat(maximumValue: max, minimumValue: min, defaultValue: 0.0, maximumFractionDigits: digits)
             }
         }
         
         // Fall through for non-scale or invalid scale type
-        let style: ORKNumericAnswerStyle = (subtype == .decimal) ? .decimal : .integer
+        let style: ORKNumericAnswerStyle = (subtype == .decimal) || (subtype == .continuousScale) ? .decimal : .integer
         return ORKNumericAnswerFormat(style: style, unit: self.unitLabel, minimum: self.minNumber, maximum: self.maxNumber)
     }
     
