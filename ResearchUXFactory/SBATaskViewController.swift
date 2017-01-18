@@ -214,7 +214,7 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
         // Finally, look at the step and special-case certain steps
         else if let step = self.task?.step?(withIdentifier: stepIdentifier) {
             // Special-case the data groups step
-            let dataGroups = SBAInfoManager.shared.currentDataGroups
+            let dataGroups = SBAInfoManager.shared.currentParticipant.dataGroups
             if let result = (step as? SBADataGroupsStep)?.stepResult(currentGroups: dataGroups) {
                 return result
             }

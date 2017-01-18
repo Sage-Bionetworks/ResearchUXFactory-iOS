@@ -1,5 +1,5 @@
 //
-//  MockInfoManager.m
+//  SBAParticipantInfo.h
 //  ResearchUXFactory
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,38 +31,21 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "MockInfoManager.h"
+#import <Foundation/Foundation.h>
 
-@implementation MockInfoManager
+NS_ASSUME_NONNULL_BEGIN
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.plist = @{};
-        self.appGroupIdentifier = [[NSUUID UUID] UUIDString];
-        [SBAInfoManager setInfoManager:self];
-    }
-    return self;
-}
+/**
+ The `SBAParticipantInfo` protocol holds references to information that might
+ either be stored locally only and/or pushed to the server.
+ */
+@protocol SBAParticipantInfo <NSObject>
 
-- (NSArray *)permissionTypes {
-    return [super permissionTypes];
-}
-
-- (void)setPermissionTypes:(NSArray *)permissionTypes {
-    NSMutableDictionary *plist = [self.plist mutableCopy];
-    [plist setValue:permissionTypes forKey:@"permissionTypes"];
-    self.plist = plist;
-}
-
-- (NSString *)appGroupIdentifier {
-    return [super appGroupIdentifier];
-}
-
-- (void)setAppGroupIdentifier:(NSString *)appGroupIdentifier {
-    NSMutableDictionary *plist = [self.plist mutableCopy];
-    [plist setValue:appGroupIdentifier forKey:@"appGroupIdentifier"];
-    self.plist = plist;
-}
+/**
+ A list of data groups that can be assigned to a user to subcategorize them.
+ */
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable dataGroups;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -72,6 +72,7 @@
 		FF55449A1E2961F900A8E189 /* PermissionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544991E2961F900A8E189 /* PermissionsTests.swift */; };
 		FF55449F1E296C6A00A8E189 /* SBAProfileInfoOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */; };
 		FF5544A11E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */; };
+		FF5544EB1E2ED2B300A8E189 /* SBAParticipantInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5544EA1E2ED2B300A8E189 /* SBAParticipantInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF5C26361E28039000A1D9E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C26351E28038F00A1D9E0 /* main.m */; };
 		FF5C26391E28039000A1D9E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C26381E28039000A1D9E0 /* AppDelegate.m */; };
 		FF5C263C1E28039000A1D9E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5C263B1E28039000A1D9E0 /* ViewController.m */; };
@@ -406,6 +407,7 @@
 		FF5544991E2961F900A8E189 /* PermissionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsTests.swift; sourceTree = "<group>"; };
 		FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileInfoOptions.swift; sourceTree = "<group>"; };
 		FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAHealthKitCharacteristicTypeAnswerFormat.swift; sourceTree = "<group>"; };
+		FF5544EA1E2ED2B300A8E189 /* SBAParticipantInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAParticipantInfo.h; sourceTree = "<group>"; };
 		FF5C26321E28038F00A1D9E0 /* ObjCSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjCSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF5C26351E28038F00A1D9E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FF5C26371E28039000A1D9E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 				FF9425721E2823FA00FD8C24 /* SBAInfoManager.h */,
 				FF9425731E2823FA00FD8C24 /* SBAInfoManager.m */,
 				FF9425701E2821FC00FD8C24 /* SBAInfoManager.swift */,
+				FF5544EA1E2ED2B300A8E189 /* SBAParticipantInfo.h */,
 				FB8439181C727BEB0086E961 /* SBABaseSurveyFactory.swift */,
 				FB84392E1C7519340086E961 /* SBASurveyItem.swift */,
 				FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */,
@@ -1184,6 +1187,7 @@
 				FF6411181CB341EC007FB9E1 /* SBATrackedDataObject.h in Headers */,
 				FF94259F1E28606300FD8C24 /* NSDate+ISO8601Format.h in Headers */,
 				FF6411391CB436B6007FB9E1 /* SBAClassTypeMap.h in Headers */,
+				FF5544EB1E2ED2B300A8E189 /* SBAParticipantInfo.h in Headers */,
 				80A27B011CE6E32000E3419B /* SBAJSONObject.h in Headers */,
 				FF2379AB1CBC41C000F3A943 /* SBATrackedDataObjectCollection.h in Headers */,
 				FBAD11591CADB2F0005611D0 /* SBADataObject.h in Headers */,

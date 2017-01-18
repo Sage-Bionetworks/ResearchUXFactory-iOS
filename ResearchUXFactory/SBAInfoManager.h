@@ -31,15 +31,16 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 #import <Foundation/Foundation.h>
+#import "SBAParticipantInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  This protocol is used as the mapping for information used to customize the study.
  The default implementation maps each key using the property name to a value
- defined in a plist dictionary included in the app resource bundle.
+ defined in a plist dictionary included in the app resource bundle. The shared app
+ info is designed to be a read-only protocol.
  
  See `BridgeInfo.plist` in the Shared SampleApp Resources included in this project
  for an example.
@@ -118,9 +119,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray <NSBundle *> *resourceBundles;
 
 /**
- A list of data groups that can be assigned to a user to subcategorize them.
+ A pointer to the current participant object
  */
-@property (nonatomic, copy, nullable) NSSet <NSString *> *currentDataGroups;
+@property (nonatomic, strong) id <SBAParticipantInfo> currentParticipant;
 
 @end
 
