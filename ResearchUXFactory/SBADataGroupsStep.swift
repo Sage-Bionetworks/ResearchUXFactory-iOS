@@ -70,7 +70,7 @@ public class SBADataGroupsStep: SBANavigationFormStep {
      Create an `ORKStepResult` from the given set of data groups.
      @return    Step result for this step.
      */
-    public func stepResult(currentGroups: Set<String>?) -> ORKStepResult? {
+    public func stepResult(currentGroups: [String]?) -> ORKStepResult? {
         
         // Look for a current choice from the input groups
         let currentChoices: [Any]? = {
@@ -80,7 +80,7 @@ public class SBADataGroupsStep: SBANavigationFormStep {
                 return nil
             }
             // Create the intersection set that is the values from the current group that are in this steps subset of data groups
-            let currentSet = currentGroups!.intersection(self.dataGroups)
+            let currentSet = Set(currentGroups!).intersection(self.dataGroups)
             // If there is no overlap then return nil
             guard currentSet.count > 0 else { return nil }
             // Otherwise, look for an answer that maps to the current set
@@ -136,4 +136,34 @@ public class SBADataGroupsStep: SBANavigationFormStep {
         }
         return []
     }
+}
+
+extension ORKTask {
+    
+    public func union(currentGroups: [String]?, with taskResult: ORKTaskResult) -> (dataGroups: [String]?, changed: Bool)  {
+        let previousGroups: Set<String> = Set(currentGroups ?? [])
+        let groups = recursiveUnionDataGroups(previousGroups: previousGroups, taskResult: taskResult)
+        let changed = (groups != previousGroups)
+        return (changed ? Array(groups) : currentGroups, changed)
+    }
+    
+    // recursively search for a data group step
+    private func recursiveUnionDataGroups(previousGroups: Set<String>, taskResult: ORKTaskResult) -> Set<String> {
+        guard let navTask = self as? ORKOrderedTask else { return previousGroups }
+        var dataGroups = previousGroups
+        for step in navTask.steps {
+            if let dataGroupsStep = step as? SBADataGroupsStep,
+                let result = taskResult.stepResult(forStepIdentifier: dataGroupsStep.identifier) {
+                dataGroups = dataGroupsStep.union(previousGroups: dataGroups, stepResult: result)
+            }
+            else if let subtaskStep = step as? SBASubtaskStep {
+                let subtaskResult = ORKTaskResult(identifier: subtaskStep.subtask.identifier)
+                let (subResults, _) = subtaskStep.filteredStepResults(taskResult.results as! [ORKStepResult])
+                subtaskResult.results = subResults
+                dataGroups = subtaskStep.subtask.recursiveUnionDataGroups(previousGroups: dataGroups, taskResult: subtaskResult)
+            }
+        }
+        return dataGroups
+    }
+    
 }
