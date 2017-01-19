@@ -104,7 +104,6 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
         XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
-        XCTAssertTrue(surveyStep.skipIfPassed)
         
         guard let formItems = surveyStep.formItems , formItems.count == 3 else {
             XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
@@ -141,7 +140,6 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
         XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
-        XCTAssertTrue(surveyStep.skipIfPassed)
         
         guard let formItems = surveyStep.formItems , formItems.count == 3 else {
             XCTAssert(false, "\(surveyStep.formItems) are not of expected count")

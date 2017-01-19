@@ -231,7 +231,7 @@ open class SBABaseSurveyFactory : NSObject {
     open func createFormStep(_ inputItem:SBAFormStepSurveyItem, isSubtaskStep: Bool = false) -> ORKStep? {
         
         // If this item should use the question style then create accordingly
-        if inputItem.questionStyle {
+        if inputItem.shouldUseQuestionStyle {
             return SBANavigationQuestionStep(inputItem: inputItem, factory: self)
         }
         

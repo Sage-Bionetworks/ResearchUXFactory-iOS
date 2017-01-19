@@ -272,10 +272,13 @@ public extension SBASurveyNavigationStep {
     
     func sharedCopyFromSurveyItem(_ surveyItem: Any) {
         guard let surveyItem = surveyItem as? SBAFormStepSurveyItem else { return }
-        if let skipIdentifier = surveyItem.rules?.first?.skipIdentifier {
+        // TODO: syoung 01/19/2017 Refactor to implement multiple rules rather than 
+        // assuming that there is only one
+        assert(surveyItem.rules == nil || surveyItem.rules!.count <= 1, "Not yet implemented for multiple rules")
+        if let rule = surveyItem.rules?.first, let skipIdentifier = rule.skipIdentifier {
             self.skipToStepIdentifier = skipIdentifier
+            self.skipIfPassed = rule.skipIfPassed
         }
-        self.skipIfPassed = surveyItem.skipIfPassed
     }
     
     func sharedHash() -> Int {

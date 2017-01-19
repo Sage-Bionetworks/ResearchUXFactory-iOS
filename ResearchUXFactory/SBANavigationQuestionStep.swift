@@ -41,6 +41,8 @@ public class SBASurveyRuleItem: SBADataObject, SBASurveyRule {
     
     public dynamic var rulePredicate: NSPredicate?
     
+    public var skipIfPassed: Bool { return true }
+    
     override open func dictionaryRepresentationKeys() -> [String] {
         return super.dictionaryRepresentationKeys().appending(#keyPath(rulePredicate))
     }

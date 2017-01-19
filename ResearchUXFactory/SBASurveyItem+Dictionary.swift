@@ -126,10 +126,6 @@ extension NSDictionary: SBAInstructionStepSurveyItem {
 
 extension NSDictionary: SBAFormStepSurveyItem, SBASurveyRule {
     
-    public var placeholderText: String? {
-        return self["placeholder"] as? String
-    }
-    
     public var optional: Bool {
         let optional = self["optional"] as? Bool
         return optional ?? false
@@ -140,7 +136,7 @@ extension NSDictionary: SBAFormStepSurveyItem, SBASurveyRule {
     }
     
     public var range: AnyObject? {
-        return nil 
+        return self
     }
     
     public var rules: [SBASurveyRule]? {
@@ -183,7 +179,7 @@ extension NSDictionary: SBAFormStepSurveyItem, SBASurveyRule {
         return self["expectedAnswer"]
     }
     
-    public var questionStyle: Bool {
+    public var shouldUseQuestionStyle: Bool {
         return self["questionStyle"] as? Bool ?? false
     }
 }
