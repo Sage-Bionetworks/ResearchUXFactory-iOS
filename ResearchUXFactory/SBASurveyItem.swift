@@ -226,35 +226,6 @@ public protocol SBATextFieldRange: class {
      */
     var maximumLength: Int { get }
     
-    /**
-     A Boolean value indicating whether to expect more than one line of input.
-     */
-    var multipleLines: Bool { get }
-    
-    /**
-     The autocapitalization type that applies to the user's input.
-     */
-    var autocapitalizationType: UITextAutocapitalizationType { get }
-    
-    /**
-     The autocorrection type that applies to the user's input.
-     */
-    var autocorrectionType: UITextAutocorrectionType { get }
-    
-    /**
-     The spell checking type that applies to the user's input.
-     */
-    var spellCheckingType: UITextSpellCheckingType { get }
-    
-    /**
-     The keyboard type that applies to the user's input.
-    */
-    var keyboardType: UIKeyboardType { get }
-    
-    /**
-     Identifies whether the text object should hide the text being entered.
-     */
-    var isSecureTextEntry: Bool { get }
 }
 
 /**
@@ -342,6 +313,7 @@ public enum SBASurveyItemType {
         case singleChoice       = "singleChoiceText"    // ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
         case multipleChoice     = "multipleChoiceText"  // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
         case text               = "textfield"           // ORKTextAnswerFormat
+        case multipleLineText   = "multilineText"       // ORKTextAnswerFormat with multiple lines
         case date               = "datePicker"          // ORKDateAnswerFormat of style Date
         case dateTime           = "timeAndDatePicker"   // ORKDateAnswerFormat of style DateTime
         case time               = "timePicker"          // ORKTimeOfDayAnswerFormat

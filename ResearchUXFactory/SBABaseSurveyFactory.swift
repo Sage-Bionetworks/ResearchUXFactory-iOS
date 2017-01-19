@@ -394,8 +394,15 @@ extension SBAFormStepSurveyItem {
         switch(subtype) {
         case .boolean:
             return ORKBooleanAnswerFormat()
-        case .text:
-            return ORKTextAnswerFormat()
+        case .text, .multipleLineText:
+            let answerFormat = ORKTextAnswerFormat()
+            answerFormat.multipleLines = (subtype == .multipleLineText)
+            if let range = self.range as? SBATextFieldRange {
+                answerFormat.validationRegex = range.validationRegex
+                answerFormat.invalidMessage = range.invalidMessage
+                answerFormat.maximumLength = range.maximumLength
+            }
+            return answerFormat
         case .singleChoice, .multipleChoice:
             guard let textChoices = self.items?.map({createTextChoice(from: $0)}) else { return nil }
             let style: ORKChoiceAnswerStyle = (subtype == .singleChoice) ? .singleChoice : .multipleChoice
