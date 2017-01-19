@@ -54,24 +54,11 @@ open class SBABaseSurveyFactory : NSObject {
     public convenience init(dictionary: NSDictionary) {
         self.init()
         
-        // Load the sections
-        var previousSectionType: SBAConsentSectionType?
-        if let sections = dictionary["sections"] as? [NSDictionary] {
-            self.consentDocument.sections = sections.map({ (dictionarySection) -> ORKConsentSection in
-                let consentSection = dictionarySection.createConsentSection(previous: previousSectionType)
-                previousSectionType = dictionarySection.consentSectionType
-                return consentSection
-            })
-        }
+        // Map the consent sections into a consent document (if applicable)
+        self.mapConsentDocumentSectionsIfNeeded(with: dictionary)
         
-        // Load the document for the HTML content
-        if let properties = dictionary["documentProperties"] as? NSDictionary,
-            let documentHtmlContent = properties["htmlDocument"] as? String {
-            self.consentDocument.htmlReviewContent = SBAResourceFinder.shared.html(forResource: documentHtmlContent)
-        }
-        
-        // After loading the consentDocument, map the steps
-        self.mapSteps(dictionary)
+        // Map the steps (if applicable)
+        self.mapSteps(with: dictionary)
     }
     
     /**
@@ -80,7 +67,7 @@ open class SBABaseSurveyFactory : NSObject {
      
      @param dictionary  dictionary with the steps to map
     */
-    public func mapSteps(_ dictionary: NSDictionary) {
+    public func mapSteps(with dictionary: NSDictionary) {
         if let steps = dictionary["steps"] as? [NSDictionary] {
             self.steps = steps.mapAndFilter({ self.createSurveyStepWithDictionary($0) })
         }
@@ -271,8 +258,11 @@ open class SBABaseSurveyFactory : NSObject {
         }
     }
     
+    /**
+     The consent document is created on demand using a lazy initializer with 
+     default values for the required fields.
+    */
     lazy open var consentDocument: ORKConsentDocument = {
-        
         // Setup the consent document
         let consentDocument = ORKConsentDocument()
         consentDocument.title = Localization.localizedString("SBA_CONSENT_TITLE")
@@ -285,9 +275,37 @@ open class SBABaseSurveyFactory : NSObject {
         
         return consentDocument
     }()
-
     
-    // Override the base class to implement creating consent steps
+    /**
+     Map the consent sections and document properties from the given dictionary.
+     If this instance of the factory uses consent sections then the `consentDocument`
+     will be initialized and the sections will be added to it.
+    */
+    open func mapConsentDocumentSectionsIfNeeded(with dictionary: NSDictionary) {
+        
+        // Load the sections
+        var previousSectionType: SBAConsentSectionType?
+        if let sections = dictionary["sections"] as? [NSDictionary] {
+            self.consentDocument.sections = sections.map({ (dictionarySection) -> ORKConsentSection in
+                let consentSection = dictionarySection.createConsentSection(previous: previousSectionType)
+                previousSectionType = dictionarySection.consentSectionType
+                return consentSection
+            })
+        }
+        
+        // Load the document for the HTML content
+        if let properties = dictionary["documentProperties"] as? NSDictionary,
+            let documentHtmlContent = properties["htmlDocument"] as? String {
+            self.consentDocument.htmlReviewContent = SBAResourceFinder.shared.html(forResource: documentHtmlContent)
+        }
+    }
+
+    /**
+     Override the base class to implement creating consent steps.
+     @param inputItem   The item used to create the step
+     @param subtype     The `SBASurveyItemType.ConsentSubtype` for this step
+     @return            The step created by the factory
+     */
     open func createConsentStep(inputItem: SBASurveyItem, subtype: SBASurveyItemType.ConsentSubtype) -> ORKStep? {
         switch (subtype) {
             
