@@ -43,6 +43,9 @@
 "SBA_SKIP_CHOICE" = "Prefer not to answer"; // Text for selection when prefer not to answer (skip)
 "SBA_NOT_SURE_CHOICE" = "Not sure"; // Text for selection when not sure of the answer
 
+/* Textfield entry */
+"INVALID_REGEX_MESSAGE" = "The text you have entered is invalid."; // Generic message for invalid text entry
+
 /* Passcode Reset */
 "SBA_RESET_PASSCODE_TITLE" = "Reset Passcode"; // Prompt to change passcode
 "SBA_RESET_PASSCODE_MESSAGE" = "In order to reset your passcode, you'll need to log out of the app completely and log back in using your email and password."; // Description of what happens when passcode is reset
