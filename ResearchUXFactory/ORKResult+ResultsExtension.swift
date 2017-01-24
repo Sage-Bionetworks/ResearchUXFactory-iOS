@@ -387,6 +387,8 @@ extension ORKQuestionType {
             return "Location"
         case .height:
             return "Height"
+        case .multiplePicker:
+            return "Text"
         }
     }
 }
@@ -510,5 +512,16 @@ extension ORKDateQuestionResult {
             return SBAAnswerKeyAndValue(key: key, value: (answer as NSDate).jsonObject(), questionType: self.questionType)
         }
     }
+}
+
+extension ORKMultipleComponentQuestionResult {
+    
+    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+        guard let answer = self.componentsAnswer, let separator = self.separator else { return nil }
+        let key = "textAnswer"
+        let textAnswer = answer.map({"\($0)"}).joined(separator: separator)
+        return SBAAnswerKeyAndValue(key: key, value: textAnswer as NSSecureCoding, questionType: .text)
+    }
+    
 }
 
