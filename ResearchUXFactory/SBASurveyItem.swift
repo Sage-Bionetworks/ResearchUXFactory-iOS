@@ -274,168 +274,17 @@ public protocol SBANumberRange: class {
     var stepInterval: Double { get }
 }
 
-extension ORKPasscodeType {
-    init?(key: String) {
-        switch (key) {
-        case SBASurveyItemType.passcodeType6Digit:
-            self = .type6Digit
-        case SBASurveyItemType.passcodeType4Digit:
-            self = .type4Digit
-        default:
-            return nil
-        }
-    }
-}
-
 /**
- List of all the currently supported step types with the key name for each class type.
- This is used by the `SBABaseSurveyFactory` to determine which subclass of `ORKStep` to return
- for a given `SBASurveyItem`.
-*/
-public enum SBASurveyItemType {
-    
-    case custom(String?)
-    
-    case subtask                                        // SBASubtaskStep
-    public static let subtaskKey = "subtask"
-    
-    case instruction(InstructionSubtype)
-    public enum InstructionSubtype: String {
-        case instruction        = "instruction"         // ORKInstructionStep
-        case completion         = "completion"          // ORKCompletionStep
-    }
-
-    case form(FormSubtype)                              // ORKFormStep
-    public enum FormSubtype: String {
-        case compound           = "compound"            // ORKFormItems > 1
-        case toggle             = "toggle"              // SBABooleanToggleFormStep 
-        case boolean            = "boolean"             // ORKBooleanAnswerFormat
-        case singleChoice       = "singleChoiceText"    // ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
-        case multipleChoice     = "multipleChoiceText"  // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
-        case text               = "textfield"           // ORKTextAnswerFormat
-        case multipleLineText   = "multilineText"       // ORKTextAnswerFormat with multiple lines
-        case date               = "datePicker"          // ORKDateAnswerFormat of style Date
-        case dateTime           = "timeAndDatePicker"   // ORKDateAnswerFormat of style DateTime
-        case time               = "timePicker"          // ORKTimeOfDayAnswerFormat
-        case duration           = "timeInterval"        // ORKTimeIntervalAnswerFormat
-        case integer            = "numericInteger"      // ORKNumericAnswerFormat of style Integer
-        case decimal            = "numericDecimal"      // ORKNumericAnswerFormat of style Decimal
-        case scale              = "scaleInteger"        // ORKScaleAnswerFormat
-        case continuousScale    = "continuousScale"     // ORKContinuousScaleAnswerFormat
-        case timingRange        = "timingRange"         // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
-    }
-
-    case consent(ConsentSubtype)
-    public enum ConsentSubtype: String {
-        case sharingOptions     = "consentSharingOptions"   // ORKConsentSharingStep
-        case review             = "consentReview"           // ORKConsentReviewStep
-        case visual             = "consentVisual"           // ORKVisualConsentStep
-    }
-    
-    case account(AccountSubtype)
-    public enum AccountSubtype: String {
-        case registration       = "registration"            // ORKRegistrationStep
-        case login              = "login"                   // SBAProfileFormStep
-        case emailVerification  = "emailVerification"       // Custom
-        case externalID         = "externalID"              // SBAProfileFormStep
-        case permissions        = "permissions"             // SBAPermissionsStep
-        case dataGroups         = "dataGroups"              // SBADataGroupsStep
-        case profile            = "profile"                 // SBAProfileFormStep
-    }
-    
-    case passcode(ORKPasscodeType)
-    public static let passcodeType6Digit = "passcodeType6Digit"
-    public static let passcodeType4Digit = "passcodeType4Digit"
-    
-    public init(rawValue: String?) {
-        guard let type = rawValue else { self = .custom(nil); return }
-        
-        if let subtype = InstructionSubtype(rawValue: type) {
-            self = .instruction(subtype)
-        }
-        else if let subtype = FormSubtype(rawValue: type) {
-            self = .form(subtype)
-        }
-        else if let subtype = ConsentSubtype(rawValue: type) {
-            self = .consent(subtype)
-        }
-        else if let subtype = AccountSubtype(rawValue: type) {
-            self = .account(subtype)
-        }
-        else if let subtype = ORKPasscodeType(key: type) {
-            self = .passcode(subtype)
-        }
-        else if type == SBASurveyItemType.subtaskKey {
-            self = .subtask
-        }
-        else {
-            self = .custom(type)
-        }
-    }
-        
-    public func formSubtype() -> FormSubtype? {
-        if case .form(let subtype) = self {
-            return subtype
-        }
-        return nil
-    }
-    
-    public func consentSubtype() -> ConsentSubtype? {
-        if case .consent(let subtype) = self {
-            return subtype
-        }
-        return nil
-    }
-    
-    public func accountSubtype() -> AccountSubtype? {
-        if case .account(let subtype) = self {
-            return subtype
-        }
-        return nil
-    }
-    
-    public func isNilType() -> Bool {
-        if case .custom(let customType) = self {
-            return (customType == nil)
-        }
-        return false
-    }
-}
-
-extension SBASurveyItemType: Equatable {
-}
-
-public func ==(lhs: SBASurveyItemType, rhs: SBASurveyItemType) -> Bool {
-    switch (lhs, rhs) {
-    case (.instruction(let lhsValue), .instruction(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.form(let lhsValue), .form(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.consent(let lhsValue), .consent(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.account(let lhsValue), .account(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.passcode(let lhsValue), .passcode(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.subtask, .subtask):
-        return true
-    case (.custom(let lhsValue), .custom(let rhsValue)):
-        return lhsValue == rhsValue;
-    default:
-        return false
-    }
-}
-
+ This protocol includes a pointer to a custom step type identifier that can be used by factory
+ overrides or an implemnentation of `ORKTaskViewControllerDelegate` to vend a custom step.
+ */
 public protocol SBACustomTypeStep {
+    
+    /**
+     An identifier for a custom step type.
+    */
     var customTypeIdentifier: String? { get }
 }
 
-extension SBASurveyItemType: SBACustomTypeStep {
-    public var customTypeIdentifier: String? {
-        if case .custom(let type) = self {
-            return type
-        }
-        return nil
-    }
-}
+
 
