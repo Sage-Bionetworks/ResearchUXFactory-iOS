@@ -103,12 +103,25 @@ class SBABaseSurveyFactoryTests: XCTestCase {
             return
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
-        XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
         
         guard let formItems = surveyStep.formItems , formItems.count == 3 else {
             XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
             return
         }
+        
+        // First try with one "NO" answer
+        let taskResultFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: false),
+                                                                createBooleanResult("question3", answer: true)])
+        let failedIdentifier = surveyStep.nextStepIdentifier(with: taskResultFail, and: nil)
+        XCTAssertNil(failedIdentifier)
+        
+        // Next try with pass results
+        let taskResultSuccess = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: true),
+                                                                createBooleanResult("question3", answer: true)])
+        let passedIdentifier = surveyStep.nextStepIdentifier(with: taskResultSuccess, and: nil)
+        XCTAssertEqual(passedIdentifier, "consent")
     }
     
     func testFactory_ToggleSurveyQuestion() {
@@ -128,7 +141,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
                     "expectedAnswer" : true],
             ],
             "skipIdentifier" : "consent",
-            "skipIfPassed" : true
+            "skipIfPassed" : false
         ]
         
         let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
@@ -139,16 +152,10 @@ class SBABaseSurveyFactoryTests: XCTestCase {
             return
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
-        XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
         
-        guard let formItems = surveyStep.formItems , formItems.count == 3 else {
+        guard let formItems = surveyStep.formItems, formItems.count == 3 else {
             XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
             return
-        }
-        
-        for formItem in formItems {
-            let answerFormat = formItem.answerFormat as? ORKBooleanAnswerFormat
-            XCTAssertNotNil(answerFormat)
         }
         
         XCTAssertEqual(formItems[0].identifier, "question1")
@@ -158,6 +165,28 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(formItems[0].text, "Are you older than 18?")
         XCTAssertEqual(formItems[1].text, "Are you a US resident?")
         XCTAssertEqual(formItems[2].text, "Can you read English?")
+        
+        XCTAssertNotNil(formItems[0] as? SBANavigationFormItem)
+        XCTAssertNotNil(formItems[1] as? SBANavigationFormItem)
+        XCTAssertNotNil(formItems[2] as? SBANavigationFormItem)
+        
+        XCTAssertNotNil(formItems[0].answerFormat as? ORKBooleanAnswerFormat)
+        XCTAssertNotNil(formItems[1].answerFormat as? ORKBooleanAnswerFormat)
+        XCTAssertNotNil(formItems[2].answerFormat as? ORKBooleanAnswerFormat)
+        
+        // First try with one "NO" answer
+        let taskResultFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: false),
+                                                                createBooleanResult("question3", answer: true)])
+        let failedIdentifier = surveyStep.nextStepIdentifier(with: taskResultFail, and: nil)
+        XCTAssertEqual(failedIdentifier, "consent")
+        
+        // Next try with pass results
+        let taskResultSuccess = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                   createBooleanResult("question2", answer: true),
+                                                                   createBooleanResult("question3", answer: true)])
+        let passedIdentifier = surveyStep.nextStepIdentifier(with: taskResultSuccess, and: nil)
+        XCTAssertNil(passedIdentifier)
     }
     
     func testFactory_CompoundSurveyQuestion_NoRule() {
@@ -229,14 +258,28 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         }
         
         XCTAssertEqual(surveyStep.identifier, "quiz")
-        XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
-        XCTAssertTrue(surveyStep.skipIfPassed)
         
         guard let subtask = surveyStep.subtask as? ORKOrderedTask else {
             XCTAssert(false, "\(surveyStep.subtask) is not of expected class")
             return
         }
         XCTAssertEqual(subtask.steps.count, 3)
+        
+        // First try with one "NO" answer
+        let taskResultFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: true),
+                                                                createBooleanResult("question3", answer: true)],
+                                              isSubtask:true)
+        let failedIdentifier = surveyStep.nextStepIdentifier(with: taskResultFail, and: nil)
+        XCTAssertNil(failedIdentifier)
+        
+        // Next try with pass results
+        let taskResultSuccess = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                   createBooleanResult("question2", answer: false),
+                                                                   createBooleanResult("question3", answer: true)],
+                                                 isSubtask:true)
+        let passedIdentifier = surveyStep.nextStepIdentifier(with: taskResultSuccess, and: nil)
+        XCTAssertEqual(passedIdentifier, "consent")
     }
     
     func testFactory_DirectNavigationRule() {
@@ -511,35 +554,46 @@ class SBABaseSurveyFactoryTests: XCTestCase {
     
     
     // MARK: Helper methods
-
-    func createTaskBooleanResult(_ answer: Bool?) -> ORKTaskResult {
-        let questionResult = ORKBooleanQuestionResult(identifier:"living-alone-status")
+    
+    func createBooleanResult(_ stepIdentifier: String, answer: Bool?) -> ORKResult {
+        let questionResult = ORKBooleanQuestionResult(identifier:stepIdentifier)
         if let booleanAnswer = answer {
             questionResult.booleanAnswer = booleanAnswer as NSNumber?
         }
-        let stepResult = ORKStepResult(stepIdentifier: "living-alone-status", results: [questionResult])
-        let taskResult = ORKTaskResult(identifier: "task")
-        taskResult.results = [ORKStepResult(identifier: "introduction"), stepResult]
-        return taskResult
+        return questionResult
+    }
+
+    func createTaskBooleanResult(_ stepIdentifier: String, answer: Bool?) -> ORKTaskResult {
+        let questionResult = createBooleanResult(stepIdentifier, answer: answer)
+        return createTaskResult(stepIdentifier, results: [questionResult])
     }
     
-    func createTaskChoiceResult(_ answer: [Any]?) -> ORKTaskResult {
-        let questionResult = ORKChoiceQuestionResult(identifier:"medical-usage")
+    func createTaskChoiceResult(_ stepIdentifier: String, answer: [Any]?) -> ORKTaskResult {
+        let questionResult = ORKChoiceQuestionResult(identifier:stepIdentifier)
         questionResult.choiceAnswers = answer
-        let stepResult = ORKStepResult(stepIdentifier: "medical-usage", results: [questionResult])
-        let taskResult = ORKTaskResult(identifier: "task")
-        taskResult.results = [ORKStepResult(identifier: "introduction"), stepResult]
-        return taskResult
+        return createTaskResult(stepIdentifier, results: [questionResult])
     }
     
-    func createTaskNumberResult(_ answer: Int?) -> ORKTaskResult {
-        let questionResult = ORKNumericQuestionResult(identifier: "age")
+    func createTaskNumberResult(_ stepIdentifier: String, answer: Int?) -> ORKTaskResult {
+        let questionResult = ORKNumericQuestionResult(identifier:stepIdentifier)
         if let numericAnswer = answer {
             questionResult.numericAnswer = numericAnswer as NSNumber?
         }
-        let stepResult = ORKStepResult(stepIdentifier: "age", results: [questionResult])
+        return createTaskResult(stepIdentifier, results: [questionResult])
+    }
+    
+    func createTaskResult(_ stepIdentifier: String, results: [ORKResult]?, isSubtask:Bool = false) -> ORKTaskResult {
+        var stepResults: [ORKStepResult] = [ORKStepResult(identifier: "introduction")]
+        if isSubtask {
+            let subResults = results!.map({ (result) -> ORKStepResult in
+                return ORKStepResult(stepIdentifier: "\(stepIdentifier).\(result.identifier)", results: [result])
+            })
+            stepResults.append(contentsOf: subResults)
+        } else {
+            stepResults.append(ORKStepResult(stepIdentifier: stepIdentifier, results: results))
+        }
         let taskResult = ORKTaskResult(identifier: "task")
-        taskResult.results = [ORKStepResult(identifier: "introduction"), stepResult]
+        taskResult.results = stepResults
         return taskResult
     }
     

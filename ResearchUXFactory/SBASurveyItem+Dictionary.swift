@@ -204,23 +204,23 @@ extension NSDictionary: SBASurveyRule {
     }
     
     public var rulePredicate: NSPredicate? {
-        if let subtype = self.surveyItemType.formSubtype() {
-            if case .boolean = subtype,
-                let expectedAnswer = self.expectedAnswer as? Bool
-            {
-                return NSPredicate(format: "answer = %@", expectedAnswer as CVarArg)
-            }
-            else if case .singleChoice = subtype,
-                let expectedAnswer = self.expectedAnswer
-            {
-                let answerArray = [expectedAnswer]
-                return NSPredicate(format: "answer = %@", answerArray)
-            }
-            else if case .multipleChoice = subtype,
-                let expectedAnswer = self.expectedAnswer as? [AnyObject]
-            {
-                return NSPredicate(format: "answer = %@", expectedAnswer)
-            }
+        // If this is an item where the parent is a toggle type, then it is assumed boolean
+        let subtype = self.surveyItemType.formSubtype() ?? SBASurveyItemType.FormSubtype.boolean
+        if case .boolean = subtype,
+            let expectedAnswer = self.expectedAnswer as? Bool
+        {
+            return NSPredicate(format: "answer = %@", expectedAnswer as CVarArg)
+        }
+        else if case .singleChoice = subtype,
+            let expectedAnswer = self.expectedAnswer
+        {
+            let answerArray = [expectedAnswer]
+            return NSPredicate(format: "answer = %@", answerArray)
+        }
+        else if case .multipleChoice = subtype,
+            let expectedAnswer = self.expectedAnswer as? [AnyObject]
+        {
+            return NSPredicate(format: "answer = %@", expectedAnswer)
         }
         return nil;
     }
