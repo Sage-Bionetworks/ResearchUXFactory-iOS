@@ -293,6 +293,13 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
     }
     
     open func taskViewController(_ taskViewController: ORKTaskViewController, stepViewControllerWillAppear stepViewController: ORKStepViewController) {
+        
+        // If there is a learnmore action, then call it
+        if let learnMoreStep = stepViewController.step as? SBALearnMoreActionStep,
+            let learnMore = learnMoreStep.learnMoreAction, let learnMoreText = learnMore.learnMoreButtonText {
+            stepViewController.learnMoreButtonTitle = learnMoreText
+        }
+        
         _internalDelegate?.taskViewController?(taskViewController, stepViewControllerWillAppear: stepViewController)
     }
     
