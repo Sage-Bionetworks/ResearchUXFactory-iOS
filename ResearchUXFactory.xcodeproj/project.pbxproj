@@ -245,6 +245,7 @@
 		FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */; };
 		FFDECDFD1D077C2000434001 /* ConsentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECDFC1D077C2000434001 /* ConsentTests.swift */; };
 		FFDECE011D07DDED00434001 /* Dictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */; };
+		FFE57F1E1E38837400CEC67F /* SBASurveyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */; };
 		FFF05FAB1D5A4FCC007304FF /* SBAPermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -540,6 +541,7 @@
 		FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SBATrackedActivityStep.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FFDECDFC1D077C2000434001 /* ConsentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTests.swift; sourceTree = "<group>"; };
 		FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
+		FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyRule.swift; sourceTree = "<group>"; };
 		FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -649,6 +651,7 @@
 				FB84392E1C7519340086E961 /* SBASurveyItem.swift */,
 				FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */,
 				FF1DD9351E37DC210096727C /* SBASurveyItemType.swift */,
+				FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1526,6 +1529,7 @@
 				FF5544951E29611600A8E189 /* SBAPasswordOptions.swift in Sources */,
 				FBAD11701CADE79E005611D0 /* SBABridgeTask+Dictionary.swift in Sources */,
 				FF63D0CA1CCFF517007ADEE5 /* SBAWebViewController.swift in Sources */,
+				FFE57F1E1E38837400CEC67F /* SBASurveyRule.swift in Sources */,
 				FB6BA0951C7CDA6000C9903F /* SBAInstructionStep.swift in Sources */,
 				FF882F221E173DB7002CFB63 /* SBAFormProtocol.swift in Sources */,
 				FF10F4E01D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.m in Sources */,

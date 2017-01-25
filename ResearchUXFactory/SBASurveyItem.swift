@@ -40,6 +40,7 @@ public protocol SBAStepTransformer: class {
     func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep?
 }
 
+
 /**
  The `SBASurveyItem` protocol can be used to transform a model object defined in the input model
  into the appropriate ResearchKit model object. The type of object created is up to the implementation
@@ -87,6 +88,7 @@ public protocol SBASurveyItem: SBAStepTransformer {
     var options: [String : AnyObject]? { get }
 }
 
+
 /**
  For the case where an `SBASurveyItem` will transform into an `ORKActiveStep`, the item
  may also implement the `SBAActiveStepSurveyItem` protocol to allow modifying properties 
@@ -111,31 +113,6 @@ public protocol SBAActiveStepSurveyItem: SBASurveyItem {
     var stepFinishedSpokenInstruction: String? { get }
 }
 
-/**
- The `SBASurveyRule` defines an identifier to skip to and a rule predicate for that step.
- The predicate will only be tested against the owning step. The rules are used to build the 
- appropriate step class that implements the `SBANavigationRule` protocol.
- */
-public protocol SBASurveyRule : NSSecureCoding {
-    
-    /**
-     Identifier for the step to skip to.
-    */
-    var skipIdentifier: String? { get }
-    
-    // TODO: syoung 01/19/2017 Refactor to deprecate this property in favor of applying a
-    // NOT Predicate to the Dictionary implementation.
-    /**
-     If `YES`, then the skip rule is applied when the `rulePredicate` passes,
-     Otherwise, the skip rule is applied when the `rulePredicate` fails.
-    */
-    var skipIfPassed: Bool { get }
-    
-    /**
-     A rule predicate to use to test the `ORKResult`.
-    */
-    var rulePredicate: NSPredicate? { get }
-}
 
 /**
  Additional properties used in creating the appropriate subclass of an `ORKFormStep` or
@@ -166,12 +143,8 @@ public protocol SBAFormStepSurveyItem: SBASurveyItem {
      `SBASurveyItemType`.
     */
     var range: AnyObject? { get }
-    
-    /**
-     A list of rules for navigating away from this step.
-    */
-    var rules: [SBASurveyRule]? { get }
 }
+
 
 /**
  Additional properties used in creating the appropriate subclass of an `ORKInstructionStep`.
@@ -204,6 +177,7 @@ public protocol SBAInstructionStepSurveyItem: SBASurveyItem {
      */
     func learnMoreAction() -> SBALearnMoreAction?
 }
+
 
 /**
  Additional properties used when creating an `ORKTextFieldAnswerFormat`. This object
@@ -285,6 +259,5 @@ public protocol SBACustomTypeStep {
     */
     var customTypeIdentifier: String? { get }
 }
-
 
 

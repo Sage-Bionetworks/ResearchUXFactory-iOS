@@ -468,7 +468,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         guard steps.count == expectedCount else { return }
         
         guard let changedStep = steps.first as? SBANavigationFormStep,
-            let formItem = changedStep.formItems?.first as? SBANavigationFormItem,
+            let formItem = changedStep.formItems?.first,
             let _ = formItem.answerFormat as? ORKBooleanAnswerFormat else {
                 XCTAssert(false, "\(steps.first) not of expected type")
                 return
@@ -476,7 +476,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertEqual(changedStep.identifier, "medicationChanged")
         XCTAssertEqual(changedStep.text, "Has your medication changed?")
         
-        guard let navigationRule = formItem.rulePredicate else {
+        guard let navigationRule = changedStep.rules?.first?.rulePredicate else {
             return
         }
         

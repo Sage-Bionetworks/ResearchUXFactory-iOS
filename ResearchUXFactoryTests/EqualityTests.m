@@ -123,7 +123,7 @@ MAKE_TEST_INIT(ORKQuestionResult, ^{return [self initWithIdentifier:[NSUUID UUID
              [SBASubtaskStep class],
              [SBANavigationFormStep class],
              [SBANavigationSubtaskStep class],
-             [SBANavigationFormItem class],
+             [SBASurveyRuleObject class],
              [SBATrackedSelectionStep class],
              [SBATrackedDataSelectionResult class],
              [SBATrackedActivityFormStep class],

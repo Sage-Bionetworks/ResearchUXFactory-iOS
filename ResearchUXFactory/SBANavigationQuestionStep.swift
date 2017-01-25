@@ -33,34 +33,6 @@
 
 import ResearchKit
 
-public class SBASurveyRuleItem: SBADataObject, SBASurveyRule {
-    
-    public var skipIdentifier: String? {
-        return self.identifier
-    }
-    
-    public dynamic var rulePredicate: NSPredicate?
-    
-    public var skipIfPassed: Bool { return true }
-    
-    override open func dictionaryRepresentationKeys() -> [String] {
-        return super.dictionaryRepresentationKeys().appending(#keyPath(rulePredicate))
-    }
-    
-    public init(skipIdentifier: String, rulePredicate: NSPredicate) {
-        super.init(identifier: skipIdentifier)
-        self.rulePredicate = rulePredicate
-    }
-    
-    public required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    public required init(dictionaryRepresentation dictionary: [AnyHashable : Any]) {
-        super.init(dictionaryRepresentation: dictionary)
-    }
-}
-
 public class SBANavigationQuestionStep: ORKQuestionStep, SBANavigationRule {
 
     public var rules: [SBASurveyRule]?
@@ -89,7 +61,9 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBANavigationRule {
         inputItem.mapStepValues(with: self)
         let subtype = inputItem.surveyItemType.formSubtype()
         self.answerFormat = factory?.createAnswerFormat(inputItem, subtype: subtype) ?? inputItem.createAnswerFormat(subtype)
-        self.rules = inputItem.rules
+        if let ruleGroup = inputItem as? SBASurveyRuleGroup {
+            self.rules = ruleGroup.createSurveyRuleObjects()
+        }
     }
     
     // MARK: NSCopying
