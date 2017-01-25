@@ -468,26 +468,32 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         guard steps.count == expectedCount else { return }
         
         guard let changedStep = steps.first as? SBANavigationFormStep,
-            let formItem = changedStep.formItems?.first as? SBANavigationFormItem,
+            let formItem = changedStep.formItems?.first,
             let _ = formItem.answerFormat as? ORKBooleanAnswerFormat else {
                 XCTAssert(false, "\(steps.first) not of expected type")
                 return
         }
         XCTAssertEqual(changedStep.identifier, "medicationChanged")
         XCTAssertEqual(changedStep.text, "Has your medication changed?")
-        XCTAssertTrue(changedStep.skipIfPassed)
-        XCTAssertEqual(changedStep.skipToStepIdentifier, expectedSkipIdentifier)
         
-        guard let navigationRule = formItem.rulePredicate else {
+        guard let navigationRule = changedStep.rules?.first?.rulePredicate else {
             return
         }
         
+        // Check navigation
         let questionResult = ORKBooleanQuestionResult(identifier:formItem.identifier)
         questionResult.booleanAnswer = false
         XCTAssertTrue(navigationRule.evaluate(with: questionResult))
-        
+        let taskResult = ORKTaskResult(identifier: "task")
+        taskResult.results = [ORKStepResult(stepIdentifier: "medicationChanged", results: [questionResult])]
+        let nextIdentifier = changedStep.nextStepIdentifier(with:taskResult, and: nil)
+        XCTAssertEqual(nextIdentifier, expectedSkipIdentifier)
+    
         questionResult.booleanAnswer = true
         XCTAssertFalse(navigationRule.evaluate(with: questionResult))
+        taskResult.results = [ORKStepResult(stepIdentifier: "medicationChanged", results: [questionResult])]
+        let failedIdentifier = changedStep.nextStepIdentifier(with:taskResult, and: nil)
+        XCTAssertNil(failedIdentifier)
         
         let selectionStep = steps[1]
         XCTAssertEqual(selectionStep.identifier, "medicationSelection")

@@ -232,7 +232,7 @@ open class SBABaseSurveyFactory : NSObject {
             // Otherwise, use a form step
             ORKFormStep(identifier: inputItem.identifier)
         
-        inputItem.buildFormItems(with: step as! SBAFormProtocol, isSubtaskStep: isSubtaskStep, factory: self)
+        inputItem.buildFormItems(with: step as! SBAFormStepProtocol, isSubtaskStep: isSubtaskStep, factory: self)
         inputItem.mapStepValues(with: step)
         return step
     }
@@ -361,6 +361,11 @@ extension SBAFormStepSurveyItem {
         return isBooleanToggle || (SBASurveyItemType.form(.compound) == self.surveyItemType)
     }
     
+    func usesNavigation() -> Bool {
+        guard let ruleGroup = self as? SBASurveyRuleGroup else { return false }
+        return ruleGroup.hasNavigationRules()
+    }
+    
     public func createSubtaskStep(with factory:SBABaseSurveyFactory) -> SBASubtaskStep {
         assert((self.items?.count ?? 0) > 0, "A subtask step requires items")
         let steps = self.items?.mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
@@ -379,7 +384,7 @@ extension SBAFormStepSurveyItem {
         }
     }
     
-    public func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
+    public func buildFormItems(with step: SBAFormStepProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
         
         if self.isCompoundStep {
             let factory = factory ?? SBAInfoManager.shared.defaultSurveyFactory
@@ -395,16 +400,7 @@ extension SBAFormStepSurveyItem {
         
     func createFormItem(text: String?, subtype: SBASurveyItemType.FormSubtype?, factory: SBABaseSurveyFactory? = nil) -> ORKFormItem {
         let answerFormat = factory?.createAnswerFormat(self, subtype: subtype) ?? self.createAnswerFormat(subtype)
-        if let rulePredicate = self.rules?.first?.rulePredicate {
-            // If there is a rule predicate then return a survey form item
-            let formItem = SBANavigationFormItem(identifier: self.identifier, text: text, answerFormat: answerFormat, optional: self.optional)
-            formItem.rulePredicate = rulePredicate
-            return formItem
-        }
-        else {
-            // Otherwise, return a form item
-            return ORKFormItem(identifier: self.identifier, text: text, answerFormat: answerFormat, optional: self.optional)
-        }
+        return ORKFormItem(identifier: self.identifier, text: text, answerFormat: answerFormat, optional: self.optional)
     }
     
     public func createAnswerFormat(_ subtype: SBASurveyItemType.FormSubtype?) -> ORKAnswerFormat? {
@@ -468,20 +464,6 @@ extension SBAFormStepSurveyItem {
             return ORKTextChoice(text: "", detailText: nil, value: NSNull(), exclusive: false)
         }
         return textChoice.createORKTextChoice()
-    }
-
-    func usesNavigation() -> Bool {
-        if let count = self.rules?.count, count > 0 {
-            return true
-        }
-        guard let items = self.items else { return false }
-        for item in items {
-            if let item = item as? SBAFormStepSurveyItem,
-                let count = item.rules?.count, count > 0 {
-                    return true
-            }
-        }
-        return false
     }
 }
 

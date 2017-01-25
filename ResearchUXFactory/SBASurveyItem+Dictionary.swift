@@ -33,6 +33,49 @@
 
 import ResearchKit
 
+func key(_ dictionaryKey: DictionaryKey) -> String {
+    return dictionaryKey.rawValue
+}
+
+enum DictionaryKey: String {
+    
+    // extension NSDictionary: SBASurveyItem
+    case identifier                     // var identifier: String!
+    case type                           // var surveyItemType: SBASurveyItemType (raw value)
+    case title                          // var stepTitle: String?
+    case text                           // var stepText: String?
+    case prompt                         // var stepText: String? (deprecated)
+    case detailText                     // var stepDetail: String?
+    case footnote                       // var stepFootnote: String?
+    case options                        // var options: [String : AnyObject]?
+    
+    // extension NSDictionary: SBAActiveStepSurveyItem
+    case spokenInstruction              // var stepSpokenInstruction: String?
+    case finishedSpokenInstruction      // var stepFinishedSpokenInstruction: String? 
+    
+    // extension NSDictionary: SBAInstructionStepSurveyItem 
+    case image                          // var stepImage: UIImage? (resource name)
+    case iconImage                      // var iconImage: UIImage? (resource name)
+    case learnMoreAction                // func learnMoreAction() -> SBALearnMoreAction? (SBAClassTypeMap factory object)
+    case learnMoreHTMLContentURL        // func learnMoreAction() -> SBALearnMoreAction? (deprecated)
+    
+    // extension NSDictionary: SBAFormStepSurveyItem
+    case optional                       // var optional: Bool
+    case items                          // var items: [Any]?
+    case questionStyle                  // var shouldUseQuestionStyle: Bool
+    
+    // extension NSDictionary: SBASurveyRule 
+    case skipIdentifier                 // var skipIdentifier: String?
+    case skipIfPassed                   // var skipIfPassed: Bool
+    case expectedAnswer                 // var expectedAnswer: Any?
+    
+    // extension NSDictionary: SBANumberRange 
+    case min                            // var minNumber: NSNumber?
+    case max                            // var maxNumber: NSNumber?
+    case unit                           // var unitLabel: String?
+    case stepInterval                   // var stepInterval: Double
+
+}
 
 extension NSDictionary: SBAStepTransformer {
     
@@ -57,148 +100,153 @@ extension NSDictionary: SBAStepTransformer {
 extension NSDictionary: SBASurveyItem {
     
     public var identifier: String! {
-        return (self["identifier"] as? String) ?? self.schemaIdentifier
+        return (self[key(.identifier)] as? String) ?? self.schemaIdentifier
     }
     
     public var surveyItemType: SBASurveyItemType {
-        if let type = self["type"] as? String {
+        if let type = self[key(.type)] as? String {
             return SBASurveyItemType(rawValue: type)
         }
         return .custom(nil)
     }
     
     public var stepTitle: String? {
-        return self["title"] as? String
+        return self[key(.title)] as? String
     }
     
     public var stepText: String? {
-        return (self["text"] as? String) ?? (self["prompt"] as? String)
+        return (self[key(.text)] as? String) ?? (self[key(.prompt)] as? String)
     }
     
     public var stepDetail: String? {
-        return self["detailText"] as? String
+        return self[key(.detailText)] as? String
     }
     
     public var stepFootnote: String? {
-        return self["footnote"] as? String
+        return self[key(.footnote)] as? String
     }
     
     public var options: [String : AnyObject]? {
-        return self["options"] as? [String : AnyObject]
+        return self[key(.options)] as? [String : AnyObject]
     }
 }
 
 extension NSDictionary: SBAActiveStepSurveyItem {
     
     public var stepSpokenInstruction: String? {
-        return self["spokenInstruction"] as? String
+        return self[key(.spokenInstruction)] as? String
     }
     
     public var stepFinishedSpokenInstruction: String? {
-        return self["finishedSpokenInstruction"] as? String
+        return self[key(.finishedSpokenInstruction)] as? String
     }
 }
 
 extension NSDictionary: SBAInstructionStepSurveyItem {
     
     public var stepImage: UIImage? {
-        guard let imageNamed = self["image"] as? String else { return nil }
+        guard let imageNamed = self[key(.image)] as? String else { return nil }
         return SBAResourceFinder.shared.image(forResource: imageNamed)
     }
     
     public var iconImage: UIImage? {
-        guard let imageNamed = self["iconImage"] as? String else { return nil }
+        guard let imageNamed = self[key(.iconImage)] as? String else { return nil }
         return SBAResourceFinder.shared.image(forResource: imageNamed)
     }
     
     public func learnMoreAction() -> SBALearnMoreAction? {
         // Keep reverse-compatibility to previous dictionary key
-        if let html = self["learnMoreHTMLContentURL"] as? String {
+        if let html = self[key(.learnMoreHTMLContentURL)] as? String {
             return SBAURLLearnMoreAction(identifier: html)
         }
         // Look for a dictionary that matches the learnMoreActionKey
-        if let learnMoreAction = self["learnMoreAction"] as? [AnyHashable: Any] {
+        if let learnMoreAction = self[key(.learnMoreAction)] as? [AnyHashable: Any] {
             return SBAClassTypeMap.shared.object(with: learnMoreAction) as? SBALearnMoreAction
         }
         return nil
     }
 }
 
-extension NSDictionary: SBAFormStepSurveyItem, SBASurveyRule {
+extension NSDictionary: SBAFormStepSurveyItem {
     
     public var optional: Bool {
-        let optional = self["optional"] as? Bool
+        let optional = self[key(.optional)] as? Bool
         return optional ?? false
     }
     
     public var items: [Any]? {
-        return self["items"] as? [Any]
+        return self[key(.items)] as? [Any]
     }
     
     public var range: AnyObject? {
         return self
     }
     
-    public var rules: [SBASurveyRule]? {
-        guard self.rulePredicate != nil || self.skipIdentifier != nil else { return nil }
-        return [self]
+    public var shouldUseQuestionStyle: Bool {
+        return self[key(.questionStyle)] as? Bool ?? false
+    }
+}
+
+extension NSDictionary: SBASurveyRuleGroup, SBASurveyRuleItem {
+    
+    public var resultIdentifier: String? {
+        return self.identifier
     }
     
     public var skipIdentifier: String? {
-        return self["skipIdentifier"] as? String
+        return self[key(.skipIdentifier)] as? String
+    }
+    
+    public var formSubtype:SBASurveyItemType.FormSubtype? {
+        return self.surveyItemType.formSubtype()
     }
     
     public var skipIfPassed: Bool {
-        let skipIfPassed = self["skipIfPassed"] as? Bool
+        let skipIfPassed = self[key(.skipIfPassed)] as? Bool
         return skipIfPassed ?? false
     }
     
-    public var rulePredicate: NSPredicate? {
-        if let subtype = self.surveyItemType.formSubtype() {
-            if case .boolean = subtype,
-                let expectedAnswer = self.expectedAnswer as? Bool
-            {
-                return NSPredicate(format: "answer = %@", expectedAnswer as CVarArg)
-            }
-            else if case .singleChoice = subtype,
-                let expectedAnswer = self.expectedAnswer
-            {
-                let answerArray = [expectedAnswer]
-                return NSPredicate(format: "answer = %@", answerArray)
-            }
-            else if case .multipleChoice = subtype,
-                let expectedAnswer = self.expectedAnswer as? [AnyObject]
-            {
-                return NSPredicate(format: "answer = %@", expectedAnswer)
-            }
-        }
-        return nil;
-    }
-    
     public var expectedAnswer: Any? {
-        return self["expectedAnswer"]
+        return self[key(.expectedAnswer)]
     }
     
-    public var shouldUseQuestionStyle: Bool {
-        return self["questionStyle"] as? Bool ?? false
+    public var ruleOperator: SBASurveyRuleOperator? {
+        return .equal
     }
+    
+    public func hasNavigationRules() -> Bool {
+        return self.skipIdentifier != nil || self.expectedAnswer != nil
+    }
+    
+    public var rules: [SBASurveyRuleItem]? {
+        // If there is an expected answer
+        if self.expectedAnswer != nil {
+            return [self]
+        }
+        // else if the items include a value that can map to an expected answer
+        return self.items?.mapAndFilter({ (item) -> SBASurveyRuleItem? in
+            guard let rule = item as? SBASurveyRuleItem else { return nil }
+            return rule
+        })
+    }
+    
 }
 
 extension NSDictionary: SBANumberRange {
     
     public var minNumber: NSNumber? {
-        return self["min"] as? NSNumber
+        return self[key(.min)] as? NSNumber
     }
     
     public var maxNumber: NSNumber? {
-        return self["max"] as? NSNumber
+        return self[key(.max)] as? NSNumber
     }
 
     public var unitLabel: String? {
-        return self["unit"] as? String
+        return self[key(.unit)] as? String
     }
 
     public var stepInterval: Double {
-        return self["stepInterval"] as? Double ?? 1
+        return self[key(.stepInterval)] as? Double ?? 1
     }
 }

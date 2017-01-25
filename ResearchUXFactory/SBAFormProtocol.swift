@@ -1,5 +1,5 @@
 //
-//  SBAFormProtocol.swift
+//  SBAFormStepProtocol.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -38,7 +38,7 @@ import ResearchKit
  inheritance from `ORKFormStep`
  */
 @objc
-public protocol SBAFormProtocol : class {
+public protocol SBAFormStepProtocol : class {
     var identifier: String { get }
     var title: String? { get set }
     var text: String? { get set }
@@ -46,7 +46,7 @@ public protocol SBAFormProtocol : class {
     init(identifier: String)
 }
 
-extension SBAFormProtocol {
+extension SBAFormStepProtocol {
     
     /**
      Convenience method for finding a form item with the given identifier.
@@ -59,5 +59,18 @@ extension SBAFormProtocol {
     }
 }
 
-extension ORKFormStep: SBAFormProtocol {
+extension ORKFormStep: SBAFormStepProtocol {
 }
+
+extension ORKQuestionStep: SBAFormStepProtocol {
+    
+    public var formItems: [ORKFormItem]? {
+        get {
+            return [ORKFormItem(identifier: self.identifier, text: nil, answerFormat: self.answerFormat)]
+        }
+        set {
+            self.answerFormat = newValue?.find(withIdentifier: self.identifier)?.answerFormat
+        }
+    }
+}
+

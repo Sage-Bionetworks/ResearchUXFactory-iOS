@@ -186,9 +186,10 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         
         // Map the next step identifier back into the changed step
         if let changedStep = steps.first as? SBANavigationFormStep,
-            let nextStepIdentifier = firstActivityStepIdentifier
-            , include.nextStepIfNoChange == .activity  {
-            changedStep.skipToStepIdentifier = nextStepIdentifier
+            let nextStepIdentifier = firstActivityStepIdentifier,
+            let rule = changedStep.rules?.first as? SBASurveyRuleObject,
+            include.nextStepIfNoChange == .activity {
+            rule.skipIdentifier = nextStepIdentifier
         }
         
         return (steps, trackedResults)

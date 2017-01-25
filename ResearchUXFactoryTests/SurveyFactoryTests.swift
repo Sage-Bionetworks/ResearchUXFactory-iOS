@@ -103,12 +103,46 @@ class SBABaseSurveyFactoryTests: XCTestCase {
             return
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
-        XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
         
         guard let formItems = surveyStep.formItems , formItems.count == 3 else {
             XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
             return
         }
+        
+        // First try with one "NO" answer
+        let taskResultFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: false),
+                                                                createBooleanResult("question3", answer: true)])
+        let failedIdentifier = surveyStep.nextStepIdentifier(with: taskResultFail, and: nil)
+        XCTAssertNil(failedIdentifier)
+        
+        // Next try with pass results
+        let taskResultSuccess = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: true),
+                                                                createBooleanResult("question3", answer: true)])
+        let passedIdentifier = surveyStep.nextStepIdentifier(with: taskResultSuccess, and: nil)
+        XCTAssertEqual(passedIdentifier, "consent")
+        
+        guard let rules = surveyStep.rules, rules.count == 3 else {
+            XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
+            return
+        }
+        
+        XCTAssertEqual(rules[0].resultIdentifier, "question1")
+        XCTAssertEqual(rules[1].resultIdentifier, "question2")
+        XCTAssertEqual(rules[2].resultIdentifier, "question3")
+        
+        XCTAssertEqual(rules[0].skipIdentifier, "consent")
+        XCTAssertEqual(rules[1].skipIdentifier, "consent")
+        XCTAssertEqual(rules[2].skipIdentifier, "consent")
+        
+        XCTAssertTrue(rules[0].rulePredicate.evaluate(with: createBooleanResult("question1", answer: true)))
+        XCTAssertTrue(rules[1].rulePredicate.evaluate(with: createBooleanResult("question2", answer: true)))
+        XCTAssertTrue(rules[2].rulePredicate.evaluate(with: createBooleanResult("question3", answer: true)))
+        
+        XCTAssertFalse(rules[0].rulePredicate.evaluate(with: createBooleanResult("question1", answer: false)))
+        XCTAssertFalse(rules[1].rulePredicate.evaluate(with: createBooleanResult("question2", answer: false)))
+        XCTAssertFalse(rules[2].rulePredicate.evaluate(with: createBooleanResult("question3", answer: false)))
     }
     
     func testFactory_ToggleSurveyQuestion() {
@@ -128,7 +162,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
                     "expectedAnswer" : true],
             ],
             "skipIdentifier" : "consent",
-            "skipIfPassed" : true
+            "skipIfPassed" : false
         ]
         
         let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
@@ -139,16 +173,10 @@ class SBABaseSurveyFactoryTests: XCTestCase {
             return
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
-        XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
         
-        guard let formItems = surveyStep.formItems , formItems.count == 3 else {
+        guard let formItems = surveyStep.formItems, formItems.count == 3 else {
             XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
             return
-        }
-        
-        for formItem in formItems {
-            let answerFormat = formItem.answerFormat as? ORKBooleanAnswerFormat
-            XCTAssertNotNil(answerFormat)
         }
         
         XCTAssertEqual(formItems[0].identifier, "question1")
@@ -158,6 +186,52 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(formItems[0].text, "Are you older than 18?")
         XCTAssertEqual(formItems[1].text, "Are you a US resident?")
         XCTAssertEqual(formItems[2].text, "Can you read English?")
+        
+        XCTAssertNotNil(formItems[0].answerFormat as? ORKBooleanAnswerFormat)
+        XCTAssertNotNil(formItems[1].answerFormat as? ORKBooleanAnswerFormat)
+        XCTAssertNotNil(formItems[2].answerFormat as? ORKBooleanAnswerFormat)
+        
+        // First try with one "NO" answer
+        let taskResultFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: false),
+                                                                createBooleanResult("question3", answer: true)])
+        let failedIdentifier = surveyStep.nextStepIdentifier(with: taskResultFail, and: nil)
+        XCTAssertEqual(failedIdentifier, "consent")
+        
+        // First try with one "NO" answer
+        let taskResultAllFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: false),
+                                                                createBooleanResult("question2", answer: false),
+                                                                createBooleanResult("question3", answer: false)])
+        let allFailedIdentifier = surveyStep.nextStepIdentifier(with: taskResultAllFail, and: nil)
+        XCTAssertEqual(allFailedIdentifier, "consent")
+        
+        // Next try with pass results
+        let taskResultSuccess = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                   createBooleanResult("question2", answer: true),
+                                                                   createBooleanResult("question3", answer: true)])
+        let passedIdentifier = surveyStep.nextStepIdentifier(with: taskResultSuccess, and: nil)
+        XCTAssertNil(passedIdentifier)
+        
+        guard let rules = surveyStep.rules, rules.count == 3 else {
+            XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
+            return
+        }
+        
+        XCTAssertEqual(rules[0].resultIdentifier, "question1")
+        XCTAssertEqual(rules[1].resultIdentifier, "question2")
+        XCTAssertEqual(rules[2].resultIdentifier, "question3")
+        
+        XCTAssertEqual(rules[0].skipIdentifier, "consent")
+        XCTAssertEqual(rules[1].skipIdentifier, "consent")
+        XCTAssertEqual(rules[2].skipIdentifier, "consent")
+        
+        XCTAssertTrue(rules[0].rulePredicate.evaluate(with: createBooleanResult("question1", answer: true)))
+        XCTAssertTrue(rules[1].rulePredicate.evaluate(with: createBooleanResult("question2", answer: true)))
+        XCTAssertTrue(rules[2].rulePredicate.evaluate(with: createBooleanResult("question3", answer: true)))
+        
+        XCTAssertFalse(rules[0].rulePredicate.evaluate(with: createBooleanResult("question1", answer: false)))
+        XCTAssertFalse(rules[1].rulePredicate.evaluate(with: createBooleanResult("question2", answer: false)))
+        XCTAssertFalse(rules[2].rulePredicate.evaluate(with: createBooleanResult("question3", answer: false)))
     }
     
     func testFactory_CompoundSurveyQuestion_NoRule() {
@@ -229,14 +303,28 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         }
         
         XCTAssertEqual(surveyStep.identifier, "quiz")
-        XCTAssertEqual(surveyStep.skipToStepIdentifier, "consent")
-        XCTAssertTrue(surveyStep.skipIfPassed)
         
         guard let subtask = surveyStep.subtask as? ORKOrderedTask else {
             XCTAssert(false, "\(surveyStep.subtask) is not of expected class")
             return
         }
         XCTAssertEqual(subtask.steps.count, 3)
+        
+        // First try with one "NO" answer
+        let taskResultFail = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                createBooleanResult("question2", answer: true),
+                                                                createBooleanResult("question3", answer: true)],
+                                              isSubtask:true)
+        let failedIdentifier = surveyStep.nextStepIdentifier(with: taskResultFail, and: nil)
+        XCTAssertNil(failedIdentifier)
+        
+        // Next try with pass results
+        let taskResultSuccess = createTaskResult("quiz", results: [createBooleanResult("question1", answer: true),
+                                                                   createBooleanResult("question2", answer: false),
+                                                                   createBooleanResult("question3", answer: true)],
+                                                 isSubtask:true)
+        let passedIdentifier = surveyStep.nextStepIdentifier(with: taskResultSuccess, and: nil)
+        XCTAssertEqual(passedIdentifier, "consent")
     }
     
     func testFactory_DirectNavigationRule() {
@@ -301,7 +389,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
-        guard let surveyStep = step as? ORKFormStep else {
+        guard let surveyStep = step as? SBANavigationFormStep else {
             XCTAssert(false, "\(step) is not of expected class type")
             return
         }
@@ -309,7 +397,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(surveyStep.identifier, "question1")
         XCTAssertEqual(surveyStep.formItems?.count, 1)
         
-        guard let formItem = surveyStep.formItems?.first as? SBANavigationFormItem,
+        guard let formItem = surveyStep.formItems?.first,
             let _ = formItem.answerFormat as? ORKBooleanAnswerFormat else {
                 XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
                 return
@@ -317,18 +405,21 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         XCTAssertNil(formItem.text)
         XCTAssertEqual(surveyStep.text, "Are you older than 18?")
-        XCTAssertNotNil(formItem.rulePredicate)
         
-        guard let navigationRule = formItem.rulePredicate else {
+        guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
+            XCTAssert(false, "\(step) is missing a rule")
             return
         }
         
+        XCTAssertEqual(rule.resultIdentifier, "question1")
+        XCTAssertEqual(rule.skipIdentifier, ORKNullStepIdentifier)
+        
         let questionResult = ORKBooleanQuestionResult(identifier:formItem.identifier)
         questionResult.booleanAnswer = true
-        XCTAssertTrue(navigationRule.evaluate(with: questionResult))
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
         
         questionResult.booleanAnswer = false
-        XCTAssertFalse(navigationRule.evaluate(with: questionResult))
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
     }
     
     func testFactory_SingleChoiceQuestion() {
@@ -343,7 +434,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
-        guard let surveyStep = step as? ORKFormStep else {
+        guard let surveyStep = step as? SBANavigationFormStep else {
             XCTAssert(false, "\(step) is not of expected class type")
             return
         }
@@ -351,7 +442,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(surveyStep.identifier, "question1")
         XCTAssertEqual(surveyStep.formItems?.count, 1)
         
-        guard let formItem = surveyStep.formItems?.first as? SBANavigationFormItem,
+        guard let formItem = surveyStep.formItems?.first,
             let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat else {
                 XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
                 return
@@ -359,7 +450,6 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         XCTAssertNil(formItem.text)
         XCTAssertEqual(surveyStep.text, "Question 1?")
-        XCTAssertNotNil(formItem.rulePredicate)
         XCTAssertEqual(answerFormat.style, ORKChoiceAnswerStyle.singleChoice)
         XCTAssertEqual(answerFormat.textChoices.count, 3)
         
@@ -367,16 +457,20 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         let firstValue = answerFormat.textChoices.first!.value as? String
         XCTAssertEqual(firstValue, "a")
         
-        guard let navigationRule = formItem.rulePredicate else {
+        guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
+            XCTAssert(false, "\(step) is missing a rule")
             return
         }
         
+        XCTAssertEqual(rule.resultIdentifier, "question1")
+        XCTAssertEqual(rule.skipIdentifier, ORKNullStepIdentifier)
+        
         let questionResult = ORKChoiceQuestionResult(identifier:formItem.identifier)
         questionResult.choiceAnswers = ["b"]
-        XCTAssertTrue(navigationRule.evaluate(with: questionResult))
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
         
         questionResult.choiceAnswers = ["c"]
-        XCTAssertFalse(navigationRule.evaluate(with: questionResult))
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
     }
     
     
@@ -446,7 +540,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
         XCTAssertNotNil(step)
         
-        guard let surveyStep = step as? ORKFormStep else {
+        guard let surveyStep = step as? SBANavigationFormStep else {
             XCTAssert(false, "\(step) is not of expected class type")
             return
         }
@@ -454,7 +548,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(surveyStep.identifier, "purpose")
         XCTAssertEqual(surveyStep.formItems?.count, 1)
         
-        guard let formItem = surveyStep.formItems?.first as? SBANavigationFormItem,
+        guard let formItem = surveyStep.formItems?.first,
             let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat else {
                 XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
                 return
@@ -476,17 +570,20 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         let lastValue = answerFormat.textChoices.last!.value as? Bool
         XCTAssertEqual(lastValue, false)
         
-        XCTAssertNotNil(formItem.rulePredicate)
-        guard let navigationRule = formItem.rulePredicate else {
+        guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
+            XCTAssert(false, "\(step) is missing a rule")
             return
         }
         
+        XCTAssertEqual(rule.resultIdentifier, "purpose")
+        XCTAssertEqual(rule.skipIdentifier, ORKNullStepIdentifier)
+        
         let questionResult = ORKChoiceQuestionResult(identifier:formItem.identifier)
         questionResult.choiceAnswers = [true]
-        XCTAssertTrue(navigationRule.evaluate(with: questionResult))
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
         
         questionResult.choiceAnswers = [false]
-        XCTAssertFalse(navigationRule.evaluate(with: questionResult))
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
         
     }
     
@@ -511,35 +608,46 @@ class SBABaseSurveyFactoryTests: XCTestCase {
     
     
     // MARK: Helper methods
-
-    func createTaskBooleanResult(_ answer: Bool?) -> ORKTaskResult {
-        let questionResult = ORKBooleanQuestionResult(identifier:"living-alone-status")
+    
+    func createBooleanResult(_ stepIdentifier: String, answer: Bool?) -> ORKResult {
+        let questionResult = ORKBooleanQuestionResult(identifier:stepIdentifier)
         if let booleanAnswer = answer {
             questionResult.booleanAnswer = booleanAnswer as NSNumber?
         }
-        let stepResult = ORKStepResult(stepIdentifier: "living-alone-status", results: [questionResult])
-        let taskResult = ORKTaskResult(identifier: "task")
-        taskResult.results = [ORKStepResult(identifier: "introduction"), stepResult]
-        return taskResult
+        return questionResult
+    }
+
+    func createTaskBooleanResult(_ stepIdentifier: String, answer: Bool?) -> ORKTaskResult {
+        let questionResult = createBooleanResult(stepIdentifier, answer: answer)
+        return createTaskResult(stepIdentifier, results: [questionResult])
     }
     
-    func createTaskChoiceResult(_ answer: [Any]?) -> ORKTaskResult {
-        let questionResult = ORKChoiceQuestionResult(identifier:"medical-usage")
+    func createTaskChoiceResult(_ stepIdentifier: String, answer: [Any]?) -> ORKTaskResult {
+        let questionResult = ORKChoiceQuestionResult(identifier:stepIdentifier)
         questionResult.choiceAnswers = answer
-        let stepResult = ORKStepResult(stepIdentifier: "medical-usage", results: [questionResult])
-        let taskResult = ORKTaskResult(identifier: "task")
-        taskResult.results = [ORKStepResult(identifier: "introduction"), stepResult]
-        return taskResult
+        return createTaskResult(stepIdentifier, results: [questionResult])
     }
     
-    func createTaskNumberResult(_ answer: Int?) -> ORKTaskResult {
-        let questionResult = ORKNumericQuestionResult(identifier: "age")
+    func createTaskNumberResult(_ stepIdentifier: String, answer: Int?) -> ORKTaskResult {
+        let questionResult = ORKNumericQuestionResult(identifier:stepIdentifier)
         if let numericAnswer = answer {
             questionResult.numericAnswer = numericAnswer as NSNumber?
         }
-        let stepResult = ORKStepResult(stepIdentifier: "age", results: [questionResult])
+        return createTaskResult(stepIdentifier, results: [questionResult])
+    }
+    
+    func createTaskResult(_ stepIdentifier: String, results: [ORKResult]?, isSubtask:Bool = false) -> ORKTaskResult {
+        var stepResults: [ORKStepResult] = [ORKStepResult(identifier: "introduction")]
+        if isSubtask {
+            let subResults = results!.map({ (result) -> ORKStepResult in
+                return ORKStepResult(stepIdentifier: "\(stepIdentifier).\(result.identifier)", results: [result])
+            })
+            stepResults.append(contentsOf: subResults)
+        } else {
+            stepResults.append(ORKStepResult(stepIdentifier: stepIdentifier, results: results))
+        }
         let taskResult = ORKTaskResult(identifier: "task")
-        taskResult.results = [ORKStepResult(identifier: "introduction"), stepResult]
+        taskResult.results = stepResults
         return taskResult
     }
     
