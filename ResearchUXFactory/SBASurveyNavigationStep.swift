@@ -56,120 +56,7 @@ public protocol SBASurveyNavigationStep: SBAPredicateNavigationStep, SBANavigati
     /**
      Form step that matches with the given result
     */
-    func matchingSurveyStep(for stepResult: ORKStepResult) -> SBAFormProtocol?
-}
-
-public class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep {
-    
-    public var surveyStepResultFilterPredicate: NSPredicate {
-        return NSPredicate(format: "%K = %@", #keyPath(identifier), self.identifier)
-    }
-    
-    public func matchingSurveyStep(for stepResult: ORKStepResult) -> SBAFormProtocol? {
-        guard (stepResult.identifier == self.identifier) else { return nil }
-        return self
-    }
-    
-    // MARK: Stuff you can't extend on a protocol
-    
-    public var rules: [SBASurveyRule]?
-    public var failedSkipIdentifier: String?
-    
-    override public init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
-    init(inputItem: SBASurveyItem) {
-        super.init(identifier: inputItem.identifier)
-        self.sharedCopyFromSurveyItem(inputItem)
-    }
-    
-    // MARK: NSCopying
-    
-    override public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = super.copy(with: zone)
-        return self.sharedCopying(copy)
-    }
-    
-    // MARK: NSSecureCoding
-    
-    required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder);
-        self.sharedDecoding(coder: aDecoder)
-    }
-    
-    override public func encode(with aCoder: NSCoder){
-        super.encode(with: aCoder)
-        self.sharedEncoding(aCoder)
-    }
-    
-    // MARK: Equality
-    
-    override public func isEqual(_ object: Any?) -> Bool {
-        return super.isEqual(object) && sharedEquality(object)
-    }
-    
-    override public var hash: Int {
-        return super.hash ^ sharedHash()
-    }
-}
-
-public class SBANavigationSubtaskStep: SBASubtaskStep, SBASurveyNavigationStep {
-    
-    public var surveyStepResultFilterPredicate: NSPredicate {
-        return NSPredicate(format: "%K BEGINSWITH %@", #keyPath(identifier), "\(self.identifier).")
-    }
-    
-    public func matchingSurveyStep(for stepResult: ORKStepResult) -> SBAFormProtocol? {
-        return self.step(withIdentifier: stepResult.identifier) as? SBAFormProtocol
-    }
-    
-    // MARK: Stuff you can't extend on a protocol
-    
-    public var rules: [SBASurveyRule]?
-    public var failedSkipIdentifier: String?
-    
-    override public init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
-    override public init(identifier: String, steps: [ORKStep]?) {
-        super.init(identifier: identifier, steps: steps)
-    }
-    
-    init(inputItem: SBASurveyItem, steps: [ORKStep]?) {
-        super.init(identifier: inputItem.identifier, steps: steps)
-        self.sharedCopyFromSurveyItem(inputItem)
-    }
-    
-    // MARK: NSCopying
-    
-    override public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = super.copy(with: zone)
-        return self.sharedCopying(copy)
-    }
-    
-    // MARK: NSSecureCoding
-    
-    required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder);
-        self.sharedDecoding(coder: aDecoder)
-    }
-    
-    override public func encode(with aCoder: NSCoder){
-        super.encode(with: aCoder)
-        self.sharedEncoding(aCoder)
-    }
-    
-    // MARK: Equality
-    
-    override public func isEqual(_ object: Any?) -> Bool {
-        return super.isEqual(object) && sharedEquality(object)
-    }
-    
-    override public var hash: Int {
-        return super.hash ^ sharedHash()
-    }
+    func matchingSurveyStep(for stepResult: ORKStepResult) -> SBAFormStepProtocol?
 }
 
 public extension SBASurveyNavigationStep {
@@ -212,7 +99,7 @@ public extension SBASurveyNavigationStep {
         }
         
         // If the count of the skipIdentifiers doesn't match the count of the returned rules, then 
-        // not all answers match
+        // not all answers match.
         guard matchingRules.count == self.rules!.filter({ $0.skipIdentifier == skipIdentifier }).count else {
             return nil
         }

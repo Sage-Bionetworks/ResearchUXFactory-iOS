@@ -185,31 +185,50 @@ extension SBASurveyRuleGroup {
     */
     public func createSurveyRuleObjects() -> [SBASurveyRuleObject]? {
         
+        guard let surveyRules = self.rules else { return nil }
+        
         // Get the subtype of the group
         let groupSubtype = self.surveyItemType.formSubtype()
         
-        let rules = self.rules?.mapAndFilter({ (rule) -> SBASurveyRuleObject? in
+        // build a mapping of rules objects, combining for the case where the 
+        // skip identifier and the result identifier are the same because in that case
+        // only one of the rules needs to match
+        var rulesMap: [String:[SBASurveyRuleObject]] = [:]
+        for rule in surveyRules {
             
-            // Need a valid Form subtype and identifier and rule predicate
-            guard let subtype = rule.formSubtype ?? groupSubtype,
-                let identifier = rule.resultIdentifier ?? self.identifier,
-                let rulePredicate = rule.rulePredicate(with: subtype)
-            else {
-                return nil
+            let ruleObject: SBASurveyRuleObject? = {
+            
+                // Need a valid Form subtype and identifier and rule predicate
+                guard let subtype = rule.formSubtype ?? groupSubtype,
+                    let identifier = rule.resultIdentifier ?? self.identifier,
+                    let rulePredicate = rule.rulePredicate(with: subtype)
+                else {
+                    return nil
+                }
+                
+                let skipIdentifier = rule.skipIdentifier ?? self.skipIdentifier ?? ORKNullStepIdentifier
+                let ruleObject = SBASurveyRuleObject(identifier: identifier)
+                ruleObject.skipIdentifier = skipIdentifier
+                ruleObject.rulePredicate = rulePredicate
+                
+                return ruleObject
+            }()
+            if let ruleObject = ruleObject {
+                let key = "\(ruleObject.resultIdentifier).\(ruleObject.skipIdentifier!)"
+                let subgroup: [SBASurveyRuleObject] = rulesMap[key] ?? []
+                rulesMap[key] = subgroup.appending(ruleObject)
             }
-            
-            let skipIdentifier = rule.skipIdentifier ?? self.skipIdentifier ?? ORKNullStepIdentifier
-            let ruleObject = SBASurveyRuleObject(identifier: identifier)
-            ruleObject.skipIdentifier = skipIdentifier
-            ruleObject.rulePredicate = rulePredicate
-            
-            return ruleObject
-        })
+        }
 
-        // If the filtered count is zero then return nil
-        guard (rules != nil) && rules!.count > 0 else { return nil }
-        
-        // Otherwise, return the created rules
+        // reduce the rules for each result identifier with the same skip identifier to a single OR predicate
+        let rules = rulesMap.map { (kv: (_: String, value: [SBASurveyRuleObject])) -> SBASurveyRuleObject in
+            let rule = kv.value.first!
+            if (kv.value.count > 1) {
+                let predicates: [NSPredicate] = kv.value.map({ $0.rulePredicate })
+                rule.rulePredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+            }
+            return rule
+        }
         return rules
     }
 }

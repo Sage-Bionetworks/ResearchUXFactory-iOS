@@ -1,5 +1,5 @@
 //
-//  SBARegistrationForm.swift
+//  SBANavigationFormStep.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -34,44 +34,60 @@
 import ResearchKit
 
 /**
- Protocol for extending all the profile info steps (used by the factory to create the
- appropriate default form items).
+ `SBANavigationFormStep` is an implementation of the `SBASurveyNavigationStep`
+ that implements the rules for an `ORKFormStep`
  */
-public protocol SBAProfileInfoForm: SBAFormStepProtocol {
+public class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep {
     
-    /**
-     Use the `ORKFormItem` model object when getting/setting
-    */
-    var formItems:[ORKFormItem]? { get set }
+    public var surveyStepResultFilterPredicate: NSPredicate {
+        return NSPredicate(format: "%K = %@", #keyPath(identifier), self.identifier)
+    }
     
-    /**
-     Used in common initialization to get the default options if the included options are nil.
-     */
-    func defaultOptions(_ inputItem: SBASurveyItem?) -> [SBAProfileInfoOption]
+    public func matchingSurveyStep(for stepResult: ORKStepResult) -> SBAFormStepProtocol? {
+        guard (stepResult.identifier == self.identifier) else { return nil }
+        return self
+    }
+    
+    // MARK: Stuff you can't extend on a protocol
+    
+    public var rules: [SBASurveyRule]?
+    public var failedSkipIdentifier: String?
+    
+    override public init(identifier: String) {
+        super.init(identifier: identifier)
+    }
+    
+    init(inputItem: SBASurveyItem) {
+        super.init(identifier: inputItem.identifier)
+        self.sharedCopyFromSurveyItem(inputItem)
+    }
+    
+    // MARK: NSCopying
+    
+    override public func copy(with zone: NSZone? = nil) -> Any {
+        let copy = super.copy(with: zone)
+        return self.sharedCopying(copy)
+    }
+    
+    // MARK: NSSecureCoding
+    
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder);
+        self.sharedDecoding(coder: aDecoder)
+    }
+    
+    override public func encode(with aCoder: NSCoder){
+        super.encode(with: aCoder)
+        self.sharedEncoding(aCoder)
+    }
+    
+    // MARK: Equality
+    
+    override public func isEqual(_ object: Any?) -> Bool {
+        return super.isEqual(object) && sharedEquality(object)
+    }
+    
+    override public var hash: Int {
+        return super.hash ^ sharedHash()
+    }
 }
-
-/**
- Shared factory methods for creating profile form steps.
- */
-extension SBAProfileInfoForm {
-    
-    public var options: [SBAProfileInfoOption]? {
-        return self.formItems?.mapAndFilter({ SBAProfileInfoOption(rawValue: $0.identifier) })
-    }
-    
-    public func formItemForProfileInfoOption(_ profileInfoOption: SBAProfileInfoOption) -> ORKFormItem? {
-        return self.formItems?.find({ $0.identifier == profileInfoOption.rawValue })
-    }
-    
-    public func commonInit(inputItem: SBASurveyItem?, factory: SBABaseSurveyFactory?) {
-        self.title = inputItem?.stepTitle
-        self.text = inputItem?.stepText
-        if let formStep = self as? ORKFormStep {
-            formStep.footnote = inputItem?.stepFootnote
-        }
-        let options = SBAProfileInfoOptions(inputItem: inputItem, defaultIncludes: defaultOptions(inputItem))
-        self.formItems = options.makeFormItems(factory: factory)
-    }
-}
-
-

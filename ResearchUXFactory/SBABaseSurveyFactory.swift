@@ -232,7 +232,7 @@ open class SBABaseSurveyFactory : NSObject {
             // Otherwise, use a form step
             ORKFormStep(identifier: inputItem.identifier)
         
-        inputItem.buildFormItems(with: step as! SBAFormProtocol, isSubtaskStep: isSubtaskStep, factory: self)
+        inputItem.buildFormItems(with: step as! SBAFormStepProtocol, isSubtaskStep: isSubtaskStep, factory: self)
         inputItem.mapStepValues(with: step)
         return step
     }
@@ -384,7 +384,7 @@ extension SBAFormStepSurveyItem {
         }
     }
     
-    public func buildFormItems(with step: SBAFormProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
+    public func buildFormItems(with step: SBAFormStepProtocol, isSubtaskStep: Bool, factory: SBABaseSurveyFactory? = nil) {
         
         if self.isCompoundStep {
             let factory = factory ?? SBAInfoManager.shared.defaultSurveyFactory

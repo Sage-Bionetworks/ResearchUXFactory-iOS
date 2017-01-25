@@ -246,6 +246,8 @@
 		FFDECDFD1D077C2000434001 /* ConsentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECDFC1D077C2000434001 /* ConsentTests.swift */; };
 		FFDECE011D07DDED00434001 /* Dictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */; };
 		FFE57F1E1E38837400CEC67F /* SBASurveyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */; };
+		FFE57F221E393E3D00CEC67F /* SBANavigationFormStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */; };
+		FFE57F241E393EFA00CEC67F /* SBANavigationSubtaskStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */; };
 		FFF05FAB1D5A4FCC007304FF /* SBAPermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -542,6 +544,8 @@
 		FFDECDFC1D077C2000434001 /* ConsentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTests.swift; sourceTree = "<group>"; };
 		FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyRule.swift; sourceTree = "<group>"; };
+		FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationFormStep.swift; sourceTree = "<group>"; };
+		FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationSubtaskStep.swift; sourceTree = "<group>"; };
 		FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -820,12 +824,14 @@
 				FF2729021D91FE5300956CFB /* SBADirectNavigationRule+Dictionary.swift */,
 				FB6BA0941C7CDA6000C9903F /* SBAInstructionStep.swift */,
 				FF882F211E173DB7002CFB63 /* SBAFormProtocol.swift */,
+				FBE551681C6D9CBC00C9E1AA /* SBASurveyNavigationStep.swift */,
+				FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */,
+				FF3B162F1E1314A30037D1D0 /* SBANavigationQuestionStep.swift */,
+				FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */,
 				FF9055EB1CE527890049D12A /* SBAProgressStep.swift */,
 				FF30756F1DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift */,
 				FB6BA0961C7CDB2600C9903F /* SBASubtaskStep.swift */,
-				FBE551681C6D9CBC00C9E1AA /* SBASurveyNavigationStep.swift */,
 				FF36DC6E1DB68F230034C85D /* SBAToggleFormStep.swift */,
-				FF3B162F1E1314A30037D1D0 /* SBANavigationQuestionStep.swift */,
 			);
 			name = Step;
 			sourceTree = "<group>";
@@ -1503,6 +1509,7 @@
 				FBC45E7A1C759040007AA424 /* Localization.swift in Sources */,
 				FF2729171D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift in Sources */,
 				FF9425A01E28606300FD8C24 /* NSDate+ISO8601Format.m in Sources */,
+				FFE57F221E393E3D00CEC67F /* SBANavigationFormStep.swift in Sources */,
 				FBAE3CF41C8615DF003CEC4A /* SBAPDFPrintPageRenderer.m in Sources */,
 				FF27290D1D92036A00956CFB /* SBAPopUpLearnMoreAction.swift in Sources */,
 				FB84392D1C7518FE0086E961 /* SBATextChoice.swift in Sources */,
@@ -1566,6 +1573,7 @@
 				FF77F4721D4AC5E10005503E /* SBAMultipleLineTableViewCell.swift in Sources */,
 				FB0C9EF31CAA52F700BA5B44 /* NSDate+Utilities.swift in Sources */,
 				FF64111C1CB34766007FB9E1 /* SBAMedication.m in Sources */,
+				FFE57F241E393EFA00CEC67F /* SBANavigationSubtaskStep.swift in Sources */,
 				FF9055EC1CE527890049D12A /* SBAProgressStep.swift in Sources */,
 				FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */,
 				FF9425981E285BC900FD8C24 /* SBAExternalIDOptions.swift in Sources */,

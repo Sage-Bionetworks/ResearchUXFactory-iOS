@@ -1,5 +1,5 @@
 //
-//  SBANavigationQuestionStep.swift
+//  SBANavigationSubtaskStep.swift
 //  ResearchUXFactory
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
@@ -37,15 +37,14 @@ import ResearchKit
  `SBANavigationQuestionStep` is an implementation of the `SBASurveyNavigationStep`
  that implements the rules for an `ORKQuestionStep`
  */
-public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep {
+public class SBANavigationSubtaskStep: SBASubtaskStep, SBASurveyNavigationStep {
     
     public var surveyStepResultFilterPredicate: NSPredicate {
-        return NSPredicate(format: "%K = %@", #keyPath(identifier), self.identifier)
+        return NSPredicate(format: "%K BEGINSWITH %@", #keyPath(identifier), "\(self.identifier).")
     }
     
     public func matchingSurveyStep(for stepResult: ORKStepResult) -> SBAFormStepProtocol? {
-        guard (stepResult.identifier == self.identifier) else { return nil }
-        return self
+        return self.step(withIdentifier: stepResult.identifier) as? SBAFormStepProtocol
     }
     
     // MARK: Stuff you can't extend on a protocol
@@ -57,12 +56,12 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep
         super.init(identifier: identifier)
     }
     
-    init(inputItem: SBASurveyItem, factory: SBABaseSurveyFactory? = nil) {
-        super.init(identifier: inputItem.identifier)
-        guard let form = inputItem as? SBAFormStepSurveyItem else { return }
-        form.mapStepValues(with: self)
-        let subtype = inputItem.surveyItemType.formSubtype()
-        self.answerFormat = factory?.createAnswerFormat(form, subtype: subtype) ?? form.createAnswerFormat(subtype)
+    override public init(identifier: String, steps: [ORKStep]?) {
+        super.init(identifier: identifier, steps: steps)
+    }
+    
+    init(inputItem: SBASurveyItem, steps: [ORKStep]?) {
+        super.init(identifier: inputItem.identifier, steps: steps)
         self.sharedCopyFromSurveyItem(inputItem)
     }
     
@@ -94,5 +93,4 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep
     override public var hash: Int {
         return super.hash ^ sharedHash()
     }
-    
 }
