@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 /**
  The SBAResourceFinderDelegate delegate is used to define additional functionality on the app delegate
@@ -169,19 +170,48 @@ open class SBAResourceFinder: NSObject {
     
     public func url(forResource resourceNamed: String, withExtension: String) -> URL? {
         if let resourceDelegate = self.sharedResourceDelegate(),
-            let url = resourceDelegate.resourceBundle().url(forResource: resourceNamed, withExtension: withExtension)
-            , (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
+            let url = resourceDelegate.resourceBundle().url(forResource: resourceNamed, withExtension: withExtension),
+            (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
                 return url
         }
-        else if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension)
-            , (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
+        else if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension),
+            (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
             return url
         }
-        else if let url = Bundle(for: self.classForCoder).url(forResource: resourceNamed, withExtension: withExtension)
-            , (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
+        else if let url = Bundle(for: self.classForCoder).url(forResource: resourceNamed, withExtension: withExtension),
+            (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
                 return url
         }
         return nil;
     }
+    
+    public func systemSoundID(forResource resourceNamed: String, withExtension: String = "aif") -> SystemSoundID {
+        guard let url = self.url(forResource: resourceNamed, withExtension: withExtension),
+            let sound = SystemSound(soundURL: url)
+        else {
+            return 0
+        }
+        return sound.soundID
+    }
 
+}
+
+/**
+ Wraps a SystemSoundID.
+ 
+ A class is used in order to provide appropriate cleanup when the sound is
+ no longer needed.
+ */
+class SystemSound {
+    var soundID: SystemSoundID = 0
+    
+    init?(soundURL: URL) {
+        if AudioServicesCreateSystemSoundID(soundURL as CFURL, &soundID) != noErr {
+            return nil
+        }
+    }
+    
+    deinit {
+        AudioServicesDisposeSystemSoundID(soundID)
+    }
 }
