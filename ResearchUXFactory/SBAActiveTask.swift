@@ -138,6 +138,7 @@ public protocol SBAActiveTask: SBABridgeTask, SBAStepTransformer {
     var predefinedExclusions: ORKPredefinedTaskOption? { get }
     var localizedSteps: [SBASurveyItem]? { get }
     var optional: Bool { get }
+    var ignorePermissions: Bool { get }
 }
 
 extension SBAActiveTask {
@@ -181,7 +182,7 @@ extension SBAActiveTask {
         }
         
         // Add the permissions step
-        if let permissions = permissionTypes {
+        if !self.ignorePermissions, let permissions = permissionTypes {
             task = taskWithPermissions(task, permissions)
         }
         
@@ -198,6 +199,7 @@ extension SBAActiveTask {
         
         // Add the permission step
         let permissionsStep = SBAPermissionsStep(identifier: "SBAPermissionsStep")
+        permissionsStep.text = Localization.localizedString("PERMISSIONS_TASK_TEXT")
         permissionsStep.permissionTypes = permissions
         permissionsStep.isOptional = false
         var steps = task.steps

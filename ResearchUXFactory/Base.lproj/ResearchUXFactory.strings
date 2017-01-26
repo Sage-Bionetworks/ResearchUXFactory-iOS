@@ -93,6 +93,7 @@
 
 /* Permissions */
 "SBA_PERMISSIONS_TITLE" = "Permissions"; // Title for the screen showing the required permissions
+"PERMISSIONS_TASK_TEXT" = "These permissions are required to perform this task. You cannot continue with this task if they are not allowed."; // Message for a permissions step added to an active task that requires permissions
 "SBA_PERMISSIONS_FAILED_TITLE" = "Not Authorized"; // Title for a popup explaining that not all required permissions have been authorized.
 "SBA_PERMISSIONS_FAILED_MESSAGE" = "Go to Settings to change your permissions."; // General purpose message for a popup explaining that not all required permissions have been authorized.
 "SBA_HEALTHKIT_PERMISSIONS_TITLE" = "Health Kit";
