@@ -40,6 +40,20 @@ extension SBAPermissionsManager {
     }
     
     /**
+     Are all the permissions granted?
+     @param permissionTypes     Permissions to check
+     @return                    Whether or not all have been granted
+    */
+    public func allPermissionsAuthorized(for permissionTypes:[SBAPermissionObjectType]) -> Bool {
+        for permissionType in permissionTypes {
+            if !self.isPermissionGranted(for: permissionType) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    /**
      Request permission for each permission in the list.
      
      @param     permissions     List of the permissions being requested

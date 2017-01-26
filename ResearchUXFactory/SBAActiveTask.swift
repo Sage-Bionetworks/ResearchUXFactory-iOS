@@ -127,17 +127,22 @@ extension SBAActiveTask {
         
         // Map known active tasks
         var task: ORKOrderedTask!
+        var permissionTypes: [SBAPermissionObjectType]?
         switch self.taskType {
         case .tapping:
             task = tappingTask(predefinedExclusions)
+            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
         case .memory:
             task = memoryTask(predefinedExclusions)
         case .voice:
             task = voiceTask(predefinedExclusions)
+            permissionTypes = [SBAPermissionObjectType(permissionType: .microphone)]
         case .walking:
             task = walkingTask(predefinedExclusions)
+            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
         case .tremor:
             task = tremorTask(predefinedExclusions)
+            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
         case .moodSurvey:
             task = moodSurvey(predefinedExclusions)
         case .trailmaking:
@@ -150,6 +155,37 @@ extension SBAActiveTask {
         // Modify the instruction step if this is an optional task
         if self.optional {
             task = taskWithSkipAction(task)
+        }
+        
+        if let permissions = permissionTypes {
+            
+            // Add the permission step
+            let permissionsStep = SBAPermissionsStep(identifier: "SBAPermissionsStep")
+            permissionsStep.permissionTypes = permissions
+            permissionsStep.isOptional = false
+            var steps = task.steps
+            let idx = steps.first is ORKInstructionStep ? 1 : 0
+            steps.insert(permissionsStep, at: idx)
+            
+            if let navTask = task as? ORKNavigableOrderedTask {
+                // If this is a navigation task then create a navgiation rule
+                // and use that to setup the skip rules
+                task = navTask.copy(with: steps)
+                let skipRule = SBAPermissionsSkipRule(permissionTypes: permissions)
+                (task as! ORKNavigableOrderedTask).setSkip(skipRule, forStepIdentifier: permissionsStep.identifier)
+            }
+            else if type(of: task!) === ORKOrderedTask.self {
+                // If this is an ORKOrderedTask then turn it into an SBANavigableOrderedTask
+                task = SBANavigableOrderedTask(identifier: task.identifier, steps: steps)
+            }
+            else if let navTask = task as? SBANavigableOrderedTask {
+                // If this is a subclass of an SBANavigableOrderedTask then copy it
+                task = navTask.copy(with: steps)
+            }
+            else {
+                // Otherwise, adding the permissions isn't supported.
+                assertionFailure("Handling of permissions task is not implemented for this task: \(task)")
+            }
         }
         
         // map the localized steps
