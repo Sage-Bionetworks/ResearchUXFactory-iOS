@@ -33,6 +33,49 @@
 
 import ResearchKit
 
+open class SBAPermissionsSkipRule: ORKSkipStepNavigationRule {
+    
+    /**
+     Manager for handling requesting permissions
+     */
+    open var permissionsManager: SBAPermissionsManager {
+        return SBAPermissionsManager.shared
+    }
+    
+    /**
+     Permission types to request for this step of the task.
+     */
+    public let permissionTypes: [SBAPermissionObjectType]
+    
+    /**
+     Whether or not the rule should be applied
+     @param taskResult  Ignored.
+     @return            `YES` if all permissions are granted
+    */
+    open override func stepShouldSkip(with taskResult: ORKTaskResult) -> Bool {
+        return self.permissionsManager.allPermissionsAuthorized(for: self.permissionTypes)
+    }
+    
+    public required init(permissionTypes: [SBAPermissionObjectType]) {
+        self.permissionTypes = permissionTypes
+        super.init()
+    }
+    
+    public required init(coder aDecoder: NSCoder) {
+        self.permissionTypes = aDecoder.decodeObject(forKey: "permissionTypes") as! [SBAPermissionObjectType]
+        super.init(coder: aDecoder)
+    }
+    
+    open override func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.permissionTypes, forKey: "permissionTypes")
+        super.encode(with: aCoder)
+    }
+    
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        return type(of: self).init(permissionTypes: self.permissionTypes)
+    }
+}
+
 open class SBAPermissionsStep: ORKTableStep, SBANavigationSkipRule {
 
     /**
@@ -107,19 +150,10 @@ open class SBAPermissionsStep: ORKTableStep, SBANavigationSkipRule {
         return SBAPermissionsStepViewController.classForCoder()
     }
     
-    open func allPermissionsAuthorized() -> Bool {
-        for permissionType in permissionTypes {
-            if !self.permissionsManager.isPermissionGranted(for: permissionType) {
-                return false
-            }
-        }
-        return true
-    }
-    
     // MARK: SBANavigationSkipRule
     
     open func shouldSkipStep(with result: ORKTaskResult, and additionalTaskResults: [ORKTaskResult]?) -> Bool {
-        return allPermissionsAuthorized()
+        return self.permissionsManager.allPermissionsAuthorized(for: self.permissionTypes)
     }
     
     // MARK: Cell overrides

@@ -76,11 +76,11 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         
-        let expectedCount = 4
+        let expectedCount = 5
         XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
         guard task.steps.count == expectedCount else { return }
 
-        // Step 1 - Overview
+        // Step - Overview
         guard let instructionStep = task.steps.first as? ORKInstructionStep else {
             XCTAssert(false, "\(task.steps.first) not of expect class")
             return
@@ -88,22 +88,28 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(instructionStep.identifier, "instruction")
         XCTAssertEqual(instructionStep.text, "intended Use Description Text")
         
-        // Step 2 - Right Hand Tapping Instruction
-        guard let rightInstructionStep = task.steps[1] as? ORKInstructionStep else {
+        // Step - Permissions Step
+        guard let _ = task.steps[1] as? SBAPermissionsStep else {
             XCTAssert(false, "\(task.steps[1]) not of expect class")
+            return
+        }
+        
+        // Step - Right Hand Tapping Instruction
+        guard let rightInstructionStep = task.steps[2] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[2]) not of expect class")
             return
         }
         XCTAssertEqual(rightInstructionStep.identifier, "instruction1.right")
         
-        // Step 3 - Right Hand Tapping
-        guard let rightTappingStep = task.steps[2] as? ORKTappingIntervalStep else {
-            XCTAssert(false, "\(task.steps[2]) not of expect class")
+        // Step - Right Hand Tapping
+        guard let rightTappingStep = task.steps[3] as? ORKTappingIntervalStep else {
+            XCTAssert(false, "\(task.steps[3]) not of expect class")
             return
         }
         XCTAssertEqual(rightTappingStep.identifier, "tapping.right")
         XCTAssertEqual(rightTappingStep.stepDuration, 12.0)
         
-        // Step 4 - Completion
+        // Step - Completion
         guard let completionStep = task.steps.last as? ORKCompletionStep else {
             XCTAssert(false, "\(task.steps.last) not of expect class")
             return
@@ -197,6 +203,72 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(completionStep.detailText, "Detail Text 123")
     }
     
+    func testGoNoGoTask() {
+        
+        let inputTask: NSDictionary = [
+            "taskIdentifier"            : "1-Go-No-Go",
+            "schemaIdentifier"          : "Go-No-Go",
+            "taskType"                  : "goNoGo",
+            "intendedUseDescription"    : "intended Use Description Text",
+            "localizedSteps"               : [[
+                "identifier" : "conclusion",
+                "title"      : "Title 123",
+                "text"       : "Text 123",
+                "detailText" : "Detail Text 123"
+                ]
+            ]
+        ]
+        
+        let result = inputTask.createORKTask()
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result?.identifier, "Go-No-Go")
+        
+        guard let task = result as? ORKOrderedTask else {
+            XCTAssert(false, "\(result) not of expect class")
+            return
+        }
+        
+        let expectedCount = 5
+        XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
+        guard task.steps.count == expectedCount else { return }
+        
+        // Step 1 - Overview
+        guard let instructionStep = task.steps.first as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps.first) not of expect class")
+            return
+        }
+        XCTAssertEqual(instructionStep.identifier, "instruction")
+        XCTAssertEqual(instructionStep.text, "intended Use Description Text")
+        
+        // Step - Permissions
+        guard let _ = task.steps[1] as? SBAPermissionsStep else {
+            XCTAssert(false, "\(task.steps[1]) not of expect class")
+            return
+        }
+        
+        // Step - Instruction
+        guard let _ = task.steps[2] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[2]) not of expect class")
+            return
+        }
+
+        // Step - Active
+        guard let _ = task.steps[3] as? ORKActiveStep else {
+            XCTAssert(false, "\(task.steps[3]) not of expect class")
+            return
+        }
+        
+        // Step - Completion
+        guard let completionStep = task.steps.last as? ORKCompletionStep else {
+            XCTAssert(false, "\(task.steps.last) not of expect class")
+            return
+        }
+        XCTAssertEqual(completionStep.identifier, "conclusion")
+        XCTAssertEqual(completionStep.title, "Title 123")
+        XCTAssertEqual(completionStep.text, "Text 123")
+        XCTAssertEqual(completionStep.detailText, "Detail Text 123")
+    }
+    
     func testMemoryTask() {
         
         let inputTask: NSDictionary = [
@@ -279,7 +351,7 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         
-        let expectedCount = 6
+        let expectedCount = 7
         XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
         guard task.steps.count == expectedCount else { return }
         
@@ -291,17 +363,23 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(instructionStep.identifier, "instruction")
         XCTAssertEqual(instructionStep.text, "intended Use Description Text")
         
-        // Step 2 - Detail Instruction
-        guard let instructionDetailStep = task.steps[1] as? ORKInstructionStep else {
+        // Step - Permissions Step
+        guard let _ = task.steps[1] as? SBAPermissionsStep else {
             XCTAssert(false, "\(task.steps[1]) not of expect class")
+            return
+        }
+        
+        // Step 2 - Detail Instruction
+        guard let instructionDetailStep = task.steps[2] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[2]) not of expect class")
             return
         }
         XCTAssertEqual(instructionDetailStep.identifier, "instruction1")
         XCTAssertEqual(instructionDetailStep.text, "Speech Instruction")
         
         // Step 3 - Count down
-        guard let countStep = task.steps[2] as? ORKCountdownStep else {
-            XCTAssert(false, "\(task.steps[2]) not of expect class")
+        guard let countStep = task.steps[3] as? ORKCountdownStep else {
+            XCTAssert(false, "\(task.steps[3]) not of expect class")
             return
         }
         XCTAssertEqual(countStep.identifier, "countdown")
@@ -309,8 +387,8 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertNotNil(audioRule)
         
         // Step 4 - audio too loud
-        guard let tooLoudStep = task.steps[3] as? ORKInstructionStep else {
-            XCTAssert(false, "\(task.steps[3]) not of expect class")
+        guard let tooLoudStep = task.steps[4] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[4]) not of expect class")
             return
         }
         XCTAssertEqual(tooLoudStep.identifier, "audio.tooloud")
@@ -322,8 +400,8 @@ class SBAActiveTaskTests: XCTestCase {
         }
         
         // Step 5 - Audio
-        guard let audioStep = task.steps[4] as? ORKAudioStep else {
-            XCTAssert(false, "\(task.steps[4]) not of expect class")
+        guard let audioStep = task.steps[5] as? ORKAudioStep else {
+            XCTAssert(false, "\(task.steps[5]) not of expect class")
             return
         }
         XCTAssertEqual(audioStep.identifier, "audio")
@@ -359,7 +437,7 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         
-        let expectedCount = 6
+        let expectedCount = 7
         XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
         guard task.steps.count == expectedCount else { return }
         
@@ -371,31 +449,37 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(instructionStep.identifier, "instruction")
         XCTAssertEqual(instructionStep.text, "intended Use Description Text")
         
-        // Step 2 - Detail Instruction
-        guard let instructionDetailStep = task.steps[1] as? ORKInstructionStep else {
+        // Step - Permissions Step
+        guard let _ = task.steps[1] as? SBAPermissionsStep else {
             XCTAssert(false, "\(task.steps[1]) not of expect class")
+            return
+        }
+        
+        // Step 2 - Detail Instruction
+        guard let instructionDetailStep = task.steps[2] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[2]) not of expect class")
             return
         }
         XCTAssertEqual(instructionDetailStep.identifier, "instruction1")
         
         // Step 3 - Count down
-        guard let countStep = task.steps[2] as? ORKCountdownStep else {
-            XCTAssert(false, "\(task.steps[2]) not of expect class")
+        guard let countStep = task.steps[3] as? ORKCountdownStep else {
+            XCTAssert(false, "\(task.steps[3]) not of expect class")
             return
         }
         XCTAssertEqual(countStep.identifier, "countdown")
         
         // Step 4 - Walking
-        guard let walkingStep = task.steps[3] as? ORKWalkingTaskStep else {
-            XCTAssert(false, "\(task.steps[3]) not of expect class")
+        guard let walkingStep = task.steps[4] as? ORKWalkingTaskStep else {
+            XCTAssert(false, "\(task.steps[4]) not of expect class")
             return
         }
         XCTAssertEqual(walkingStep.identifier, "walking.outbound")
         XCTAssertEqual(walkingStep.stepDuration, 45.0)
         
         // Step 5 - Rest
-        guard let restStep = task.steps[4] as? ORKFitnessStep else {
-            XCTAssert(false, "\(task.steps[4]) not of expect class")
+        guard let restStep = task.steps[5] as? ORKFitnessStep else {
+            XCTAssert(false, "\(task.steps[5]) not of expect class")
             return
         }
         XCTAssertEqual(restStep.identifier, "walking.rest")
@@ -431,7 +515,7 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         
-        let expectedCount = 18
+        let expectedCount = 19
         XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
         guard task.steps.count == expectedCount else { return }
         
@@ -443,30 +527,36 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(instructionStep.identifier, "instruction")
         XCTAssertEqual(instructionStep.text, "intended Use Description Text")
         
-        // Step 2 - Additional Instruction
-        guard let additionalInstructionStep = task.steps[1] as? ORKInstructionStep else {
+        // Step - Permissions Step
+        guard let _ = task.steps[1] as? SBAPermissionsStep else {
             XCTAssert(false, "\(task.steps[1]) not of expect class")
+            return
+        }
+        
+        // Step 2 - Additional Instruction
+        guard let additionalInstructionStep = task.steps[2] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[2]) not of expect class")
             return
         }
         XCTAssertEqual(additionalInstructionStep.identifier, "instruction1.right")
         
         // Step 3 - Right Hand Tremor Instruction
-        guard let rightInstructionStep = task.steps[2] as? ORKInstructionStep else {
-            XCTAssert(false, "\(task.steps[2]) not of expect class")
+        guard let rightInstructionStep = task.steps[3] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[3]) not of expect class")
             return
         }
         XCTAssertEqual(rightInstructionStep.identifier, "instruction2.right")
         
         // Step 4 - Count down
-        guard let countStep = task.steps[3] as? ORKCountdownStep else {
-            XCTAssert(false, "\(task.steps[3]) not of expect class")
+        guard let countStep = task.steps[4] as? ORKCountdownStep else {
+            XCTAssert(false, "\(task.steps[4]) not of expect class")
             return
         }
         XCTAssertEqual(countStep.identifier, "countdown1.right")
         
         // Step 5 - Hand In Lap
-        guard let handInLapStep = task.steps[4] as? ORKActiveStep else {
-            XCTAssert(false, "\(task.steps[4]) not of expect class")
+        guard let handInLapStep = task.steps[5] as? ORKActiveStep else {
+            XCTAssert(false, "\(task.steps[5]) not of expect class")
             return
         }
         XCTAssertEqual(handInLapStep.identifier, "tremor.handInLap.right")
@@ -503,7 +593,8 @@ class SBAActiveTaskTests: XCTestCase {
         }
         
         let introSteps = ["instruction",
-                          "skipHand"]
+                          "skipHand",
+                          "SBAPermissionStep"]
         let bothHandSteps = ["instruction1.",
                              "instruction2.",
                              "countdown1.",
@@ -528,9 +619,15 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(introStep.identifier, introSteps[0])
         XCTAssertEqual(introStep.text, "intended Use Description Text")
         
-        // Step - Navigation
-        guard let navStep = task.steps[1] as? ORKQuestionStep else {
+        // Step - Permissions Step
+        guard let _ = task.steps[1] as? SBAPermissionsStep else {
             XCTAssert(false, "\(task.steps[1]) not of expect class")
+            return
+        }
+        
+        // Step - Navigation
+        guard let navStep = task.steps[2] as? ORKQuestionStep else {
+            XCTAssert(false, "\(task.steps[2]) not of expect class")
             return
         }
         XCTAssertEqual(navStep.identifier, introSteps[1])

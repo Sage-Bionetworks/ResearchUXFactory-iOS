@@ -60,6 +60,10 @@ extension NSDictionary: SBAActiveTask {
         guard let steps = self["localizedSteps"] as? [AnyObject] else { return nil }
         return steps.map({ return ($0 as? SBASurveyItem) ?? NSDictionary() })
     }
+    
+    public var ignorePermissions: Bool {
+        return self["ignorePermissions"] as? Bool ?? false
+    }
 
 }
 
