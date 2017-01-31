@@ -147,13 +147,13 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
         // If this is an ORKCompletionStepViewController then set the tint color for the 
         // checkmark and the default Done button placement.
         if let completionVC = stepViewController as? ORKCompletionStepViewController {
-            completionVC.checkmarkColor = UIColor.greenTintColor()
+            completionVC.checkmarkColor = UIColor.greenTintColor
             completionVC.shouldShowContinueButton = true
         }
         
         // If this is an audio step then change the tint color to blue
         if step is ORKAudioStep {
-            stepViewController.view.tintColor = UIColor.blueTintColor()
+            stepViewController.view.tintColor = UIColor.blueTintColor
         }
         
         // If there is a continue button text that should be used for all steps, then
