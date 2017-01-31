@@ -33,46 +33,46 @@
 
 import UIKit
 
-open class SBAColorInfo : NSObject {
-    
-    static let defaultColorInfo = SBAColorInfo(name: "ColorInfo")
-    
-    fileprivate var plist: [String : Any]?
-    
-    init(name: String) {
-        super.init()
-        self.plist = SBAResourceFinder.shared.plist(forResource: name)
-    }
-    
-    func color(for colorKey: String) -> UIColor? {
-        guard let colorHex = plist?[colorKey] as? String else {
-            return nil
-        }
-        return UIColor(hexString: colorHex)
-    }
-}
-
-
 extension UIColor {
     
+    /**
+     Get the color defined in the `ColorInfo.plist` file included (optionally) in the main resource bundle.
+     This allows the app to define a list of colors in a single place using a plist with key/value pairs.
+    */
     static public func color(for key: String) -> UIColor? {
-        return SBAColorInfo.defaultColorInfo.color(for: key)
+        return SBAColorInfo.shared.color(for: key)
     }
     
-    static public func primaryTintColor() -> UIColor? {
-        return SBAColorInfo.defaultColorInfo.color(for: "primaryTintColor")
-    }
+    /**
+     If the shared ColorInfo.plist includes a primary tint color then set the color
+     */
+    static public let primaryTintColor: UIColor? = UIColor.color(for: "primaryTintColor")
     
-    static public func greenTintColor() -> UIColor? {
-        // For certain cases, we want to use a green checkmark and will override the default color
-        return SBAColorInfo.defaultColorInfo.color(for: "greenTintColor") ?? UIColor(hexString: "#44d24e")
-    }
+    /**
+     Tint color for the navigation bar when displaying an `ORKTaskViewController`.
+     */
+    static public let taskNavigationBarTintColor: UIColor? = UIColor.color(for: "taskNavigationBarTintColor")
     
-    static public func blueTintColor() -> UIColor? {
-        // For certain cases, we want to use a blue tint and will override the default color
-        return SBAColorInfo.defaultColorInfo.color(for: "blueTintColor") ?? UIColor(red:0.132, green:0.684, blue:0.959, alpha:1.000)
-    }
+    /**
+     Tint color for the navigation bar button items when displaying an `ORKTaskViewController`.
+     */
+    static public let taskNavigationButtonTintColor: UIColor? = UIColor.color(for: "taskNavigationButtonTintColor")
     
+    /** 
+     The green tint color is used for the green checkmark that is displayed for `ORKCompletionStep`
+    */
+    static public let greenTintColor: UIColor = UIColor.color(for: "greenTintColor") ?? UIColor(red:0.267, green:0.824, blue:0.306, alpha:1.000)
+    
+    /**
+     The blue tint color is used for the voice activity when the volume is within range.
+     */
+    static public let blueTintColor: UIColor = UIColor.color(for: "blueTintColor") ?? UIColor(red:0.132, green:0.684, blue:0.959, alpha:1.000)
+    
+    /**
+     Initialize a `UIColor` with a hex string. 
+     @param  hexString  An RGB color defined using a hex code.
+     @return            A color if the hex is valid.
+    */
     public convenience init?(hexString: String) {
         let r, g, b: CGFloat
         
@@ -109,5 +109,27 @@ extension UIColor {
         }
         
         return nil
+    }
+}
+
+/**
+ Private class used to store the ColorInfo pList.
+ */
+fileprivate final class SBAColorInfo : NSObject {
+    
+    fileprivate static let shared = SBAColorInfo(name: "ColorInfo")
+    
+    fileprivate let plist: [String : Any]?
+    
+    fileprivate init(name: String) {
+        self.plist = SBAResourceFinder.shared.plist(forResource: name)
+        super.init()
+    }
+    
+    fileprivate func color(for colorKey: String) -> UIColor? {
+        guard let colorHex = plist?[colorKey] as? String else {
+            return nil
+        }
+        return UIColor(hexString: colorHex)
     }
 }

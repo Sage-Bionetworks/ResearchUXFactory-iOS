@@ -87,7 +87,7 @@ class SBACheckmarkView: UIView {
     fileprivate func commonInit() {
         
         self.layer.cornerRadius = _tickViewSize / 2;
-        self.backgroundColor = UIColor.greenTintColor()
+        self.backgroundColor = UIColor.greenTintColor
 
         let ratio = _tickViewSize / SBACheckmarkView.defaultSize
         let path = UIBezierPath()
