@@ -63,6 +63,7 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep
         form.mapStepValues(with: self)
         let subtype = inputItem.surveyItemType.formSubtype()
         self.answerFormat = factory?.createAnswerFormat(form, subtype: subtype) ?? form.createAnswerFormat(subtype)
+        self.placeholder = form.placeholderText
         self.sharedCopyFromSurveyItem(inputItem)
     }
     

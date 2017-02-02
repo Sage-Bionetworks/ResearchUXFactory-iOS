@@ -121,6 +121,14 @@ public protocol SBAActiveStepSurveyItem: SBASurveyItem {
 public protocol SBAFormStepSurveyItem: SBASurveyItem {
     
     /**
+     A localized string that displays placeholder information for the form item.
+     
+     You can display placeholder text in a text field or text area to help users understand how to answer the
+     item's question. A placeholder string is not appropriate for choice-based answer formats.
+     */
+    var placeholderText: String? { get }
+    
+    /**
      Whether or not to create an `ORKQuestionStep` or `ORKFormStep` subclass. If `YES`,
      then the factory will instantiate a `SBANavigationQuestionStep` by default.
     */
