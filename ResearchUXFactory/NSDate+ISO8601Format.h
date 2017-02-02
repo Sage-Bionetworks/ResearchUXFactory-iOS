@@ -32,13 +32,15 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDate (ISO8601Format)
 
 + (NSDateFormatter *)ISO8601formatter;
 + (NSDateFormatter *)ISO8601DateOnlyformatter;
 + (NSDateFormatter *)ISO8601TimeOnlyformatter;
 
-+ (instancetype)dateWithISO8601String:(NSString *)iso8601string;
++ (nullable instancetype)dateWithISO8601String:(NSString *)iso8601string;
 
 - (NSString *)ISO8601String;
 - (NSString *)ISO8601StringUTC;
@@ -47,3 +49,12 @@
 - (NSString *)ISO8601OffsetString;
 
 @end
+
+@interface NSString (DateFormat)
+
+@property (nonatomic, readonly, nullable) NSDate *dateValue;
+@property (nonatomic, readonly, nullable) NSDateComponents *timeValue;
+
+@end
+
+NS_ASSUME_NONNULL_END
