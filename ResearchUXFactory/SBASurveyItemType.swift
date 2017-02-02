@@ -148,6 +148,10 @@ public enum SBASurveyItemType {
         }
         return false
     }
+    
+    public var usesPlaceholderText: Bool {
+        return self == SBASurveyItemType.form(.text) || self == SBASurveyItemType.form(.multipleLineText)
+    }
 }
 
 extension SBASurveyItemType: Equatable {

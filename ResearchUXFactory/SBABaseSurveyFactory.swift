@@ -400,7 +400,9 @@ extension SBAFormStepSurveyItem {
         
     func createFormItem(text: String?, subtype: SBASurveyItemType.FormSubtype?, factory: SBABaseSurveyFactory? = nil) -> ORKFormItem {
         let answerFormat = factory?.createAnswerFormat(self, subtype: subtype) ?? self.createAnswerFormat(subtype)
-        return ORKFormItem(identifier: self.identifier, text: text, answerFormat: answerFormat, optional: self.optional)
+        let formItem = ORKFormItem(identifier: self.identifier, text: text, answerFormat: answerFormat, optional: self.optional)
+        formItem.placeholder = self.placeholderText
+        return formItem
     }
     
     public func createAnswerFormat(_ subtype: SBASurveyItemType.FormSubtype?) -> ORKAnswerFormat? {

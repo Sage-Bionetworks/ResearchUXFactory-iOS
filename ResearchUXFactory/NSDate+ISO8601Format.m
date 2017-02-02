@@ -72,6 +72,34 @@
     return formatter;
 }
 
++ (NSDateFormatter *)UnitedStatesDateOnlyformatter
+{
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MM/dd/yyyy"];
+        NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+        [formatter setLocale:enUSPOSIXLocale];
+    });
+    
+    return formatter;
+}
+
++ (NSDateFormatter *)UnitedStatesTimeOnlyformatter
+{
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm"];
+        NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+        [formatter setLocale:enUSPOSIXLocale];
+    });
+    
+    return formatter;
+}
+
 + (NSDateFormatter *)ISO8601TimeOnlyformatter
 {
     static NSDateFormatter *formatter;
@@ -126,6 +154,27 @@
 - (NSString *)ISO8601OffsetString
 {
     return [[[self class] ISO8601OffsetOnlyformatter] stringFromDate:self];
+}
+
+@end
+
+@implementation NSString (DateFormat)
+
+- (NSDate *)dateValue {
+    NSDate *date = [NSDate dateWithISO8601String:self];
+    if (date == nil) {
+        date = [[NSDate UnitedStatesDateOnlyformatter] dateFromString:self];
+    }
+    return date;
+}
+
+- (NSDateComponents *)timeValue {
+    NSDate *date = [[NSDate UnitedStatesTimeOnlyformatter] dateFromString:self];
+    if (!date) {
+        return nil;
+    }
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:date];
 }
 
 @end

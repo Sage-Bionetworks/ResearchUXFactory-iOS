@@ -80,6 +80,11 @@ private let kTrailmakingTapTimestampKey = "timestamp"
 private let kTrailmakingTapIndexKey = "index"
 private let kTrailmakingTapIncorrectKey = "incorrect"
 
+private let kGoNoGoTimestampKey = "timestamp"
+private let kGoNoGoTimeToThresholdKey = "timeToThreshold"
+private let kGoNoGoGoKey = "go"
+private let kGoNoGoIncorrectKey = "incorrect"
+
 private let QuestionResultQuestionTextKey = "questionText"
 private let QuestionResultQuestionTypeKey = "questionType"
 private let QuestionResultQuestionTypeNameKey = "questionTypeName"
@@ -171,10 +176,10 @@ extension ORKStep {
         
         // Add the start/end date
         if let startDateString = bridgeDictionary[kStartDateKey] as? String {
-            stepResult.startDate = NSDate(iso8601String: startDateString) as Date
+            stepResult.startDate = NSDate(iso8601String: startDateString) as! Date
         }
         if let endDateString = bridgeDictionary[kEndDateKey] as? String {
-            stepResult.endDate = NSDate(iso8601String: endDateString) as Date
+            stepResult.endDate = NSDate(iso8601String: endDateString) as! Date
         }
         
         return stepResult
@@ -332,6 +337,27 @@ extension ORKTrailmakingResult {
         
         result[kTrailmakingTapsKey] = resultTaps
         result[kTrailmakingNumberOfErrorsKey] = NSNumber(value: self.numberOfErrors)
+        result[kItemKey] = self.filenameForArchive()
+        
+        return result
+    }
+}
+
+extension ORKGoNoGoResult {
+    
+    // Schema mapping in the Researcher UI
+    // goNoGo.json.timestamp           Decimal
+    // goNoGo.json.timeToThreshold     Decimal
+    // goNoGo.json.go                  Boolean
+    // goNoGo.json.incorrect           Boolean
+    
+    override func resultAsDictionary() -> NSMutableDictionary {
+        let result = super.resultAsDictionary()
+        
+        result[kGoNoGoTimestampKey] = NSNumber(value: self.timestamp)
+        result[kGoNoGoTimeToThresholdKey] = NSNumber(value: self.timeToThreshold)
+        result[kGoNoGoGoKey] = NSNumber(value: self.go)
+        result[kGoNoGoIncorrectKey] = NSNumber(value: self.incorrect)
         result[kItemKey] = self.filenameForArchive()
         
         return result

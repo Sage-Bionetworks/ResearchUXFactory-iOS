@@ -63,6 +63,7 @@ enum DictionaryKey: String {
     case optional                       // var optional: Bool
     case items                          // var items: [Any]?
     case questionStyle                  // var shouldUseQuestionStyle: Bool
+    case placeholder                    // var placeholderText: String?
     
     // extension NSDictionary: SBASurveyRule 
     case skipIdentifier                 // var skipIdentifier: String?
@@ -168,6 +169,10 @@ extension NSDictionary: SBAInstructionStepSurveyItem {
 }
 
 extension NSDictionary: SBAFormStepSurveyItem {
+    
+    public var placeholderText: String? {
+        return self[key(.placeholder)] as? String
+    }
     
     public var optional: Bool {
         let optional = self[key(.optional)] as? Bool
