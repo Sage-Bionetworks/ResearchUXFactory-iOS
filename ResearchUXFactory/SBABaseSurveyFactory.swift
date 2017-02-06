@@ -289,15 +289,14 @@ open class SBABaseSurveyFactory : NSObject {
             self.consentDocument.sections = sections.map({ (dictionarySection) -> ORKConsentSection in
                 let consentSection = dictionarySection.createConsentSection(previous: previousSectionType)
                 previousSectionType = dictionarySection.consentSectionType
+                // If this is an `.onlyInDocument` type then set this to the html review by default
+                if consentSection.type == .onlyInDocument, let htmlContent = consentSection.htmlContent {
+                    self.consentDocument.htmlReviewContent = htmlContent
+                }
                 return consentSection
             })
         }
         
-        // Load the document for the HTML content
-        if let properties = dictionary["documentProperties"] as? NSDictionary,
-            let documentHtmlContent = properties["htmlDocument"] as? String {
-            self.consentDocument.htmlReviewContent = SBAResourceFinder.shared.html(forResource: documentHtmlContent)
-        }
     }
 
     /**
