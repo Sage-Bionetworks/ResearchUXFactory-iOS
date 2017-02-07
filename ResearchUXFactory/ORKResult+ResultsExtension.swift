@@ -84,6 +84,8 @@ private let kGoNoGoTimestampKey = "timestamp"
 private let kGoNoGoTimeToThresholdKey = "timeToThreshold"
 private let kGoNoGoGoKey = "go"
 private let kGoNoGoIncorrectKey = "incorrect"
+private let kGoNoGoSamplesKey = "samples"
+private let kGoNoGoVectorMagnitudeKey = "vectorMagnitude"
 
 private let QuestionResultQuestionTextKey = "questionText"
 private let QuestionResultQuestionTypeKey = "questionType"
@@ -350,6 +352,7 @@ extension ORKGoNoGoResult {
     // goNoGo.json.timeToThreshold     Decimal
     // goNoGo.json.go                  Boolean
     // goNoGo.json.incorrect           Boolean
+    // goNoGo.json.samples             JSON Table
     
     override func resultAsDictionary() -> NSMutableDictionary {
         let result = super.resultAsDictionary()
@@ -359,6 +362,12 @@ extension ORKGoNoGoResult {
         result[kGoNoGoGoKey] = NSNumber(value: self.go)
         result[kGoNoGoIncorrectKey] = NSNumber(value: self.incorrect)
         result[kItemKey] = self.filenameForArchive()
+        
+        let resultSamples = self.samples?.map ({ (sample) -> [String: AnyObject] in
+            return [kGoNoGoTimestampKey         : NSNumber(value: sample.timestamp),
+                    kGoNoGoVectorMagnitudeKey   : NSNumber(value: sample.vectorMagnitude)]
+        })
+        result[kGoNoGoSamplesKey] = resultSamples ?? []
         
         return result
     }
