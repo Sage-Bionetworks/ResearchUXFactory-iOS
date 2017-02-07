@@ -38,6 +38,10 @@ extension SBAInfoManager {
     public static var shared: SBAInfoManager {
         return __shared()
     }
+    
+    public var resolvedSuiteName: String? {
+        return self.suiteName
+    }
 }
 
 extension SBASharedAppInfo {
@@ -52,18 +56,25 @@ extension SBASharedAppInfo {
     }
     
     /**
-     The shared user defaults for the Bridge frameworks.
+     The user defaults suite name to use, or nil to use standard defaults.
+     First looks for an explicit suite name, then the app group identifier, and if neither exists
+     and the flag to default to standard user defaults isn't set, then falls back to the
+     default Bridge framework suite name, org.sagebase.Bridge.
     */
-    public var userDefaults: UserDefaults {
-        let explicitSuiteName = self.userDefaultsSuite ?? self.appGroupIdentifier
-        if explicitSuiteName != nil {
-            return UserDefaults(suiteName: explicitSuiteName!)!
+    public var suiteName: String? {
+        var suiteName = self.userDefaultsSuite ?? self.appGroupIdentifier
+        if  suiteName == nil && !self.useStandardUserDefaults {
+            suiteName = "org.sagebase.Bridge"
         }
         
-        if self.useStandardUserDefaults {
-            return UserDefaults.standard
-        } else {
-            return UserDefaults(suiteName: "org.sagebase.Bridge")!
-        }
+        return suiteName
+    }
+    
+    /**
+     The shared user defaults for this application. This will check for a specified suite name
+     and will use the standard user defaults if not found.
+     */
+    public var userDefaults: UserDefaults {
+        return UserDefaults(suiteName: self.suiteName) ?? UserDefaults.standard
     }
 }
