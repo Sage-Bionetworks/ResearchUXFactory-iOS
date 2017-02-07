@@ -89,12 +89,12 @@ static id __instance;
     return [self stringForKey:NSStringFromSelector(@selector(appGroupIdentifier))];
 }
 
-- (NSString *)userDefaultsSuite {
-    return [self stringForKey:NSStringFromSelector(@selector(userDefaultsSuite))];
+- (NSString *)userDefaultsSuiteName {
+    return [self stringForKey:NSStringFromSelector(@selector(userDefaultsSuiteName))];
 }
 
-- (BOOL)useStandardUserDefaults {
-    NSNumber *num = self.plist[NSStringFromSelector(@selector(useStandardUserDefaults))];
+- (BOOL)usesStandardUserDefaults {
+    NSNumber *num = self.plist[NSStringFromSelector(@selector(usesStandardUserDefaults))];
     if (![num isKindOfClass:[NSNumber class]]) {
         return NO;
     }

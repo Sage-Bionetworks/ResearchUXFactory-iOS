@@ -62,8 +62,8 @@ extension SBASharedAppInfo {
      default Bridge framework suite name, org.sagebase.Bridge.
     */
     public var suiteName: String? {
-        var suiteName = self.userDefaultsSuite ?? self.appGroupIdentifier
-        if  suiteName == nil && !self.useStandardUserDefaults {
+        var suiteName = self.userDefaultsSuiteName ?? self.appGroupIdentifier
+        if  suiteName == nil && !self.usesStandardUserDefaults {
             suiteName = "org.sagebase.Bridge"
         }
         
