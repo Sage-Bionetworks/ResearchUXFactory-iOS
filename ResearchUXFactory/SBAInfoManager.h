@@ -68,7 +68,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString * _Nullable keychainAccessGroup;
 
 /**
- App group identifier used for the suite name of NSUserDefaults (if provided).
+ Whether to use standard user defaults as the fallback.
+ For backward compatibility only, when upgrading an app originally built with old
+ Bridge frameworks that used standard user defaults. Has no effect if either userDefaultsSuiteName
+ or appGroupIdentifier is set.
+ 
+ If neither of those is set, and this is not set or is set to NO, then the default internal suite
+ for Bridge frameworks will be used (org.sagebase.Bridge).
+ */
+@property (nonatomic, readonly) BOOL usesStandardUserDefaults;
+
+/**
+ Explicit suite name to use for NSUserDefaults. This value will be used if set.
+ */
+@property (nonatomic, readonly, copy) NSString * _Nullable userDefaultsSuiteName;
+
+/**
+ App group identifier used for the suite name of NSUserDefaults (if provided, and
+ userDefaultsSuiteName is not set).
  */
 @property (nonatomic, readonly, copy) NSString * _Nullable appGroupIdentifier;
 

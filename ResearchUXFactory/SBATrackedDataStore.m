@@ -61,7 +61,7 @@
 }
 
 - (instancetype)init {
-    return [self initWithUserDefaultsWithSuiteName:[SBAInfoManager sharedManager].appGroupIdentifier];
+    return [self initWithUserDefaultsWithSuiteName:[SBAInfoManager sharedManager].resolvedSuiteName];
 }
 
 - (instancetype)initWithUserDefaultsWithSuiteName:(NSString * _Nullable)suiteName {
