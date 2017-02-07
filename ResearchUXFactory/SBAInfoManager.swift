@@ -52,10 +52,18 @@ extension SBASharedAppInfo {
     }
     
     /**
-     The shared user defaults for this application. This will check for a shared app group
-     identifier and will use the standard user defaults if not found.
+     The shared user defaults for the Bridge frameworks.
     */
     public var userDefaults: UserDefaults {
-        return UserDefaults(suiteName: self.appGroupIdentifier) ?? UserDefaults.standard
+        let explicitSuiteName = self.userDefaultsSuite ?? self.appGroupIdentifier
+        if explicitSuiteName != nil {
+            return UserDefaults(suiteName: explicitSuiteName!)!
+        }
+        
+        if self.useStandardUserDefaults {
+            return UserDefaults.standard
+        } else {
+            return UserDefaults(suiteName: "org.sagebase.Bridge")!
+        }
     }
 }

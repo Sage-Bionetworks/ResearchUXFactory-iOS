@@ -89,6 +89,18 @@ static id __instance;
     return [self stringForKey:NSStringFromSelector(@selector(appGroupIdentifier))];
 }
 
+- (NSString *)userDefaultsSuite {
+    return [self stringForKey:NSStringFromSelector(@selector(userDefaultsSuite))];
+}
+
+- (BOOL)useStandardUserDefaults {
+    NSNumber *num = self.plist[NSStringFromSelector(@selector(useStandardUserDefaults))];
+    if (![num isKindOfClass:[NSNumber class]]) {
+        return NO;
+    }
+    return [num boolValue];
+}
+
 - (NSString *)stringForKey:(NSString *)key {
     NSString *str = self.plist[key];
     if (![str isKindOfClass:[NSString class]] || str.length == 0) {
