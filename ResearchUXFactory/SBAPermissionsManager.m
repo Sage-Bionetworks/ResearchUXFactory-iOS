@@ -552,9 +552,11 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
             else if ([[hkType identifier] isEqualToString:HKCharacteristicTypeIdentifierFitzpatrickSkinType]) {
                 [self.healthStore fitzpatrickSkinTypeWithError:&error];
             }
+#ifdef __IPHONE_10_0
             else if ([[hkType identifier] isEqualToString:HKCharacteristicTypeIdentifierWheelchairUse]) {
                 [self.healthStore wheelchairUseWithError:&error];
             }
+#endif
             if (error != nil) {
                 return NO;
             }
