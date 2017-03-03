@@ -31,8 +31,13 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+@import Foundation;
+@import HealthKit;
+
 #if defined(__cplusplus)
 #  define ENUM_EXTERN extern "C" __attribute__((visibility("default")))
 #else
 #  define ENUM_EXTERN extern __attribute__((visibility("default")))
 #endif
+
+#define SBA_IOS_10_WATCHOS_3_AVAILABLE (NSClassFromString(@"HKWorkoutConfiguration") != nil)

@@ -217,6 +217,10 @@ open class SBAPermissionsStepViewController: ORKTableStepViewController {
         }
     }
     
+    override open func skipForward() {
+        goNext()
+    }
+    
     fileprivate func goNext() {
         super.goForward()
     }
