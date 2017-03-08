@@ -68,13 +68,13 @@ import HealthKit
  */
 open class SBAPermissionObjectTypeFactory: NSObject {
     
-    @objc
+    @objc(permissionTypesForItems:)
     open func permissionTypes(for items:[Any]?) -> [SBAPermissionObjectType] {
         guard let inputItems = items else { return [] }
         return inputItems.map({ self.permissionType(for: $0) })
     }
     
-    @objc
+    @objc(permissionTypeForItem:)
     open func permissionType(for item:Any) -> SBAPermissionObjectType {
         if let identifier = item as? String {
             // If the item is a string then create a permission object for the given identifier
@@ -102,6 +102,43 @@ open class SBAPermissionObjectTypeFactory: NSObject {
         // Define a default but assert on unrecognized type
         assertionFailure("Unrecognized item type: \(item)")
         return SBAPermissionObjectType(identifier: "unknown")
+    }
+    
+    @objc(permissionTypesForTask:)
+    open func permissionTypes(for task:ORKOrderedTask) -> [SBAPermissionObjectType]? {
+        var permissionTypes:[SBAPermissionObjectType] = []
+        let permissionsMask = task.requestedPermissions
+        
+        if (permissionsMask.contains(.audioRecording)) {
+            permissionTypes.append(SBAPermissionObjectType(permissionType: .microphone))
+        }
+        
+        if (permissionsMask.contains(.camera)) {
+            permissionTypes.append(SBAPermissionObjectType(permissionType: .camera))
+        }
+        
+        if (permissionsMask.contains(.coreMotionAccelerometer) ||
+            permissionsMask.contains(.coreMotionActivity)) {
+            permissionTypes.append(SBAPermissionObjectType(permissionType: .coremotion))
+        }
+        
+        if (permissionsMask.contains(.coreLocation)) {
+            permissionTypes.append(SBALocationPermissionObjectType(permissionType: .location))
+        }
+        
+        // Add healthkit permissions
+        if let readPermissions = task.requestedHealthKitTypesForReading {
+            let writePermissions = task.requestedHealthKitTypesForWriting ?? Set<HKSampleType>()
+            let permission = SBAHealthKitPermissionObjectType(permissionType: .healthKit)
+            permission.healthKitTypes = readPermissions.union(writePermissions).map({ (objType) -> SBAHealthKitProfileObject in
+                let obj = SBAHealthKitProfileObject(identifier: objType.identifier)
+                obj.readonly = !writePermissions.contains(objType)
+                return obj
+            })
+            permissionTypes.append(permission)
+        }
+
+        return permissionTypes.count > 0 ? permissionTypes : nil
     }
     
     fileprivate func permissionType(with permissionTypeIdentifier:SBAPermissionTypeIdentifier) -> SBAPermissionObjectType {
@@ -165,6 +202,10 @@ open class SBAPermissionObjectType: SBADataObject {
         if self.detail == nil {
             self.detail = self.permissionType.defaultDescription()
         }
+    }
+    
+    open override var description: String {
+        return "\(self.dictionaryRepresentation())"
     }
 }
 
@@ -242,7 +283,9 @@ public final class SBANotificationPermissionObjectType: SBAPermissionObjectType 
  */
 public final class SBALocationPermissionObjectType: SBAPermissionObjectType {
     
-    public dynamic var always: Bool = true
+    public dynamic var always: Bool = {
+        return Localization.localizedBundleString("NSLocationAlwaysUsageDescription") != nil
+    }()
     
     override open func defaultIdentifierIfNil() -> String {
         return SBAPermissionTypeIdentifier.location.rawValue
@@ -371,9 +414,8 @@ public final class SBAHealthKitProfileObject: SBADataObject {
             return type
         }
         
-        // open class func workoutType() -> HKWorkoutType
-        let workoutTypeIdentifier = String(describing: HKWorkoutType.classForCoder())
-        if self.identifier == workoutTypeIdentifier {
+        // Check if this is a HKWorkoutType
+        if self.identifier == HKWorkoutTypeIdentifier {
             return HKObjectType.workoutType()
         }
         
@@ -430,8 +472,14 @@ extension SBAPermissionTypeIdentifier {
             return Localization.localizedString("SBA_HEALTHKIT_PERMISSIONS_DESCRIPTION")
             
         case SBAPermissionTypeIdentifier.location:
-            return privacyString("NSLocationWhenInUseUsageDescription",
-                                                      localizedKey: "SBA_LOCATION_PERMISSIONS_DESCRIPTION")
+            if let str = Localization.localizedBundleString("NSLocationAlwaysUsageDescription") {
+                return str
+            }
+            else {
+                return privacyString("NSLocationWhenInUseUsageDescription",
+                                     localizedKey: "SBA_LOCATION_PERMISSIONS_DESCRIPTION")
+            }
+            
         case SBAPermissionTypeIdentifier.coremotion:
             return privacyString("NSMotionUsageDescription",
                                                       localizedKey: "SBA_COREMOTION_PERMISSIONS_DESCRIPTION")

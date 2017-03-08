@@ -132,7 +132,7 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
                 items = [self typeIdentifiersForPermissionCode:[appDelegate requiredPermissions]];
             }
         }
-        _defaultPermissionTypes = [self.permissionsTypeFactory permissionTypesFor:items];
+        _defaultPermissionTypes = [self.permissionsTypeFactory permissionTypesForItems:items];
     }
     return _defaultPermissionTypes;
 }
@@ -191,7 +191,7 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
 
 - (NSArray<SBAPermissionObjectType *> *)typeObjectsForForType:(SBAPermissionsType)type {
     NSArray *typeIdentifiers = [self typeIdentifiersForPermissionCode:type];
-    return [self.permissionsTypeFactory permissionTypesFor:typeIdentifiers];
+    return [self.permissionsTypeFactory permissionTypesForItems:typeIdentifiers];
 }
 
 - (BOOL)isPermissionsGrantedForType:(SBAPermissionsType)type {
@@ -340,12 +340,8 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
 //---------------------------------------------------------------
 
 - (BOOL)isPermissionsGrantedForLocation:(BOOL)always {
-#if TARGET_IPHONE_SIMULATOR
-    return YES;
-#else
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     return [self isPermissionsGrantedForLocation:always status:status];
-#endif
 }
 
 - (BOOL)isPermissionsGrantedForLocation:(BOOL)always status:(CLAuthorizationStatus)status {
