@@ -1043,9 +1043,12 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertEqual(storedResults.count, selectionResults.count)
         
         for expectedResult in selectionResults {
-            let result = storedResult.result(forIdentifier: expectedResult.identifier) as! ORKQuestionResult
+            let result = storedResult.result(forIdentifier: expectedResult.identifier)
             XCTAssertNotNil(result, "\(expectedResult.identifier)")
-            XCTAssertEqual(result.answer as! NSObject, (expectedResult as! ORKQuestionResult).answer as! NSObject, "\(expectedResult.identifier)")
+            if let result = result as? ORKQuestionResult {
+                XCTAssertNotNil(result, "\(expectedResult.identifier)")
+                XCTAssertEqual(result.answer as! NSObject, (expectedResult as! ORKQuestionResult).answer as! NSObject, "\(expectedResult.identifier)")
+            }
         }
     }
     
