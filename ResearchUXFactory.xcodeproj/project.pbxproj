@@ -93,7 +93,6 @@
 		FF5C266E1E28048A00A1D9E0 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */; };
 		FF5C266F1E28048A00A1D9E0 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF5C26721E28049900A1D9E0 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF84AB651D90A7D900ABD54C /* HealthKit.framework */; };
-		FF5C26741E28060900A1D9E0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5C26731E28060900A1D9E0 /* Info.plist */; };
 		FF5C26751E28069600A1D9E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801040F21C5AD2D700D26E19 /* Assets.xcassets */; };
 		FF5C26761E2806A100A1D9E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801040F21C5AD2D700D26E19 /* Assets.xcassets */; };
 		FF5CDF351DDE8D3600117218 /* SBAAnswerFormatFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5CDF341DDE8D3600117218 /* SBAAnswerFormatFinder.swift */; };
@@ -128,7 +127,6 @@
 		FF9312391DC93327001A9F86 /* SBAPermissionObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9312381DC93327001A9F86 /* SBAPermissionObjectType.swift */; };
 		FF9424EB1E28096000FD8C24 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */; };
 		FF9424EC1E2809EE00FD8C24 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */; };
-		FF9424ED1E2809EE00FD8C24 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5C26731E28060900A1D9E0 /* Info.plist */; };
 		FF9424EE1E2809EE00FD8C24 /* ColorInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */; };
 		FF9424EF1E2809EF00FD8C24 /* ColorInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */; };
 		FF9424F01E280A0800FD8C24 /* consent_1welcome.html in Resources */ = {isa = PBXBuildFile; fileRef = FF78CEF81D00B5C4002C456D /* consent_1welcome.html */; };
@@ -1301,7 +1299,6 @@
 				TargetAttributes = {
 					801040B11C5A843D00D26E19 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 4B822CZK9N;
 						LastSwiftMigration = 0800;
 					};
 					801040BA1C5A843D00D26E19 = {
@@ -1413,7 +1410,6 @@
 				FF9425181E280A4A00FD8C24 /* consent_contact.html in Resources */,
 				FF9424EF1E2809EF00FD8C24 /* ColorInfo.plist in Resources */,
 				FF9425081E280A3E00FD8C24 /* consent_18researchers.html in Resources */,
-				FF5C26741E28060900A1D9E0 /* Info.plist in Resources */,
 				FF9424F21E280A0D00FD8C24 /* consent_2quiz_headsup.html in Resources */,
 				FF9425261E280A7900FD8C24 /* Walking.json in Resources */,
 				FF9425211E280A7900FD8C24 /* Memory.json in Resources */,
@@ -1473,7 +1469,6 @@
 				FF94252B1E280A7A00FD8C24 /* Tapping.json in Resources */,
 				FF9424F91E280A1C00FD8C24 /* consent_5dataprocessing.html in Resources */,
 				FF9424F51E280A1200FD8C24 /* consent_3activities.html in Resources */,
-				FF9424ED1E2809EE00FD8C24 /* Info.plist in Resources */,
 				FF94250B1E280A3F00FD8C24 /* consent_9study_survey.html in Resources */,
 				FF9424F71E280A1800FD8C24 /* consent_4sensordata.html in Resources */,
 				FF9425121E280A3F00FD8C24 /* consent_16future.html in Resources */,
@@ -2042,7 +2037,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 14;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4B822CZK9N;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 14;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2070,7 +2065,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 14;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4B822CZK9N;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 14;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
