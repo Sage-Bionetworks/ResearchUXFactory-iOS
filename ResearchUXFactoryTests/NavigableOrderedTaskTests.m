@@ -42,7 +42,7 @@
 @end
 
 @interface MockActiveStep : ORKActiveStep
-@property (nonatomic, readwrite, nullable) NSSet<HKObjectType *> *requestedHealthKitTypesForReading;
+@property (nonatomic, readwrite, copy, nullable) NSSet<HKObjectType *> *requestedHealthKitTypesForReading;
 @end
 
 @implementation SBANavigableOrderedTaskTests
