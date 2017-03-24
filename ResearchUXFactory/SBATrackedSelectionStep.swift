@@ -98,7 +98,7 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
         // Map the steps
         var results:[ORKResult] = self.steps.map { (step) -> [ORKResult] in
             
-            let substepResults: [ORKResult] = {
+            var substepResults: [ORKResult] = {
                 if let trackingStep = step as? SBATrackedDataSelectedItemsProtocol {
                     // If the substeps implement the selected item result protocol then use that
                     return trackingStep.stepResult(selectedItems: items)?.results ?? []
@@ -113,9 +113,11 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
             for result in substepResults {
                 result.identifier = "\(step.identifier).\(result.identifier)"
             }
-            return substepResults
+            substepResults.insert(ORKResult(identifier: "step.\(step.identifier)"), at: 0)
             
-            }.flatMap({$0})
+            return substepResults
+        
+        }.flatMap({$0})
         
         // Add the tracked result last
         let trackedResult = SBATrackedDataSelectionResult(identifier: self.identifier)

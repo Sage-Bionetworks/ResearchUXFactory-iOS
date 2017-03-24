@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable dataGroups;
 
+@property (nonatomic, readonly) BOOL isTestUser;
+
 @end
 
 NS_ASSUME_NONNULL_END

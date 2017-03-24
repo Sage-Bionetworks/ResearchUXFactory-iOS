@@ -40,14 +40,15 @@ public enum SBAActiveTaskType {
     
     case activeTask(Identifier)
     public enum Identifier : String {
+        case cardio
         case goNoGo
         case memory
         case moodSurvey
-        case voice
-        case walking
         case tapping
         case trailmaking
         case tremor
+        case voice
+        case walking
     }
     
     init(name: String?) {
@@ -72,6 +73,8 @@ public enum SBAActiveTaskType {
         }
         return nil
     }
+    
+
 }
 
 extension SBAActiveTaskType: Equatable {
@@ -148,33 +151,37 @@ extension SBAActiveTask {
         guard let activeTaskIdentifier = self.taskType.activeTaskIdentifier() else { return nil }
         
         let predefinedExclusions = self.predefinedExclusions ?? options
-        
-        // Map active tasks
-        var task: ORKOrderedTask!
-        var permissionTypes: [SBAPermissionObjectType]?
-        switch activeTaskIdentifier {
-        case .goNoGo:
-            task = goNoGoTask(predefinedExclusions)
-            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
-        case .memory:
-            task = memoryTask(predefinedExclusions)
-        case .moodSurvey:
-            task = moodSurvey(predefinedExclusions)
-        case .tapping:
-            task = tappingTask(predefinedExclusions)
-            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
-        case .trailmaking:
-            task = trailmakingTask(predefinedExclusions)
-        case .tremor:
-            task = tremorTask(predefinedExclusions)
-            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
-        case .voice:
-            task = voiceTask(predefinedExclusions)
-            permissionTypes = [SBAPermissionObjectType(permissionType: .microphone)]
-        case .walking:
-            task = walkingTask(predefinedExclusions)
-            permissionTypes = [SBAPermissionObjectType(permissionType: .coremotion)]
-        }
+        var task:ORKOrderedTask = {
+            switch activeTaskIdentifier {
+                
+            case .cardio:
+                return cardioTask(predefinedExclusions)
+                
+            case .goNoGo:
+                return goNoGoTask(predefinedExclusions)
+
+            case .memory:
+                return memoryTask(predefinedExclusions)
+                
+            case .moodSurvey:
+                return moodSurveyTask(predefinedExclusions)
+                
+            case .tapping:
+                return tappingTask(predefinedExclusions)
+                
+            case .trailmaking:
+                return trailmakingTask(predefinedExclusions)
+                
+            case .tremor:
+                return tremorTask(predefinedExclusions)
+                
+            case .voice:
+                return voiceTask(predefinedExclusions)
+                
+            case .walking:
+                return walkingTask(predefinedExclusions)
+            }
+        }()
         
         // Modify the instruction step if this is an optional task
         if self.optional {
@@ -182,8 +189,9 @@ extension SBAActiveTask {
         }
         
         // Add the permissions step
-        if !self.ignorePermissions, let permissions = permissionTypes {
-            task = taskWithPermissions(task, permissions)
+        if !self.ignorePermissions,
+            let permissionTypes = SBAPermissionsManager.shared.permissionsTypeFactory.permissionTypes(for: task) {
+            task = taskWithPermissions(task, permissionTypes)
         }
         
         // map the localized steps
@@ -292,6 +300,28 @@ extension SBAActiveTask {
     
     // MARK: active task factory
     
+    func cardioTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
+        
+        let walkDuration: TimeInterval = taskOptions?["walkDuration"] as? TimeInterval ?? 6 * 60.0
+        let restDuration: TimeInterval = taskOptions?["restDuration"] as? TimeInterval ?? 0.0
+        
+        if #available(iOS 10.0, *) {
+            return ORKOrderedTask.cardioChallenge(withIdentifier: self.schemaIdentifier,
+                                                  intendedUseDescription: self.intendedUseDescription,
+                                                  walkDuration: walkDuration,
+                                                  restDuration: restDuration,
+                                                  relativeDistanceOnly: !SBAInfoManager.shared.currentParticipant.isTestUser,
+                                                  options: options)
+        }
+        else {
+            return ORKOrderedTask.fitnessCheck(withIdentifier: self.schemaIdentifier,
+                                               intendedUseDescription: self.intendedUseDescription,
+                                               walkDuration: walkDuration,
+                                               restDuration: restDuration,
+                                               options: options)
+        }
+    }
+    
     func goNoGoTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
         
         let maximumStimulusInterval: TimeInterval = taskOptions?["maximumStimulusInterval"] as? TimeInterval ?? 10.0
@@ -317,16 +347,16 @@ extension SBAActiveTask {
         let failureSound = findSoundID(key: "failureSound", defaultSound: SystemSoundID(kSystemSoundID_Vibrate))
         
         return ORKOrderedTask.gonogoTask(withIdentifier: self.schemaIdentifier,
-                                         intendedUseDescription: self.intendedUseDescription,
-                                         maximumStimulusInterval: maximumStimulusInterval,
-                                         minimumStimulusInterval: minimumStimulusInterval,
-                                         thresholdAcceleration: thresholdAcceleration,
-                                         numberOfAttempts: numberOfAttempts,
-                                         timeout: timeout,
-                                         successSound: successSound,
-                                         timeoutSound: timeoutSound,
-                                         failureSound: failureSound,
-                                         options: options)
+                                             intendedUseDescription: self.intendedUseDescription,
+                                             maximumStimulusInterval: maximumStimulusInterval,
+                                             minimumStimulusInterval: minimumStimulusInterval,
+                                             thresholdAcceleration: thresholdAcceleration,
+                                             numberOfAttempts: numberOfAttempts,
+                                             timeout: timeout,
+                                             successSound: successSound,
+                                             timeoutSound: timeoutSound,
+                                             failureSound: failureSound,
+                                             options: options)
     }
     
     func memoryTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
@@ -345,40 +375,39 @@ extension SBAActiveTask {
         let requireReversal: Bool = taskOptions?["requireReversal"] as? Bool ?? false
         
         return ORKOrderedTask.spatialSpanMemoryTask(withIdentifier: self.schemaIdentifier,
-                                                                  intendedUseDescription: self.intendedUseDescription,
-                                                                  initialSpan: initialSpan,
-                                                                  minimumSpan: minimumSpan,
-                                                                  maximumSpan: maximumSpan,
-                                                                  playSpeed: playSpeed,
-                                                                  maximumTests: maxTests,
-                                                                  maximumConsecutiveFailures: maxConsecutiveFailures,
-                                                                  customTargetImage: customTargetImage,
-                                                                  customTargetPluralName: customTargetPluralName,
-                                                                  requireReversal: requireReversal,
-                                                                  options: options)
+                                                        intendedUseDescription: self.intendedUseDescription,
+                                                        initialSpan: initialSpan,
+                                                        minimumSpan: minimumSpan,
+                                                        maximumSpan: maximumSpan,
+                                                        playSpeed: playSpeed,
+                                                        maximumTests: maxTests,
+                                                        maximumConsecutiveFailures: maxConsecutiveFailures,
+                                                        customTargetImage: customTargetImage,
+                                                        customTargetPluralName: customTargetPluralName,
+                                                        requireReversal: requireReversal,
+                                                        options: options)
     }
     
-    func moodSurvey(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
+    func moodSurveyTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
         
         let frequency = ORKMoodSurveyFrequency(name: taskOptions?["frequency"] as? String)
         let customQuestionText = taskOptions?["customQuestionText"] as? String
         
         return ORKOrderedTask.moodSurvey(withIdentifier: self.schemaIdentifier,
-                                         intendedUseDescription: self.intendedUseDescription,
-                                         frequency: frequency,
-                                         customQuestionText: customQuestionText,
-                                         options: options)
+                                             intendedUseDescription: self.intendedUseDescription,
+                                             frequency: frequency,
+                                             customQuestionText: customQuestionText,
+                                             options: options)
     }
     
     func tappingTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
         let duration: TimeInterval = taskOptions?["duration"] as? TimeInterval ?? 10.0
         let handOptions = ORKPredefinedTaskHandOption(name: taskOptions?["handOptions"] as? String)
-        return ORKOrderedTask.twoFingerTappingIntervalTask(
-            withIdentifier: self.schemaIdentifier,
-            intendedUseDescription: self.intendedUseDescription,
-            duration: duration,
-            handOptions: handOptions,
-            options: options)
+        return ORKOrderedTask.twoFingerTappingIntervalTask(withIdentifier: self.schemaIdentifier,
+                                                               intendedUseDescription: self.intendedUseDescription,
+                                                               duration: duration,
+                                                               handOptions: handOptions,
+                                                               options: options)
     }
     
     func trailmakingTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
@@ -392,10 +421,10 @@ extension SBAActiveTask {
         let trailmakingInstruction = taskOptions?["trailmakingInstruction"] as? String
         
         return ORKOrderedTask.trailmakingTask(withIdentifier: self.schemaIdentifier,
-                                              intendedUseDescription: self.intendedUseDescription,
-                                              trailmakingInstruction: trailmakingInstruction,
-                                              trailType: trailType,
-                                              options: options)
+                                                  intendedUseDescription: self.intendedUseDescription,
+                                                  trailmakingInstruction: trailmakingInstruction,
+                                                  trailType: trailType,
+                                                  options: options)
     }
     
     func tremorTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
@@ -405,11 +434,11 @@ extension SBAActiveTask {
         let excludeOptions = ORKTremorActiveTaskOption(excludes: taskOptions?["excludePostions"] as? [String])
         
         return ORKOrderedTask.tremorTest(withIdentifier: self.schemaIdentifier,
-                                         intendedUseDescription: self.intendedUseDescription,
-                                         activeStepDuration: duration,
-                                         activeTaskOptions: excludeOptions,
-                                         handOptions: handOptions,
-                                         options: options)
+                                             intendedUseDescription: self.intendedUseDescription,
+                                             activeStepDuration: duration,
+                                             activeTaskOptions: excludeOptions,
+                                             handOptions: handOptions,
+                                             options: options)
     }
     
     func voiceTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
@@ -420,13 +449,13 @@ extension SBAActiveTask {
         let recordingSettings: [String: AnyObject]? = taskOptions?["recordingSettings"] as? [String: AnyObject]
         
         return ORKOrderedTask.audioTask(withIdentifier: self.schemaIdentifier,
-            intendedUseDescription: self.intendedUseDescription,
-            speechInstruction: speechInstruction,
-            shortSpeechInstruction: shortSpeechInstruction,
-            duration: duration,
-            recordingSettings: recordingSettings,
-            checkAudioLevel: true,
-            options: options)
+                                            intendedUseDescription: self.intendedUseDescription,
+                                            speechInstruction: speechInstruction,
+                                            shortSpeechInstruction: shortSpeechInstruction,
+                                            duration: duration,
+                                            recordingSettings: recordingSettings,
+                                            checkAudioLevel: true,
+                                            options: options)
     }
     
     func walkingTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
@@ -436,10 +465,10 @@ extension SBAActiveTask {
         let restDuration: TimeInterval = taskOptions?["restDuration"] as? TimeInterval ?? 30.0
         
         return ORKOrderedTask.walkBackAndForthTask(withIdentifier: self.schemaIdentifier,
-                                                                 intendedUseDescription: self.intendedUseDescription,
-                                                                 walkDuration: walkDuration,
-                                                                 restDuration: restDuration,
-                                                                 options: options)
+                                                       intendedUseDescription: self.intendedUseDescription,
+                                                       walkDuration: walkDuration,
+                                                       restDuration: restDuration,
+                                                       options: options)
     }
 
 }

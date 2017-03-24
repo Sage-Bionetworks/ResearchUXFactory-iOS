@@ -45,7 +45,6 @@
 		FF2379AC1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2379AA1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m */; };
 		FF2498141CB6C1F0002DD05F /* MockTrackedDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2498131CB6C1F0002DD05F /* MockTrackedDataStore.m */; };
 		FF24981F1CB6DC13002DD05F /* SBATrackedStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24981E1CB6DC13002DD05F /* SBATrackedStep.swift */; };
-		FF2498211CB6E605002DD05F /* SequenceType+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2498201CB6E605002DD05F /* SequenceType+Utilities.swift */; };
 		FF2498251CB78972002DD05F /* TrackedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2498241CB78972002DD05F /* TrackedDataTests.swift */; };
 		FF2728881D91CFB900956CFB /* SBAClassTypeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2728871D91CFB900956CFB /* SBAClassTypeMap.swift */; };
 		FF2729031D91FE5300956CFB /* SBADirectNavigationRule+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2729021D91FE5300956CFB /* SBADirectNavigationRule+Dictionary.swift */; };
@@ -93,7 +92,6 @@
 		FF5C266E1E28048A00A1D9E0 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */; };
 		FF5C266F1E28048A00A1D9E0 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF5C26721E28049900A1D9E0 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF84AB651D90A7D900ABD54C /* HealthKit.framework */; };
-		FF5C26741E28060900A1D9E0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5C26731E28060900A1D9E0 /* Info.plist */; };
 		FF5C26751E28069600A1D9E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801040F21C5AD2D700D26E19 /* Assets.xcassets */; };
 		FF5C26761E2806A100A1D9E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801040F21C5AD2D700D26E19 /* Assets.xcassets */; };
 		FF5CDF351DDE8D3600117218 /* SBAAnswerFormatFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5CDF341DDE8D3600117218 /* SBAAnswerFormatFinder.swift */; };
@@ -128,7 +126,6 @@
 		FF9312391DC93327001A9F86 /* SBAPermissionObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9312381DC93327001A9F86 /* SBAPermissionObjectType.swift */; };
 		FF9424EB1E28096000FD8C24 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */; };
 		FF9424EC1E2809EE00FD8C24 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF9424EA1E28096000FD8C24 /* BridgeInfo.plist */; };
-		FF9424ED1E2809EE00FD8C24 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5C26731E28060900A1D9E0 /* Info.plist */; };
 		FF9424EE1E2809EE00FD8C24 /* ColorInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */; };
 		FF9424EF1E2809EF00FD8C24 /* ColorInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */; };
 		FF9424F01E280A0800FD8C24 /* consent_1welcome.html in Resources */ = {isa = PBXBuildFile; fileRef = FF78CEF81D00B5C4002C456D /* consent_1welcome.html */; };
@@ -215,7 +212,6 @@
 		FFAAF61E1CC0267E00500929 /* SBAPermissionsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFAAF61C1CC0267E00500929 /* SBAPermissionsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFAAF61F1CC0267E00500929 /* SBAPermissionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FFAAF61D1CC0267E00500929 /* SBAPermissionsManager.m */; };
 		FFAAF6391CC0A42A00500929 /* SBABorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAF6381CC0A42A00500929 /* SBABorderedButton.swift */; };
-		FFB30D2E1D4008DE00D175D2 /* Array+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB30D2D1D4008DE00D175D2 /* Array+Utilities.swift */; };
 		FFB30D621D40891400D175D2 /* ORKFormStep+Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB30D611D40891400D175D2 /* ORKFormStep+Result.swift */; };
 		FFB30D691D4139B400D175D2 /* SBATrackedSelectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB30D681D4139B400D175D2 /* SBATrackedSelectionStep.swift */; };
 		FFB30E3A1D488F4800D175D2 /* SBALoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB30E391D488F4800D175D2 /* SBALoadingView.swift */; };
@@ -244,7 +240,6 @@
 		FFCF385D1CE1172A0090452F /* NSPredicate+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */; };
 		FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */; };
 		FFDECDFD1D077C2000434001 /* ConsentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECDFC1D077C2000434001 /* ConsentTests.swift */; };
-		FFDECE011D07DDED00434001 /* Dictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */; };
 		FFE57F1E1E38837400CEC67F /* SBASurveyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */; };
 		FFE57F221E393E3D00CEC67F /* SBANavigationFormStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */; };
 		FFE57F241E393EFA00CEC67F /* SBANavigationSubtaskStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */; };
@@ -286,6 +281,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = B183A4731A8535D100C76870;
 			remoteInfo = ResearchKit;
+		};
+		FF8630331E6FDCBF0077AC57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF0395F21CFE283F00245DE3 /* ResearchKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF405E2E1E5393DB00002C19;
+			remoteInfo = "ResearchKit (watchOS)";
 		};
 		FF9425AE1E28977F00FD8C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -382,7 +384,6 @@
 		FF2498121CB6C1F0002DD05F /* MockTrackedDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockTrackedDataStore.h; sourceTree = "<group>"; };
 		FF2498131CB6C1F0002DD05F /* MockTrackedDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockTrackedDataStore.m; sourceTree = "<group>"; };
 		FF24981E1CB6DC13002DD05F /* SBATrackedStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBATrackedStep.swift; sourceTree = "<group>"; };
-		FF2498201CB6E605002DD05F /* SequenceType+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SequenceType+Utilities.swift"; sourceTree = "<group>"; };
 		FF2498241CB78972002DD05F /* TrackedDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackedDataTests.swift; sourceTree = "<group>"; };
 		FF2728871D91CFB900956CFB /* SBAClassTypeMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAClassTypeMap.swift; sourceTree = "<group>"; };
 		FF2729021D91FE5300956CFB /* SBADirectNavigationRule+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBADirectNavigationRule+Dictionary.swift"; sourceTree = "<group>"; };
@@ -513,7 +514,6 @@
 		FFAAF61C1CC0267E00500929 /* SBAPermissionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAPermissionsManager.h; sourceTree = "<group>"; };
 		FFAAF61D1CC0267E00500929 /* SBAPermissionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAPermissionsManager.m; sourceTree = "<group>"; };
 		FFAAF6381CC0A42A00500929 /* SBABorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBABorderedButton.swift; sourceTree = "<group>"; };
-		FFB30D2D1D4008DE00D175D2 /* Array+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Utilities.swift"; sourceTree = "<group>"; };
 		FFB30D611D40891400D175D2 /* ORKFormStep+Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ORKFormStep+Result.swift"; sourceTree = "<group>"; };
 		FFB30D681D4139B400D175D2 /* SBATrackedSelectionStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SBATrackedSelectionStep.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FFB30E391D488F4800D175D2 /* SBALoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBALoadingView.swift; sourceTree = "<group>"; };
@@ -542,7 +542,6 @@
 		FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Utilities.swift"; sourceTree = "<group>"; };
 		FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SBATrackedActivityStep.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FFDECDFC1D077C2000434001 /* ConsentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTests.swift; sourceTree = "<group>"; };
-		FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyRule.swift; sourceTree = "<group>"; };
 		FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationFormStep.swift; sourceTree = "<group>"; };
 		FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationSubtaskStep.swift; sourceTree = "<group>"; };
@@ -745,15 +744,12 @@
 			children = (
 				FF94259D1E28606300FD8C24 /* NSDate+ISO8601Format.h */,
 				FF94259E1E28606300FD8C24 /* NSDate+ISO8601Format.m */,
-				FFB30D2D1D4008DE00D175D2 /* Array+Utilities.swift */,
-				FFDECE001D07DDED00434001 /* Dictionary+Utilities.swift */,
 				FF3A354D1CBDAFE600F44E6E /* UIColor+Utilities.swift */,
 				FFA8E4A91CBD6E0B00ED5399 /* NSError+SBBTranslation.swift */,
 				FB0C9EF21CAA52F700BA5B44 /* NSDate+Utilities.swift */,
 				FF23799E1CBC2E5900F3A943 /* NSDictionary+Utilities.swift */,
 				FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */,
 				FF9055DA1CE3E09C0049D12A /* NSUserDefaults+Utilities.swift */,
-				FF2498201CB6E605002DD05F /* SequenceType+Utilities.swift */,
 				FF6410F91CAF39B4007FB9E1 /* String+Utilities.swift */,
 				FF9E48951CF3A2F1005EE7E0 /* StaticUtilities.swift */,
 				FBF1B6B21CAAF6FC007C1082 /* UIAlertController+Utilities.swift */,
@@ -1168,6 +1164,7 @@
 			isa = PBXGroup;
 			children = (
 				FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */,
+				FF8630341E6FDCBF0077AC57 /* ResearchKit.framework */,
 				FFC160A11CFE672100C29AF7 /* ResearchKitTests.xctest */,
 			);
 			name = Products;
@@ -1301,7 +1298,6 @@
 				TargetAttributes = {
 					801040B11C5A843D00D26E19 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 4B822CZK9N;
 						LastSwiftMigration = 0800;
 					};
 					801040BA1C5A843D00D26E19 = {
@@ -1350,6 +1346,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		FF8630341E6FDCBF0077AC57 /* ResearchKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchKit.framework;
+			remoteRef = FF8630331E6FDCBF0077AC57 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1413,7 +1416,6 @@
 				FF9425181E280A4A00FD8C24 /* consent_contact.html in Resources */,
 				FF9424EF1E2809EF00FD8C24 /* ColorInfo.plist in Resources */,
 				FF9425081E280A3E00FD8C24 /* consent_18researchers.html in Resources */,
-				FF5C26741E28060900A1D9E0 /* Info.plist in Resources */,
 				FF9424F21E280A0D00FD8C24 /* consent_2quiz_headsup.html in Resources */,
 				FF9425261E280A7900FD8C24 /* Walking.json in Resources */,
 				FF9425211E280A7900FD8C24 /* Memory.json in Resources */,
@@ -1473,7 +1475,6 @@
 				FF94252B1E280A7A00FD8C24 /* Tapping.json in Resources */,
 				FF9424F91E280A1C00FD8C24 /* consent_5dataprocessing.html in Resources */,
 				FF9424F51E280A1200FD8C24 /* consent_3activities.html in Resources */,
-				FF9424ED1E2809EE00FD8C24 /* Info.plist in Resources */,
 				FF94250B1E280A3F00FD8C24 /* consent_9study_survey.html in Resources */,
 				FF9424F71E280A1800FD8C24 /* consent_4sensordata.html in Resources */,
 				FF9425121E280A3F00FD8C24 /* consent_16future.html in Resources */,
@@ -1495,7 +1496,6 @@
 			files = (
 				FF3A354E1CBDAFE600F44E6E /* UIColor+Utilities.swift in Sources */,
 				FB14FFE71C7686EB00E0D5AF /* SBAResourceFinder.swift in Sources */,
-				FFDECE011D07DDED00434001 /* Dictionary+Utilities.swift in Sources */,
 				FF2729071D91FF3000956CFB /* SBATextChoice+ORKTextChoice.swift in Sources */,
 				FF4F06D21CEED20D007BD273 /* SBATrackedDataSelectionResult.swift in Sources */,
 				FF24981F1CB6DC13002DD05F /* SBATrackedStep.swift in Sources */,
@@ -1529,7 +1529,6 @@
 				FF08E0C01C9A6A120082D530 /* SBASurveyItem+Dictionary.swift in Sources */,
 				FF2729031D91FE5300956CFB /* SBADirectNavigationRule+Dictionary.swift in Sources */,
 				FFCF37E01CDA99120090452F /* UIView+LayoutExtensions.swift in Sources */,
-				FF2498211CB6E605002DD05F /* SequenceType+Utilities.swift in Sources */,
 				FF94256E1E281BC000FD8C24 /* ORKResult+ResultsExtension.swift in Sources */,
 				FF1DD9361E37DC210096727C /* SBASurveyItemType.swift in Sources */,
 				FBF1B6B31CAAF6FC007C1082 /* UIAlertController+Utilities.swift in Sources */,
@@ -1540,7 +1539,6 @@
 				FB6BA0951C7CDA6000C9903F /* SBAInstructionStep.swift in Sources */,
 				FF882F221E173DB7002CFB63 /* SBAFormProtocol.swift in Sources */,
 				FF10F4E01D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.m in Sources */,
-				FFB30D2E1D4008DE00D175D2 /* Array+Utilities.swift in Sources */,
 				FBAD115A1CADB2F0005611D0 /* SBADataObject.m in Sources */,
 				FF36DCBE1DB6CE840034C85D /* SBAToggleTableViewCell.swift in Sources */,
 				FFA8E4AA1CBD6E0B00ED5399 /* NSError+SBBTranslation.swift in Sources */,
@@ -1963,7 +1961,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2012,7 +2010,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2040,11 +2038,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4B822CZK9N;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 14;
+				DYLIB_CURRENT_VERSION = 15;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ResearchUXFactory/Info.plist;
@@ -2068,11 +2066,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4B822CZK9N;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 14;
+				DYLIB_CURRENT_VERSION = 15;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ResearchUXFactory/Info.plist;
