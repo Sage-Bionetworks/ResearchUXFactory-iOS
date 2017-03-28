@@ -78,6 +78,8 @@
 "SBA_REGISTRATION_FULLNAME_PLACEHOLDER" = "Enter full name"; // Placeholder for the full name during registration.
 
 /* Profile */
+"AGE_FORM_ITEM_TITLE" = "Current Age";
+"AGE_FORM_ITEM_PLACEHOLDER" = "What is your current age?";
 "BLOOD_TYPE_FORM_ITEM_TITLE" = "Blood Type";    // Title for a form item for entering blood type
 "BLOOD_TYPE_FORM_ITEM_PLACEHOLDER" = "Enter blood type";    // Placeholder for a form item for entering blood type
 "FITZPATRICK_SKIN_TYPE_FORM_ITEM_TITLE" = "Fitzpatrick Skin Type";    // Title for a form item for entering blood type

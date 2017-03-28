@@ -2,7 +2,7 @@
 //  SBAProfileInfoOptions.swift
 //  ResearchUXFactory
 //
-//  Copyright © 2016 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -41,8 +41,11 @@ public enum SBAProfileInfoOption : String {
     case email                  = "email"
     case password               = "password"
     case externalID             = "externalID"
-    case name                   = "name"
+    case fullName               = "name"
+    case givenName              = "given"
+    case familyName             = "family"
     case birthdate              = "birthdate"
+    case currentAge             = "currentAge"
     case gender                 = "gender"
     case bloodType              = "bloodType"
     case fitzpatrickSkinType    = "fitzpatrickSkinType"
@@ -167,9 +170,6 @@ public struct SBAProfileInfoOptions {
         self.customItems = customItems
     }
     
-    /**
-     Factory method for converting to `ORKFormItem` array.
-     */
     public func makeFormItems(factory:SBABaseSurveyFactory? = nil) -> [ORKFormItem] {
         
         var formItems: [ORKFormItem] = []
@@ -195,12 +195,16 @@ public struct SBAProfileInfoOptions {
                 let formItem = makeExternalIDFormItem(with: option.rawValue)
                 formItems.append(formItem)
                 
-            case .name:
+            case .fullName, .givenName, .familyName:
                 let formItem = makeNameFormItem(with: option.rawValue)
                 formItems.append(formItem)
                 
             case .birthdate:
                 let formItem = makeBirthdateFormItem(with: option.rawValue)
+                formItems.append(formItem)
+                
+            case .currentAge:
+                let formItem = makeCurrentAgeFormItem(with: option.rawValue)
                 formItems.append(formItem)
                 
             case .gender:
@@ -331,12 +335,31 @@ public struct SBAProfileInfoOptions {
         answerFormat.spellCheckingType = .no
         answerFormat.keyboardType = .default
         
-        let formItem = ORKFormItem(identifier: identifier,
-                                   text: Localization.localizedString("SBA_REGISTRATION_FULLNAME_TITLE"),
-                                   answerFormat: answerFormat,
-                                   optional: false)
-        formItem.placeholder = Localization.localizedString("SBA_REGISTRATION_FULLNAME_PLACEHOLDER")
+        let nameType = SBAProfileInfoOption(rawValue: identifier) ?? SBAProfileInfoOption.fullName
         
+        
+        let (text, placeholder): (String, String) = {
+            switch(nameType) {
+            case .givenName:
+                return (Localization.localizedString("CONSENT_NAME_GIVEN"),
+                        Localization.localizedString("CONSENT_NAME_PLACEHOLDER"))
+                
+            case .familyName:
+                return (Localization.localizedString("CONSENT_NAME_FAMILY"),
+                         Localization.localizedString("CONSENT_NAME_PLACEHOLDER"))
+                    
+            default:
+                return (Localization.localizedString("SBA_REGISTRATION_FULLNAME_TITLE"),
+                        Localization.localizedString("SBA_REGISTRATION_FULLNAME_PLACEHOLDER"))
+            }
+        }()
+        
+        let formItem = ORKFormItem(identifier: identifier,
+                                       text: text,
+                                       answerFormat: answerFormat.copy() as? ORKAnswerFormat,
+                                       optional: false)
+        formItem.placeholder = placeholder
+            
         return formItem
     }
     
@@ -350,6 +373,17 @@ public struct SBAProfileInfoOptions {
                                    answerFormat: answerFormat,
                                    optional: false)
         formItem.placeholder = Localization.localizedString("DOB_FORM_ITEM_PLACEHOLDER")
+        
+        return formItem
+    }
+    
+    func makeCurrentAgeFormItem(with identifier: String) -> ORKFormItem {
+        let answerFormat = ORKNumericAnswerFormat(style: .integer)
+        let formItem = ORKFormItem(identifier: identifier,
+                                   text: Localization.localizedString("AGE_FORM_ITEM_TITLE"),
+                                   answerFormat: answerFormat,
+                                   optional: false)
+        formItem.placeholder = Localization.localizedString("AGE_FORM_ITEM_PLACEHOLDER")
         
         return formItem
     }
@@ -489,8 +523,6 @@ public struct SBAProfileInfoOptions {
     }
 }
 
-
-
 /**
  For any given result, get the result associated with the given `SBAProfileInfoOption`.
  This could be used in both updating demographics from a user profile and in onboarding.
@@ -500,7 +532,11 @@ extension SBAResearchKitResultConverter {
     // MARK: Results
     
     public var name: String? {
-        return textAnswer(for: .name)
+        return textAnswer(for: .givenName) ?? textAnswer(for: .fullName)
+    }
+    
+    public var familyName: String? {
+        return textAnswer(for: .familyName)
     }
     
     public var email: String? {
@@ -517,6 +553,10 @@ extension SBAResearchKitResultConverter {
     
     public var gender: HKBiologicalSex? {
         return convertBiologicalSex(for: .gender)
+    }
+    
+    public var currentAge: Int? {
+        return intAnswer(for: SBAProfileInfoOption.currentAge.rawValue)
     }
     
     public var birthdate: Date? {
