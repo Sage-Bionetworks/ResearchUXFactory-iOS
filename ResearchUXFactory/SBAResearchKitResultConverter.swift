@@ -162,5 +162,13 @@ extension SBAResearchKitResultConverter {
         return result.textAnswer
     }
     
+    /**
+     Convert an `ORKNumericQuestionResult` for a given result into a integer.
+     */
+    public func intAnswer(for identifier:String) -> Int? {
+        guard let result = self.findResult(for: identifier) as? ORKNumericQuestionResult else { return nil }
+        return result.numericAnswer?.intValue
+    }
+    
 }
 

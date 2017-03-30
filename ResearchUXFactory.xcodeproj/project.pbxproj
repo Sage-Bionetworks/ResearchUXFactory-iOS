@@ -37,6 +37,8 @@
 		FF0158711DF6047600F417E1 /* AnswerFormatFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0158701DF6047600F417E1 /* AnswerFormatFinderTests.swift */; };
 		FF08C9301DEE1EBC00235711 /* UtilityExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08C92F1DEE1EBC00235711 /* UtilityExtensionTests.swift */; };
 		FF08E0C01C9A6A120082D530 /* SBASurveyItem+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */; };
+		FF0A880E1E8ADF1D00708A69 /* SBANameDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0A880D1E8ADF1D00708A69 /* SBANameDataSource.swift */; };
+		FF0A88131E8AE35C00708A69 /* Date+CurrentAgeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0A88121E8AE35C00708A69 /* Date+CurrentAgeExtension.swift */; };
 		FF10F4DF1D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF10F4DD1D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF10F4E01D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF10F4DE1D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.m */; };
 		FF1DD9361E37DC210096727C /* SBASurveyItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD9351E37DC210096727C /* SBASurveyItemType.swift */; };
@@ -375,6 +377,8 @@
 		FF0395F21CFE283F00245DE3 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		FF08C92F1DEE1EBC00235711 /* UtilityExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityExtensionTests.swift; sourceTree = "<group>"; };
 		FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBASurveyItem+Dictionary.swift"; sourceTree = "<group>"; };
+		FF0A880D1E8ADF1D00708A69 /* SBANameDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANameDataSource.swift; sourceTree = "<group>"; };
+		FF0A88121E8AE35C00708A69 /* Date+CurrentAgeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+CurrentAgeExtension.swift"; sourceTree = "<group>"; };
 		FF10F4DD1D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ORKCollectionResult+SBAExtensions.h"; sourceTree = "<group>"; };
 		FF10F4DE1D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ORKCollectionResult+SBAExtensions.m"; sourceTree = "<group>"; };
 		FF1DD9351E37DC210096727C /* SBASurveyItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyItemType.swift; sourceTree = "<group>"; };
@@ -1016,8 +1020,10 @@
 		FF9425921E28593600FD8C24 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				FF0A88121E8AE35C00708A69 /* Date+CurrentAgeExtension.swift */,
 				FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */,
 				FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */,
+				FF0A880D1E8ADF1D00708A69 /* SBANameDataSource.swift */,
 				FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */,
 				FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */,
 				FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */,
@@ -1520,6 +1526,7 @@
 				FF9425411E2812F100FD8C24 /* SBAConsentSection.swift in Sources */,
 				FB8439191C727BEB0086E961 /* SBABaseSurveyFactory.swift in Sources */,
 				FF9425421E2812F100FD8C24 /* SBAConsentSection+Dictionary.swift in Sources */,
+				FF0A88131E8AE35C00708A69 /* Date+CurrentAgeExtension.swift in Sources */,
 				FF9312391DC93327001A9F86 /* SBAPermissionObjectType.swift in Sources */,
 				FF9E48961CF3A2F1005EE7E0 /* StaticUtilities.swift in Sources */,
 				FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */,
@@ -1578,6 +1585,7 @@
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
 				FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */,
 				FF2729151D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift in Sources */,
+				FF0A880E1E8ADF1D00708A69 /* SBANameDataSource.swift in Sources */,
 				FF2729131D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift in Sources */,
 				FF9425441E2812F100FD8C24 /* SBAConsentSharingOptions+Dictionary.swift in Sources */,
 				FF80920F1D01FD35003FF617 /* ORKAnswerFormat+KeyboardUtilities.swift in Sources */,
