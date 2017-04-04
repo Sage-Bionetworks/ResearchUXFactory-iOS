@@ -66,14 +66,21 @@
 - (void)commonInitWithDictionaryRepresentation:(NSDictionary *)dictionary {
     for (NSString *key in [self dictionaryRepresentationKeys]) {
         id value = dictionary[key];
-        if (value && ![value isKindOfClass:[NSNull class]]) {
+        if (!value || [value isKindOfClass:[NSNull class]]) {
+            value = [self defaultValueForKey:key];
+        }
+        if (value) {
             [self setValue:value forKey:key];
         }
     }
     if (_identifier == nil) {
         _identifier = [self defaultIdentifierIfNil];
     }
+}
 
+- (id _Nullable)defaultValueForKey:(NSString *)key {
+    // Base class implementation does nothing
+    return nil;
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key {

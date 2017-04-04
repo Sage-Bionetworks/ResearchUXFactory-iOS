@@ -59,18 +59,14 @@ static NSString *kTrackedItemsKey = @"items";
     return _dataStore;
 }
 
-- (NSNumber *)trackingSurveyRepeatTimeInterval {
-    if (_trackingSurveyRepeatTimeInterval == nil) {
-        _trackingSurveyRepeatTimeInterval = @(30 * 24 * 60 * 60);   // Every 30 days by default
+- (id _Nullable)defaultValueForKey:(NSString *)key {    
+    if ([key isEqualToString:NSStringFromSelector(@selector(trackingSurveyRepeatTimeInterval))]) {
+        return @(30 * 24 * 60 * 60);   // Every 30 days by default
     }
-    return _trackingSurveyRepeatTimeInterval;
-}
-
-- (NSNumber *)momentInDayRepeatTimeInterval {
-    if (_momentInDayRepeatTimeInterval == nil) {
-        _momentInDayRepeatTimeInterval = @(20 * 60);   // Every 20 minutes by default
+    else if ([key isEqualToString:NSStringFromSelector(@selector(momentInDayRepeatTimeInterval))]) {
+        return @(20 * 60);   // Every 20 minutes by default
     }
-    return _momentInDayRepeatTimeInterval;
+    return [super defaultValueForKey:key];
 }
 
 - (NSString *)defaultIdentifierIfNil {
