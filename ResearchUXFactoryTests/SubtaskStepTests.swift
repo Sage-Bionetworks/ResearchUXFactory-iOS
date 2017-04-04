@@ -70,7 +70,7 @@ class SBASubtaskStepTests: XCTestCase {
         XCTAssertNotNil(step3)
         XCTAssertEqual(step3!.identifier, "Mutating Task.question1")
         guard let formStep3 = step3 as? ORKFormStep else {
-            XCTAssert(false, "\(step3) not of expected type")
+            XCTAssert(false, "\(String(describing: step3)) not of expected type")
             return
         }
         taskResult.results!.append(formStep3.instantiateDefaultStepResult(nil))

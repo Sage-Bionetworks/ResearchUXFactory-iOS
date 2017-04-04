@@ -178,10 +178,10 @@ extension ORKStep {
         
         // Add the start/end date
         if let startDateString = bridgeDictionary[kStartDateKey] as? String {
-            stepResult.startDate = NSDate(iso8601String: startDateString) as! Date
+            stepResult.startDate = NSDate(iso8601String: startDateString) as Date? ?? Date()
         }
         if let endDateString = bridgeDictionary[kEndDateKey] as? String {
-            stepResult.endDate = NSDate(iso8601String: endDateString) as! Date
+            stepResult.endDate = NSDate(iso8601String: endDateString) as Date? ?? Date()
         }
         
         return stepResult

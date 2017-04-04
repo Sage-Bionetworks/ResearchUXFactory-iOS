@@ -174,8 +174,8 @@
         
         // ORKTaskViewController will look ahead to the next step and then look back to
         // see what navigation rules it should be using for buttons. Need to honor that flow.
-        [task stepAfterStep:step withResult:taskResult];
-        [task stepBeforeStep:step withResult:taskResult];
+        ORKStep *after __unused = [task stepAfterStep:step withResult:taskResult];
+        ORKStep *before __unused = [task stepBeforeStep:step withResult:taskResult];
         
         // Check expectations
         XCTAssertNotNil(step);

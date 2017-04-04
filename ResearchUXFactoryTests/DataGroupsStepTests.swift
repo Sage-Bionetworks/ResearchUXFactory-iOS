@@ -60,7 +60,7 @@ class SBADataGroupsStepTests: XCTestCase {
         XCTAssertEqual(surveyStep.dataGroups, Set(["groupA", "groupB", "groupC", "groupD", "groupE", "groupF"]))
         
         guard let answerFormat = surveyStep.formItems?.first?.answerFormat as? ORKTextChoiceAnswerFormat else {
-            XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
+            XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
             return
         }
     
@@ -196,7 +196,7 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = surveyStep.stepResult(currentGroups: ["test_user", "groupC"])
         guard let questionResult = stepResult?.results?.first as? ORKChoiceQuestionResult,
             let choices = questionResult.choiceAnswers as? [String] else {
-            XCTAssert(false, "\(stepResult) does not have expected choiceAnswers")
+            XCTAssert(false, "\(String(describing: stepResult)) does not have expected choiceAnswers")
             return
         }
         
@@ -212,7 +212,7 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = surveyStep.stepResult(currentGroups: ["test_user", "groupB"])
         guard let questionResult = stepResult?.results?.first as? ORKChoiceQuestionResult,
             let choices = questionResult.choiceAnswers as NSArray? else {
-                XCTAssert(false, "\(stepResult) does not have expected choiceAnswers")
+                XCTAssert(false, "\(String(describing: stepResult)) does not have expected choiceAnswers")
                 return
         }
         
@@ -228,7 +228,7 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = surveyStep.stepResult(currentGroups: ["test_user", "groupA", "groupB"])
         guard let questionResult = stepResult?.results?.first as? ORKChoiceQuestionResult,
             let choices = questionResult.choiceAnswers as NSArray? else {
-                XCTAssert(false, "\(stepResult) does not have expected choiceAnswers")
+                XCTAssert(false, "\(String(describing: stepResult)) does not have expected choiceAnswers")
                 return
         }
         
@@ -244,7 +244,7 @@ class SBADataGroupsStepTests: XCTestCase {
         let stepResult = surveyStep.stepResult(currentGroups: ["test_user", "groupE", "groupF"])
         guard let questionResult = stepResult?.results?.first as? ORKChoiceQuestionResult,
             let choices = questionResult.choiceAnswers as NSArray? else {
-                XCTAssert(false, "\(stepResult) does not have expected choiceAnswers")
+                XCTAssert(false, "\(String(describing: stepResult)) does not have expected choiceAnswers")
                 return
         }
         
@@ -281,7 +281,7 @@ class SBADataGroupsStepTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBADataGroupsStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return nil
         }
         

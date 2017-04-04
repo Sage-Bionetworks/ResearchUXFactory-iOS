@@ -124,7 +124,7 @@ class SBAToggleTableViewCell: UITableViewCell {
             self.result = initialResult ?? ORKBooleanQuestionResult(identifier: formItem.identifier)
         }
         else {
-            assertionFailure("\(formItem.answerFormat) is not supported")
+            assertionFailure("\(String(describing: formItem.answerFormat)) is not supported")
         }
         
         // Set the currently selected answer

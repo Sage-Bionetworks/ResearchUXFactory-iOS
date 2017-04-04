@@ -86,7 +86,7 @@ extension ORKFormItem: SBAQuestionResultMapping {
         guard let answerFormat = self.answerFormat as? SBAQuestionResultMapping,
             let questionResult = answerFormat.questionResult(identifier: identifier, answer: answer)
             else {
-                assertionFailure("Unsupported answer format \(self.answerFormat)")
+                assertionFailure("Unsupported answer format \(String(describing: self.answerFormat))")
                 return nil
         }
         questionResult.questionType = answerFormat.questionType
@@ -109,7 +109,7 @@ extension ORKTextChoiceAnswerFormat: SBAQuestionResultMapping {
         
         // Check that the choice answers are nil or valid
         guard (choiceAnswers == nil) || isValidAnswer(choiceAnswers! as AnyObject) else {
-            assertionFailure("\(answer) is invalid")
+            assertionFailure("\(String(describing: answer)) is invalid")
             return nil
         }
         

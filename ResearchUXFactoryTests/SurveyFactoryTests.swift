@@ -63,7 +63,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBAInstructionStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         XCTAssertEqual(surveyStep.identifier, "customStep")
@@ -99,13 +99,13 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
         
         guard let formItems = surveyStep.formItems , formItems.count == 3 else {
-            XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
+            XCTAssert(false, "\(String(describing: surveyStep.formItems)) are not of expected count")
             return
         }
         
@@ -124,7 +124,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(passedIdentifier, "consent")
         
         guard let rules = surveyStep.rules, rules.count == 3 else {
-            XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
+            XCTAssert(false, "\(String(describing: surveyStep.formItems)) are not of expected count")
             return
         }
         
@@ -169,13 +169,13 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBAToggleFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         XCTAssertEqual(surveyStep.identifier, "quiz")
         
         guard let formItems = surveyStep.formItems, formItems.count == 3 else {
-            XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
+            XCTAssert(false, "\(String(describing: surveyStep.formItems)) are not of expected count")
             return
         }
         
@@ -213,7 +213,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNil(passedIdentifier)
         
         guard let rules = surveyStep.rules, rules.count == 3 else {
-            XCTAssert(false, "\(surveyStep.formItems) are not of expected count")
+            XCTAssert(false, "\(String(describing: surveyStep.formItems)) are not of expected count")
             return
         }
         
@@ -256,7 +256,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -298,7 +298,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationSubtaskStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -342,7 +342,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBAInstructionStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -367,7 +367,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKInstructionStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -390,7 +390,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -399,7 +399,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         guard let formItem = surveyStep.formItems?.first,
             let _ = formItem.answerFormat as? ORKBooleanAnswerFormat else {
-                XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
                 return
         }
         
@@ -407,7 +407,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(surveyStep.text, "Are you older than 18?")
         
         guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
-            XCTAssert(false, "\(step) is missing a rule")
+            XCTAssert(false, "\(String(describing: step)) is missing a rule")
             return
         }
         
@@ -435,7 +435,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -444,7 +444,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         guard let formItem = surveyStep.formItems?.first,
             let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat else {
-                XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
                 return
         }
         
@@ -458,7 +458,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(firstValue, "a")
         
         guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
-            XCTAssert(false, "\(step) is missing a rule")
+            XCTAssert(false, "\(String(describing: step)) is missing a rule")
             return
         }
         
@@ -489,7 +489,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? ORKFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -498,7 +498,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         guard let formItem = surveyStep.formItems?.first,
             let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat else {
-                XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
                 return
         }
         
@@ -541,7 +541,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBANavigationFormStep else {
-            XCTAssert(false, "\(step) is not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return
         }
         
@@ -550,7 +550,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         guard let formItem = surveyStep.formItems?.first,
             let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat else {
-                XCTAssert(false, "\(surveyStep.formItems) is not of expected class type")
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
                 return
         }
         
@@ -571,7 +571,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(lastValue, false)
         
         guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
-            XCTAssert(false, "\(step) is missing a rule")
+            XCTAssert(false, "\(String(describing: step)) is missing a rule")
             return
         }
         
@@ -598,7 +598,7 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         XCTAssertNotNil(result)
         guard let step = result as? ORKRegistrationStep else {
-            XCTAssert(false, "\(result) not of expected type.")
+            XCTAssert(false, "\(String(describing: result)) not of expected type.")
             return
         }
         
