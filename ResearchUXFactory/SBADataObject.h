@@ -111,6 +111,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSArray <NSString *> *)dictionaryRepresentationKeys;
 
+/**
+ Returns a default value for a given key. This is used during initialization to set defaults for
+ objects that should not return nil.
+ 
+ @param     key     The property key.
+ 
+ @return            The default value. Optional.
+ */
+- (id _Nullable)defaultValueForKey:(NSString *)key;
+
 @end
 
 NS_ASSUME_NONNULL_END

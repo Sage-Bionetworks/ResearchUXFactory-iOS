@@ -148,7 +148,7 @@ extension SBASurveyRuleItem {
         let op: SBASurveyRuleOperator = self.ruleOperator ?? ((value == nil) ? .skip : .equal)
         guard (value != nil) || (op == .skip)
             else {
-                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(value)")
+                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(String(describing: value))")
                 return (false, nil, .skip)
         }
         
@@ -169,35 +169,35 @@ extension SBASurveyRuleItem {
             
         case .boolean, .toggle:
             guard let answer = value as? Bool ?? (value as? NSString)?.boolValue else {
-                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(value) for \(subtype)")
+                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(String(describing: value)) for \(subtype)")
                 return (false, nil, .skip)
             }
             return (true, NSNumber(value: answer), op)
             
         case .scale, .integer:
             guard let answer = value as? Int ?? (value as? NSString)?.integerValue else {
-                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(value) for \(subtype)")
+                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(String(describing: value)) for \(subtype)")
                 return (false, nil, .skip)
             }
             return (true, NSNumber(value: answer), op)
             
         case .continuousScale, .decimal, .duration:
             guard let answer = value as? Double ?? (value as? NSString)?.doubleValue else {
-                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(value) for \(subtype)")
+                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(String(describing: value)) for \(subtype)")
                 return (false, nil, .skip)
             }
             return (true, NSNumber(value: answer), op)
         
         case .date, .dateTime:
             guard let answer = (value as? Date) ?? (value as? NSString)?.dateValue else {
-                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(value) for \(subtype)")
+                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(String(describing: value)) for \(subtype)")
                 return (false, nil, .skip)
             }
             return (true, answer as NSDate, op)
             
         case .time:
             guard let answer = (value as? DateComponents) ?? (value as? NSString)?.timeValue else {
-                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(value) for \(subtype)")
+                assertionFailure("Unsupported operator: \(op) OR expectedAnswer: \(String(describing: value)) for \(subtype)")
                 return (false, nil, .skip)
             }
             return (true, answer as NSDateComponents, op)

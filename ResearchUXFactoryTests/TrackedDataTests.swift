@@ -108,7 +108,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
             let rytary = meds?[2] as? SBAMedication,
             let duopa = meds?.last as? SBAMedication
             else {
-                XCTAssert(false, "items not of expected type \(meds)")
+                XCTAssert(false, "items not of expected type \(String(describing: meds))")
                 return
         }
         
@@ -188,7 +188,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertEqual(handStep.text, "Which hand would you normally use to write or throw a ball?")
         
         guard let conclusionStep = steps.last as? ORKInstructionStep else {
-            XCTAssert(false, "\(steps.last) not of expected type")
+            XCTAssert(false, "\(String(describing: steps.last)) not of expected type")
             return
         }
         XCTAssertEqual(conclusionStep.identifier, "medicationConclusion")
@@ -218,7 +218,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
     
     func splitMedicationSelectionStep(_ step: ORKStep?) -> (selection:ORKStep?, frequency:ORKStep?) {
         guard let selectionStep = step as? SBATrackedSelectionStep else {
-            XCTAssert(false, "\(step) not of expected type")
+            XCTAssert(false, "\(String(describing: step)) not of expected type")
             return (nil, nil)
         }
         return (selectionStep.steps.first, selectionStep.steps.last)
@@ -227,7 +227,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
     func checkMedicationSelectionStep(_ step: ORKStep?, optional: Bool) {
         
         guard let selectionStep = step as? ORKFormStep else {
-            XCTAssert(false, "\(step) not of expected type")
+            XCTAssert(false, "\(String(describing: step)) not of expected type")
             return
         }
         
@@ -237,7 +237,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         let selectionFormItem = selectionStep.formItems?.first
         XCTAssertNotNil(selectionFormItem)
         guard let answerFormat = selectionFormItem?.answerFormat as? ORKTextChoiceAnswerFormat else {
-            XCTAssert(false, "\(selectionFormItem?.answerFormat) not of expected type")
+            XCTAssert(false, "\(String(describing: selectionFormItem?.answerFormat)) not of expected type")
             return
         }
         XCTAssertEqual(selectionStep.identifier, "medicationSelection")
@@ -284,7 +284,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
     func checkMedicationFrequencyStep(_ step: ORKStep?, idList:[String], expectedFrequencyIds: [String], items:[SBATrackedDataObject]) {
         
         guard let trackNav = step as? SBATrackedNavigationStep, let formStep = step as? ORKFormStep else {
-            XCTAssert(false, "\(step) not of expected type")
+            XCTAssert(false, "\(String(describing: step)) not of expected type")
             return
         }
         
@@ -311,7 +311,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
                     XCTAssertEqual(answerFormat.step, 1)
                 }
                 else {
-                    XCTAssert(false, "\(formItem?.answerFormat) not expected type for \(identifier)")
+                    XCTAssert(false, "\(String(describing: formItem?.answerFormat)) not expected type for \(identifier)")
                 }
             }
             else {
@@ -342,7 +342,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
             let formItem = momentInDayStep.formItems?.first,
             let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat
             else {
-                XCTAssert(false, "\(steps.first) not of expected type")
+                XCTAssert(false, "\(String(describing: steps.first)) not of expected type")
                 return
         }
         XCTAssertEqual(momentInDayStep.identifier, "momentInDay")
@@ -427,7 +427,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
     func checkDefaultMomentInDayResults(_ dataStore: SBATrackedDataStore) -> Bool {
         
         guard let momentInDayResults = dataStore.momentInDayResults, momentInDayResults.count == 3 else {
-            XCTAssert(false, "\(dataStore.momentInDayResults) nil or not expected count")
+            XCTAssert(false, "\(String(describing: dataStore.momentInDayResults)) nil or not expected count")
             return false
         }
         
@@ -470,7 +470,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         guard let changedStep = steps.first as? SBANavigationFormStep,
             let formItem = changedStep.formItems?.first,
             let _ = formItem.answerFormat as? ORKBooleanAnswerFormat else {
-                XCTAssert(false, "\(steps.first) not of expected type")
+                XCTAssert(false, "\(String(describing: steps.first)) not of expected type")
                 return
         }
         XCTAssertEqual(changedStep.identifier, "medicationChanged")
@@ -570,7 +570,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: true)
         
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
-            XCTAssert(false, "\(step) not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) not of expected class type")
             return
         }
         
@@ -592,7 +592,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssert(checkDefaultMomentInDayResults(dataStore))
 
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
-            XCTAssert(false, "\(step) not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) not of expected class type")
             return
         }
         
@@ -616,7 +616,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssert(checkDefaultMomentInDayResults(dataStore))
         
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
-            XCTAssert(false, "\(step) not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) not of expected class type")
             return
         }
         
@@ -638,7 +638,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         let step = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
-            XCTAssert(false, "\(step) not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) not of expected class type")
             return
         }
         
@@ -662,7 +662,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertNotNil(dataStore.momentInDaySteps)
 
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
-            XCTAssert(false, "\(step) not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) not of expected class type")
             return
         }
         
@@ -686,7 +686,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssert(checkDefaultMomentInDayResults(dataStore))
         
         guard let taskStep = step as? SBASubtaskStep, let task = taskStep.subtask as? SBANavigableOrderedTask else {
-            XCTAssert(false, "\(step) not of expected class type")
+            XCTAssert(false, "\(String(describing: step)) not of expected class type")
             return
         }
         
@@ -740,7 +740,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         // Get moment in day
         guard let momentStep = step1 as? SBATrackedActivityFormStep , momentStep.trackingType == .activity,
             let momentFormItem = momentStep.formItems?.first else {
-                XCTAssert(false, "\(step1) not of expected type")
+                XCTAssert(false, "\(String(describing: step1)) not of expected type")
                 return
         }
         
@@ -758,7 +758,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         
         guard let timingStep = step2 as? SBATrackedActivityFormStep, timingStep.trackingType == .activity,
             let timingFormItem = timingStep.formItems?.first else {
-            XCTAssert(false, "\(step2) not of expected type")
+            XCTAssert(false, "\(String(describing: step2)) not of expected type")
             return
         }
         
@@ -775,7 +775,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertNotNil(step3)
 
         guard let timingEachStep = step3 as? SBATrackedActivityPageStep else {
-            XCTAssert(false, "\(step3) not of expected type")
+            XCTAssert(false, "\(String(describing: step3)) not of expected type")
             return
         }
 
@@ -1073,7 +1073,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertNotNil(storedResult)
         
         guard let booleanResult = storedResult?.results?.first as? ORKBooleanQuestionResult else {
-            XCTAssert(false, "\(storedResult) results are nil or not expected type")
+            XCTAssert(false, "\(String(describing: storedResult)) results are nil or not expected type")
             return
         }
      
@@ -1102,7 +1102,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertNotNil(storedResult)
         
         guard let booleanResult = storedResult?.results?.first as? ORKBooleanQuestionResult else {
-            XCTAssert(false, "\(storedResult) results are nil or not expected type")
+            XCTAssert(false, "\(String(describing: storedResult)) results are nil or not expected type")
             return
         }
         
@@ -1175,7 +1175,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         let transformedStep = dataCollection.transformToStep(with: SBABaseSurveyFactory(), isLastStep: false)
         guard let subtaskStep = transformedStep as? SBASubtaskStep
             else {
-                XCTAssert(false, "\(transformedStep) not of expected type")
+                XCTAssert(false, "\(String(describing: transformedStep)) not of expected type")
                 return (nil,nil,nil, nil)
         }
         
@@ -1190,7 +1190,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
                 taskResult.results! += [stepResult]
             }
             guard let nextStep = task.step(after: step, with: taskResult) else {
-                XCTAssert(false, "\(step) after not expected to be nil")
+                XCTAssert(false, "\(String(describing: step)) after not expected to be nil")
                 return (nil, nil, nil, nil)
             }
             step = nextStep
@@ -1223,7 +1223,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         }
         
         guard let handStep = step as? ORKFormStep, let handFormItem = handStep.formItems?.first else {
-            XCTAssert(false, "\(step) not of expected type" )
+            XCTAssert(false, "\(String(describing: step)) not of expected type" )
             return  (nil, nil, nil, nil)
         }
         

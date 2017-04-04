@@ -112,7 +112,7 @@ class UtilityExtensionTests: XCTestCase {
         XCTAssertNotNil(results.find(withIdentifier: "number_dup2"))
         
         guard let numResult = lastResult as? ORKNumericQuestionResult, let numAnswer = numResult.numericAnswer else {
-            XCTAssert(false, "\(lastResult) did not match expected")
+            XCTAssert(false, "\(String(describing: lastResult)) did not match expected")
             return
         }
         

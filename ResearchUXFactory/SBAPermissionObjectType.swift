@@ -272,7 +272,7 @@ public final class SBANotificationPermissionObjectType: SBAPermissionObjectType 
             self.notificationTypes = UIUserNotificationType(keys: types)
         }
         else {
-            assertionFailure("Failed to convert \(value) to UIUserNotificationType")
+            assertionFailure("Failed to convert \(String(describing: value)) to UIUserNotificationType")
         }
     }
 }

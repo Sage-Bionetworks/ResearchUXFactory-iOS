@@ -46,7 +46,7 @@
 @property (nonatomic, copy) NSArray *steps;
 
 @property (nonatomic) SBATrackedDataStore *dataStore;
-@property (nonatomic) NSNumber *trackingSurveyRepeatTimeInterval;
-@property (nonatomic) NSNumber *momentInDayRepeatTimeInterval;
+@property (nonatomic) NSTimeInterval trackingSurveyRepeatTimeInterval;
+@property (nonatomic) NSTimeInterval momentInDayRepeatTimeInterval;
 
 @end

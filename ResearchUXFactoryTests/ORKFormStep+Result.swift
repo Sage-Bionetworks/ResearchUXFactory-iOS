@@ -103,7 +103,6 @@ extension ORKFormItem {
     func instantiateQuestionResult(_ defaultAnswer: SBADefaultFormItemAnswer, answer: AnyObject?) -> ORKQuestionResult? {
         
         let impliedAnswerFormat = self.answerFormat?.implied()
-        print("\(self.identifier): \(impliedAnswerFormat)")
         guard let answerFormat = impliedAnswerFormat as? SBAQuestionResultMapping,
               let questionResult = answerFormat.instantiateQuestionResult(self.identifier, defaultAnswer, answer)
         else {
@@ -157,7 +156,7 @@ extension TextChoicesAnswerFormat {
         
         // Check that the choice answers are nil or valid
         guard (choiceAnswers == nil) || isValidAnswer(choiceAnswers! as AnyObject) else {
-            assertionFailure("\(answer) is invalid")
+            assertionFailure("\(String(describing: answer)) is invalid")
             return nil
         }
         
