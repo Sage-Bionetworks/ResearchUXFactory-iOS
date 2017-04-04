@@ -389,6 +389,7 @@ public final class SBAAnswerKeyAndValue: NSObject {
 
 public protocol ORKQuestionResultAnswerJSON {
     func jsonSerializedAnswer() -> SBAAnswerKeyAndValue?
+    func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any?
 }
 
 extension ORKQuestionType {
@@ -461,6 +462,11 @@ extension ORKQuestionResult: ORKQuestionResultAnswerJSON {
         fatalError("jsonSerializedAnswer not implemented for \(className)")
     }
     
+    public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        let className = NSStringFromClass(self.classForCoder)
+        fatalError("storedAnswer(with:) not implemented for \(className)")
+    }
+    
 }
 
 extension ORKChoiceQuestionResult {
@@ -468,6 +474,11 @@ extension ORKChoiceQuestionResult {
     override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let choiceAnswers = self.choiceAnswers else { return nil }
         return SBAAnswerKeyAndValue(key: "choiceAnswers", value: (choiceAnswers as NSArray).jsonObject(), questionType: self.questionType)
+    }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        guard let choiceAnswers = self.choiceAnswers else { return nil }
+        return self.questionType == .singleChoice ? choiceAnswers.first : choiceAnswers
     }
 }
 
@@ -477,6 +488,15 @@ extension ORKScaleQuestionResult {
         guard let answer = self.scaleAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "scaleAnswer", value: answer.jsonObject(), questionType: .scale)
     }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        if answerFormat is ORKContinuousScaleAnswerFormat {
+            return self.scaleAnswer?.doubleValue
+        }
+        else {
+            return self.scaleAnswer?.intValue
+        }
+    }
 }
 
 extension ORKMoodScaleQuestionResult {
@@ -484,6 +504,10 @@ extension ORKMoodScaleQuestionResult {
     override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.scaleAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "scaleAnswer", value: answer.jsonObject(), questionType: .scale)
+    }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.scaleAnswer?.intValue
     }
 }
 
@@ -493,6 +517,10 @@ extension ORKBooleanQuestionResult {
         guard let answer = self.booleanAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "booleanAnswer", value: answer.jsonObject(), questionType: .boolean)
     }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.booleanAnswer?.boolValue
+    }
 }
 
 extension ORKTextQuestionResult {
@@ -500,6 +528,10 @@ extension ORKTextQuestionResult {
     override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.textAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "textAnswer", value: answer as NSSecureCoding, questionType: .text)
+    }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.textAnswer
     }
 }
 
@@ -512,6 +544,21 @@ extension ORKNumericQuestionResult {
         return answerKey
     }
 
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        guard let answer = self.numericAnswer else { return nil }
+        if let unit = self.unit {
+            return HKQuantity(unit: HKUnit(from: unit), doubleValue: answer.doubleValue)
+        }
+        else if self.questionType == .integer {
+            return answer.intValue
+        }
+        else if self.questionType == .decimal {
+            return answer.doubleValue
+        }
+        else {
+            return answer
+        }
+    }
 }
 
 extension ORKTimeOfDayQuestionResult {
@@ -524,6 +571,10 @@ extension ORKTimeOfDayQuestionResult {
         answer.day = 0
         return SBAAnswerKeyAndValue(key: "dateComponentsAnswer", value: (answer as NSDateComponents).jsonObject(), questionType: .timeOfDay)
     }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.dateComponentsAnswer
+    }
 }
 
 extension ORKTimeIntervalQuestionResult {
@@ -532,6 +583,10 @@ extension ORKTimeIntervalQuestionResult {
         guard let answer = self.intervalAnswer else { return nil }
         
         return SBAAnswerKeyAndValue(key: "intervalAnswer", value: answer.jsonObject(), questionType: .timeInterval)
+    }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.intervalAnswer
     }
 }
 
@@ -547,6 +602,10 @@ extension ORKDateQuestionResult {
             return SBAAnswerKeyAndValue(key: key, value: (answer as NSDate).jsonObject(), questionType: self.questionType)
         }
     }
+    
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.dateAnswer
+    }
 }
 
 extension ORKMultipleComponentQuestionResult {
@@ -558,5 +617,8 @@ extension ORKMultipleComponentQuestionResult {
         return SBAAnswerKeyAndValue(key: key, value: textAnswer as NSSecureCoding, questionType: .text)
     }
     
+    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+        return self.jsonSerializedAnswer()?.value
+    }
 }
 
