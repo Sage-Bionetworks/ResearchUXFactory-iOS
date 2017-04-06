@@ -215,3 +215,66 @@ extension ORKScaleAnswerFormat : SBAQuestionResultMapping {
     }
     
 }
+
+extension ORKNumericAnswerFormat : SBAQuestionResultMapping {
+    
+    func instantiateQuestionResult(_ identifier: String, _ defaultAnswer: SBADefaultFormItemAnswer, _ answer: AnyObject?) -> ORKQuestionResult? {
+        
+        let result = ORKNumericQuestionResult(identifier: identifier)
+        if let num = answer as? NSNumber {
+            result.numericAnswer = num
+        }
+        else if let str = answer as? String,
+            let num = str.components(separatedBy: CharacterSet.whitespaces).first,
+            let unit = str.components(separatedBy: CharacterSet.whitespaces).last {
+            if self.questionType == .integer {
+                result.numericAnswer = NSNumber(value: Int(num) ?? 0)
+            }
+            else {
+                result.numericAnswer = NSNumber(value: Double(num) ?? 0)
+            }
+            result.unit = unit
+        }
+        else {
+            switch defaultAnswer {
+            case .defaultValue:
+                result.numericAnswer = 0
+            case .first:
+                result.numericAnswer = self.minimum as NSNumber?
+            case .last:
+                result.numericAnswer = self.maximum as NSNumber?
+            case .skip:
+                result.numericAnswer = nil
+            }
+        }
+        
+        return result
+    }
+    
+}
+
+extension ORKHeightAnswerFormat : SBAQuestionResultMapping {
+    
+    func instantiateQuestionResult(_ identifier: String, _ defaultAnswer: SBADefaultFormItemAnswer, _ answer: AnyObject?) -> ORKQuestionResult? {
+        
+        let result = ORKNumericQuestionResult(identifier: identifier)
+        if let num = answer as? NSNumber {
+            result.numericAnswer = num
+            result.unit = HKUnit.meterUnit(with: .centi).unitString
+        }
+        
+        return result
+    }
+}
+
+extension ORKTimeOfDayAnswerFormat : SBAQuestionResultMapping {
+    
+    func instantiateQuestionResult(_ identifier: String, _ defaultAnswer: SBADefaultFormItemAnswer, _ answer: AnyObject?) -> ORKQuestionResult? {
+        
+        let result = ORKTimeOfDayQuestionResult(identifier: identifier)
+        result.dateComponentsAnswer = answer as? DateComponents
+        
+        return result
+    }
+}
+

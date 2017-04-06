@@ -75,7 +75,35 @@ extension ORKStepViewController: SBAResearchKitResultConverter {
 extension SBAResearchKitResultConverter {
     
     /**
+     For a given answer format and result, return the value to store for the user's profile or dashboard.
+     This should map to the same key/value pairs that are used to store base-class demographics such as 
+     gender, height, weight, etc.
+     
+     @param     identifier      Result identifier
+     
+     @return                    The result to store (if any)
+     */
+    public func storedAnswer(for identifier: String) -> Any? {
+        guard let answerFormat = self.answerFormatFinder?.find(for: identifier),
+            let result = self.findResult(for: identifier) else {
+                return nil
+        }
+        if let hkCharacteristicFormat = answerFormat as? ORKHealthKitCharacteristicTypeAnswerFormat {
+            let characteristicType = HKCharacteristicTypeIdentifier(rawValue: hkCharacteristicFormat.characteristicType.identifier)
+            return characteristicAnswer(for: identifier, characteristicType: characteristicType)
+        }
+        else if let questionResult = result as? ORKQuestionResult {
+            return questionResult.storedAnswer(with: answerFormat)
+        }
+        return result
+    }
+    
+    /**
      Look for an `ORKTimeOfDayQuestionResult` and get the date components from the result.
+     
+     @param     identifier      Result identifier
+
+     @return                    The time of day from a result
     */
     public func timeOfDay(for identifier: String) -> DateComponents? {
         guard let result = self.findResult(for: identifier) as? ORKTimeOfDayQuestionResult
@@ -88,6 +116,10 @@ extension SBAResearchKitResultConverter {
     /**
      If the associated identifier can be mapped to a result from an `HKQuantitySample` then
      return the object created from that result.
+     
+     @param     identifier      Result identifier
+     
+     @return                    The quantity sample
     */
     public func quantitySample(for identifier: String) -> HKQuantitySample? {
         guard let profileResult = findResult(for: identifier) as? ORKQuestionResult,
@@ -101,6 +133,10 @@ extension SBAResearchKitResultConverter {
     
     /**
      Get the `HKQuantity` associated with a given result to an `ORKFormItem` with a matching type.
+     
+     @param     identifier      Result identifier
+     
+     @return                    The quantity
     */
     public func quantity(for identifier: String) -> HKQuantity? {
         guard let profileResult = findResult(for: identifier) as? ORKQuestionResult,
@@ -115,6 +151,10 @@ extension SBAResearchKitResultConverter {
     
     /**
      Get the `HKQuantityType` associated with a given answer format with a matching type.
+     
+     @param     identifier      Result identifier
+     
+     @return                    The quantity type
     */
     public func quantityType(for identifier: String) -> HKQuantityType? {
         if let answerFormat = self.answerFormatFinder?.find(for: identifier) as? ORKHealthKitQuantityTypeAnswerFormat {
@@ -136,6 +176,10 @@ extension SBAResearchKitResultConverter {
     /**
      Convert an `ORKHealthKitCharacteristicTypeAnswerFormat` survey question into 
      an `HKBiologicalSex` enum value.
+     
+     @param     identifier      Result identifier
+     
+     @return                    biological sex
     */
     public func convertBiologicalSex(for identifier:String) -> HKBiologicalSex? {
         guard let result = self.findResult(for: identifier) as? ORKChoiceQuestionResult
@@ -156,6 +200,10 @@ extension SBAResearchKitResultConverter {
     
     /**
      Convert an `ORKTextQuestionResult` for a given result into a string.
+     
+     @param     identifier      Result identifier
+     
+     @return                    string result
     */
     public func textAnswer(for identifier:String) -> String? {
         guard let result = self.findResult(for: identifier) as? ORKTextQuestionResult else { return nil }
@@ -164,10 +212,81 @@ extension SBAResearchKitResultConverter {
     
     /**
      Convert an `ORKNumericQuestionResult` for a given result into a integer.
+     
+     @param     identifier      Result identifier
+     
+     @return                    integer result
      */
     public func intAnswer(for identifier:String) -> Int? {
         guard let result = self.findResult(for: identifier) as? ORKNumericQuestionResult else { return nil }
         return result.numericAnswer?.intValue
+    }
+    
+    /**
+     Convert an `ORKResult` for a given `HKCharacteristicType` into the appropriate object.
+     
+     @param     identifier      Result identifier
+     
+     @return                    The answer value for this type of characteristic
+     */
+    public func characteristicAnswer(for identifier: String, characteristicType: HKCharacteristicTypeIdentifier) -> Any? {
+        
+        if characteristicType == .biologicalSex {
+            return convertBiologicalSex(for: identifier)
+        }
+        else if characteristicType == .bloodType {
+            return bloodTypeAnswer(for: identifier)
+        }
+        else if characteristicType == .dateOfBirth {
+            return dateOfBirthAnswer(for: identifier)
+        }
+        else if characteristicType == .fitzpatrickSkinType {
+            return fitzpatrickSkinTypeAnswer(for: identifier)
+        }
+        else if #available(iOS 10.0, *), characteristicType == .wheelchairUse {
+            return wheelchairUseAnswer(for: identifier)
+        }
+        return nil
+    }
+    
+    func dateOfBirthAnswer(for identifier: String) -> Date? {
+        guard let result = self.findResult(for: identifier) as? ORKDateQuestionResult else { return nil }
+        return result.dateAnswer
+    }
+    
+    func bloodTypeAnswer(for identifier: String) -> HKBloodType? {
+        guard let result = self.findResult(for: identifier) as? ORKChoiceQuestionResult
+            else { return nil }
+        if  let answer = (result.choiceAnswers?.first as? NSNumber)?.intValue {
+            return HKBloodType(rawValue: answer)
+        }
+        else if let answer = result.choiceAnswers?.first as? String {
+            // The ORKHealthKitCharacteristicTypeAnswerFormat uses a string rather
+            // than using the HKBloodType enum directly so you have to convert
+            let bloodType = ORKBloodTypeIdentifier(rawValue: answer)
+            return bloodType.healthKitBloodType()
+        }
+        else {
+            return nil
+        }
+    }
+    
+    func fitzpatrickSkinTypeAnswer(for identifier: String) -> HKFitzpatrickSkinType? {
+        guard let result = self.findResult(for: identifier) as? ORKChoiceQuestionResult,
+            let answer = (result.choiceAnswers?.first as? NSNumber)?.intValue
+            else {
+                return nil
+        }
+        return HKFitzpatrickSkinType(rawValue: answer)
+    }
+    
+    func wheelchairUseAnswer(for identifier: String) -> Bool? {
+        guard let result = self.findResult(for: identifier) as? ORKChoiceQuestionResult,
+            let answer = (result.choiceAnswers?.first as? NSNumber)?.boolValue
+            else {
+                return nil
+        }
+        return answer
     }
     
 }

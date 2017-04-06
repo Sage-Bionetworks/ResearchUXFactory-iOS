@@ -319,4 +319,45 @@ class SBAAccountTests: XCTestCase {
         let confirmationItem = step.formItem(for:"passwordConfirmation")
         XCTAssertNil(confirmationItem)
     }
+    
+    func testGivenFamilyNameStep() {
+        let input: NSDictionary = [
+            "identifier"    : "profile",
+            "type"          : "profile",
+            "title"         : "Profile",
+            "items"         : ["given", "family"]
+        ]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "profile")
+        XCTAssertEqual(step.title, "Profile")
+        
+        let givenNameItem = step.formItem(for:"given")
+        let givenName = givenNameItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(givenNameItem)
+        XCTAssertNotNil(givenName, "\(String(describing: givenNameItem?.answerFormat))")
+        
+        let familyNameItem = step.formItem(for:"family")
+        let familyName = familyNameItem?.answerFormat as? ORKTextAnswerFormat
+        XCTAssertNotNil(familyNameItem)
+        XCTAssertNotNil(familyName, "\(String(describing: familyNameItem?.answerFormat))")
+    }
+    
+    func testCurrentAgeStep() {
+        let input: NSDictionary = [
+            "identifier"    : "profile",
+            "type"          : "profile",
+            "title"         : "Profile",
+            "items"         : ["currentAge"]
+        ]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        XCTAssertEqual(step.identifier, "profile")
+        XCTAssertEqual(step.title, "Profile")
+        
+        let currentAgeItem = step.formItem(for:"currentAge")
+        let currentAge = currentAgeItem?.answerFormat as? ORKNumericAnswerFormat
+        XCTAssertNotNil(currentAgeItem)
+        XCTAssertNotNil(currentAge, "\(String(describing: currentAgeItem?.answerFormat))")
+    }
 }

@@ -560,43 +560,19 @@ extension SBAResearchKitResultConverter {
     }
     
     public var birthdate: Date? {
-        guard let result = self.findResult(for: SBAProfileInfoOption.birthdate.rawValue) as? ORKDateQuestionResult else { return nil }
-        return result.dateAnswer
+        return dateOfBirthAnswer(for: SBAProfileInfoOption.birthdate.rawValue)
     }
     
     public var bloodType: HKBloodType? {
-        guard let result = self.findResult(for: SBAProfileInfoOption.bloodType.rawValue) as? ORKChoiceQuestionResult
-            else { return nil }
-        if  let answer = (result.choiceAnswers?.first as? NSNumber)?.intValue {
-            return HKBloodType(rawValue: answer)
-        }
-        else if let answer = result.choiceAnswers?.first as? String {
-            // The ORKHealthKitCharacteristicTypeAnswerFormat uses a string rather
-            // than using the HKBloodType enum directly so you have to convert
-            let bloodType = ORKBloodTypeIdentifier(rawValue: answer)
-            return bloodType.healthKitBloodType()
-        }
-        else {
-            return nil
-        }
+        return bloodTypeAnswer(for: SBAProfileInfoOption.bloodType.rawValue)
     }
     
     public var fitzpatrickSkinType: HKFitzpatrickSkinType? {
-        guard let result = self.findResult(for: SBAProfileInfoOption.fitzpatrickSkinType.rawValue) as? ORKChoiceQuestionResult,
-            let answer = (result.choiceAnswers?.first as? NSNumber)?.intValue
-            else {
-                return nil
-        }
-        return HKFitzpatrickSkinType(rawValue: answer)
+        return fitzpatrickSkinTypeAnswer(for: SBAProfileInfoOption.fitzpatrickSkinType.rawValue)
     }
     
     public var wheelchairUse: Bool? {
-        guard let result = self.findResult(for: SBAProfileInfoOption.wheelchairUse.rawValue) as? ORKChoiceQuestionResult,
-            let answer = (result.choiceAnswers?.first as? NSNumber)?.boolValue
-            else {
-                return nil
-        }
-        return answer
+        return wheelchairUseAnswer(for: SBAProfileInfoOption.wheelchairUse.rawValue)
     }
     
     public var height: HKQuantity? {
