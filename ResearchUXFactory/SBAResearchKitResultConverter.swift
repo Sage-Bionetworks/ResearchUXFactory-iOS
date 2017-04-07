@@ -37,7 +37,7 @@ import Foundation
  Protocol for use in extending ResearchKit model objects and view controllers to 
  process the results.
  */
-public protocol SBAResearchKitResultConverter: class {
+public protocol SBAResearchKitResultConverter: SBANameDataSource {
     
     /**
      Returns an answer format finder that can be used to get the answer format for a 

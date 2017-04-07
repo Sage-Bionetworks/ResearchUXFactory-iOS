@@ -5,3 +5,4 @@
 #import "MockORKTask.h"
 #import "MockTrackedDataStore.h"
 #import "MockInfoManager.h"
+#import "MockParticipantInfo.h"

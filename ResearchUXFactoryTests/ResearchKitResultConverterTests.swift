@@ -101,11 +101,12 @@ class ResearchKitResultConverterTests: XCTestCase {
         
         // NOTE: If this test fails, check that AccountTests.testCreateProfileFormStep() is passing
         // b/c for convenience, I am using the same methods to create the step
+        let profileKeys = ["externalID", "name", "birthdate", "gender", "bloodType", "fitzpatrickSkinType", "wheelchairUse", "height", "weight", "wakeTime", "sleepTime"]
         let input: NSDictionary = [
             "identifier"    : "profile",
             "type"          : "profile",
             "title"         : "Profile",
-            "items"         : ["externalID", "name", "birthdate", "gender", "bloodType", "fitzpatrickSkinType", "wheelchairUse", "height", "weight", "wakeTime", "sleepTime"]
+            "items"         : profileKeys
         ]
         
         let step = SBAProfileFormStep(inputItem: input)
@@ -170,5 +171,60 @@ class ResearchKitResultConverterTests: XCTestCase {
         
         let storedSleepTime = converter.storedAnswer(for: "sleepTime") as? DateComponents
         XCTAssertEqual(storedSleepTime, sleepTime)
+        
+        // -- Test that a participant is updated properly
+        
+        let participant = MockParticipantInfo()
+        converter.update(participantInfo: participant, with: profileKeys)
+        
+        XCTAssertEqual(participant.storedAnswers["externalID"] as? String, "1234ABCD")
+        XCTAssertEqual(participant.birthdate, birthdate)
+        XCTAssertEqual(participant.name, "Joe Smith")
+        XCTAssertEqual(participant.storedAnswers["gender"] as? HKBiologicalSex, HKBiologicalSex.female)
+        XCTAssertEqual(participant.storedAnswers["bloodType"] as? HKBloodType, HKBloodType.bNegative)
+        XCTAssertEqual(participant.storedAnswers["wheelchairUse"] as? Bool, true)
+        XCTAssertEqual(participant.storedAnswers["wakeTime"] as? DateComponents , wakeTime)
+        XCTAssertEqual(participant.storedAnswers["sleepTime"] as? DateComponents, sleepTime)
+        
+        
+    }
+    
+    func testProfileResults_GivenFamily_CurrentAge() {
+        
+        // NOTE: If this test fails, check that AccountTests.testCreateProfileFormStep() is passing
+        // b/c for convenience, I am using the same methods to create the step
+        let profileKeys = ["given", "family", "currentAge"]
+        let input: NSDictionary = [
+            "identifier"    : "profile",
+            "type"          : "profile",
+            "title"         : "Profile",
+            "items"         : profileKeys
+        ]
+        
+        let step = SBAProfileFormStep(inputItem: input)
+        
+        let converter = MockResultConverter()
+        converter.answerFormatFinder = step
+        
+        let stepResult = step.instantiateDefaultStepResult(["given" : "Joe",
+                                                            "family" : "Smith",
+                                                            "currentAge" : 20])
+        converter.results = stepResult.results!
+        
+        // -- Test that the Profile Info properties are correct
+        XCTAssertEqual(converter.fullName, "Joe Smith")
+        XCTAssertEqual(converter.givenName, "Joe")
+        XCTAssertEqual(converter.familyName, "Smith")
+        XCTAssertEqual(converter.name, "Joe")
+        
+        // -- Test that a participant is updated properly
+        
+        let participant = MockParticipantInfo()
+        converter.update(participantInfo: participant, with: profileKeys)
+        
+        let expectedBirthday = Date().addingNumberOfYears(-20).dateOnly()
+        XCTAssertEqual(participant.birthdate?.dateOnly(), expectedBirthday)
+        XCTAssertEqual(participant.name, "Joe")
+        XCTAssertEqual(participant.familyName, "Smith")
     }
 }
