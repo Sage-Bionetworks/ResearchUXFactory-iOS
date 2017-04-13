@@ -33,7 +33,7 @@
 
 import Foundation
 
-extension NSDictionary: SBATaskReference {
+extension NSDictionary: SBABridgeTask {
     
     public func transformToTask(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> (ORKTask & NSCopying & NSSecureCoding)? {
         if !self.taskType.isNilType() {
@@ -42,10 +42,10 @@ extension NSDictionary: SBATaskReference {
             return factory.createTaskWithActiveTask(self, taskOptions:taskOptions)
         }
         guard let bridgeTask = self.objectWithResourceDictionary() as? SBABridgeTask
-        else {
-            // If this isn't a resource task then return nil
-            assertionFailure("Invalid NSDictionary for SBABridgeTask implementation.")
-            return nil
+            else {
+                // If this isn't a resource task then return nil
+                assertionFailure("Invalid NSDictionary for SBABridgeTask implementation.")
+                return nil
         }
         if let dictionary = bridgeTask as? NSDictionary , !dictionary.isValidBridgeTask() {
             // If the object returned is a dictionary, check validity and return nil if failed
@@ -53,29 +53,6 @@ extension NSDictionary: SBATaskReference {
         }
         return bridgeTask.createORKTask(with: factory)
     }
-    
-    public var cancelDisabled: Bool {
-        return self["cancelDisabled"] as? Bool ?? false
-    }
-    
-    public var allowMultipleRun: Bool {
-        return self["allowMultipleRun"] as? Bool ?? true
-    }
-
-    public var scheduleNotification: Bool {
-        return self["scheduleNotification"] as? Bool ?? false
-    }
-}
-
-extension NSDictionary: SBASchemaReference {
-    
-    public var schemaRevision: NSNumber! {
-        return self["schemaRevision"] as? NSNumber ?? 1
-    }
-    
-}
-
-extension NSDictionary: SBABridgeTask {
     
     func isValidBridgeTask() -> Bool {
         
