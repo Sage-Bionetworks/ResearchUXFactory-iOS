@@ -37,16 +37,9 @@ public protocol SBATaskTransformable: class {
     func transformToTask(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> (ORKTask & NSCopying & NSSecureCoding)?
 }
 
-public protocol SBATaskReference: SBATaskTransformable {
-    var cancelDisabled: Bool { get }
-    var allowMultipleRun: Bool { get }
-    var scheduleNotification: Bool { get }
-}
 
-public protocol SBASchemaReference: class {
-    var schemaIdentifier: String! { get }
-    var schemaRevision: NSNumber! { get }
-}
+
+
 
 public protocol SBABridgeTask: class {
     var taskIdentifier: String! { get }
