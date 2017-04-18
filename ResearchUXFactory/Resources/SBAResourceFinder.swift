@@ -39,6 +39,7 @@ import AudioToolbox
  related to finding resources.
  */
 @objc
+@available(*, unavailable, message: "Use `SBAInfoManager.shared.resourceBundles` instead.")
 public protocol SBAResourceFinderDelegate: class, NSObjectProtocol {
     
     /**
@@ -59,23 +60,13 @@ open class SBAResourceFinder: NSObject {
     
     public static let shared = SBAResourceFinder()
     
-    private func sharedResourceDelegate() -> SBAResourceFinderDelegate? {
-        return UIApplication.shared.delegate as? SBAResourceFinderDelegate
-    }
-    
     private func resourceBundles() -> [Bundle] {
         return SBAInfoManager.shared.resourceBundles
     }
     
     public func path(forResource resourceNamed: String, ofType: String, mainBundleOnly: Bool = false) -> String? {
-        if mainBundleOnly {
-            return Bundle.main.path(forResource: resourceNamed, ofType: ofType)
-        }
-        else if let resourceDelegate = self.sharedResourceDelegate(),
-            let path = resourceDelegate.path(forResource: resourceNamed, ofType: ofType) {
-                return path
-        }
-        else if let path = Bundle.main.path(forResource: resourceNamed, ofType: ofType) {
+        let path = Bundle.main.path(forResource: resourceNamed, ofType: ofType)
+        if mainBundleOnly || (path != nil) {
             return path
         }
         else {
@@ -89,11 +80,7 @@ open class SBAResourceFinder: NSObject {
     }
     
     public func image(forResource resourceNamed: String) -> UIImage? {
-        if let resourceDelegate = self.sharedResourceDelegate(),
-            let image = UIImage(named: resourceNamed, in: resourceDelegate.resourceBundle(), compatibleWith: nil) {
-            return image
-        }
-        else if let image = UIImage(named: resourceNamed) {
+        if let image = UIImage(named: resourceNamed) {
             return image
         }
         else {
@@ -184,12 +171,7 @@ open class SBAResourceFinder: NSObject {
     }
     
     public func url(forResource resourceNamed: String, withExtension: String) -> URL? {
-        if let resourceDelegate = self.sharedResourceDelegate(),
-            let url = resourceDelegate.resourceBundle().url(forResource: resourceNamed, withExtension: withExtension),
-            (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
-                return url
-        }
-        else if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension),
+        if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension),
             (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
             return url
         }
