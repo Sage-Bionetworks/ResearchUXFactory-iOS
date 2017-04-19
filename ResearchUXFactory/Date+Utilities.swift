@@ -54,5 +54,19 @@ extension Date {
         let calendar = Calendar.current
         return calendar.date(byAdding: .day, value: days, to: self, wrappingComponents: false)!
     }
-
+    
+    public func addingNumberOfYears(_ years: Int) -> Date {
+        let calendar = Calendar.current
+        return calendar.date(byAdding: .year, value: years, to: self, wrappingComponents: false)!
+    }
+    
+    public func dateOnly() -> DateComponents {
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day, .month, .year], from: self)
+    }
+    
+    public func timeOnly() -> DateComponents {
+        let calendar = Calendar.current
+        return calendar.dateComponents([.hour, .minute], from: self)
+    }
 }

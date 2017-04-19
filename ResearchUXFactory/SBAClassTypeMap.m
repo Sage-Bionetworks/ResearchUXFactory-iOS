@@ -33,7 +33,7 @@
 
 #import "SBAClassTypeMap.h"
 #import "SBAJSONObject.h"
-#import <ResearchUXFactory/ResearchUXFactory-Swift.h>
+#import "SBAInfoManager.h"
 
 static NSString * const kClassTypeMapPListName = @"ClassTypeMap";
 
@@ -57,12 +57,9 @@ static NSString * const kClassTypeMapPListName = @"ClassTypeMap";
 - (instancetype)init {
     if ((self = [super init])) {
         // Look in all the bundles that we know about
-        [self addObjectsFromPList:[[NSBundle mainBundle] pathForResource:kClassTypeMapPListName ofType:@"plist"]];
-        [self addObjectsFromPList:[[NSBundle bundleForClass:[self class]] pathForResource:kClassTypeMapPListName ofType:@"plist"]];
-        id <SBAResourceFinderDelegate> appDelegate = (id <SBAResourceFinderDelegate>) [[UIApplication sharedApplication] delegate];
-        if ([appDelegate conformsToProtocol:@protocol(SBAResourceFinderDelegate)]) {
-            [self addObjectsFromPList:[appDelegate pathForResource:kClassTypeMapPListName ofType:@"plist"]];
-            [self addObjectsFromPList:[[appDelegate resourceBundle] pathForResource:kClassTypeMapPListName ofType:@"plist"]];
+        NSArray *bundles = [[SBAInfoManager sharedManager] resourceBundles];
+        for (NSBundle *bundle in bundles) {
+            [self addObjectsFromPList:[bundle pathForResource:kClassTypeMapPListName ofType:@"plist"]];
         }
     }
     return self;

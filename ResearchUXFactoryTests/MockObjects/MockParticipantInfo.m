@@ -1,5 +1,5 @@
 //
-//  SBAParticipantInfo.h
+//  MockParticipantInfo.m
 //  ResearchUXFactory
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,57 +31,27 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
+#import "MockParticipantInfo.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation MockParticipantInfo
 
-/**
- The `SBAParticipantInfo` protocol holds references to information that might
- either be stored locally only and/or pushed to the server.
- */
-@protocol SBAParticipantInfo <NSObject>
+- (instancetype)init {
+    self = [super init];
+    _storedAnswers = [NSMutableDictionary new];
+    return self;
+}
 
-/**
- This can either be the full name or the given name for the user. (First name in Western cultures)
- */
-@property (nonatomic, copy, nullable) NSString *name;
+- (void)setStoredAnswer:(id)storedAnswer forKey:(NSString *)key {
+    if (storedAnswer) {
+        self.storedAnswers[key] = storedAnswer;
+    }
+    else {
+        [self.storedAnswers removeObjectForKey:key];
+    }
+}
 
-/**
- Family name. If this field is used, then `name` is assumed to be the given name.
- */
-@property (nonatomic, copy, nullable) NSString *familyName;
-
-/**
- Birthdate can be used to verify eligibility and consent.
- */
-@property (nonatomic, copy, nullable) NSDate *birthdate;
-
-/**
- A list of data groups that can be assigned to a user to subcategorize them.
- */
-@property (nonatomic, copy, nullable) NSArray<NSString *> *dataGroups;
-
-/**
- Is this a test user?
- */
-@property (nonatomic, readonly) BOOL isTestUser;
-
-/**
- Set the value of the stored answer for the given key.
- 
- @param storedAnswer    The value to store
- @param key             The key associated with the given value
- */
-- (void)setStoredAnswer:(id _Nullable)storedAnswer forKey:(NSString *)key;
-
-/**
- Get the stored answer for the given key.
- 
- @param key             The key associated with the given value
- @return                The stored value (if any)
- */
-- (id _Nullable)storedAnswerForKey:(NSString *)key NS_SWIFT_NAME(storedAnswer(for:));
+- (id)storedAnswerForKey:(NSString *)key {
+    return self.storedAnswers[key];
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

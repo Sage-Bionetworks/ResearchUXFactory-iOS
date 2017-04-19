@@ -529,7 +529,52 @@ public struct SBAProfileInfoOptions {
  */
 extension SBAResearchKitResultConverter {
     
-    // MARK: Results
+    /**
+     Method for updating the user's profile. This method will only update non-nil results so that
+     if the user skips a step, that doesn't remove the value. This will update the `name` property,
+     the `familyName` property and the `birthdate` property using the available values.
+     
+     @param participantInfo     The participant info object to be updated
+     @param profileKeys         A list of keys to update
+     */
+    public func update(participantInfo: SBAParticipantInfo, with profileKeys: [String]) {
+        
+        // "Name" can refer to either .givenName or .fullName and depends upon the application
+        // To stay compatible with older apps, this field *could* apply to either case.
+        let nameKeys: [SBAProfileInfoOption] = [.fullName, .familyName, .givenName]
+        let nameSet = Set(nameKeys.map{ $0.rawValue })
+        if nameSet.union(profileKeys).count > 0 {
+            if let name = self.name {
+                participantInfo.name = name
+            }
+            if let familyName = self.familyName {
+                participantInfo.familyName = familyName
+            }
+        }
+        
+        // Eligibility and consent can have an age requirement and studies usually track
+        // age as demographic data. Generally, actual birthdate is not required but can be
+        // estimated from the age that the user enters.
+        let birthdayKeys: [SBAProfileInfoOption] = [.birthdate, .currentAge]
+        let birthdaySet = Set(birthdayKeys.map{ $0.rawValue })
+        if birthdaySet.union(profileKeys).count > 0 {
+            if let birthdate = self.birthdate {
+                participantInfo.birthdate = birthdate
+            }
+            else if let currentAge = self.currentAge {
+                participantInfo.birthdate = Date(currentAge: currentAge)
+            }
+        }
+        
+        // Set the profile for any other keys that are included in the list of keys to update.
+        // These values are only updated if non-nil.
+        let remainingSet = Set(profileKeys).subtracting(nameSet).subtracting(birthdaySet)
+        for key in remainingSet {
+            if let storedAnswer = self.storedAnswer(for: key) {
+                participantInfo.setStoredAnswer(storedAnswer, forKey: key)
+            }
+        }
+    }
     
     public var name: String? {
         return textAnswer(for: .givenName) ?? textAnswer(for: .fullName)
@@ -607,4 +652,3 @@ extension SBAResearchKitResultConverter {
         return textAnswer(for: option.rawValue)
     }
 }
-

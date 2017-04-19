@@ -39,6 +39,7 @@ import AudioToolbox
  related to finding resources.
  */
 @objc
+@available(*, unavailable, message: "Use `SBAInfoManager.shared.resourceBundles` instead.")
 public protocol SBAResourceFinderDelegate: class, NSObjectProtocol {
     
     /**
@@ -59,34 +60,35 @@ open class SBAResourceFinder: NSObject {
     
     public static let shared = SBAResourceFinder()
     
-    private func sharedResourceDelegate() -> SBAResourceFinderDelegate? {
-        return UIApplication.shared.delegate as? SBAResourceFinderDelegate
+    private func resourceBundles() -> [Bundle] {
+        return SBAInfoManager.shared.resourceBundles
     }
     
-    public func path(forResource resourceNamed: String, ofType: String) -> String? {
-        if let resourceDelegate = self.sharedResourceDelegate(),
-            let path = resourceDelegate.path(forResource: resourceNamed, ofType: ofType) {
-                return path
-        }
-        else if let path = Bundle.main.path(forResource: resourceNamed, ofType: ofType) {
+    public func path(forResource resourceNamed: String, ofType: String, mainBundleOnly: Bool = false) -> String? {
+        let path = Bundle.main.path(forResource: resourceNamed, ofType: ofType)
+        if mainBundleOnly || (path != nil) {
             return path
         }
-        else if let path = Bundle(for: self.classForCoder).path(forResource: resourceNamed, ofType: ofType) {
-            return path
+        else {
+            for bundle in resourceBundles() {
+                if let path = bundle.path(forResource: resourceNamed, ofType: ofType) {
+                    return path
+                }
+            }
         }
         return nil
     }
     
     public func image(forResource resourceNamed: String) -> UIImage? {
-        if let resourceDelegate = self.sharedResourceDelegate(),
-            let image = UIImage(named: resourceNamed, in: resourceDelegate.resourceBundle(), compatibleWith: nil) {
+        if let image = UIImage(named: resourceNamed) {
             return image
         }
-        else if let image = UIImage(named: resourceNamed) {
-            return image
-        }
-        else if let image = UIImage(named: resourceNamed, in: Bundle(for: self.classForCoder), compatibleWith: nil) {
-            return image
+        else {
+            for bundle in resourceBundles() {
+                if let image = UIImage(named: resourceNamed, in: bundle, compatibleWith: nil) {
+                    return image
+                }
+            }
         }
         return nil;
     }
@@ -150,8 +152,8 @@ open class SBAResourceFinder: NSObject {
         return nil
     }
     
-    public func plist(forResource resourceNamed: String) -> [String : Any]? {
-        if let path = self.path(forResource: resourceNamed, ofType: "plist"),
+    public func plist(forResource resourceNamed: String, mainBundleOnly: Bool = false) -> [String : Any]? {
+        if let path = self.path(forResource: resourceNamed, ofType: "plist", mainBundleOnly: mainBundleOnly),
             let dictionary = NSDictionary(contentsOfFile: path) {
                 return dictionary as? [String : Any]
         }
@@ -159,28 +161,27 @@ open class SBAResourceFinder: NSObject {
     }
     
     public func infoPlist(forResource resourceNamed: String) -> [String : Any]? {
-        guard let dictionary = self.plist(forResource: resourceNamed) else { return nil }
+        guard let dictionary = self.plist(forResource: resourceNamed, mainBundleOnly: true) else { return nil }
         var plist = dictionary
         // Look to see if there is a second plist source that includes private keys
-        if let additionalInfo = self.plist(forResource: "\(resourceNamed)-private") {
+        if let additionalInfo = self.plist(forResource: "\(resourceNamed)-private", mainBundleOnly: true) {
             plist = plist.merge(from: additionalInfo)
         }
         return plist
     }
     
     public func url(forResource resourceNamed: String, withExtension: String) -> URL? {
-        if let resourceDelegate = self.sharedResourceDelegate(),
-            let url = resourceDelegate.resourceBundle().url(forResource: resourceNamed, withExtension: withExtension),
-            (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
-                return url
-        }
-        else if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension),
+        if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension),
             (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
             return url
         }
-        else if let url = Bundle(for: self.classForCoder).url(forResource: resourceNamed, withExtension: withExtension),
-            (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
-                return url
+        else {
+            for bundle in resourceBundles() {
+                if let url = bundle.url(forResource: resourceNamed, withExtension: withExtension),
+                    (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
+                    return url
+                }
+            }
         }
         return nil;
     }
