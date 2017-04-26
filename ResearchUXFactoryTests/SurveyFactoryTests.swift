@@ -524,6 +524,41 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertTrue(choiceC.exclusive)
     }
     
+    func testFactory_MoodQuestion() {
+        let inputStep: NSDictionary = [
+            "identifier" : "question1",
+            "type" : "mood",
+            "prompt" : "Question 1?",
+            "items" : ["a", "b", "c", "d", "e"]
+        ]
+        
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
+        XCTAssertNotNil(step)
+        
+        guard let surveyStep = step as? ORKFormStep else {
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
+            return
+        }
+        
+        XCTAssertEqual(surveyStep.identifier, "question1")
+        XCTAssertEqual(surveyStep.formItems?.count, 1)
+        
+        guard let formItem = surveyStep.formItems?.first,
+            let answerFormat = formItem.answerFormat as? ORKMoodScaleAnswerFormat else {
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
+                return
+        }
+        
+        XCTAssertNil(formItem.text)
+        XCTAssertEqual(surveyStep.text, "Question 1?")
+        XCTAssertEqual(answerFormat.imageChoices.count, 5)
+        
+        XCTAssertEqual(answerFormat.imageChoices.first!.text, "a")
+        XCTAssertEqual(answerFormat.imageChoices.last!.text, "e")
+        
+        XCTAssertNotNil(answerFormat.imageChoices.first?.normalStateImage)
+    }
+    
     func testFactory_TextChoice() {
         
         let inputStep: NSDictionary = [

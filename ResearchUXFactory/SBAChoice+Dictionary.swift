@@ -1,8 +1,8 @@
 //
-//  SBATextChoice.swift
+//  SBATextChoice+Dictionary.swift
 //  ResearchUXFactory
 //
-//  Copyright © 2016 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,17 +31,41 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import ResearchKit
 
-public protocol SBATextChoice  {
-    var choiceText: String { get }
-    var choiceDetail: String? { get }
-    var choiceValue: NSCoding & NSCopying & NSObjectProtocol { get }
-    var exclusive: Bool { get }
+import Foundation
+
+extension NSDictionary: SBAChoice {
+    
+    public var choiceText: String {
+        return (self["text"] as? String) ?? (self["prompt"] as? String) ?? self.identifier
+    }
+    
+    public var choiceValue: NSCoding & NSCopying & NSObjectProtocol {
+        return (self["value"] as? NSCoding & NSCopying & NSObjectProtocol) ?? self.choiceText as NSString
+    }
 }
 
-extension SBATextChoice {
-    func createORKTextChoice() -> ORKTextChoice {
-        return ORKTextChoice(text: self.choiceText.trim() ?? "", detailText: self.choiceDetail?.trim(), value: self.choiceValue, exclusive: self.exclusive)
+extension NSDictionary: SBATextChoice {
+    
+    public var choiceDetail: String? {
+        return self["detailText"] as? String
+    }
+    
+    public var exclusive: Bool {
+        let exclusive = self["exclusive"] as? Bool
+        return exclusive ?? false
+    }
+}
+
+extension NSDictionary: SBAImageChoice {
+    
+    public var choiceImage: UIImage? {
+        guard let imageName = self["image"] as? String else { return nil }
+        return SBAResourceFinder.shared.image(forResource: imageName)
+    }
+    
+    public var choiceSelectedImage: UIImage? {
+        guard let imageName = self["selectedImage"] as? String else { return nil }
+        return SBAResourceFinder.shared.image(forResource: imageName)
     }
 }

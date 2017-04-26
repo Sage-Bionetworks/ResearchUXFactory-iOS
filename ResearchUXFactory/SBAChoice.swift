@@ -1,8 +1,8 @@
 //
-//  SBATextChoice+Dictionary.swift
+//  SBATextChoice.swift
 //  ResearchUXFactory
 //
-//  Copyright © 2016 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,25 +31,34 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import ResearchKit
 
-import Foundation
+public protocol SBAChoice  {
+    var choiceText: String { get }
+    var choiceValue: NSCoding & NSCopying & NSObjectProtocol { get }
+}
 
-extension NSDictionary: SBATextChoice {
-    
-    public var choiceText: String {
-        return (self["text"] as? String) ?? (self["prompt"] as? String) ?? self.identifier
+public protocol SBATextChoice: SBAChoice  {
+    var choiceDetail: String? { get }
+    var exclusive: Bool { get }
+}
+
+extension SBATextChoice {
+    func createORKTextChoice() -> ORKTextChoice {
+        return ORKTextChoice(text: self.choiceText.trim() ?? "", detailText: self.choiceDetail?.trim(), value: self.choiceValue, exclusive: self.exclusive)
     }
-    
-    public var choiceDetail: String? {
-        return self["detailText"] as? String
-    }
-    
-    public var choiceValue: NSCoding & NSCopying & NSObjectProtocol {
-        return (self["value"] as? NSCoding & NSCopying & NSObjectProtocol) ?? self.choiceText as NSString
-    }
-    
-    public var exclusive: Bool {
-        let exclusive = self["exclusive"] as? Bool
-        return exclusive ?? false
+}
+
+public protocol SBAImageChoice: SBAChoice  {
+    var choiceImage: UIImage? { get }
+    var choiceSelectedImage: UIImage? { get }
+}
+
+extension SBAImageChoice {
+    func createORKImageChoice(with imageChoice:ORKImageChoice? = nil) -> ORKImageChoice {
+        return ORKImageChoice(normalImage: self.choiceImage ?? imageChoice?.normalStateImage,
+                              selectedImage: self.choiceSelectedImage ?? imageChoice?.selectedStateImage,
+                              text: self.choiceText,
+                              value: imageChoice?.value ?? self.choiceValue)
     }
 }

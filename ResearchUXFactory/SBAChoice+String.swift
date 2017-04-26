@@ -33,16 +33,32 @@
 
 import Foundation
 
-extension NSString: SBATextChoice {
+extension NSString: SBAChoice {
     public var choiceText: String { return self as String }
     public var choiceValue: NSCoding & NSCopying & NSObjectProtocol { return self }
+}
+
+extension NSString: SBATextChoice {
     public var choiceDetail: String? { return nil }
     public var exclusive: Bool { return false }
 }
 
-extension String: SBATextChoice {
+extension NSString: SBAImageChoice {
+    public var choiceImage: UIImage? { return nil }
+    public var choiceSelectedImage: UIImage? { return nil }
+}
+
+extension String: SBAChoice {
     public var choiceText: String { return self }
     public var choiceValue: NSCoding & NSCopying & NSObjectProtocol { return self as NSString }
+}
+
+extension String: SBATextChoice {
     public var choiceDetail: String? { return nil }
     public var exclusive: Bool { return false }
+}
+
+extension String: SBAImageChoice {
+    public var choiceImage: UIImage? { return nil }
+    public var choiceSelectedImage: UIImage? { return nil }
 }
