@@ -40,6 +40,7 @@ static NSString * const kClassTypeMapPListName = @"ClassTypeMap";
 @interface SBAClassTypeMap ()
 
 @property (nonatomic) NSMutableDictionary *map;
+@property (nonatomic) NSMutableDictionary *namespaceMap;
 
 @end
 
@@ -57,15 +58,16 @@ static NSString * const kClassTypeMapPListName = @"ClassTypeMap";
 - (instancetype)init {
     if ((self = [super init])) {
         // Look in all the bundles that we know about
-        NSArray *bundles = [[SBAInfoManager sharedManager] resourceBundles];
+        NSEnumerator *bundles = [[[SBAInfoManager sharedManager] resourceBundles] reverseObjectEnumerator];
         for (NSBundle *bundle in bundles) {
-            [self addObjectsFromPList:[bundle pathForResource:kClassTypeMapPListName ofType:@"plist"]];
+            [self addObjectsFromBundle:bundle];
         }
     }
     return self;
 }
 
-- (void)addObjectsFromPList:(NSString *)path {
+- (void)addObjectsFromBundle:(NSBundle *)bundle {
+    NSString *path = [bundle pathForResource:kClassTypeMapPListName ofType:@"plist"];
     if (path == nil) return;
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
@@ -77,11 +79,34 @@ static NSString * const kClassTypeMapPListName = @"ClassTypeMap";
     else {
         [_map addEntriesFromDictionary:dictionary];
     }
+    
+    if (_namespaceMap == nil) {
+        _namespaceMap = [NSMutableDictionary new];
+    }
+    
+    NSString *bundleIdentifier = [bundle bundleIdentifier];
+    NSRange range = [bundleIdentifier rangeOfString:@"." options:NSBackwardsSearch];
+    if (range.location == NSNotFound) {
+        return;
+    }
+    
+    NSString *namespace = [bundleIdentifier substringFromIndex:range.location + 1];
+    for (NSString *key in dictionary.allKeys) {
+        _namespaceMap[key] = namespace;
+    }
 }
 
 - (Class)classForClassType:(NSString *)classType {
     NSString *className = _map[classType] ?: classType;
-    return NSClassFromString(className);
+    Class result = NSClassFromString(className);
+    if (result == nil) {
+        NSString *namespace = _namespaceMap[classType];
+        if (namespace) {
+            className = [NSString stringWithFormat:@"%@.%@", namespace, className];
+            result = NSClassFromString(className);
+        }
+    }
+    return result;
 }
 
 - (id)objectWithDictionaryRepresentation:(NSDictionary*)dictionary {

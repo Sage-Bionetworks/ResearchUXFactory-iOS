@@ -33,7 +33,69 @@
 
 import ResearchKit
 
-extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBAConditionalRule {
+open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStepTransformer, SBAConditionalRule {
+    
+    lazy open var dataStore: SBATrackedDataStore! = {
+        return SBATrackedDataStore.shared
+    }()
+    
+    // MARK: Dynamic properties 
+    
+    lazy open dynamic var taskIdentifier: String! = {
+        return UUID().uuidString
+    }()
+    
+    lazy open dynamic var schemaIdentifier: String! = {
+        return self.taskIdentifier
+    }()
+    
+    open dynamic var alwaysIncludeActivitySteps: Bool = false
+    
+    open dynamic var itemsClassType: String!
+    
+    open dynamic var items: [SBATrackedDataObject]!
+    
+    open dynamic var steps: [Any]!
+
+    open dynamic var trackingSurveyRepeatTimeInterval: TimeInterval = 30 * 24 * 60 * 60   // Every 30 days by default
+    
+    open dynamic var momentInDayRepeatTimeInterval: TimeInterval = 20 * 60   // Every 20 minutes by default
+    
+    
+    override open func dictionaryRepresentationKeys() -> [String] {
+        let keys = super.dictionaryRepresentationKeys().filter({ $0 != #keyPath(identifier)})
+        return keys.appending(contentsOf: [ #keyPath(taskIdentifier),
+                                            #keyPath(schemaIdentifier),
+                                            #keyPath(alwaysIncludeActivitySteps),
+                                            #keyPath(trackingSurveyRepeatTimeInterval),
+                                            #keyPath(momentInDayRepeatTimeInterval),
+                                            #keyPath(itemsClassType),
+                                            #keyPath(items),
+                                            #keyPath(steps)])
+    }
+    
+    override open func defaultValue(forKey key: String) -> Any? {
+        return super.defaultValue(forKey: key)
+    }
+    
+    override open func defaultIdentifierIfNil() -> String {
+        return self.schemaIdentifier;
+    }
+    
+    override open func setValue(_ value: Any?, forKey key: String) {
+        if (key == #keyPath(items)), let arr = value as? [Any] {
+            self.items = arr.mapAndFilter({ (obj) -> SBATrackedDataObject? in
+                if let item = obj as? SBATrackedDataObject {
+                    return item
+                }
+                return self.mapValue(obj, forKey: key, withClassType: self.itemsClassType) as? SBATrackedDataObject
+            })
+        }
+        else {
+            super.setValue(value, forKey: key)
+        }
+    }
+
     
     // MARK: SBABridgeTask
     
@@ -41,9 +103,8 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         return [self]
     }
 
-    public var insertSteps: [SBAStepTransformer]? {
-        return nil
-    }
+    open var insertSteps: [SBAStepTransformer]?
+    
     
     // MARK: SBAStepTransformer
     
@@ -89,7 +150,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         return (task, include)
     }
     
-    public func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep? {
+    open func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep? {
         let (retTask, retInclude) = transformToTaskAndIncludes(factory, isLastStep: isLastStep)
         guard let task = retTask, let include = retInclude else { return nil }
         
@@ -105,7 +166,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
     
     // MARK: SBAConditionalRule
     
-    public func shouldSkip(step: ORKStep?, with result: ORKTaskResult) -> Bool {
+    open func shouldSkip(step: ORKStep?, with result: ORKTaskResult) -> Bool {
 
         // Check if this step is a tracked step. If the tracked step is nil then should *not* skip the step
         guard let trackedStep = step as? SBATrackedNavigationStep else { return false }
@@ -116,7 +177,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         return trackedStep.shouldSkipStep
     }
     
-    public func nextStep(previousStep: ORKStep?, nextStep: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
+    open func nextStep(previousStep: ORKStep?, nextStep: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
         
         if let selectionStep = previousStep as? SBATrackedSelectionStep,
             let stepResult = result.stepResult(forStepIdentifier: selectionStep.identifier),
@@ -138,7 +199,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
     
     // MARK: Functions for transforming and recording results
     
-    public func filteredSteps(_ include: SBATrackingStepIncludes) -> [ORKStep] {
+    open func filteredSteps(_ include: SBATrackingStepIncludes) -> [ORKStep] {
         let (steps, _) = filteredSteps(include, factory: SBAInfoManager.shared.defaultSurveyFactory)
         return steps
     }
@@ -195,7 +256,7 @@ extension SBATrackedDataObjectCollection: SBABridgeTask, SBAStepTransformer, SBA
         return (steps, trackedResults)
     }
     
-    public func findStep(_ trackingType: SBATrackingStepType) -> SBATrackedStepSurveyItem? {
+    open func findStep(_ trackingType: SBATrackingStepType) -> SBATrackedStepSurveyItem? {
         return self.steps.find({ (obj) -> Bool in
             guard let trackingItem = obj as? SBATrackedStepSurveyItem,
                 let type = trackingItem.trackingType else { return false }

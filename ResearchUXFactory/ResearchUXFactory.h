@@ -47,6 +47,7 @@ FOUNDATION_EXPORT const unsigned char ResearchUXFactoryVersionString[];
 #import <ResearchUXFactory/SBAMedication.h>
 #import <ResearchUXFactory/SBAPDFPrintPageRenderer.h>
 #import <ResearchUXFactory/SBAPermissionsManager.h>
+#import <ResearchUXFactory/SBATrackedDataObject.h>
 #import <ResearchUXFactory/SBATrackedDataStore.h>
 #import <ResearchUXFactory/ORKCollectionResult+SBAExtensions.h>
 #import <ResearchUXFactory/ORKOrderedTask+SBAExtension.h>

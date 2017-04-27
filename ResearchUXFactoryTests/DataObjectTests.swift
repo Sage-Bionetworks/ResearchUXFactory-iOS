@@ -79,7 +79,16 @@ class SBADataObjectTests: ResourceTestCase {
             XCTAssert(false, "\(String(describing: result)) not of expected class type")
             return
         }
+    }
+    
+    func testClassTypeMap_SwiftClass() {
         
+        let result: AnyClass? = SBAClassTypeMap.shared.class(forClassType: "TrackedDataObjectCollection")
+        XCTAssertNotNil(result)
+        guard let _ = result as? SBATrackedDataObjectCollection.Type else {
+            XCTAssert(false, "\(String(describing: result)) not of expected class type")
+            return
+        }
     }
 
 }
