@@ -44,8 +44,6 @@
 		FF14A0A81E981559007BB710 /* MockParticipantInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FF14A0A71E981559007BB710 /* MockParticipantInfo.m */; };
 		FF1DD9361E37DC210096727C /* SBASurveyItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD9351E37DC210096727C /* SBASurveyItemType.swift */; };
 		FF23799F1CBC2E5900F3A943 /* NSDictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23799E1CBC2E5900F3A943 /* NSDictionary+Utilities.swift */; };
-		FF2379AB1CBC41C000F3A943 /* SBATrackedDataObjectCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2379A91CBC41C000F3A943 /* SBATrackedDataObjectCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF2379AC1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2379AA1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m */; };
 		FF2498141CB6C1F0002DD05F /* MockTrackedDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2498131CB6C1F0002DD05F /* MockTrackedDataStore.m */; };
 		FF24981F1CB6DC13002DD05F /* SBATrackedStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24981E1CB6DC13002DD05F /* SBATrackedStep.swift */; };
 		FF2498251CB78972002DD05F /* TrackedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2498241CB78972002DD05F /* TrackedDataTests.swift */; };
@@ -387,8 +385,6 @@
 		FF14A0A71E981559007BB710 /* MockParticipantInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockParticipantInfo.m; sourceTree = "<group>"; };
 		FF1DD9351E37DC210096727C /* SBASurveyItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyItemType.swift; sourceTree = "<group>"; };
 		FF23799E1CBC2E5900F3A943 /* NSDictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utilities.swift"; sourceTree = "<group>"; };
-		FF2379A91CBC41C000F3A943 /* SBATrackedDataObjectCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBATrackedDataObjectCollection.h; sourceTree = "<group>"; };
-		FF2379AA1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBATrackedDataObjectCollection.m; sourceTree = "<group>"; };
 		FF2498121CB6C1F0002DD05F /* MockTrackedDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockTrackedDataStore.h; sourceTree = "<group>"; };
 		FF2498131CB6C1F0002DD05F /* MockTrackedDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockTrackedDataStore.m; sourceTree = "<group>"; };
 		FF24981E1CB6DC13002DD05F /* SBATrackedStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBATrackedStep.swift; sourceTree = "<group>"; };
@@ -946,8 +942,6 @@
 				FF64111A1CB34766007FB9E1 /* SBAMedication.m */,
 				FF6411171CB341EC007FB9E1 /* SBATrackedDataObject.h */,
 				FF6411151CB341D0007FB9E1 /* SBATrackedDataObject.m */,
-				FF2379A91CBC41C000F3A943 /* SBATrackedDataObjectCollection.h */,
-				FF2379AA1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m */,
 				FBAD11661CADCFE5005611D0 /* SBATrackedDataObjectCollection.swift */,
 				FF4F06D11CEED20D007BD273 /* SBATrackedDataSelectionResult.swift */,
 				FF8DDFD31CB62280006D1AFA /* SBATrackedDataStore.h */,
@@ -1212,7 +1206,6 @@
 				FF6411391CB436B6007FB9E1 /* SBAClassTypeMap.h in Headers */,
 				FF5544EB1E2ED2B300A8E189 /* SBAParticipantInfo.h in Headers */,
 				80A27B011CE6E32000E3419B /* SBAJSONObject.h in Headers */,
-				FF2379AB1CBC41C000F3A943 /* SBATrackedDataObjectCollection.h in Headers */,
 				FBAD11591CADB2F0005611D0 /* SBADataObject.h in Headers */,
 				FF10F4DF1D244ACE005C9BB4 /* ORKCollectionResult+SBAExtensions.h in Headers */,
 				801040B51C5A843D00D26E19 /* ResearchUXFactory.h in Headers */,
@@ -1573,7 +1566,6 @@
 				FF5E56E81D6F8941008BA2A8 /* SBATaskViewController.swift in Sources */,
 				FFB30E3A1D488F4800D175D2 /* SBALoadingView.swift in Sources */,
 				FFCF385D1CE1172A0090452F /* NSPredicate+Utilities.swift in Sources */,
-				FF2379AC1CBC41C000F3A943 /* SBATrackedDataObjectCollection.m in Sources */,
 				FFCF37B31CD94EC80090452F /* ORKOrderedTask+SBAExtension.m in Sources */,
 				FF27290F1D9203AD00956CFB /* SBASkipAction.swift in Sources */,
 				FF3075701DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift in Sources */,

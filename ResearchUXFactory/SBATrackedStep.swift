@@ -81,6 +81,7 @@ public struct SBATrackingStepIncludes {
         }
     }
     
+    public static let SelectionOnly = SBATrackingStepIncludes(includes: [.selection])
     public static let StandAloneSurvey = SBATrackingStepIncludes(includes: [.introduction, .selection, .frequency, .completion])
     public static let ActivityOnly = SBATrackingStepIncludes(includes: [.activity])
     public static let SurveyAndActivity = SBATrackingStepIncludes(includes: [.introduction, .selection, .frequency, .activity])

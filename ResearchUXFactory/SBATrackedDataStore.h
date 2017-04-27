@@ -34,8 +34,6 @@
 #import <Foundation/Foundation.h>
 #import <ResearchKit/ResearchKit.h>
 
-#import "SBATrackedDataObjectCollection.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @class SBATrackedDataObject;
