@@ -74,6 +74,9 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
         
         let steps = [firstStep] + additionalSteps
         super.init(identifier: inputItem.identifier, steps: steps)
+        
+        self.title = inputItem.stepTitle
+        self.text = inputItem.stepText
     }
     
     /**
@@ -129,7 +132,7 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
     
     // MARK: Selection filtering
     
-    var trackedResultIdentifier: String? {
+    public var trackedResultIdentifier: String? {
         return self.steps.find({ (step) -> Bool in
             if let trackedStep = step as? SBATrackedStep , trackedStep.trackingType == .selection {
                 return true

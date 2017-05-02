@@ -139,7 +139,7 @@ open class SBATrackedActivityFormStep: ORKFormStep, SBATrackedNavigationStep {
 open class SBATrackedActivityPageStep: ORKPageStep, SBATrackedNavigationStep {
     
     @objc
-    fileprivate var selectedItemIdentifiers: [String] = []
+    public var selectedItemIdentifiers: [String] = []
     
     override init(identifier: String, steps: [ORKStep]?) {
         super.init(identifier: identifier, steps: steps)
