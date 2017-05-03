@@ -50,4 +50,73 @@ extension UIView {
         
         superview.addConstraints([topConstraint, bottomConstraint, leftConstraint, rightConstraint])
     }
+    
+    /**
+     * Locks child to its parent with value of horizontalPad for leading, trailing and
+     * verticalPad for top, and bottom
+     * @param view to add the constraints to
+     * @param horizontalPad padding for leading and trailing constraints
+     * @param verticalPad padding for top and bottom constraints
+     */
+    public func constrainToFillSuperviewVisual()
+    {
+        guard let superview = self.superview else {
+            assertionFailure("Trying to set constraints without first setting superview")
+            return
+        }
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        var constraints = [NSLayoutConstraint]()
+        
+        constraints.append(contentsOf: NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-hp-[v]-hp-|",
+            options: [],
+            metrics: ["hp" : 0],
+            views:   ["v"  : self]))
+        
+        constraints.append(contentsOf: NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-vp-[v]-vp-|",
+            options: [],
+            metrics: ["vp" : 0],
+            views:   ["v"  : self]))
+        
+        superview.addConstraints(constraints)
+    }
+
+    
+    /**
+     * Locks child to its parent in top right corner, with top and right padding
+     * @param view to add the constraints to
+     * @param aspectRatio the aspect ratio for width/height to the superview
+     * @param rightPad padding for trailing constraint
+     * @param topPad padding for top constraint
+     */
+    public func constrainToSuperviewAspectInTopRight(aspectRatio: CGFloat, rightPad: CGFloat, topPad: CGFloat)
+    {
+        guard let superview = self.superview else {
+            assertionFailure("Trying to set constraints without first setting superview")
+            return
+        }
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        var constraints = [NSLayoutConstraint]()
+        
+        constraints.append(contentsOf: NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[v]-hp-|",
+            options: [],
+            metrics: ["hp" : rightPad],
+            views:   ["v"  : self]))
+        
+        constraints.append(contentsOf: NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-vp-[v]",
+            options: [],
+            metrics: ["vp" : topPad],
+            views:   ["v"  : self]))
+        
+        constraints.append(NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: superview, attribute: .height, multiplier: aspectRatio, constant: 0))
+        
+        constraints.append(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: aspectRatio, constant: 0))
+        
+        superview.addConstraints(constraints)
+    }
 }
