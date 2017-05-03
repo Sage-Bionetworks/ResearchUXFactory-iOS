@@ -156,6 +156,34 @@ open class SBATrackedActivityPageStep: ORKPageStep, SBATrackedNavigationStep {
         return ORKStepResult(stepIdentifier: self.identifier, results: [questionResult])
     }
     
+    
+    // MARK: Data source
+    
+    open func numberOfSections() -> Int {
+        return selectedItemIdentifiers.count
+    }
+    
+    open func numberOfRowsInSection(_ section: Int) -> Int {
+        return formStep(forSection: section)?.formItems?.count ?? 0
+    }
+    
+    open func itemIdentifier(forSection section:Int) -> String {
+        return selectedItemIdentifiers[section]
+    }
+    
+    open func step(forSection section:Int) -> ORKStep? {
+        return self.step(withIdentifier: selectedItemIdentifiers[section])
+    }
+    
+    open func formStep(forSection section:Int) -> ORKFormStep? {
+        return self.step(withIdentifier: selectedItemIdentifiers[section]) as? ORKFormStep
+    }
+    
+    open func formItem(atIndexPath indexPath:IndexPath) -> ORKFormItem? {
+        return formStep(forSection: indexPath.section)?.formItems?[indexPath.row]
+    }
+    
+    
     // MARK: Navigation override
     
     override open func stepAfterStep(withIdentifier identifier: String?, with result: ORKTaskResult) -> ORKStep? {
@@ -235,14 +263,26 @@ open class SBATrackedActivityPageStep: ORKPageStep, SBATrackedNavigationStep {
     // step does not need a reverse weak link to the data store.
 }
 
-open class SBATrackedActivityPageStepViewController: ORKPageStepViewController {
+/**
+ Use a protocol to build the consolidated result so that the step view controller used to present the step
+ can be appropriate to the UI design.
+ */
+public protocol SBATrackedActivityPageStepController: class {
+    var step: ORKStep? { get }
+}
+
+extension SBATrackedActivityPageStepController {
     
-    override open var result: ORKStepResult? {
-        guard let stepResult = super.result else { return nil }
+    public var activityStep: SBATrackedActivityPageStep? {
+        return self.step as? SBATrackedActivityPageStep
+    }
+    
+    public func createConsolidatedChoiceResult(with stepResult:ORKStepResult) -> ORKChoiceQuestionResult? {
+        guard let pageStep = self.activityStep else { return nil }
         
         // Get the choice answers
         var formIdentifier = self.step!.identifier
-        let choiceAnswers = self.pageStep?.steps.mapAndFilter({ (step) -> AnyObject? in
+        let choiceAnswers = pageStep.steps.mapAndFilter({ (step) -> AnyObject? in
             
             guard let formStep = step as? ORKFormStep,
                 let formItem = formStep.formItems?.first,
@@ -252,7 +292,7 @@ open class SBATrackedActivityPageStepViewController: ORKPageStepViewController {
                     return nil
             }
             
-            // keep track of the identifier for the form item and use this for the identifier for the 
+            // keep track of the identifier for the form item and use this for the identifier for the
             // consolidated result
             formIdentifier = formItem.identifier
             
@@ -269,9 +309,21 @@ open class SBATrackedActivityPageStepViewController: ORKPageStepViewController {
         questionResult.startDate = stepResult.startDate
         questionResult.endDate = stepResult.endDate
         questionResult.questionType = ORKQuestionType.multipleChoice
-        questionResult.choiceAnswers = choiceAnswers ?? []
-        stepResult.addResult(questionResult)
+        questionResult.choiceAnswers = choiceAnswers
+        
+        return questionResult
+    }
+}
 
+open class SBATrackedActivityPageStepViewController: ORKPageStepViewController, SBATrackedActivityPageStepController {
+    
+    override open var result: ORKStepResult? {
+        guard let stepResult = super.result,
+            let questionResult = self.createConsolidatedChoiceResult(with: stepResult)
+        else {
+            return nil
+        }
+        stepResult.addResult(questionResult)
         return stepResult
     }
 }
