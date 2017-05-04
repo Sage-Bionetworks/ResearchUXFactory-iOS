@@ -119,13 +119,18 @@ extension SBASurveyRuleItem {
         case .skip:
             return NSPredicate(format: "answer = NULL")
         case .equal:
-            return NSPredicate(format: "answer = %@", value!)
+            if (isArray) {
+                return NSPredicate(format: "ANY %@ IN answer", value!)
+            }
+            else {
+                return NSPredicate(format: "answer == %@", value!)
+            }
         case .notEqual:
             return NSPredicate(format: "answer <> %@", value!)
         case .otherThan:
             if (isArray) {
                 return NSCompoundPredicate(notPredicateWithSubpredicate:
-                    NSPredicate(format: "%@ IN answer", value!))
+                    NSPredicate(format: "ANY %@ IN answer", value!))
             }
             else {
                 return NSPredicate(format: "answer <> %@", value!)
@@ -161,9 +166,10 @@ extension SBASurveyRuleItem {
         // is returned as an array of choices
         switch(subtype) {
         case .singleChoice, .multipleChoice, .timingRange:
-            if op == .otherThan {
-                return (true, value, op)
-            } else {
+            if let array = value as? NSArray {
+                return (true, array, op)
+            }
+            else {
                 return (true, [value!], op)
             }
             
