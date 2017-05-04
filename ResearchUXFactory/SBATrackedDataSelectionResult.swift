@@ -93,7 +93,7 @@ open class SBATrackedDataSelectionResult: ORKQuestionResult {
 
 extension SBATrackedDataSelectionResult {
     
-    public override func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         // Always return a non-nil result for items
         let selectedItems: NSArray? = self.selectedItems as NSArray?
         let value = selectedItems?.jsonObject() ?? NSArray()

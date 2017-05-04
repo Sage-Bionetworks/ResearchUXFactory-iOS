@@ -129,7 +129,7 @@ extension ORKResult: BridgeUploadableData {
         return jsonData
     }
     
-    func resultAsDictionary() -> NSMutableDictionary {
+    open func resultAsDictionary() -> NSMutableDictionary {
         let asDict = NSMutableDictionary()
         
         asDict[kIdentifierKey] = self.identifier
@@ -147,7 +147,7 @@ extension ORKResult: BridgeUploadableData {
         return bridgifyFilename(self.identifier) + ".json"
     }
     
-    public func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
+    open func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
         // extend subclasses individually to override this as needed
         return ArchiveableResult(result: self.resultAsDictionary().jsonObject() as AnyObject, filename: self.filenameForArchive())
     }
@@ -155,7 +155,7 @@ extension ORKResult: BridgeUploadableData {
 }
 
 extension ORKStepResult {
-    override func resultAsDictionary() -> NSMutableDictionary {
+    override open func resultAsDictionary() -> NSMutableDictionary {
         let stepResult = super.resultAsDictionary()
         guard let results = self.results  else { return stepResult }
         stepResult[kAnswerMapKey] = results.filteredDictionary({ (result) -> (String?, AnyObject?) in
@@ -190,7 +190,7 @@ extension ORKStep {
 
 extension ORKFileResult {
     
-    override public func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
+    override open func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
         guard let url = self.fileURL else {
             return nil
         }
@@ -206,7 +206,7 @@ extension ORKFileResult {
 
 extension ORKTappingIntervalResult {
     
-    override func resultAsDictionary() -> NSMutableDictionary {
+    override open func resultAsDictionary() -> NSMutableDictionary {
         let tappingResults = super.resultAsDictionary()
     
         let tappingViewSize = NSStringFromCGSize(self.stepViewSize)
@@ -245,7 +245,7 @@ extension ORKTappingIntervalResult {
 
 extension ORKSpatialSpanMemoryResult {
     
-    override func resultAsDictionary() -> NSMutableDictionary {
+    override open func resultAsDictionary() -> NSMutableDictionary {
         let gameStatusKeys = [ kSpatialSpanMemoryGameStatusUnknownKey, kSpatialSpanMemoryGameStatusSuccessKey, kSpatialSpanMemoryGameStatusFailureKey, kSpatialSpanMemoryGameStatusTimeoutKey ]
         
         let memoryGameResults = super.resultAsDictionary()
@@ -328,7 +328,7 @@ extension ORKTrailmakingResult {
     // trailmaking.json.index               Integer
     // trailmaking.json.numberOfErrors      Integer
     
-    override func resultAsDictionary() -> NSMutableDictionary {
+    override open func resultAsDictionary() -> NSMutableDictionary {
         let result = super.resultAsDictionary()
         
         let resultTaps = self.taps.map ({ (tap) -> [String: AnyObject] in
@@ -354,7 +354,7 @@ extension ORKGoNoGoResult {
     // goNoGo.json.incorrect           Boolean
     // goNoGo.json.samples             JSON Table
     
-    override func resultAsDictionary() -> NSMutableDictionary {
+    override open func resultAsDictionary() -> NSMutableDictionary {
         let result = super.resultAsDictionary()
         
         result[kGoNoGoTimestampKey] = NSNumber(value: self.timestamp)
@@ -431,7 +431,7 @@ extension ORKQuestionType {
 
 extension ORKQuestionResult: ORKQuestionResultAnswerJSON {
     
-    override func resultAsDictionary() -> NSMutableDictionary {
+    override open func resultAsDictionary() -> NSMutableDictionary {
         let choiceQuestionResult = super.resultAsDictionary()
         choiceQuestionResult[kItemKey] = self.identifier
         choiceQuestionResult[QuestionResultUserInfoKey] = self.userInfo
@@ -457,12 +457,12 @@ extension ORKQuestionResult: ORKQuestionResultAnswerJSON {
         return choiceQuestionResult
     }
     
-    public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         let className = NSStringFromClass(self.classForCoder)
         fatalError("jsonSerializedAnswer not implemented for \(className)")
     }
     
-    public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         let className = NSStringFromClass(self.classForCoder)
         fatalError("storedAnswer(with:) not implemented for \(className)")
     }
@@ -471,12 +471,12 @@ extension ORKQuestionResult: ORKQuestionResultAnswerJSON {
 
 extension ORKChoiceQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let choiceAnswers = self.choiceAnswers else { return nil }
         return SBAAnswerKeyAndValue(key: "choiceAnswers", value: (choiceAnswers as NSArray).jsonObject(), questionType: self.questionType)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         guard let choiceAnswers = self.choiceAnswers else { return nil }
         return self.questionType == .singleChoice ? choiceAnswers.first : choiceAnswers
     }
@@ -484,12 +484,12 @@ extension ORKChoiceQuestionResult {
 
 extension ORKScaleQuestionResult {
 
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.scaleAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "scaleAnswer", value: answer.jsonObject(), questionType: .scale)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         if answerFormat is ORKContinuousScaleAnswerFormat {
             return self.scaleAnswer?.doubleValue
         }
@@ -501,50 +501,50 @@ extension ORKScaleQuestionResult {
 
 extension ORKMoodScaleQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.scaleAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "scaleAnswer", value: answer.jsonObject(), questionType: .scale)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.scaleAnswer?.intValue
     }
 }
 
 extension ORKBooleanQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.booleanAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "booleanAnswer", value: answer.jsonObject(), questionType: .boolean)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.booleanAnswer?.boolValue
     }
 }
 
 extension ORKTextQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.textAnswer else { return nil }
         return SBAAnswerKeyAndValue(key: "textAnswer", value: answer as NSSecureCoding, questionType: .text)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.textAnswer
     }
 }
 
 extension ORKNumericQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.numericAnswer else { return nil }
         let answerKey = SBAAnswerKeyAndValue(key: "numericAnswer", value: answer.jsonObject(), questionType: self.questionType)
         answerKey.unit = self.unit
         return answerKey
     }
 
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         guard let answer = self.numericAnswer else { return nil }
         if let unit = self.unit {
             return HKQuantity(unit: HKUnit(from: unit), doubleValue: answer.doubleValue)
@@ -563,7 +563,7 @@ extension ORKNumericQuestionResult {
 
 extension ORKTimeOfDayQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let dateAnswer = self.dateComponentsAnswer else { return nil }
         var answer = dateAnswer
         answer.year = 0
@@ -572,27 +572,27 @@ extension ORKTimeOfDayQuestionResult {
         return SBAAnswerKeyAndValue(key: "dateComponentsAnswer", value: (answer as NSDateComponents).jsonObject(), questionType: .timeOfDay)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.dateComponentsAnswer
     }
 }
 
 extension ORKTimeIntervalQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.intervalAnswer else { return nil }
         
         return SBAAnswerKeyAndValue(key: "intervalAnswer", value: answer.jsonObject(), questionType: .timeInterval)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.intervalAnswer
     }
 }
 
 extension ORKDateQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.dateAnswer else { return nil }
         let key = "dateAnswer"
         if self.questionType == ORKQuestionType.date {
@@ -603,21 +603,21 @@ extension ORKDateQuestionResult {
         }
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.dateAnswer
     }
 }
 
 extension ORKMultipleComponentQuestionResult {
     
-    override public func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         guard let answer = self.componentsAnswer, let separator = self.separator else { return nil }
         let key = "textAnswer"
         let textAnswer = answer.map({"\($0)"}).joined(separator: separator)
         return SBAAnswerKeyAndValue(key: key, value: textAnswer as NSSecureCoding, questionType: .text)
     }
     
-    override public func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         return self.jsonSerializedAnswer()?.value
     }
 }
