@@ -641,6 +641,67 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertEqual(step.title, "Registration")
     }
     
+    func testFactory_SingleChoiceWithMultipleRules() {
+        
+        let inputStep: NSDictionary = [
+            "identifier" : "question1",
+            "type" : "singleChoiceText",
+            "prompt" : "Question 1?",
+            "items" : [["prompt" : "Option A", "value" : "a"],
+                       ["prompt" : "Option B", "value" : "b"],
+                       ["prompt" : "Option C", "value" : "c"],
+                       ["prompt" : "Option D", "value" : "d"],
+                       ["prompt" : "Option E", "value" : "e"],
+                       ["prompt" : "Option F", "value" : "f"]],
+            "expectedAnswer" : ["a", "b"]
+        ]
+        
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
+        XCTAssertNotNil(step)
+        
+        guard let surveyStep = step as? SBANavigationFormStep else {
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
+            return
+        }
+        
+        XCTAssertEqual(surveyStep.identifier, "question1")
+        XCTAssertEqual(surveyStep.formItems?.count, 1)
+        
+        guard let formItem = surveyStep.formItems?.first,
+            let answerFormat = formItem.answerFormat as? ORKTextChoiceAnswerFormat else {
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
+                return
+        }
+        
+        XCTAssertNil(formItem.text)
+        XCTAssertEqual(surveyStep.text, "Question 1?")
+        XCTAssertEqual(answerFormat.style, ORKChoiceAnswerStyle.singleChoice)
+        XCTAssertEqual(answerFormat.textChoices.count, 6)
+        
+        XCTAssertEqual(answerFormat.textChoices.first!.text, "Option A")
+        let firstValue = answerFormat.textChoices.first!.value as? String
+        XCTAssertEqual(firstValue, "a")
+        
+        guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
+            XCTAssert(false, "\(String(describing: step)) is missing a rule")
+            return
+        }
+        
+        XCTAssertEqual(rule.resultIdentifier, "question1")
+        XCTAssertEqual(rule.skipIdentifier, ORKNullStepIdentifier)
+        
+        let questionResult = ORKChoiceQuestionResult(identifier:formItem.identifier)
+        questionResult.choiceAnswers = ["a"]
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        
+        questionResult.choiceAnswers = ["b"]
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        
+        questionResult.choiceAnswers = ["c"]
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        
+    }
+    
     
     // MARK: Helper methods
     
