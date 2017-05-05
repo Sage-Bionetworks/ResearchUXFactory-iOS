@@ -34,7 +34,51 @@
 import Foundation
 
 extension ORKTextChoice: SBATextChoice {
+    
     public var choiceText: String { return self.text }
     public var choiceDetail: String? { return self.detailText }
     public var choiceValue: NSCoding & NSCopying & NSObjectProtocol { return self.value }
+    
+    open var choiceDataGroups: [String] {
+        return convertValueToArray()
+    }
+}
+
+open class SBADataGroupTextChoice : ORKTextChoice {
+    
+    public var dataGroups: [String]!
+    
+    override open var choiceDataGroups: [String] {
+        return dataGroups
+    }
+    
+    public override init(text: String, detailText: String?, value: NSCoding & NSCopying & NSObjectProtocol, exclusive: Bool) {
+        super.init(text: text, detailText: detailText, value: value, exclusive: exclusive)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.dataGroups = aDecoder.decodeObject(forKey: "dataGroups") as! [String]
+    }
+    
+    override open func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.dataGroups, forKey: "dataGroups")
+    }
+    
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        let copy = super.copy(with: zone) as! SBADataGroupTextChoice
+        copy.dataGroups = self.dataGroups
+        return copy
+    }
+    
+    override open func isEqual(_ object: Any?) -> Bool {
+        guard let obj = object as? SBADataGroupTextChoice else { return false }
+        return super.isEqual(object) && (self.dataGroups == obj.dataGroups)
+    }
+    
+    override open var hash: Int {
+        return super.hash ^ SBAObjectHash(self.dataGroups)
+    }
+    
 }

@@ -47,29 +47,53 @@ class SBADataGroupsStepTests: XCTestCase {
     
     func testFactoryWithDictionary() {
         
-        guard let surveyStep = createDataGroupsStep() else {
+        guard let surveyStep = createDataGroupsStep(), let step = surveyStep as? ORKFormStep else {
             XCTAssert(false, "could not create step")
             return
         }
     
         XCTAssertEqual(surveyStep.identifier, "dataGroupSelection")
-        XCTAssertEqual(surveyStep.title, "Which data groups do you want to be in?")
-        XCTAssertEqual(surveyStep.text, "Choose one")
-        XCTAssertFalse(surveyStep.isOptional)
-        XCTAssertEqual(surveyStep.formItems?.count ?? 0, 1)
+        XCTAssertEqual(step.title, "Which data groups do you want to be in?")
+        XCTAssertEqual(step.text, "Choose one")
+        XCTAssertFalse(step.isOptional)
+        XCTAssertEqual(step.formItems?.count ?? 0, 1)
         XCTAssertEqual(surveyStep.dataGroups, Set(["groupA", "groupB", "groupC", "groupD", "groupE", "groupF"]))
         
-        guard let answerFormat = surveyStep.formItems?.first?.answerFormat as? ORKTextChoiceAnswerFormat else {
-            XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
+        guard let answerFormat = step.formItems?.first?.answerFormat as? ORKTextChoiceAnswerFormat else {
+            XCTAssert(false, "\(String(describing: step.formItems)) is not of expected class type")
             return
         }
     
-        XCTAssertEqual(surveyStep.formItems!.first!.identifier, "dataGroupSelection")
+        XCTAssertEqual(step.formItems!.first!.identifier, "dataGroupSelection")
         XCTAssertEqual(answerFormat.style, ORKChoiceAnswerStyle.multipleChoice)
         XCTAssertEqual(answerFormat.textChoices.count, 6)
         
         let noneChoice = answerFormat.textChoices.last!
         XCTAssertTrue(noneChoice.exclusive)
+    }
+    
+    func testFactoryWithDictionary_SingleChoice() {
+        guard let surveyStep = createDataGroupsSetSingle(), let step = surveyStep as? ORKFormStep else {
+            XCTAssert(false, "could not create step")
+            return
+        }
+        
+        XCTAssertEqual(surveyStep.identifier, "dataGroupSelection")
+        XCTAssertEqual(step.title, "Which data groups do you want to be in?")
+        XCTAssertEqual(step.text, "Choose one")
+        XCTAssertFalse(step.isOptional)
+        XCTAssertEqual(step.formItems?.count ?? 0, 1)
+        let dataGroups = Set(surveyStep.dataGroups)
+        XCTAssertEqual(dataGroups, Set(["groupA", "groupB"]))
+        
+        guard let answerFormat = step.formItems?.first?.answerFormat as? ORKTextChoiceAnswerFormat else {
+            XCTAssert(false, "\(String(describing: step.formItems)) is not of expected class type")
+            return
+        }
+        
+        XCTAssertEqual(step.formItems!.first!.identifier, "dataGroupSelection")
+        XCTAssertEqual(answerFormat.style, ORKChoiceAnswerStyle.singleChoice)
+        XCTAssertEqual(answerFormat.textChoices.count, 6)
     }
     
     // MARK: Union
@@ -251,9 +275,22 @@ class SBADataGroupsStepTests: XCTestCase {
         XCTAssertEqual([["groupE", "groupF"]] as NSArray, choices)
     }
     
+    func testStepResult_Single_Narrow() {
+        
+        // For the case where multiple answers can result selecting the same data group, the step result cannot 
+        // be created from the exisiting data groups
+        guard let surveyStep = createDataGroupsSetSingle() else {
+            XCTAssert(false, "could not create step")
+            return
+        }
+        
+        let stepResult = surveyStep.stepResult(currentGroups: ["groupA"])
+        XCTAssertNil(stepResult)
+    }
+    
     // MARK: helper methods
     
-    func createDataGroupsStep() -> SBADataGroupsStep? {
+    func createDataGroupsStep() -> SBADataGroupsStepProtocol? {
         
         let inputStep: NSDictionary = [
             "identifier": "dataGroupSelection",
@@ -281,6 +318,48 @@ class SBADataGroupsStepTests: XCTestCase {
         XCTAssertNotNil(step)
         
         guard let surveyStep = step as? SBADataGroupsStep else {
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
+            return nil
+        }
+        
+        return surveyStep
+    }
+    
+    func createDataGroupsSetSingle() -> SBADataGroupsStepProtocol? {
+        let inputStep: NSDictionary = [
+            "identifier": "dataGroupSelection",
+            "type": "dataGroups.singleChoiceText",
+            "title": "Which data groups do you want to be in?",
+            "text": "Choose one",
+            "optional" : false,
+            "items": [
+                [ "text" : "Group A+",
+                  "value" : "A+",
+                  "dataGroup" : "groupA"],
+                [ "text" : "Group A",
+                  "value" : "A",
+                  "dataGroup" : "groupA"],
+                [ "text" : "Group A-",
+                  "value" : "A-",
+                  "dataGroup" : "groupA"],
+                [ "text" : "Group B+",
+                  "value" : "B+",
+                  "dataGroup" : "groupB"],
+                [ "text" : "Group B-",
+                  "value" : "B-",
+                  "dataGroup" : "groupB"],
+                [ "text" : "None",
+                  "value" : "none",
+                  "dataGroup" : ""]
+            ],
+            "expectedAnswer" : ["A+", "A", "A-"],
+            "skipIdentifier" : "answerA"
+        ]
+        
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
+        XCTAssertNotNil(step)
+        
+        guard let surveyStep = step as? SBADataGroupsStepProtocol else {
             XCTAssert(false, "\(String(describing: step)) is not of expected class type")
             return nil
         }

@@ -36,6 +36,24 @@ import ResearchKit
 public protocol SBAChoice  {
     var choiceText: String { get }
     var choiceValue: NSCoding & NSCopying & NSObjectProtocol { get }
+    var choiceDataGroups: [String] { get }
+}
+
+extension SBAChoice {
+    
+    func convertValueToArray() -> [String] {
+        if let arr = choiceValue as? [String] {
+            return arr
+        }
+        else if let str = choiceValue as? String, str != "" {
+            return [str]
+        }
+        return []
+    }
+    
+    func choiceValueMatchesDataGroups() -> Bool {
+        return self.convertValueToArray() == self.choiceDataGroups
+    }
 }
 
 public protocol SBATextChoice: SBAChoice  {
@@ -45,7 +63,16 @@ public protocol SBATextChoice: SBAChoice  {
 
 extension SBATextChoice {
     func createORKTextChoice() -> ORKTextChoice {
-        return ORKTextChoice(text: self.choiceText.trim() ?? "", detailText: self.choiceDetail?.trim(), value: self.choiceValue, exclusive: self.exclusive)
+        let text = self.choiceText.trim() ?? ""
+        let detailText = self.choiceDetail?.trim()
+        if choiceValueMatchesDataGroups() {
+            return ORKTextChoice(text: text, detailText: detailText, value: self.choiceValue, exclusive: self.exclusive)
+        }
+        else {
+            let choice = SBADataGroupTextChoice(text: text, detailText: detailText, value: self.choiceValue, exclusive: self.exclusive)
+            choice.dataGroups = self.choiceDataGroups
+            return choice
+        }
     }
 }
 

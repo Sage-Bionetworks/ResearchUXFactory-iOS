@@ -96,6 +96,9 @@ open class SBABaseSurveyFactory : NSObject {
             if let form = inputItem as? SBAFormStepSurveyItem {
                 return createFormStep(form, isSubtaskStep: isSubtaskStep)
             } else { break }
+        
+        case .dataGroups(_):
+            return createDataGroupsStep(inputItem: inputItem)
             
         case .account(let subtype):
             return createAccountStep(inputItem: inputItem, subtype: subtype)
@@ -247,8 +250,6 @@ open class SBABaseSurveyFactory : NSObject {
             return ORKRegistrationStep(identifier: inputItem.identifier, title: inputItem.stepTitle, text: inputItem.stepText)
         case .permissions:
             return SBAPermissionsStep(inputItem: inputItem)
-        case .dataGroups:
-            return SBADataGroupsStep(inputItem: inputItem)
         case .emailVerification:
             let step = SBAInstructionStep(inputItem: inputItem)
             step.customTypeIdentifier = subtype.rawValue
@@ -256,6 +257,13 @@ open class SBABaseSurveyFactory : NSObject {
         case .profile, .login, .externalID:
             return SBAProfileFormStep(inputItem: inputItem, factory: self)
         }
+    }
+    
+    /**
+     Factory method for injecting an override of the creation of a data groups step.
+     */
+    open func createDataGroupsStep(inputItem: SBASurveyItem) -> ORKStep? {
+        return SBADataGroupsStep(inputItem: inputItem)
     }
     
     /**

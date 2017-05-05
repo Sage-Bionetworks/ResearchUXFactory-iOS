@@ -235,6 +235,8 @@
 		FFC160A61CFE67B600C29AF7 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */; };
 		FFC41F4D1E025DBC0057526E /* SBAKeychainWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC41F4B1E025DBC0057526E /* SBAKeychainWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFC41F4E1E025DBC0057526E /* SBAKeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC41F4C1E025DBC0057526E /* SBAKeychainWrapper.m */; };
+		FFCE30B31EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCE30B21EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift */; };
+		FFCE30B81EBD00CC0086DCAA /* SBAImageChoice+ORKImageChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCE30B71EBD00CC0086DCAA /* SBAImageChoice+ORKImageChoice.swift */; };
 		FFCF37B21CD94EC80090452F /* ORKOrderedTask+SBAExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FFCF37B01CD94EC80090452F /* ORKOrderedTask+SBAExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFCF37B31CD94EC80090452F /* ORKOrderedTask+SBAExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37B11CD94EC80090452F /* ORKOrderedTask+SBAExtension.m */; };
 		FFCF37DE1CDA91520090452F /* SBALearnMoreAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37DD1CDA91520090452F /* SBALearnMoreAction.swift */; };
@@ -540,6 +542,8 @@
 		FFC15FDB1CFE4F0D00C29AF7 /* ColorInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ColorInfo.plist; sourceTree = "<group>"; };
 		FFC41F4B1E025DBC0057526E /* SBAKeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAKeychainWrapper.h; sourceTree = "<group>"; };
 		FFC41F4C1E025DBC0057526E /* SBAKeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAKeychainWrapper.m; sourceTree = "<group>"; };
+		FFCE30B21EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAChoiceAnswerFormatProtocol.swift; sourceTree = "<group>"; };
+		FFCE30B71EBD00CC0086DCAA /* SBAImageChoice+ORKImageChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBAImageChoice+ORKImageChoice.swift"; sourceTree = "<group>"; };
 		FFCF37B01CD94EC80090452F /* ORKOrderedTask+SBAExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ORKOrderedTask+SBAExtension.h"; sourceTree = "<group>"; };
 		FFCF37B11CD94EC80090452F /* ORKOrderedTask+SBAExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ORKOrderedTask+SBAExtension.m"; sourceTree = "<group>"; };
 		FFCF37DD1CDA91520090452F /* SBALearnMoreAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBALearnMoreAction.swift; sourceTree = "<group>"; };
@@ -858,8 +862,9 @@
 			children = (
 				FB84392C1C7518FE0086E961 /* SBAChoice.swift */,
 				FF2729041D91FED900956CFB /* SBAChoice+Dictionary.swift */,
-				FF2729061D91FF3000956CFB /* SBATextChoice+ORKTextChoice.swift */,
 				FF2729081D92003700956CFB /* SBAChoice+String.swift */,
+				FFCE30B71EBD00CC0086DCAA /* SBAImageChoice+ORKImageChoice.swift */,
+				FF2729061D91FF3000956CFB /* SBATextChoice+ORKTextChoice.swift */,
 				FF2729121D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift */,
 			);
 			name = "Text+Image Choice";
@@ -922,6 +927,7 @@
 			isa = PBXGroup;
 			children = (
 				FF5CDF341DDE8D3600117218 /* SBAAnswerFormatFinder.swift */,
+				FFCE30B21EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift */,
 			);
 			name = AnswerFormat;
 			sourceTree = "<group>";
@@ -1524,6 +1530,7 @@
 				FF36DC6F1DB68F230034C85D /* SBAToggleFormStep.swift in Sources */,
 				FB68173A1C6B0307006C8FC9 /* SBANavigableOrderedTask.swift in Sources */,
 				FF23799F1CBC2E5900F3A943 /* NSDictionary+Utilities.swift in Sources */,
+				FFCE30B81EBD00CC0086DCAA /* SBAImageChoice+ORKImageChoice.swift in Sources */,
 				FF9425411E2812F100FD8C24 /* SBAConsentSection.swift in Sources */,
 				FB8439191C727BEB0086E961 /* SBABaseSurveyFactory.swift in Sources */,
 				FF9425421E2812F100FD8C24 /* SBAConsentSection+Dictionary.swift in Sources */,
@@ -1583,6 +1590,7 @@
 				FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */,
 				FF9425981E285BC900FD8C24 /* SBAExternalIDOptions.swift in Sources */,
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
+				FFCE30B31EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift in Sources */,
 				FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */,
 				FF2729151D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift in Sources */,
 				FF0A880E1E8ADF1D00708A69 /* SBANameDataSource.swift in Sources */,
