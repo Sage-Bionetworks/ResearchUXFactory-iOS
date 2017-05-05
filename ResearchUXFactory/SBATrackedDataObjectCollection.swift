@@ -110,7 +110,29 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
     
     func transformToTaskAndIncludes(_ factory: SBABaseSurveyFactory, isLastStep: Bool) -> (task: SBANavigableOrderedTask?, include: SBATrackingStepIncludes?)  {
         
-        // Build the approproate steps
+        let include = buildIncludes(isLastStep: isLastStep)
+        
+        // Setup the steps
+        let (steps, trackedResults) = filteredSteps(include, factory: factory)
+        let task = SBANavigableOrderedTask(identifier: self.schemaIdentifier, steps: steps)
+        task.conditionalRule = self
+        
+        // Check the dataStore to determine if the momentInDay step map has been setup and do so if needed
+        if (self.dataStore.momentInDaySteps == nil)  {
+            let (activitySteps, _) = filteredSteps(.ActivityOnly, factory: factory)
+            self.dataStore.momentInDaySteps = activitySteps
+        }
+        
+        // Add the tracked results
+        if trackedResults.count > 0 {
+            task.appendInitialResults(contentsOf: trackedResults)
+        }
+        
+        return (task, include)
+    }
+    
+    open func buildIncludes(isLastStep: Bool) -> SBATrackingStepIncludes {
+        
         var include: SBATrackingStepIncludes = .None
         if (isLastStep) {
             // If this is the last step then it is not being inserted into another task activity
@@ -130,24 +152,7 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
         else if shouldIncludeMomentInDayQuestions() {
             include = .ActivityOnly
         }
-        
-        // Setup the steps
-        let (steps, trackedResults) = filteredSteps(include, factory: factory)
-        let task = SBANavigableOrderedTask(identifier: self.schemaIdentifier, steps: steps)
-        task.conditionalRule = self
-        
-        // Check the dataStore to determine if the momentInDay step map has been setup and do so if needed
-        if (self.dataStore.momentInDaySteps == nil)  {
-            let (activitySteps, _) = filteredSteps(.ActivityOnly, factory: factory)
-            self.dataStore.momentInDaySteps = activitySteps
-        }
-        
-        // Add the tracked results
-        if trackedResults.count > 0 {
-            task.appendInitialResults(contentsOf: trackedResults)
-        }
-        
-        return (task, include)
+        return include
     }
     
     open func transformToStep(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> ORKStep? {
@@ -195,6 +200,18 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
         }
         
         return nextStep
+    }
+    
+    public func updateSelection(selectionStep: SBATrackedSelectionStep, activityTimingStep:SBATrackedNavigationStep, taskResult:ORKTaskResult) {
+        guard let stepResult = taskResult.stepResult(forStepIdentifier: selectionStep.identifier) else {
+            return
+        }
+
+        // If the selection step has a tracked data selection step added to it then update the data store
+        self.dataStore.updateTrackedData(for: stepResult)
+        
+        // Update the activity timing step with the new selected items
+        activityTimingStep.update(selectedItems: self.dataStore.selectedItems ?? [])
     }
     
     // MARK: Functions for transforming and recording results
