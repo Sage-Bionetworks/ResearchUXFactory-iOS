@@ -422,6 +422,56 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
     }
     
+    func testFactory_IntegerQuestion() {
+        
+        let inputStep: NSDictionary = [
+            "identifier" : "question1",
+            "type" : "numericInteger",
+            "prompt" : "What is your age?",
+            "ruleOperator" : "ge",
+            "expectedAnswer" : 18
+        ]
+        
+        let step = SBABaseSurveyFactory().createSurveyStepWithDictionary(inputStep)
+        XCTAssertNotNil(step)
+        
+        guard let surveyStep = step as? SBANavigationFormStep else {
+            XCTAssert(false, "\(String(describing: step)) is not of expected class type")
+            return
+        }
+        
+        XCTAssertEqual(surveyStep.identifier, "question1")
+        XCTAssertEqual(surveyStep.formItems?.count, 1)
+        
+        guard let formItem = surveyStep.formItems?.first,
+            let _ = formItem.answerFormat as? ORKNumericAnswerFormat else {
+                XCTAssert(false, "\(String(describing: surveyStep.formItems)) is not of expected class type")
+                return
+        }
+        
+        XCTAssertNil(formItem.text)
+        XCTAssertEqual(surveyStep.text, "What is your age?")
+        
+        guard let rules = surveyStep.rules, rules.count == 1, let rule = rules.first else {
+            XCTAssert(false, "\(String(describing: step)) is missing a rule")
+            return
+        }
+        
+        XCTAssertEqual(rule.resultIdentifier, "question1")
+        XCTAssertEqual(rule.skipIdentifier, ORKNullStepIdentifier)
+        
+        let questionResult = ORKNumericQuestionResult(identifier:formItem.identifier)
+        
+        questionResult.numericAnswer = 18
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        
+        questionResult.numericAnswer = 19
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        
+        questionResult.numericAnswer = 17
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+    }
+    
     func testFactory_SingleChoiceQuestion() {
         let inputStep: NSDictionary = [
             "identifier" : "question1",

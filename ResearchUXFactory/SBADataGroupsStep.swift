@@ -33,12 +33,43 @@
 
 import UIKit
 
-public class SBADataGroupsStep: SBANavigationFormStep {
+public protocol SBADataGroupsStepProtocol: class {
+    
+    var identifier: String { get }
+    
+    /**
+     The subset of data groups that are selected/deselected using this step.
+     */
+    var dataGroups: Set<String> { get }
+    
+    /**
+     Create an `ORKStepResult` from the given set of data groups.
+     @return    Step result for this step.
+     */
+    func stepResult(currentGroups: [String]?) -> ORKStepResult?
+    
+    /**
+     For the given step result, what are the selected data groups?
+     @return    The data groups that apply to this step result.
+     */
+    func selectedDataGroups(with stepResult: ORKStepResult) -> [String]
+}
+
+public protocol SBADataGroupsChoiceStepProtocol: SBADataGroupsStepProtocol {
+    
+    /**
+     `ORKTextChoiceAnswerFormat` and `ORKImageChoiceAnswerFormat` do not have a common superclass
+     that includes the value stored as the answer to the choice. This protocol allows the classes
+     to implement common behavior.
+     */
+    var choiceAnswerFormat: SBAChoiceAnswerFormatProtocol? { get }
+}
+
+open class SBADataGroupsStep: SBANavigationFormStep, SBADataGroupsChoiceStepProtocol {
     
     public override init(identifier: String) {
         super.init(identifier: identifier)
     }
-    
     
     public override init(inputItem: SBASurveyItem) {
         super.init(inputItem: inputItem)
@@ -48,34 +79,50 @@ public class SBADataGroupsStep: SBANavigationFormStep {
         
         // map the values
         surveyForm.mapStepValues(with: self)
-        self.formItems = [surveyForm.createFormItem(text: nil, subtype: .multipleChoice)]
+        let subtype: SBASurveyItemType.FormSubtype = inputItem.surveyItemType.formSubtype() ?? .multipleChoice
+        self.formItems = [surveyForm.createFormItem(text: nil, subtype: subtype)]
     }
     
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    /**
-     The subset of data groups that are selected/deselected using this step.
-    */
+    open var choiceAnswerFormat: SBAChoiceAnswerFormatProtocol? {
+        return self.formItems?.first?.answerFormat as? SBAChoiceAnswerFormatProtocol
+    }
+}
+
+extension SBADataGroupsChoiceStepProtocol {
+    
     public var dataGroups: Set<String> {
-        guard let answerFormat = self.formItems?.first?.answerFormat as? ORKTextChoiceAnswerFormat else {
+        guard let answerFormat = self.choiceAnswerFormat else {
             return []
         }
-        let dataGroups = answerFormat.textChoices.reduce(Set<String>()) { $0.union(convertValueToArray($1.value)) }
+        let dataGroups = answerFormat.choices.reduce(Set<String>()) { $0.union($1.choiceDataGroups) }
         return dataGroups
     }
     
-    /**
-     Create an `ORKStepResult` from the given set of data groups.
-     @return    Step result for this step.
-     */
+    public func selectedDataGroups(with stepResult: ORKStepResult) -> [String] {
+        let questionResult = stepResult.results?.first as? ORKChoiceQuestionResult
+        let choiceAnswers = questionResult?.choiceAnswers ?? []
+        let filter = NSPredicate(format: "choiceValue IN %@", choiceAnswers)
+        let selectedGroups: [String] = self.choiceAnswerFormat?.choices.mapAndFilter({ (choice) -> [String]? in
+            guard filter.evaluate(with: choice.choiceValue) else { return nil }
+            return choice.choiceDataGroups
+        }).flatMap({ $0 }) ?? []
+        return selectedGroups
+    }
+    
     public func stepResult(currentGroups: [String]?) -> ORKStepResult? {
+        
+        // The results can only be built from the current data groups if the values
+        // and the data groups are the same
+        guard choiceValueMatchesDataGroups() else { return nil }
         
         // Look for a current choice from the input groups
         let currentChoices: [Any]? = {
             // Check that the current group is non-nil
-            guard currentGroups != nil, let answerFormat = self.formItems?.first?.answerFormat as? ORKTextChoiceAnswerFormat
+            guard currentGroups != nil, let answerFormat = self.choiceAnswerFormat
             else {
                 return nil
             }
@@ -84,10 +131,10 @@ public class SBADataGroupsStep: SBANavigationFormStep {
             // If there is no overlap then return nil
             guard currentSet.count > 0 else { return nil }
             // Otherwise, look for an answer that maps to the current set
-            return answerFormat.textChoices.mapAndFilter({ (textChoice) -> Any? in
-                let value = Set(convertValueToArray(textChoice.value))
+            return answerFormat.choices.mapAndFilter({ (choice) -> Any? in
+                let value = Set(choice.convertValueToArray())
                 guard value.count > 0, currentSet.intersection(value) == value else { return nil }
-                return textChoice.value
+                return choice.choiceValue
             })
         }()
         
@@ -102,6 +149,15 @@ public class SBADataGroupsStep: SBANavigationFormStep {
         return ORKStepResult(stepIdentifier: self.identifier, results: [questionResult])
     }
     
+    func choiceValueMatchesDataGroups() -> Bool {
+        return self.choiceAnswerFormat?.choices.reduce(true, { (input, choice) -> Bool in
+            return input && choice.choiceValueMatchesDataGroups()
+        }) ?? false
+    }
+}
+
+extension SBADataGroupsStepProtocol {
+
     /**
      Return the union/minus set that includes the data groups from the current set of data groups
      that are *not* edited in this step unioned with the new data groups that are selected values
@@ -115,29 +171,18 @@ public class SBADataGroupsStep: SBANavigationFormStep {
      */
     public func union(previousGroups: [String]?, stepResult: ORKStepResult) -> Set<String> {
         let previous = Set(previousGroups ?? [])
-        return union(previous: previous, with: stepResult)
+        return unionSet(previous: previous, with: stepResult)
     }
     
-    fileprivate func union(previous previousGroups: Set<String>, with stepResult: ORKStepResult) -> Set<String> {
-        let questionResult = stepResult.results?.first as? ORKChoiceQuestionResult
-        let choiceAnswers = questionResult?.choiceAnswers ?? []
-        let choices = choiceAnswers.map({convertValueToArray($0)}).flatMap({$0})
+    fileprivate func unionSet(previous previousGroups: Set<String>, with stepResult: ORKStepResult) -> Set<String> {
+
+        let choices = selectedDataGroups(with: stepResult)
         
         // Create a set with only the groups that are *not* selected as a part of this step
         let minusSet = previousGroups.subtracting(self.dataGroups)
         
         // And the union that minus set with the new choices
         return minusSet.union(choices)
-    }
-    
-    fileprivate func convertValueToArray(_ value: Any?) -> [String] {
-        if let arr = value as? [String] {
-            return arr
-        }
-        else if let str = value as? String, str != "" {
-            return [str]
-        }
-        return []
     }
 }
 
@@ -161,9 +206,9 @@ extension ORKTask {
         guard let navTask = self as? ORKOrderedTask else { return previousGroups }
         var dataGroups = previousGroups
         for step in navTask.steps {
-            if let dataGroupsStep = step as? SBADataGroupsStep,
+            if let dataGroupsStep = step as? SBADataGroupsStepProtocol,
                 let result = taskResult.stepResult(forStepIdentifier: dataGroupsStep.identifier) {
-                dataGroups = dataGroupsStep.union(previous: dataGroups, with: result)
+                dataGroups = dataGroupsStep.unionSet(previous: dataGroups, with: result)
             }
             else if let subtaskStep = step as? SBASubtaskStep {
                 let subtaskResult = ORKTaskResult(identifier: subtaskStep.subtask.identifier)

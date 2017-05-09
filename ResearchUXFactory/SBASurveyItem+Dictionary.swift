@@ -69,6 +69,8 @@ enum DictionaryKey: String {
     case skipIdentifier                 // var skipIdentifier: String?
     case skipIfPassed                   // var skipIfPassed: Bool
     case expectedAnswer                 // var expectedAnswer: Any?
+    case rules                          // var rules: [SBASurveyRuleItem]
+    case ruleOperator                   // var ruleOperator: SBASurveyRuleOperator?
     
     // extension NSDictionary: SBANumberRange 
     case min                            // var minNumber: NSNumber?
@@ -195,7 +197,8 @@ extension NSDictionary: SBAFormStepSurveyItem {
 extension NSDictionary: SBASurveyRuleGroup, SBASurveyRuleItem {
     
     public var resultIdentifier: String? {
-        return self.identifier
+        // ONLY look for "identifier" key and do not drop through to schemaIdentifier, etc.
+        return self[key(.identifier)] as? String
     }
     
     public var skipIdentifier: String? {
@@ -216,7 +219,11 @@ extension NSDictionary: SBASurveyRuleGroup, SBASurveyRuleItem {
     }
     
     public var ruleOperator: SBASurveyRuleOperator? {
-        return .equal
+        guard let str = self[key(.ruleOperator)] as? String, let op = SBASurveyRuleOperator(rawValue: str)
+        else {
+            return .equal
+        }
+        return op
     }
     
     public func hasNavigationRules() -> Bool {
@@ -224,13 +231,20 @@ extension NSDictionary: SBASurveyRuleGroup, SBASurveyRuleItem {
     }
     
     public var rules: [SBASurveyRuleItem]? {
-        // If there is an expected answer
+        
+        // If there is an expected answer then this is the level that defines the rule
         if self.expectedAnswer != nil {
             return [self]
         }
+            
+        // else look for explicit set of rules
+        else if let rules = self[key(.rules)] as? [NSDictionary] {
+            return rules
+        }
+        
         // else if the items include a value that can map to an expected answer
         return self.items?.mapAndFilter({ (item) -> SBASurveyRuleItem? in
-            guard let rule = item as? SBASurveyRuleItem else { return nil }
+            guard let rule = item as? SBASurveyRuleItem, rule.isValidRule() else { return nil }
             return rule
         })
     }

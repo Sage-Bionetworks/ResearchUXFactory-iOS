@@ -146,7 +146,13 @@ extension SBASurveyRuleItem {
         }
     }
     
-    func convertValueAndOperator(with subtype: SBASurveyItemType.FormSubtype) -> (valid:Bool, value:CVarArg?, op:SBASurveyRuleOperator) {
+    func isValidRule() -> Bool {
+        let value = self.expectedAnswer as? NSObject
+        let op: SBASurveyRuleOperator = self.ruleOperator ?? ((value == nil) ? .skip : .equal)
+        return (value != nil) || (op == .skip)
+    }
+    
+    func convertValueAndOperator(with subtype: SBASurveyItemType.FormSubtype, shouldAssert:Bool = true) -> (valid:Bool, value:CVarArg?, op:SBASurveyRuleOperator) {
         
         // Exit early if operator or value are unsupported
         let value = self.expectedAnswer as? NSObject

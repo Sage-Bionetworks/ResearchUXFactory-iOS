@@ -4,6 +4,7 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "0C20D31A926221D177CC51E3AD95F4C30511D4DD+++1381FD5" : 9223372036854775807,
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++6A484C0" : 9223372036854775807,
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++264F2B0" : 9223372036854775807,
     "9CF6181E3789E3853840089C16D4B9FDDB9B31E2+++21CFD0F" : 9223372036854775807,
@@ -12,6 +13,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "59195287-9619-4B8C-BC31-D47C98546DC9",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0C20D31A926221D177CC51E3AD95F4C30511D4DD+++1381FD5" : "..",
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++6A484C0" : "",
     "A312D9A806D0D2A0881387E6F394BB84B63BC0CD+++264F2B0" : "ResearchUXFactory\/",
     "9CF6181E3789E3853840089C16D4B9FDDB9B31E2+++21CFD0F" : "ResearchUXFactory\/ResearchKit\/",
@@ -22,6 +24,11 @@
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ResearchUXFactory.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Sage-Bionetworks\/elevateMS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0C20D31A926221D177CC51E3AD95F4C30511D4DD+++1381FD5"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Sage-Bionetworks\/ResearchKit.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",

@@ -79,6 +79,9 @@ public enum SBASurveyItemType {
         case visual             = "consentVisual"           // ORKVisualConsentStep
     }
     
+    case dataGroups(FormSubtype)                            // SBADataGroupsStep
+    static let dataGroupsIdentifier = "dataGroups"
+    
     case account(AccountSubtype)
     public enum AccountSubtype: String {
         case registration       = "registration"            // ORKRegistrationStep
@@ -86,7 +89,6 @@ public enum SBASurveyItemType {
         case emailVerification  = "emailVerification"       // Custom
         case externalID         = "externalID"              // SBAProfileFormStep
         case permissions        = "permissions"             // SBAPermissionsStep
-        case dataGroups         = "dataGroups"              // SBADataGroupsStep
         case profile            = "profile"                 // SBAProfileFormStep
     }
     
@@ -104,6 +106,16 @@ public enum SBASurveyItemType {
         }
         else if let subtype = FormSubtype(rawValue: type) {
             self = .form(subtype)
+        }
+        else if type.hasPrefix(SBASurveyItemType.dataGroupsIdentifier) {
+            let subtype: FormSubtype = {
+                guard let subtypeString = type.parseSuffix(prefix: "\(SBASurveyItemType.dataGroupsIdentifier)."),
+                    let subtype = FormSubtype(rawValue: subtypeString) else {
+                        return .multipleChoice
+                }
+                return subtype
+            }()
+            self = .dataGroups(subtype)
         }
         else if let subtype = ConsentSubtype(rawValue: type) {
             self = .consent(subtype)
@@ -124,6 +136,8 @@ public enum SBASurveyItemType {
     
     public func formSubtype() -> FormSubtype? {
         if case .form(let subtype) = self {
+            return subtype
+        } else if case .dataGroups(let subtype) = self {
             return subtype
         }
         return nil

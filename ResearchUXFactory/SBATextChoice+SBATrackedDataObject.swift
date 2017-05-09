@@ -34,16 +34,24 @@
 import Foundation
 
 extension SBATrackedDataObject: SBATextChoice {
+    
     public var choiceText: String {
         return self.text
     }
+    
     public var choiceDetail: String? {
         return nil
     }
+    
     public var choiceValue: NSCoding & NSCopying & NSObjectProtocol {
         return self.identifier as NSCoding & NSCopying & NSObjectProtocol
     }
+    
     public var exclusive: Bool {
         return false
+    }
+    
+    open var choiceDataGroups: [String] {
+        return convertValueToArray()
     }
 }

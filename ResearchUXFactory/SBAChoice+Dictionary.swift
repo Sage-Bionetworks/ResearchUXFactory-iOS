@@ -43,6 +43,13 @@ extension NSDictionary: SBAChoice {
     public var choiceValue: NSCoding & NSCopying & NSObjectProtocol {
         return (self["value"] as? NSCoding & NSCopying & NSObjectProtocol) ?? self.choiceText as NSString
     }
+    
+    public var choiceDataGroups: [String] {
+        guard let dataGroup = self["dataGroup"] as? String else {
+            return convertValueToArray()
+        }
+        return !dataGroup.isEmpty ? [dataGroup] : []
+    }
 }
 
 extension NSDictionary: SBATextChoice {

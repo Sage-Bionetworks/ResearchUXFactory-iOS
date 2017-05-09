@@ -37,7 +37,7 @@ import ResearchKit
  `SBANavigationQuestionStep` is an implementation of the `SBASurveyNavigationStep`
  that implements the rules for an `ORKQuestionStep`
  */
-public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep {
+open class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep {
     
     public var surveyStepResultFilterPredicate: NSPredicate {
         return NSPredicate(format: "%K = %@", #keyPath(identifier), self.identifier)
@@ -69,7 +69,7 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep
     
     // MARK: NSCopying
     
-    override public func copy(with zone: NSZone? = nil) -> Any {
+    override open func copy(with zone: NSZone? = nil) -> Any {
         let copy = super.copy(with: zone)
         return self.sharedCopying(copy)
     }
@@ -81,18 +81,18 @@ public class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep
         self.sharedDecoding(coder: aDecoder)
     }
     
-    override public func encode(with aCoder: NSCoder){
+    override open func encode(with aCoder: NSCoder){
         super.encode(with: aCoder)
         self.sharedEncoding(aCoder)
     }
     
     // MARK: Equality
     
-    override public func isEqual(_ object: Any?) -> Bool {
+    override open func isEqual(_ object: Any?) -> Bool {
         return super.isEqual(object) && sharedEquality(object)
     }
     
-    override public var hash: Int {
+    override open var hash: Int {
         return super.hash ^ sharedHash()
     }
     
