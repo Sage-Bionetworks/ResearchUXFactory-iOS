@@ -74,7 +74,7 @@ open class SBASubtaskStep: ORKStep {
         return step.copy(withIdentifier: stepIdentifier)
     }
     
-    fileprivate func filteredTaskResult(_ inputResult: ORKTaskResult) -> ORKTaskResult {
+    func filteredTaskResult(_ inputResult: ORKTaskResult) -> ORKTaskResult {
         // create a mutated copy of the results that includes only the subtask results
         let subtaskResult: ORKTaskResult = inputResult.copy() as! ORKTaskResult
         if let stepResults = subtaskResult.results as? [ORKStepResult] {

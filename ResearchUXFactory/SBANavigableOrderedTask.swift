@@ -170,9 +170,16 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource {
         if let subtaskStep = subtaskStep(identifier: step?.identifier) {
             returnStep = subtaskStep.stepAfterStep(step, withResult: result)
             if (returnStep == nil) {
-                // If the subtask returns nil then it is at the last step
-                // Check super for more steps
-                returnStep = superStep(after: subtaskStep, with: result)
+                // If the returned step is nil then this subtask is done
+                // Look to see if the calling step returned an identifier
+                if let navigableStep = step as? SBANavigationRule,
+                    let nextStepIdentifier = navigableStep.nextStepIdentifier(with: subtaskStep.filteredTaskResult(result), and:nil) {
+                    returnStep = self.step(withIdentifier: nextStepIdentifier)
+                }
+                else {
+                    // Check super for more steps
+                    returnStep = superStep(after: subtaskStep, with: result)
+                }
             }
         }
         else {
