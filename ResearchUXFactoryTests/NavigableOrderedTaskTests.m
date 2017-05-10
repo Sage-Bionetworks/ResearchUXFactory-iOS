@@ -143,13 +143,96 @@
     
     stepA1.nextStepIdentifier = @"stepB.1";
     stepB2.nextStepIdentifier = @"stepA.2";
-    stepA2.nextStepIdentifier = @"Exit";
+    stepA2.nextStepIdentifier = @"exit";
     
     ORKTaskResult *taskResult = [[ORKTaskResult alloc] initWithIdentifier:@"base"];
     
     SBANavigableOrderedTask *task = [[SBANavigableOrderedTask alloc] initWithIdentifier:@"base" steps:steps];
     
     NSArray *expectedOrder = @[@"step1", @"step2", @"stepA.1", @"stepB.1", @"stepB.2", @"stepA.2"];
+    NSInteger idx = 0;
+    ORKStep *step = nil;
+    NSString *expectedIdentifier = nil;
+    
+    // -- test stepAfterStep:withResult:
+    
+    do {
+        // Add result for the given step
+        if (step) {
+            ORKStepResult *stepResult = [[ORKStepResult alloc] initWithIdentifier:step.identifier];
+            if (taskResult.results) {
+                taskResult.results = [taskResult.results arrayByAddingObject:stepResult];
+            }
+            else {
+                taskResult.results = @[stepResult];
+            }
+        }
+        
+        // Get the next step
+        expectedIdentifier = expectedOrder[idx];
+        step = [task stepAfterStep:step withResult:taskResult];
+        
+        // ORKTaskViewController will look ahead to the next step and then look back to
+        // see what navigation rules it should be using for buttons. Need to honor that flow.
+        ORKStep *after __unused = [task stepAfterStep:step withResult:taskResult];
+        ORKStep *before __unused = [task stepBeforeStep:step withResult:taskResult];
+        
+        // Check expectations
+        XCTAssertNotNil(step);
+        XCTAssertEqualObjects(step.identifier, expectedIdentifier);
+        
+    } while ((step != nil) && [step.identifier isEqualToString:expectedIdentifier] && (++idx < expectedOrder.count));
+    
+    // Check that exited while loop for expected reason
+    XCTAssertNotNil(step);
+    XCTAssertEqual(idx, expectedOrder.count);
+    idx--;
+    
+    // Check that the step after the last step is nil
+    ORKStep *afterLast = [task stepAfterStep:step withResult:taskResult];
+    XCTAssertNil(afterLast);
+    
+    // -- test stepBeforeStep:withResult:
+    
+    while ((step != nil) && [step.identifier isEqualToString:expectedIdentifier] && (--idx >= 0)) {
+        // Get the step before
+        expectedIdentifier = expectedOrder[idx];
+        step = [task stepBeforeStep:step withResult:taskResult];
+        
+        // Check expectations
+        XCTAssertNotNil(step);
+        XCTAssertEqualObjects(step.identifier, expectedIdentifier);
+        
+        // Lop off the last result
+        taskResult.results = [taskResult.results subarrayWithRange:NSMakeRange(0, taskResult.results.count - 1)];
+    }
+    
+}
+    
+- (void)testNavigationWithSubtasksAndRules {
+    
+    NSMutableArray *steps = [self createStepsWithPrefix:@"step" numberOfSteps:2];
+    SBAInstructionStep *stepA1 = [[SBAInstructionStep alloc] initWithIdentifier:@"stepA.1"];
+    [steps addObject:stepA1];
+    SBAInstructionStep *stepA2 = [[SBAInstructionStep alloc] initWithIdentifier:@"stepA.2"];
+    [steps addObject:stepA2];
+    ORKInstructionStep *stepB1 = [[ORKInstructionStep alloc] initWithIdentifier:@"stepB.1"];
+    [steps addObject:stepB1];
+    SBAInstructionStep *stepB2 = [[SBAInstructionStep alloc] initWithIdentifier:@"stepB.2"];
+    [steps addObject:stepB2];
+    
+    stepA1.nextStepIdentifier = @"stepB.1";
+    stepB2.nextStepIdentifier = @"stepA.2";
+    stepA2.nextStepIdentifier = @"exit";
+    
+    ORKTaskResult *taskResult = [[ORKTaskResult alloc] initWithIdentifier:@"base"];
+    
+    SBANavigableOrderedTask *taskA = [[SBANavigableOrderedTask alloc] initWithIdentifier:@"A" steps:steps];
+    SBASubtaskStep *subtaskStepA = [[SBASubtaskStep alloc] initWithSubtask:taskA];
+    SBASubtaskStep *subtaskStepB = [[SBASubtaskStep alloc] initWithSubtask:[self createOrderedTaskWithIdentifier:@"B" numberOfSteps:2]];
+    SBANavigableOrderedTask *task = [[SBANavigableOrderedTask alloc] initWithIdentifier:@"base" steps:@[subtaskStepA, subtaskStepB]];
+    
+    NSArray *expectedOrder = @[@"A.step1", @"A.step2", @"A.stepA.1", @"A.stepB.1", @"A.stepB.2", @"A.stepA.2"];
     NSInteger idx = 0;
     ORKStep *step = nil;
     NSString *expectedIdentifier = nil;
