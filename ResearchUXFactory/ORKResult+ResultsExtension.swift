@@ -546,7 +546,7 @@ extension ORKNumericQuestionResult {
 
     override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         guard let answer = self.numericAnswer else { return nil }
-        if let unit = self.unit {
+        if let unit = self.unit, let _ = answerFormat as? ORKHealthKitQuantityTypeAnswerFormat {
             return HKQuantity(unit: HKUnit(from: unit), doubleValue: answer.doubleValue)
         }
         else if self.questionType == .integer {
