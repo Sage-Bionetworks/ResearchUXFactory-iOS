@@ -35,6 +35,7 @@
 		FBE551691C6D9CBC00C9E1AA /* SBASurveyNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE551681C6D9CBC00C9E1AA /* SBASurveyNavigationStep.swift */; };
 		FBF1B6B31CAAF6FC007C1082 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1B6B21CAAF6FC007C1082 /* UIAlertController+Utilities.swift */; };
 		FF0158711DF6047600F417E1 /* AnswerFormatFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0158701DF6047600F417E1 /* AnswerFormatFinderTests.swift */; };
+		FF052EBC1ECF7A1A000835DB /* SBATextFieldOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF052EBB1ECF7A1A000835DB /* SBATextFieldOptions.swift */; };
 		FF08C9301DEE1EBC00235711 /* UtilityExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08C92F1DEE1EBC00235711 /* UtilityExtensionTests.swift */; };
 		FF08E0C01C9A6A120082D530 /* SBASurveyItem+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */; };
 		FF0A880E1E8ADF1D00708A69 /* SBANameDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0A880D1E8ADF1D00708A69 /* SBANameDataSource.swift */; };
@@ -69,7 +70,6 @@
 		FF3B16301E1314A30037D1D0 /* SBANavigationQuestionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3B162F1E1314A30037D1D0 /* SBANavigationQuestionStep.swift */; };
 		FF4F06D21CEED20D007BD273 /* SBATrackedDataSelectionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4F06D11CEED20D007BD273 /* SBATrackedDataSelectionResult.swift */; };
 		FF4F06E81CEF7DE5007BD273 /* SubtaskStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4F06E71CEF7DE5007BD273 /* SubtaskStepTests.swift */; };
-		FF5544951E29611600A8E189 /* SBAPasswordOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */; };
 		FF55449A1E2961F900A8E189 /* PermissionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544991E2961F900A8E189 /* PermissionsTests.swift */; };
 		FF55449F1E296C6A00A8E189 /* SBAProfileInfoOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */; };
 		FF5544A11E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */; };
@@ -203,7 +203,6 @@
 		FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9425731E2823FA00FD8C24 /* SBAInfoManager.m */; };
 		FF9425951E28594B00FD8C24 /* SBAProfileFormStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */; };
 		FF9425961E28594B00FD8C24 /* SBAProfileInfoForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */; };
-		FF9425981E285BC900FD8C24 /* SBAExternalIDOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */; };
 		FF94259F1E28606300FD8C24 /* NSDate+ISO8601Format.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94259D1E28606300FD8C24 /* NSDate+ISO8601Format.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF9425A01E28606300FD8C24 /* NSDate+ISO8601Format.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94259E1E28606300FD8C24 /* NSDate+ISO8601Format.m */; };
 		FF9425B21E2898C600FD8C24 /* MockInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9425B11E2898C600FD8C24 /* MockInfoManager.m */; };
@@ -377,6 +376,7 @@
 		FBF1B6B21CAAF6FC007C1082 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
 		FF0158701DF6047600F417E1 /* AnswerFormatFinderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerFormatFinderTests.swift; sourceTree = "<group>"; };
 		FF0395F21CFE283F00245DE3 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
+		FF052EBB1ECF7A1A000835DB /* SBATextFieldOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBATextFieldOptions.swift; sourceTree = "<group>"; };
 		FF08C92F1DEE1EBC00235711 /* UtilityExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityExtensionTests.swift; sourceTree = "<group>"; };
 		FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SBASurveyItem+Dictionary.swift"; sourceTree = "<group>"; };
 		FF0A880D1E8ADF1D00708A69 /* SBANameDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANameDataSource.swift; sourceTree = "<group>"; };
@@ -415,7 +415,6 @@
 		FF3E30C31D62CF7100347165 /* CombinedTask.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CombinedTask.json; sourceTree = "<group>"; };
 		FF4F06D11CEED20D007BD273 /* SBATrackedDataSelectionResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBATrackedDataSelectionResult.swift; sourceTree = "<group>"; };
 		FF4F06E71CEF7DE5007BD273 /* SubtaskStepTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtaskStepTests.swift; sourceTree = "<group>"; };
-		FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPasswordOptions.swift; sourceTree = "<group>"; };
 		FF5544991E2961F900A8E189 /* PermissionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsTests.swift; sourceTree = "<group>"; };
 		FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileInfoOptions.swift; sourceTree = "<group>"; };
 		FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAHealthKitCharacteristicTypeAnswerFormat.swift; sourceTree = "<group>"; };
@@ -509,7 +508,6 @@
 		FF9425731E2823FA00FD8C24 /* SBAInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAInfoManager.m; sourceTree = "<group>"; };
 		FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileFormStep.swift; sourceTree = "<group>"; };
 		FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAProfileInfoForm.swift; sourceTree = "<group>"; };
-		FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAExternalIDOptions.swift; sourceTree = "<group>"; };
 		FF94259D1E28606300FD8C24 /* NSDate+ISO8601Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601Format.h"; sourceTree = "<group>"; };
 		FF94259E1E28606300FD8C24 /* NSDate+ISO8601Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601Format.m"; sourceTree = "<group>"; };
 		FF9425B01E2898C600FD8C24 /* MockInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockInfoManager.h; sourceTree = "<group>"; };
@@ -664,6 +662,7 @@
 				FF08E0BF1C9A6A120082D530 /* SBASurveyItem+Dictionary.swift */,
 				FF1DD9351E37DC210096727C /* SBASurveyItemType.swift */,
 				FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */,
+				FF052EBB1ECF7A1A000835DB /* SBATextFieldOptions.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1030,9 +1029,7 @@
 			children = (
 				FF0A88121E8AE35C00708A69 /* Date+CurrentAgeExtension.swift */,
 				FF5544A01E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift */,
-				FF9425971E285BC900FD8C24 /* SBAExternalIDOptions.swift */,
 				FF0A880D1E8ADF1D00708A69 /* SBANameDataSource.swift */,
-				FF5544941E29611600A8E189 /* SBAPasswordOptions.swift */,
 				FF9425931E28594B00FD8C24 /* SBAProfileFormStep.swift */,
 				FF9425941E28594B00FD8C24 /* SBAProfileInfoForm.swift */,
 				FF55449E1E296C6A00A8E189 /* SBAProfileInfoOptions.swift */,
@@ -1517,6 +1514,7 @@
 				FBAD11671CADCFE5005611D0 /* SBATrackedDataObjectCollection.swift in Sources */,
 				FF9425431E2812F100FD8C24 /* SBAConsentSharingOptions.swift in Sources */,
 				804B30AF1CEA6CB4008CEA89 /* SBAJSONObject.m in Sources */,
+				FF052EBC1ECF7A1A000835DB /* SBATextFieldOptions.swift in Sources */,
 				FF64113A1CB436B6007FB9E1 /* SBAClassTypeMap.m in Sources */,
 				FFB30D691D4139B400D175D2 /* SBATrackedSelectionStep.swift in Sources */,
 				FBC45E7A1C759040007AA424 /* Localization.swift in Sources */,
@@ -1547,7 +1545,6 @@
 				FF94256E1E281BC000FD8C24 /* ORKResult+ResultsExtension.swift in Sources */,
 				FF1DD9361E37DC210096727C /* SBASurveyItemType.swift in Sources */,
 				FBF1B6B31CAAF6FC007C1082 /* UIAlertController+Utilities.swift in Sources */,
-				FF5544951E29611600A8E189 /* SBAPasswordOptions.swift in Sources */,
 				FBAD11701CADE79E005611D0 /* SBABridgeTask+Dictionary.swift in Sources */,
 				FF63D0CA1CCFF517007ADEE5 /* SBAWebViewController.swift in Sources */,
 				FFE57F1E1E38837400CEC67F /* SBASurveyRule.swift in Sources */,
@@ -1588,7 +1585,6 @@
 				FFE57F241E393EFA00CEC67F /* SBANavigationSubtaskStep.swift in Sources */,
 				FF9055EC1CE527890049D12A /* SBAProgressStep.swift in Sources */,
 				FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */,
-				FF9425981E285BC900FD8C24 /* SBAExternalIDOptions.swift in Sources */,
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
 				FFCE30B31EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift in Sources */,
 				FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */,

@@ -425,15 +425,15 @@ extension SBAFormStepSurveyItem {
                     answerFormat.validationRegex = validationRegex
                     answerFormat.invalidMessage = {
                         guard let invalidMessage = range.invalidMessage else {
-                            #if DEBUG
-                                print("Warning: The validation Regex does not have an associated validation message.")
-                            #endif
+                            print("Warning: The validation Regex does not have an associated validation message.")
                             return Localization.localizedString("INVALID_REGEX_MESSAGE")
                         }
                         return invalidMessage
                     }()
                 }
                 answerFormat.maximumLength = range.maximumLength
+                answerFormat.autocapitalizationType = range.autocapitalizationType
+                answerFormat.keyboardType = range.keyboardType
             }
             return answerFormat
         case .singleChoice, .multipleChoice:

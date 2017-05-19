@@ -42,36 +42,39 @@
 @implementation SBADataObject
 
 - (instancetype)init {
-    @throw [NSException exceptionWithName: NSInternalInconsistencyException
-                                   reason: @"method unavailable"
-                                 userInfo: nil];
-    return nil;
+    return [self initWithDictionaryRepresentation:@{}];
 }
 
 - (instancetype)initWithIdentifier:(NSString *)identifier {
     if ((self = [super init])) {
         NSParameterAssert(identifier);
-        _identifier = [identifier copy];
+        [self commonInitWithDictionaryRepresentation:@{} identifier:identifier];
     }
     return self;
 }
 
 - (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
     if ((self = [super init])) {
-        [self commonInitWithDictionaryRepresentation:dictionary];
+        [self commonInitWithDictionaryRepresentation:dictionary identifier:nil];
     }
     return self;
 }
 
-- (void)commonInitWithDictionaryRepresentation:(NSDictionary *)dictionary {
+- (void)commonInitWithDictionaryRepresentation:(NSDictionary *)dictionary identifier:(NSString *)identifier {
     for (NSString *key in [self dictionaryRepresentationKeys]) {
         id value = dictionary[key];
         if (!value || [value isKindOfClass:[NSNull class]]) {
-            value = [self defaultValueForKey:key];
+            id defaultValue = [self defaultValueForKey:key];
+            if (defaultValue) {
+                value = defaultValue;
+            }
         }
         if (value) {
             [self setValue:value forKey:key];
         }
+    }
+    if (identifier) {
+        _identifier = identifier;
     }
     if (_identifier == nil) {
         _identifier = [self defaultIdentifierIfNil];
@@ -108,6 +111,9 @@
         else {
             return [mappedValues copy];
         }
+    }
+    else if ([value isKindOfClass:[NSNull class]]) {
+        return nil;
     }
     return value;
 }
@@ -182,7 +188,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super init])) {
         NSDictionary *dictionary = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"dictionary"];
-        [self commonInitWithDictionaryRepresentation:dictionary];
+        [self commonInitWithDictionaryRepresentation:dictionary identifier:nil];
     }
     return self;
 }

@@ -147,9 +147,9 @@ public struct SBAProfileInfoOptions {
                 // but always store the options.
                 switch (option) {
                 case .externalID:
-                    extendedOptions[.externalID] = SBAExternalIDOptions(options: dictionary)
+                    extendedOptions[.externalID] = SBAExternalIDOptions(dictionaryRepresentation: dictionary)
                 case .password:
-                    extendedOptions[.password] = SBAPasswordOptions(options: dictionary)
+                    extendedOptions[.password] = SBAPasswordOptions(dictionaryRepresentation: dictionary)
                 default:
                     extendedOptions[option] = dictionary
                 }
