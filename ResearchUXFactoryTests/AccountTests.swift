@@ -164,8 +164,8 @@ class SBAAccountTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(passwordFormat.validationRegex, "[[:ascii:]]{4,24}")
-        XCTAssertEqual(passwordFormat.invalidMessage, "Passwords must be between 4 and 24 characters long.")
+        XCTAssertEqual(passwordFormat.validationRegex, "[[:ascii:]]{8,24}")
+        XCTAssertEqual(passwordFormat.invalidMessage, "Passwords must be between 8 and 24 characters long.")
         XCTAssertEqual(passwordFormat.maximumLength, 24)
         XCTAssertFalse(passwordFormat.multipleLines)
         XCTAssertEqual(passwordFormat.autocapitalizationType, UITextAutocapitalizationType.none)

@@ -97,9 +97,9 @@ open class SBATextFieldOptions: SBADataObject, SBATextFieldRange {
 public class SBAPasswordOptions: SBATextFieldOptions {
     
     /**
-     By default, the minimum password length is 4
+     By default, the minimum password length is 8
      */
-    public static let defaultMinLength: Int = 4
+    public static let defaultMinLength: Int = 8
     
     /**
      By default, the maximum password length is 24
