@@ -72,7 +72,7 @@ open class SBATrackedActivityFormStep: ORKFormStep, SBATrackedNavigationStep {
         super.init(identifier: identifier)
     }
     
-    override public func defaultStepResult() -> ORKStepResult {
+    override open func defaultStepResult() -> ORKStepResult {
         guard let formItem = self.formItems?.first else { return ORKStepResult(identifier: self.identifier) }
         let questionResult = ORKChoiceQuestionResult(identifier: formItem.identifier)
         questionResult.questionType = ORKQuestionType.multipleChoice
@@ -149,7 +149,7 @@ open class SBATrackedActivityPageStep: ORKPageStep, SBATrackedNavigationStep {
         return SBATrackedActivityPageStepViewController.classForCoder()
     }
     
-    override public func defaultStepResult() -> ORKStepResult {
+    override open func defaultStepResult() -> ORKStepResult {
         let questionResult = ORKChoiceQuestionResult(identifier: self.identifier)
         questionResult.questionType = ORKQuestionType.multipleChoice
         questionResult.choiceAnswers = []

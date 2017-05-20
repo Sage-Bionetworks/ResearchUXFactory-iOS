@@ -39,18 +39,18 @@ import ResearchKit
  */
 extension ORKStep {
     
-    public func defaultStepResult() -> ORKStepResult {
+    open func defaultStepResult() -> ORKStepResult {
         return stepResult(with: nil)
     }
     
     @objc(stepResultWithAnswerMap:)
-    public func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+    open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
         return ORKStepResult(stepIdentifier: self.identifier, results: nil)
     }
 }
 
 extension ORKFormStep {
-    override public func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+    override open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
         let stepResult = super.stepResult(with: answerMap)
         stepResult.results = self.formItems?.mapAndFilter({ (formItem) -> ORKResult? in
             return formItem.questionResult(identifier: formItem.identifier, answer: answerMap?[formItem.identifier])
@@ -60,7 +60,7 @@ extension ORKFormStep {
 }
 
 extension ORKQuestionStep {
-    override public func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+    override open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
         let stepResult = super.stepResult(with: answerMap)
         if let answerFormat = self.answerFormat as? SBAQuestionResultMapping,
             let questionResult = answerFormat.questionResult(identifier: self.identifier, answer: answerMap?[self.identifier]) {
