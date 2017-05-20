@@ -77,6 +77,14 @@ enum DictionaryKey: String {
     case max                            // var maxNumber: NSNumber?
     case unit                           // var unitLabel: String?
     case stepInterval                   // var stepInterval: Double
+    
+    // extension NSDictionary: SBATextFieldRange
+    case validationRegex                // var validationRegex: String?
+    case invalidMessage                 // var invalidMessage: String?
+    case maximumLength                  // var maximumLength: Int
+    case minimumLength                  // var minimumLength: Int
+    case autocapitalizationType         // var autocapitalizationType: UITextAutocapitalizationType
+    case keyboardType                   // var keyboardType: UIKeyboardType
 
 }
 
@@ -267,5 +275,34 @@ extension NSDictionary: SBANumberRange {
 
     public var stepInterval: Double {
         return self[key(.stepInterval)] as? Double ?? 1
+    }
+}
+
+extension NSDictionary: SBATextFieldRange {
+    
+    public var validationRegex: String? {
+        return self[key(.validationRegex)] as? String
+    }
+
+    public var invalidMessage: String? {
+        return self[key(.invalidMessage)] as? String
+    }
+
+    public var maximumLength: Int {
+        return self[key(.maximumLength)] as? Int ?? 0
+    }
+
+    public var minimumLength: Int {
+        return self[key(.minimumLength)] as? Int ?? 0
+    }
+
+    public var autocapitalizationType: UITextAutocapitalizationType {
+        guard let name = self[key(.autocapitalizationType)] as? String else { return .none }
+        return UITextAutocapitalizationType(key: name)
+    }
+    
+    public var keyboardType: UIKeyboardType  {
+        guard let name = self[key(.keyboardType)] as? String else { return .default }
+        return UIKeyboardType(key: name)
     }
 }

@@ -194,20 +194,34 @@ public protocol SBAInstructionStepSurveyItem: SBASurveyItem {
 public protocol SBATextFieldRange: class {
     
     /**
-     The regex used to validate user's input. If set to nil, no validation will be performed.
+     The regex used to validate user's input. If set to nil, no validation will be performed. 
+     Dictionary key = "validationRegex"
+     
+     @note If the "validationRegex" is defined using a dictionary key/value pair, then the `invalidMessage` should also be defined.
      */
     var validationRegex: String? { get }
     
     /**
      The text presented to the user when invalid input is received.
+     Dictionary key = "invalidMessage"
      */
      var invalidMessage: String? { get }
     
     /**
-     The maximum length of the text users can enter. When the value of this property is 0, there is no maximum.
+     The maximum length of the text users can enter. When the value of this property is 0, there is no maximum. 
+     Dictionary key = "maximumLength"
      */
     var maximumLength: Int { get }
     
+    /**
+     Auto-capitalization type for the text field
+     */
+    var autocapitalizationType: UITextAutocapitalizationType { get }
+    
+    /**
+     Keyboard type for the text field
+     */
+    var keyboardType: UIKeyboardType { get }
 }
 
 /**

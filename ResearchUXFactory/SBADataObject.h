@@ -49,8 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, readonly) NSString * classType;
 
-- (instancetype)init NS_UNAVAILABLE;
-
 /**
  Returns a new data object initialized with the specified identifier.
  
