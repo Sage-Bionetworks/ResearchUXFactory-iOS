@@ -106,6 +106,11 @@ public class SBAPasswordOptions: SBATextFieldOptions {
      */
     public static let defaultMaxLength: Int = 24
     
+    public override var autocapitalizationType: UITextAutocapitalizationType {
+        get { return .none }
+        set {}
+    }
+    
     override public func defaultValue(forKey key: String) -> Any? {
         if key == #keyPath(minimumLength) {
             return SBAPasswordOptions.defaultMinLength

@@ -264,25 +264,15 @@ public struct SBAProfileInfoOptions {
     
     func makePasswordFormItem(with identifier: String) -> (ORKFormItem, ORKTextAnswerFormat, Bool) {
     
-        let answerFormat = ORKAnswerFormat.textAnswerFormat()
-        answerFormat.multipleLines = false
-        answerFormat.isSecureTextEntry = true
-        answerFormat.autocapitalizationType = .none
-        answerFormat.autocorrectionType = .no
-        answerFormat.spellCheckingType = .no
-        
-        var shouldConfirm: Bool = false
-        
         // DO *not* validate the password if this is a login type. Requirements for login
         // can change (get harder) and we don't want to force the user to meet requirements
         // if they already have an older password with weaker requirements.
-        if self.surveyItemType != .account(.login) {
-            let passwordOptions: SBAPasswordOptions = self.extendedOptions[SBAProfileInfoOption.password] as? SBAPasswordOptions ?? SBAPasswordOptions()
-            answerFormat.validationRegex = passwordOptions.validationRegex
-            answerFormat.invalidMessage = passwordOptions.invalidMessage
-            answerFormat.maximumLength = passwordOptions.maximumLength
-            shouldConfirm = passwordOptions.shouldConfirm
-        }
+        let passwordOptions: SBAPasswordOptions? = (self.surveyItemType == .account(.login)) ? nil : (self.extendedOptions[SBAProfileInfoOption.password] as? SBAPasswordOptions ?? SBAPasswordOptions())
+        
+        let answerFormat = buildAnswerFormat(with: passwordOptions)
+        answerFormat.isSecureTextEntry = true
+        
+        let shouldConfirm = passwordOptions?.shouldConfirm ?? false
         
         let formItem = ORKFormItem(identifier: identifier,
                                    text: Localization.localizedString("PASSWORD_FORM_ITEM_TITLE"),
@@ -310,13 +300,7 @@ public struct SBAProfileInfoOptions {
     func makeExternalIDFormItem(with identifier: String) -> ORKFormItem {
         
         let externalIDOptions: SBAExternalIDOptions = self.extendedOptions[SBAProfileInfoOption.externalID] as? SBAExternalIDOptions ?? SBAExternalIDOptions()
-        let answerFormat = ORKAnswerFormat.textAnswerFormat()
-        answerFormat.multipleLines = false
-        answerFormat.autocapitalizationType = externalIDOptions.autocapitalizationType
-        answerFormat.autocorrectionType = .no
-        answerFormat.spellCheckingType = .no
-        answerFormat.keyboardType = externalIDOptions.keyboardType
-        
+        let answerFormat = buildAnswerFormat(with: externalIDOptions)
         let formItem = ORKFormItem(identifier: identifier,
                                    text: Localization.localizedString("SBA_REGISTRATION_EXTERNALID_TITLE"),
                                    answerFormat: answerFormat,
@@ -324,6 +308,31 @@ public struct SBAProfileInfoOptions {
         formItem.placeholder = Localization.localizedString("SBA_REGISTRATION_EXTERNALID_PLACEHOLDER")
         
         return formItem
+    }
+    
+    func buildAnswerFormat(with textFieldOptions: SBATextFieldOptions?) -> ORKTextAnswerFormat {
+        
+        let answerFormat = ORKAnswerFormat.textAnswerFormat()
+        
+        // set values from the options
+        if let options = textFieldOptions {
+            answerFormat.autocapitalizationType = options.autocapitalizationType
+            answerFormat.keyboardType = options.keyboardType
+            answerFormat.validationRegex = options.validationRegex
+            answerFormat.invalidMessage = options.invalidMessage
+            answerFormat.maximumLength = options.maximumLength
+        }
+        else {
+            // If options are nil then set the default capitalization to none
+            answerFormat.autocapitalizationType = .none
+        }
+        
+        // set values that are used for all text answer format fields
+        answerFormat.autocorrectionType = .no
+        answerFormat.spellCheckingType = .no
+        answerFormat.multipleLines = false
+
+        return answerFormat
     }
     
     func makeNameFormItem(with identifier: String) -> ORKFormItem {
