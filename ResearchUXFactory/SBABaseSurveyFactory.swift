@@ -421,8 +421,8 @@ extension SBAFormStepSurveyItem {
             let answerFormat = ORKTextAnswerFormat()
             answerFormat.multipleLines = (subtype == .multipleLineText)
             if let range = self.range as? SBATextFieldRange {
-                if let validationRegex = range.validationRegex {
-                    answerFormat.validationRegex = validationRegex
+                if let validationRegex = range.createRegularExpression() {
+                    answerFormat.validationRegularExpression = validationRegex
                     answerFormat.invalidMessage = {
                         guard let invalidMessage = range.invalidMessage else {
                             print("Warning: The validation Regex does not have an associated validation message.")
