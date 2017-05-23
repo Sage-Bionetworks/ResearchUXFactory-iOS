@@ -128,9 +128,12 @@ class SBABaseSurveyFactoryTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(rules[0].resultIdentifier, "question1")
-        XCTAssertEqual(rules[1].resultIdentifier, "question2")
-        XCTAssertEqual(rules[2].resultIdentifier, "question3")
+        let rule1 = rules.first(where: { $0.resultIdentifier == "question1"} )
+        XCTAssertNotNil(rule1)
+        let rule2 = rules.first(where: { $0.resultIdentifier == "question2"} )
+        XCTAssertNotNil(rule2)
+        let rule3 = rules.first(where: { $0.resultIdentifier == "question3"} )
+        XCTAssertNotNil(rule3)
         
         XCTAssertEqual(rules[0].skipIdentifier, "consent")
         XCTAssertEqual(rules[1].skipIdentifier, "consent")
@@ -217,9 +220,12 @@ class SBABaseSurveyFactoryTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(rules[0].resultIdentifier, "question1")
-        XCTAssertEqual(rules[1].resultIdentifier, "question2")
-        XCTAssertEqual(rules[2].resultIdentifier, "question3")
+        let rule1 = rules.first(where: { $0.resultIdentifier == "question1"} )
+        XCTAssertNotNil(rule1)
+        let rule2 = rules.first(where: { $0.resultIdentifier == "question2"} )
+        XCTAssertNotNil(rule2)
+        let rule3 = rules.first(where: { $0.resultIdentifier == "question3"} )
+        XCTAssertNotNil(rule3)
         
         XCTAssertEqual(rules[0].skipIdentifier, "consent")
         XCTAssertEqual(rules[1].skipIdentifier, "consent")
