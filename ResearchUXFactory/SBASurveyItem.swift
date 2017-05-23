@@ -224,6 +224,15 @@ public protocol SBATextFieldRange: class {
     var keyboardType: UIKeyboardType { get }
 }
 
+extension SBATextFieldRange {
+    
+    public func createRegularExpression() -> NSRegularExpression? {
+        guard let regex = self.validationRegex else { return nil }
+        return try? NSRegularExpression(pattern: regex, options: [])
+    }
+    
+}
+
 /**
  Additional properties used when creating an `ORKDateAnswerFormat`. This protocol
  should be returned by the `SBAFormStepSurveyItem` for the `range` property.

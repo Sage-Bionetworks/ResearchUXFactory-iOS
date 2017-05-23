@@ -318,7 +318,7 @@ public struct SBAProfileInfoOptions {
         if let options = textFieldOptions {
             answerFormat.autocapitalizationType = options.autocapitalizationType
             answerFormat.keyboardType = options.keyboardType
-            answerFormat.validationRegex = options.validationRegex
+            answerFormat.validationRegularExpression = options.createRegularExpression()
             answerFormat.invalidMessage = options.invalidMessage
             answerFormat.maximumLength = options.maximumLength
         }

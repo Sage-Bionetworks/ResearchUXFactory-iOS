@@ -164,7 +164,7 @@ class SBAAccountTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(passwordFormat.validationRegex, "[[:ascii:]]{8,24}")
+        XCTAssertEqual(passwordFormat.validationRegularExpression?.pattern, "[[:ascii:]]{8,24}")
         XCTAssertEqual(passwordFormat.invalidMessage, "Passwords must be between 8 and 24 characters long.")
         XCTAssertEqual(passwordFormat.maximumLength, 24)
         XCTAssertFalse(passwordFormat.multipleLines)
@@ -223,7 +223,7 @@ class SBAAccountTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(passwordFormat.validationRegex, "[[:ascii:]]{4,16}")
+        XCTAssertEqual(passwordFormat.validationRegularExpression?.pattern, "[[:ascii:]]{4,16}")
         XCTAssertEqual(passwordFormat.invalidMessage, "Passwords must be between 4 and 16 characters long.")
         XCTAssertEqual(passwordFormat.maximumLength, 16)
         XCTAssertFalse(passwordFormat.multipleLines)
@@ -267,7 +267,7 @@ class SBAAccountTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(passwordFormat.validationRegex, "abc")
+        XCTAssertEqual(passwordFormat.validationRegularExpression?.pattern, "abc")
         XCTAssertEqual(passwordFormat.invalidMessage, "ABC 123")
         XCTAssertEqual(passwordFormat.maximumLength, 24)
         XCTAssertFalse(passwordFormat.multipleLines)
@@ -306,7 +306,7 @@ class SBAAccountTests: XCTestCase {
             return
         }
         
-        XCTAssertNil(passwordFormat.validationRegex)
+        XCTAssertNil(passwordFormat.validationRegularExpression)
         XCTAssertNil(passwordFormat.invalidMessage)
         XCTAssertEqual(passwordFormat.maximumLength, 0)
         XCTAssertFalse(passwordFormat.multipleLines)
