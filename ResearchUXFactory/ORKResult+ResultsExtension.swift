@@ -133,8 +133,8 @@ extension ORKResult: BridgeUploadableData {
         let asDict = NSMutableDictionary()
         
         asDict[kIdentifierKey] = self.identifier
-        asDict[kStartDateKey]  = self.startDate
-        asDict[kEndDateKey]    = self.endDate
+        asDict[kStartDateKey]  = (self.startDate as NSDate).iso8601String()
+        asDict[kEndDateKey]    = (self.endDate as NSDate).iso8601String()
 
         return asDict
     }
