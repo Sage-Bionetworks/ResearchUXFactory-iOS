@@ -39,34 +39,44 @@ extension UIColor {
      Get the color defined in the `ColorInfo.plist` file included (optionally) in the main resource bundle.
      This allows the app to define a list of colors in a single place using a plist with key/value pairs.
     */
-    static public func color(for key: String) -> UIColor? {
+    class open func color(for key: String) -> UIColor? {
         return SBAColorInfo.shared.color(for: key)
     }
     
     /**
      If the shared ColorInfo.plist includes a primary tint color then set the color
      */
-    static public let primaryTintColor: UIColor? = UIColor.color(for: "primaryTintColor")
+    open class var primaryTintColor: UIColor? {
+        return color(for: "primaryTintColor")
+    }
     
     /**
      Tint color for the navigation bar when displaying an `ORKTaskViewController`.
      */
-    static public let taskNavigationBarTintColor: UIColor? = UIColor.color(for: "taskNavigationBarTintColor")
+    open class var taskNavigationBarTintColor: UIColor? {
+        return color(for: "taskNavigationBarTintColor")
+    }
     
     /**
      Tint color for the navigation bar button items when displaying an `ORKTaskViewController`.
      */
-    static public let taskNavigationButtonTintColor: UIColor? = UIColor.color(for: "taskNavigationButtonTintColor")
+    open class var taskNavigationButtonTintColor: UIColor? {
+        return color(for: "taskNavigationButtonTintColor")
+    }
     
     /** 
      The green tint color is used for the green checkmark that is displayed for `ORKCompletionStep`
     */
-    static public let greenTintColor: UIColor = UIColor.color(for: "greenTintColor") ?? UIColor(red:0.267, green:0.824, blue:0.306, alpha:1.000)
+    open class var greenTintColor: UIColor {
+        return UIColor.color(for: "greenTintColor") ?? UIColor(red:0.267, green:0.824, blue:0.306, alpha:1.000)
+    }
     
     /**
      The blue tint color is used for the voice activity when the volume is within range.
      */
-    static public let blueTintColor: UIColor = UIColor.color(for: "blueTintColor") ?? UIColor(red:0.132, green:0.684, blue:0.959, alpha:1.000)
+    open class var blueTintColor: UIColor {
+        return UIColor.color(for: "blueTintColor") ?? UIColor(red:0.132, green:0.684, blue:0.959, alpha:1.000)
+    }
     
     /**
      Initialize a `UIColor` with a hex string. 
