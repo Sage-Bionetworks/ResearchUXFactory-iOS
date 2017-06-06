@@ -105,7 +105,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             return ORKCompletionStepViewController.classForCoder()
         }
         else {
-            return SBAInstructionStepViewController.classForCoder()
+            return ORKInstructionStepViewController.classForCoder()
         }
     }
     
@@ -157,21 +157,4 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             SBAObjectHash(self.customTypeIdentifier) ^
             self.isCompletionStep.hashValue
     }
-}
-
-open class SBAInstructionStepViewController: ORKInstructionStepViewController {
-    
-    internal var sbaIntructionStep: SBAInstructionStep? {
-        return self.step as? SBAInstructionStep
-    }
-    
-    override open var learnMoreButtonTitle: String? {
-        get {
-            return sbaIntructionStep?.learnMoreAction?.learnMoreButtonText ?? super.learnMoreButtonTitle
-        }
-        set {
-            super.learnMoreButtonTitle = newValue
-        }
-    }
-    
 }

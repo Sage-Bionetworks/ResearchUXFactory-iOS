@@ -201,65 +201,6 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(completionStep.detailText, "Detail Text 123")
     }
     
-    func testMemoryTask() {
-        
-        let inputTask: NSDictionary = [
-            "taskIdentifier"            : "1-Memory-ABCD-1234",
-            "schemaIdentifier"          : "Memory Activity",
-            "taskType"                  : "memory",
-            "intendedUseDescription"    : "intended Use Description Text",
-            "taskOptions"               : [
-                "initialSpan"               : 5,
-                "minimumSpan"               : 3,
-                "maximumSpan"               : 10,
-                "playSpeed"                 : 1.5,
-                "maxTests"                  : 6,
-                "maxConsecutiveFailures"    : 4
-            ],
-        ]
-        
-        let result = inputTask.createORKTask()
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.identifier, "Memory Activity")
-        
-        guard let task = result as? ORKOrderedTask else {
-            XCTAssert(false, "\(String(describing: result)) not of expect class")
-            return
-        }
-        
-        let expectedCount = 4
-        XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
-        guard task.steps.count == expectedCount else { return }
-        
-        // First - Overview
-        guard let instructionStep = task.steps.first as? ORKInstructionStep else {
-            XCTAssert(false, "\(String(describing: task.steps.first)) not of expect class")
-            return
-        }
-        XCTAssertEqual(instructionStep.identifier, "instruction")
-        XCTAssertEqual(instructionStep.text, "intended Use Description Text")
-        
-        // Third - Memory
-        guard let activeStep = task.steps[2] as? ORKSpatialSpanMemoryStep else {
-            XCTAssert(false, "\(task.steps[2]) not of expect class")
-            return
-        }
-        XCTAssertEqual(activeStep.identifier, "cognitive.memory.spatialspan")
-        XCTAssertEqual(activeStep.initialSpan, 5)
-        XCTAssertEqual(activeStep.minimumSpan, 3)
-        XCTAssertEqual(activeStep.maximumSpan, 10)
-        XCTAssertEqual(activeStep.playSpeed, 1.5)
-        XCTAssertEqual(activeStep.maximumTests, 6)
-        XCTAssertEqual(activeStep.maximumConsecutiveFailures, 4)
-        
-        // Last - Completion
-        guard let completionStep = task.steps.last as? ORKCompletionStep else {
-            XCTAssert(false, "\(String(describing: task.steps.last)) not of expect class")
-            return
-        }
-        XCTAssertEqual(completionStep.identifier, "conclusion")
-    }
-    
     func testMoodSurveyTask() {
         
         let inputTask: NSDictionary = [

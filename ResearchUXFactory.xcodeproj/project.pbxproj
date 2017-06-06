@@ -178,14 +178,12 @@
 		FF94251E1E280A6C00FD8C24 /* EligibilityRequirements.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF881D00F3DB002C456D /* EligibilityRequirements.json */; };
 		FF94251F1E280A6C00FD8C24 /* CombinedTask.json in Resources */ = {isa = PBXBuildFile; fileRef = FF3E30C31D62CF7100347165 /* CombinedTask.json */; };
 		FF9425201E280A7900FD8C24 /* Consent.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF4E1D00B6C9002C456D /* Consent.json */; };
-		FF9425211E280A7900FD8C24 /* Memory.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF601D00C125002C456D /* Memory.json */; };
 		FF9425231E280A7900FD8C24 /* Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF631D00C12A002C456D /* Tapping.json */; };
 		FF9425241E280A7900FD8C24 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = FF35B9351D9EEC2000E0DF23 /* Tremor.json */; };
 		FF9425251E280A7900FD8C24 /* Voice.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF661D00C130002C456D /* Voice.json */; };
 		FF9425261E280A7900FD8C24 /* Walking.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF691D00C135002C456D /* Walking.json */; };
 		FF9425271E280A7900FD8C24 /* MedicalSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF531D00BDAE002C456D /* MedicalSurvey.json */; };
 		FF9425281E280A7A00FD8C24 /* Consent.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF4E1D00B6C9002C456D /* Consent.json */; };
-		FF9425291E280A7A00FD8C24 /* Memory.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF601D00C125002C456D /* Memory.json */; };
 		FF94252B1E280A7A00FD8C24 /* Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF631D00C12A002C456D /* Tapping.json */; };
 		FF94252C1E280A7A00FD8C24 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = FF35B9351D9EEC2000E0DF23 /* Tremor.json */; };
 		FF94252D1E280A7A00FD8C24 /* Voice.json in Resources */ = {isa = PBXBuildFile; fileRef = FF78CF661D00C130002C456D /* Voice.json */; };
@@ -477,7 +475,6 @@
 		FF78CF4A1D00B698002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/consent_irb.html; sourceTree = "<group>"; };
 		FF78CF4D1D00B6C9002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Consent.json; sourceTree = "<group>"; };
 		FF78CF521D00BDAE002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/MedicalSurvey.json; sourceTree = "<group>"; };
-		FF78CF5F1D00C125002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Memory.json; sourceTree = "<group>"; };
 		FF78CF621D00C12A002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Tapping.json; sourceTree = "<group>"; };
 		FF78CF651D00C130002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Voice.json; sourceTree = "<group>"; };
 		FF78CF681D00C135002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Walking.json; sourceTree = "<group>"; };
@@ -1153,7 +1150,6 @@
 				FF78CF881D00F3DB002C456D /* EligibilityRequirements.json */,
 				FF3E30C31D62CF7100347165 /* CombinedTask.json */,
 				FF78CF4E1D00B6C9002C456D /* Consent.json */,
-				FF78CF601D00C125002C456D /* Memory.json */,
 				FF78CF631D00C12A002C456D /* Tapping.json */,
 				FF35B9351D9EEC2000E0DF23 /* Tremor.json */,
 				FF78CF661D00C130002C456D /* Voice.json */,
@@ -1428,7 +1424,6 @@
 				FF9425081E280A3E00FD8C24 /* consent_18researchers.html in Resources */,
 				FF9424F21E280A0D00FD8C24 /* consent_2quiz_headsup.html in Resources */,
 				FF9425261E280A7900FD8C24 /* Walking.json in Resources */,
-				FF9425211E280A7900FD8C24 /* Memory.json in Resources */,
 				FF94251C1E280A6B00FD8C24 /* EligibilityRequirements.json in Resources */,
 				FF9425021E280A3E00FD8C24 /* consent_12medical_care.html in Resources */,
 				FF9425071E280A3E00FD8C24 /* consent_17data_sharing.html in Resources */,
@@ -1472,7 +1467,6 @@
 				FF5C26641E28043900A1D9E0 /* LaunchScreen.storyboard in Resources */,
 				FF9424F31E280A0F00FD8C24 /* consent_2quiz_headsup.html in Resources */,
 				FF94252E1E280A7A00FD8C24 /* Walking.json in Resources */,
-				FF9425291E280A7A00FD8C24 /* Memory.json in Resources */,
 				FF94251E1E280A6C00FD8C24 /* EligibilityRequirements.json in Resources */,
 				FF94250E1E280A3F00FD8C24 /* consent_12medical_care.html in Resources */,
 				FF9425131E280A3F00FD8C24 /* consent_17data_sharing.html in Resources */,
@@ -1917,14 +1911,6 @@
 				FF78CF521D00BDAE002C456D /* Base */,
 			);
 			name = MedicalSurvey.json;
-			sourceTree = "<group>";
-		};
-		FF78CF601D00C125002C456D /* Memory.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FF78CF5F1D00C125002C456D /* Base */,
-			);
-			name = Memory.json;
 			sourceTree = "<group>";
 		};
 		FF78CF631D00C12A002C456D /* Tapping.json */ = {
