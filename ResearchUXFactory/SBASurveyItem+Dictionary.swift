@@ -57,7 +57,9 @@ enum DictionaryKey: String {
     case image                          // var stepImage: UIImage? (resource name)
     case iconImage                      // var iconImage: UIImage? (resource name)
     case learnMoreAction                // func learnMoreAction() -> SBALearnMoreAction? (SBAClassTypeMap factory object)
-    case learnMoreHTMLContentURL        // func learnMoreAction() -> SBALearnMoreAction? (deprecated)
+    case learnMoreButtonText            // Text for the learn More button
+    case learnMoreHTMLContentURL        // func learnMoreAction() -> SBALearnMoreAction? (SBAURLLearnMoreAction)
+    case learnMoreAlertText             // func learnMoreAction() -> SBALearnMoreAction? (SBAPopUpLearnMoreAction)
     
     // extension NSDictionary: SBAFormStepSurveyItem
     case optional                       // var optional: Bool
@@ -166,15 +168,29 @@ extension NSDictionary: SBAInstructionStepSurveyItem {
     }
     
     public func learnMoreAction() -> SBALearnMoreAction? {
-        // Keep reverse-compatibility to previous dictionary key
-        if let html = self[key(.learnMoreHTMLContentURL)] as? String {
-            return SBAURLLearnMoreAction(identifier: html)
+        
+        // Get the action (if one is defined)
+        let learnMoreAction: SBALearnMoreAction? = {
+            if let html = self[key(.learnMoreHTMLContentURL)] as? String {
+                return SBAURLLearnMoreAction(identifier: html)
+            }
+            else if let alertText = self[key(.learnMoreAlertText)] as? String {
+                let action = SBAPopUpLearnMoreAction(identifier: key(.learnMoreAlertText))
+                action.learnMoreText = alertText
+                return action
+            }
+            else if let learnMoreAction = self[key(.learnMoreAction)] as? [AnyHashable: Any] {
+                return SBAClassTypeMap.shared.object(with: learnMoreAction) as? SBALearnMoreAction
+            }
+            return nil
+        }()
+        
+        // Update the button text
+        if let buttonText = self[key(.learnMoreButtonText)] as? String {
+            learnMoreAction?.learnMoreButtonText = buttonText
         }
-        // Look for a dictionary that matches the learnMoreActionKey
-        if let learnMoreAction = self[key(.learnMoreAction)] as? [AnyHashable: Any] {
-            return SBAClassTypeMap.shared.object(with: learnMoreAction) as? SBALearnMoreAction
-        }
-        return nil
+        
+        return learnMoreAction
     }
 }
 
