@@ -148,7 +148,7 @@ public protocol SBAActiveTask: SBABridgeTask, SBAStepTransformer {
 
 extension SBAActiveTask {
     
-    func createDefaultORKActiveTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask? {
+    public func createDefaultORKActiveTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask? {
         
         guard let activeTaskIdentifier = self.taskType.activeTaskIdentifier() else { return nil }
         

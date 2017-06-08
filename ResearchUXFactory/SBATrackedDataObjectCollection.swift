@@ -35,6 +35,7 @@ import ResearchKit
 
 open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStepTransformer, SBAConditionalRule {
     
+
     lazy open var dataStore: SBATrackedDataStore! = {
         return SBATrackedDataStore.shared
     }()
@@ -56,6 +57,8 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
     open dynamic var items: [SBATrackedDataObject]!
     
     open dynamic var steps: [Any]!
+    
+    open dynamic var insertAfter: String?
 
     open dynamic var trackingSurveyRepeatTimeInterval: TimeInterval = 30 * 24 * 60 * 60   // Every 30 days by default
     

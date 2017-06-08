@@ -477,10 +477,13 @@ extension SBAFormStepSurveyItem {
         return textChoice.createORKTextChoice()
     }
     
-    public func createMoodScaleAnswerFormat() -> ORKMoodScaleAnswerFormat {
-        let moodScale = ORKMoodScaleAnswerFormat(moodQuestionType: .custom)
-        guard let items = self.items, moodScale.imageChoices.count == items.count else { return moodScale }
-        let imageChoices = moodScale.imageChoices.enumerated().map { (idx: Int, moodChoice: ORKImageChoice) -> ORKImageChoice in
+    public func createMoodScaleAnswerFormat(with defaultChoices:[ORKImageChoice]? = nil) -> ORKMoodScaleAnswerFormat {
+        let moodChoices = defaultChoices ?? ORKMoodScaleAnswerFormat(moodQuestionType: .custom).imageChoices
+        guard let items = self.items, moodChoices.count == items.count
+        else {
+            return ORKMoodScaleAnswerFormat(imageChoices: moodChoices)
+        }
+        let imageChoices = moodChoices.enumerated().map { (idx: Int, moodChoice: ORKImageChoice) -> ORKImageChoice in
             guard let choice = items[idx] as? SBAImageChoice else { return moodChoice }
             return choice.createORKImageChoice(with: moodChoice)
         }
