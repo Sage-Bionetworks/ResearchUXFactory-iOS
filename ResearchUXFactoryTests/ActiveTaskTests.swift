@@ -92,7 +92,7 @@ class SBAActiveTaskTests: XCTestCase {
         // for iOS 9, the fitnessTest task is returned instead.
         guard #available(iOS 10.0, *) else { return }
         
-        let expectedCount = 13
+        let expectedCount = 12
         XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
         guard task.steps.count == expectedCount else { return }
         
@@ -127,7 +127,7 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(healthPermission!.writeTypes!.count, 4)
         
         // Step - Workout Step
-        guard let _ = task.steps[8] as? ORKWorkoutStep else {
+        guard let _ = task.steps[7] as? ORKWorkoutStep else {
             XCTAssert(false, "\(task.steps[8]) not of expect class")
             return
         }

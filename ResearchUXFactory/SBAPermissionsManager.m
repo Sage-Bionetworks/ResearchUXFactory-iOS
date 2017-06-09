@@ -556,12 +556,9 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
             }
         }
         else {
+            // Assume that the permission has been granted.
             // If this is *not* a recognized type for writing or a characteristic, then we have no
-            // means of determining if the value is available using this method. This does *not*
-            // mean that this permission has not been granted, but that the default behavior is for
-            // the app to fallback to showing the permissions step and attempt to get permission
-            // before continuing.
-            return NO;
+            // means of determining if the value is available using this method. Assume it is granted.
         }
     }
     return YES;

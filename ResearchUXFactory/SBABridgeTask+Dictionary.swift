@@ -105,6 +105,10 @@ extension NSDictionary: SBABridgeTask {
         return steps.mapAndFilter({ return mapToStepTransformer($0) })
     }
     
+    public var insertAfter: String? {
+        return self["insertAfter"] as? String
+    }
+    
     public var insertSteps: [SBAStepTransformer]? {
         guard let steps = self["insertSteps"] as? [AnyObject] else {
             // return self if there are no taskSteps

@@ -37,14 +37,11 @@ public protocol SBATaskTransformable: class {
     func transformToTask(with factory: SBABaseSurveyFactory, isLastStep: Bool) -> (ORKTask & NSCopying & NSSecureCoding)?
 }
 
-
-
-
-
 public protocol SBABridgeTask: class {
     var taskIdentifier: String! { get }
     var schemaIdentifier: String! { get }
     var taskSteps: [SBAStepTransformer] { get }
+    var insertAfter: String? { get }
     var insertSteps: [SBAStepTransformer]? { get }
 }
 
@@ -105,8 +102,8 @@ public extension SBABridgeTask {
     fileprivate func addInsertSteps(_ subtaskSteps: [ORKStep], factory: SBABaseSurveyFactory) -> [ORKStep] {
         
         // Map the insert steps
-        guard let insertSteps = self.insertSteps?.mapAndFilter({ $0.transformToStep(with: factory, isLastStep: false) })
-            , insertSteps.count > 0 else {
+        guard let insertSteps = self.insertSteps?.mapAndFilter({ $0.transformToStep(with: factory, isLastStep: false) }),
+            insertSteps.count > 0 else {
                 return subtaskSteps
         }
         
@@ -131,9 +128,18 @@ public extension SBABridgeTask {
             introStep = firstStep
         }
         
+        let insertIndex: Int = {
+            guard let insertAfterIndentifier = self.insertAfter,
+                let index = subtaskSteps.index(where: { $0.identifier == insertAfterIndentifier })
+            else {
+                return 1
+            }
+            return index
+        }()
+        
         // Insert the steps inside
         steps.insert(introStep, at: 0)
-        steps.insert(contentsOf: insertSteps, at: 1)
+        steps.insert(contentsOf: insertSteps, at: insertIndex)
         
         return steps
 
