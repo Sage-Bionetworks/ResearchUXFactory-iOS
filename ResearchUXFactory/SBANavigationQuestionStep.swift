@@ -57,7 +57,7 @@ open class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep {
         super.init(identifier: identifier)
     }
     
-    init(inputItem: SBASurveyItem, factory: SBABaseSurveyFactory? = nil) {
+    public init(inputItem: SBASurveyItem, factory: SBABaseSurveyFactory? = nil) {
         super.init(identifier: inputItem.identifier)
         guard let form = inputItem as? SBAFormStepSurveyItem else { return }
         form.mapStepValues(with: self)
