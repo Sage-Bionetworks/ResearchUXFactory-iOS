@@ -167,3 +167,34 @@ extension ORKBooleanAnswerFormat : SBAQuestionResultMapping {
         return result
     }
 }
+
+extension ORKHealthKitQuantityTypeAnswerFormat : SBAQuestionResultMapping {
+    
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let result = ORKNumericQuestionResult(identifier: identifier)
+        if let num = answer as? NSNumber {
+            result.numericAnswer = num
+        }
+        else if let qty = answer as? HKQuantity, let unit = self.unit {
+            result.numericAnswer = NSNumber(value: qty.doubleValue(for: unit))
+            result.unit = unit.unitString
+        }
+        
+        return result
+    }
+}
+
+extension ORKNumericAnswerFormat : SBAQuestionResultMapping {
+    
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let result = ORKNumericQuestionResult(identifier: identifier)
+        if let num = answer as? NSNumber {
+            result.numericAnswer = num
+            result.unit = self.unit
+        }
+        
+        return result
+    }
+}
