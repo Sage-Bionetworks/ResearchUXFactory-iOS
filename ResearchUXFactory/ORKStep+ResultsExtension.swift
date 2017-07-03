@@ -212,6 +212,19 @@ extension ORKTextAnswerFormat : SBAQuestionResultMapping {
     }
 }
 
+extension ORKEmailAnswerFormat : SBAQuestionResultMapping {
+    
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let result = ORKTextQuestionResult(identifier: identifier)
+        if let text = answer as? String {
+            result.textAnswer = text
+        }
+        
+        return result
+    }
+}
+
 extension ORKDateAnswerFormat : SBAQuestionResultMapping {
     
     func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
@@ -225,4 +238,11 @@ extension ORKDateAnswerFormat : SBAQuestionResultMapping {
     }
 }
 
-
+extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let answerFormat = self.implied() as! SBAQuestionResultMapping
+        return answerFormat.questionResult(identifier: identifier, answer: answer)
+        
+    }
+}
