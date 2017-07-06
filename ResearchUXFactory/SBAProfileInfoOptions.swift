@@ -462,14 +462,10 @@ public struct SBAProfileInfoOptions {
     
     func makeHeightFormItem(with identifier: String) -> ORKFormItem {
         
-        // Get the locale unit
-        var formatterUnit = LengthFormatter.Unit.meter
-        let formatter = LengthFormatter()
-        formatter.unitStyle = .medium
-        formatter.isForPersonHeightUse = true
-        formatter.unitString(fromMeters: 2.0, usedUnit: &formatterUnit)
-        
-        let unit: HKUnit = HKUnit(from: formatterUnit)
+        // Always use cm for Height form items. ORKHeightPicker takes values in cm and returns values
+        // with an implied unit of cm. It looks at the user's locale itself to determine which kind of
+        // picker to show and how to convert the results into a string.
+        let unit: HKUnit = HKUnit(from: .centimeter)
         let quantityType = HKObjectType.quantityType(forIdentifier: .height)!
         let answerFormat = ORKHealthKitQuantityTypeAnswerFormat(quantityType: quantityType, unit: unit, style: .integer)
         answerFormat.shouldRequestAuthorization = false
