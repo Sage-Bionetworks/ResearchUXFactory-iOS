@@ -241,7 +241,12 @@ extension ORKDateAnswerFormat : SBAQuestionResultMapping {
 extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
     func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
-        let answerFormat = self.implied() as! SBAQuestionResultMapping
+        guard let answerFormat = self.implied() as? SBAQuestionResultMapping
+            else {
+                assertionFailure("No question result mapping for \(type(of: self.implied()))")
+                return nil
+        }
+
         return answerFormat.questionResult(identifier: identifier, answer: answer)
         
     }
