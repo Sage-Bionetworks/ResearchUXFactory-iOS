@@ -243,7 +243,7 @@ extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
         
         guard let answerFormat = self.implied() as? SBAQuestionResultMapping
             else {
-                assertionFailure("No question result mapping for \(type(of: self.implied()))")
+                assertionFailure("Unsupported answer format \(String(describing: self.implied()))")
                 return nil
         }
 
