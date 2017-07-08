@@ -90,4 +90,8 @@ open class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep {
     override open var hash: Int {
         return super.hash ^ sharedHash()
     }
+    
+    override open func stepViewControllerClass() -> AnyClass {
+        return SBAGenericStepViewController.classForCoder()
+    }
 }
