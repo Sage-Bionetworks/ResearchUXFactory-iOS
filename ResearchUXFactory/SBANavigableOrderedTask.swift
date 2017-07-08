@@ -58,11 +58,16 @@ public protocol SBAConditionalRule: class, NSSecureCoding {
     func nextStep(previousStep: ORKStep?, nextStep: ORKStep?, with result: ORKTaskResult) -> ORKStep?
 }
 
+@objc
+public protocol SBAConditionalExit: class, NSSecureCoding {
+    func shouldEndTask(step: ORKStep?, with result: ORKTaskResult) -> Bool
+}
+
 /**
  * SBANavigableOrderedTask can process both SBASubtaskStep steps and as well as any step that conforms
  * to the SBANavigationRule.
  */
-open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource {
+open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBAConditionalExit {
     
     public var additionalTaskResults: [ORKTaskResult]?
     public var conditionalRule: SBAConditionalRule?
@@ -163,11 +168,16 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource {
     // MARK: ORKOrderedTask overrides
     
     override open func step(after step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
-        
         var returnStep: ORKStep?
 
         // Look to see if this has a valid subtask step associated with this step
         if let subtaskStep = subtaskStep(identifier: step?.identifier) {
+            
+            // Exit early if there is a conditional exit which indicates that the task should end
+            if subtaskStep.shouldEndTask(step: step, with: result) {
+                return nil
+            }
+            
             returnStep = subtaskStep.stepAfterStep(step, withResult: result)
             if (returnStep == nil) {
                 // If the returned step is nil then this subtask is done
@@ -200,6 +210,20 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource {
         }
 
         return returnStep
+    }
+    
+    open func shouldEndTask(step: ORKStep?, with result: ORKTaskResult) -> Bool {
+        let taskResult: ORKTaskResult = {
+            if let subtaskStep = subtaskStep(identifier: step?.identifier) {
+                return subtaskStep.filteredTaskResult(result)
+            }
+            return result
+        }()
+        if let navigableStep = step as? SBANavigationRule,
+            let nextStepIdentifier = navigableStep.nextStepIdentifier(with: taskResult, and:nil) {
+            return self.step(withIdentifier: nextStepIdentifier) == nil
+        }
+        return false
     }
 
     override open func step(before step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {

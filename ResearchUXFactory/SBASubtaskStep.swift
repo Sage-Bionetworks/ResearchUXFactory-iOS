@@ -36,7 +36,7 @@ import ResearchKit
 /**
  * The subtask step is a logical grouping of steps where the steps are defined by a subtask.
  */
-open class SBASubtaskStep: ORKStep {
+open class SBASubtaskStep: ORKStep, SBAConditionalExit {
     
     open var taskIdentifier: String?
     open var schemaIdentifier: String?
@@ -138,6 +138,20 @@ open class SBASubtaskStep: ORKStep {
         
         // And finally return the replacement step
         return replacementStep(nextStep)
+    }
+    
+    open func shouldEndTask(step: ORKStep?, with result: ORKTaskResult) -> Bool {
+        guard let conditionalExit = self.subtask as? SBAConditionalExit,
+            let step = step,
+            let substepIdentifier = substepIdentifier(step.identifier)
+        else {
+            return false
+        }
+        
+        let substep = step.copy(withIdentifier: substepIdentifier)
+        let replacementTaskResult = filteredTaskResult(result)
+
+        return conditionalExit.shouldEndTask(step: substep, with: replacementTaskResult)
     }
     
     public func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {

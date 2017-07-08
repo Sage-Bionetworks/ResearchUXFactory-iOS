@@ -198,3 +198,56 @@ extension ORKNumericAnswerFormat : SBAQuestionResultMapping {
         return result
     }
 }
+
+extension ORKTextAnswerFormat : SBAQuestionResultMapping {
+    
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let result = ORKTextQuestionResult(identifier: identifier)
+        if let text = answer as? String {
+            result.textAnswer = text
+        }
+        
+        return result
+    }
+}
+
+extension ORKEmailAnswerFormat : SBAQuestionResultMapping {
+    
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let result = ORKTextQuestionResult(identifier: identifier)
+        if let text = answer as? String {
+            result.textAnswer = text
+        }
+        
+        return result
+    }
+}
+
+extension ORKDateAnswerFormat : SBAQuestionResultMapping {
+    
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        let result = ORKDateQuestionResult(identifier: identifier)
+        if let date = answer as? Date {
+            result.dateAnswer = date
+        }
+        
+        return result
+    }
+}
+
+extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
+    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+        
+        guard let answerFormat = self.implied() as? SBAQuestionResultMapping
+            else {
+                assertionFailure("Unsupported answer format \(String(describing: self.implied()))")
+                return nil
+        }
+
+        return answerFormat.questionResult(identifier: identifier, answer: answer)
+        
+    }
+}
