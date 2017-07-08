@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		032D3E631F0EB07B00AB8D33 /* SBAGenericStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E621F0EB07B00AB8D33 /* SBAGenericStepViewController.swift */; };
+		032D3E681F0EB09900AB8D33 /* SBAGenericPageStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E671F0EB09900AB8D33 /* SBAGenericPageStepViewController.swift */; };
+		032D3E6A1F0EB1DE00AB8D33 /* SBAStepNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E691F0EB1DE00AB8D33 /* SBAStepNavigationView.swift */; };
+		032D3E6C1F0EB24000AB8D33 /* SBAStepHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E6B1F0EB24000AB8D33 /* SBAStepHeaderView.swift */; };
+		032D3E6E1F0EB29700AB8D33 /* SBAStepProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E6D1F0EB29700AB8D33 /* SBAStepProgressView.swift */; };
+		032D3E701F0EB2EC00AB8D33 /* SBAStepChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E6F1F0EB2EC00AB8D33 /* SBAStepChoiceTableViewCell.swift */; };
+		032D3E731F0EB3C200AB8D33 /* SBAGenericStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E721F0EB3C200AB8D33 /* SBAGenericStepDataSource.swift */; };
+		032D3E851F0EBED000AB8D33 /* SBARoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E841F0EBED000AB8D33 /* SBARoundedButton.swift */; };
+		032D3E891F0ED72700AB8D33 /* SBAShadowGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E881F0ED72700AB8D33 /* SBAShadowGradient.swift */; };
+		032D3E8B1F0EE07400AB8D33 /* SBAUnderlinedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E8A1F0EE07400AB8D33 /* SBAUnderlinedButton.swift */; };
+		032D3E8E1F0EE35600AB8D33 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E8D1F0EE35600AB8D33 /* UIColor+BridgeKeyNames.swift */; };
+		032D3E911F0EE58700AB8D33 /* UIFont+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E901F0EE58700AB8D33 /* UIFont+BridgeKeyNames.swift */; };
+		032D3E991F0EEC3C00AB8D33 /* NSLayoutConstraint+setMultiplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E981F0EEC3C00AB8D33 /* NSLayoutConstraint+setMultiplier.swift */; };
+		032D3E9B1F0F0FD400AB8D33 /* SBAVisualConsentStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E9A1F0F0FD400AB8D33 /* SBAVisualConsentStep.swift */; };
+		032D3E9D1F0FF4CC00AB8D33 /* SBAFormStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D3E9C1F0FF4CC00AB8D33 /* SBAFormStep.swift */; };
 		801040B51C5A843D00D26E19 /* ResearchUXFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 801040B41C5A843D00D26E19 /* ResearchUXFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		801040BC1C5A843D00D26E19 /* ResearchUXFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801040B21C5A843D00D26E19 /* ResearchUXFactory.framework */; };
 		804B30AF1CEA6CB4008CEA89 /* SBAJSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6410FE1CB2DC21007FB9E1 /* SBAJSONObject.m */; };
@@ -341,6 +356,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		032D3E621F0EB07B00AB8D33 /* SBAGenericStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAGenericStepViewController.swift; sourceTree = "<group>"; };
+		032D3E671F0EB09900AB8D33 /* SBAGenericPageStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAGenericPageStepViewController.swift; sourceTree = "<group>"; };
+		032D3E691F0EB1DE00AB8D33 /* SBAStepNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAStepNavigationView.swift; sourceTree = "<group>"; };
+		032D3E6B1F0EB24000AB8D33 /* SBAStepHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAStepHeaderView.swift; sourceTree = "<group>"; };
+		032D3E6D1F0EB29700AB8D33 /* SBAStepProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAStepProgressView.swift; sourceTree = "<group>"; };
+		032D3E6F1F0EB2EC00AB8D33 /* SBAStepChoiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAStepChoiceTableViewCell.swift; sourceTree = "<group>"; };
+		032D3E721F0EB3C200AB8D33 /* SBAGenericStepDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAGenericStepDataSource.swift; sourceTree = "<group>"; };
+		032D3E841F0EBED000AB8D33 /* SBARoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBARoundedButton.swift; sourceTree = "<group>"; };
+		032D3E881F0ED72700AB8D33 /* SBAShadowGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAShadowGradient.swift; sourceTree = "<group>"; };
+		032D3E8A1F0EE07400AB8D33 /* SBAUnderlinedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAUnderlinedButton.swift; sourceTree = "<group>"; };
+		032D3E8D1F0EE35600AB8D33 /* UIColor+BridgeKeyNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BridgeKeyNames.swift"; sourceTree = "<group>"; };
+		032D3E901F0EE58700AB8D33 /* UIFont+BridgeKeyNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+BridgeKeyNames.swift"; sourceTree = "<group>"; };
+		032D3E981F0EEC3C00AB8D33 /* NSLayoutConstraint+setMultiplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+setMultiplier.swift"; sourceTree = "<group>"; };
+		032D3E9A1F0F0FD400AB8D33 /* SBAVisualConsentStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAVisualConsentStep.swift; sourceTree = "<group>"; };
+		032D3E9C1F0FF4CC00AB8D33 /* SBAFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAFormStep.swift; sourceTree = "<group>"; };
 		161479CF1BD6CE8F0099A068 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		801040B21C5A843D00D26E19 /* ResearchUXFactory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchUXFactory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		801040B41C5A843D00D26E19 /* ResearchUXFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchUXFactory.h; sourceTree = "<group>"; };
@@ -592,6 +622,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		032D3E711F0EB37B00AB8D33 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				032D3E721F0EB3C200AB8D33 /* SBAGenericStepDataSource.swift */,
+			);
+			name = DataSource;
+			sourceTree = "<group>";
+		};
+		032D3E8C1F0EE32200AB8D33 /* Color Management */ = {
+			isa = PBXGroup;
+			children = (
+				032D3E8D1F0EE35600AB8D33 /* UIColor+BridgeKeyNames.swift */,
+			);
+			name = "Color Management";
+			sourceTree = "<group>";
+		};
+		032D3E8F1F0EE55F00AB8D33 /* Font Management */ = {
+			isa = PBXGroup;
+			children = (
+				032D3E901F0EE58700AB8D33 /* UIFont+BridgeKeyNames.swift */,
+			);
+			name = "Font Management";
+			sourceTree = "<group>";
+		};
 		161479B71BD6CE8F0099A068 = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +813,7 @@
 				FF6410F91CAF39B4007FB9E1 /* String+Utilities.swift */,
 				FF9E48951CF3A2F1005EE7E0 /* StaticUtilities.swift */,
 				FBF1B6B21CAAF6FC007C1082 /* UIAlertController+Utilities.swift */,
+				032D3E981F0EEC3C00AB8D33 /* NSLayoutConstraint+setMultiplier.swift */,
 				FFC41F331E025DA50057526E /* Keychain */,
 				FBAE3CF01C861587003CEC4A /* PDF */,
 			);
@@ -834,6 +889,8 @@
 				FF30756F1DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift */,
 				FB6BA0961C7CDB2600C9903F /* SBASubtaskStep.swift */,
 				FF36DC6E1DB68F230034C85D /* SBAToggleFormStep.swift */,
+				032D3E9A1F0F0FD400AB8D33 /* SBAVisualConsentStep.swift */,
+				032D3E9C1F0FF4CC00AB8D33 /* SBAFormStep.swift */,
 			);
 			name = Step;
 			sourceTree = "<group>";
@@ -932,6 +989,8 @@
 			isa = PBXGroup;
 			children = (
 				FF63D0C91CCFF517007ADEE5 /* SBAWebViewController.swift */,
+				032D3E621F0EB07B00AB8D33 /* SBAGenericStepViewController.swift */,
+				032D3E671F0EB09900AB8D33 /* SBAGenericPageStepViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1037,9 +1096,12 @@
 		FFA8E4AD1CBD7CB700ED5399 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				032D3E8F1F0EE55F00AB8D33 /* Font Management */,
+				032D3E8C1F0EE32200AB8D33 /* Color Management */,
 				FFAAF63A1CC0A85900500929 /* Protocols */,
 				FFAAF63B1CC0A86800500929 /* Views */,
 				FF63D0BF1CCFF3E7007ADEE5 /* ViewControllers */,
+				032D3E711F0EB37B00AB8D33 /* DataSource */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1067,6 +1129,9 @@
 		FFAAF63B1CC0A86800500929 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				032D3E881F0ED72700AB8D33 /* SBAShadowGradient.swift */,
+				032D3E841F0EBED000AB8D33 /* SBARoundedButton.swift */,
+				032D3E8A1F0EE07400AB8D33 /* SBAUnderlinedButton.swift */,
 				FFAAF6381CC0A42A00500929 /* SBABorderedButton.swift */,
 				FF5E56E51D6F8469008BA2A8 /* SBACheckmarkView.swift */,
 				FFCF37DF1CDA99120090452F /* UIView+LayoutExtensions.swift */,
@@ -1074,6 +1139,10 @@
 				FF77F4711D4AC5E10005503E /* SBAMultipleLineTableViewCell.swift */,
 				FF36DCBC1DB6CE840034C85D /* SBAToggleTableViewCell.swift */,
 				FF36DCBD1DB6CE840034C85D /* SBAToggleTableViewCell.xib */,
+				032D3E691F0EB1DE00AB8D33 /* SBAStepNavigationView.swift */,
+				032D3E6B1F0EB24000AB8D33 /* SBAStepHeaderView.swift */,
+				032D3E6D1F0EB29700AB8D33 /* SBAStepProgressView.swift */,
+				032D3E6F1F0EB2EC00AB8D33 /* SBAStepChoiceTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1507,16 +1576,19 @@
 				FF94256D1E281BC000FD8C24 /* SBAResearchKitResultConverter.swift in Sources */,
 				FBAD11671CADCFE5005611D0 /* SBATrackedDataObjectCollection.swift in Sources */,
 				FF9425431E2812F100FD8C24 /* SBAConsentSharingOptions.swift in Sources */,
+				032D3E911F0EE58700AB8D33 /* UIFont+BridgeKeyNames.swift in Sources */,
 				804B30AF1CEA6CB4008CEA89 /* SBAJSONObject.m in Sources */,
 				FF052EBC1ECF7A1A000835DB /* SBATextFieldOptions.swift in Sources */,
 				FF64113A1CB436B6007FB9E1 /* SBAClassTypeMap.m in Sources */,
 				FFB30D691D4139B400D175D2 /* SBATrackedSelectionStep.swift in Sources */,
 				FBC45E7A1C759040007AA424 /* Localization.swift in Sources */,
 				FF2729171D92057600956CFB /* SBATrackedActivitySurveyItem+Dictionary.swift in Sources */,
+				032D3E9B1F0F0FD400AB8D33 /* SBAVisualConsentStep.swift in Sources */,
 				FF9425A01E28606300FD8C24 /* NSDate+ISO8601Format.m in Sources */,
 				FFE57F221E393E3D00CEC67F /* SBANavigationFormStep.swift in Sources */,
 				FBAE3CF41C8615DF003CEC4A /* SBAPDFPrintPageRenderer.m in Sources */,
 				FF27290D1D92036A00956CFB /* SBAPopUpLearnMoreAction.swift in Sources */,
+				032D3E631F0EB07B00AB8D33 /* SBAGenericStepViewController.swift in Sources */,
 				FB84392D1C7518FE0086E961 /* SBAChoice.swift in Sources */,
 				FF55449F1E296C6A00A8E189 /* SBAProfileInfoOptions.swift in Sources */,
 				FF36DC6F1DB68F230034C85D /* SBAToggleFormStep.swift in Sources */,
@@ -1548,6 +1620,7 @@
 				FBAD115A1CADB2F0005611D0 /* SBADataObject.m in Sources */,
 				FF36DCBE1DB6CE840034C85D /* SBAToggleTableViewCell.swift in Sources */,
 				FFA8E4AA1CBD6E0B00ED5399 /* NSError+SBBTranslation.swift in Sources */,
+				032D3E991F0EEC3C00AB8D33 /* NSLayoutConstraint+setMultiplier.swift in Sources */,
 				FF35B8EC1D9DA93C00E0DF23 /* SBADataGroupsStep.swift in Sources */,
 				FF2728881D91CFB900956CFB /* SBAClassTypeMap.swift in Sources */,
 				FF8359231D6FACED0028B899 /* SBADirectNavigationRule.swift in Sources */,
@@ -1564,6 +1637,7 @@
 				FF5E56E81D6F8941008BA2A8 /* SBATaskViewController.swift in Sources */,
 				FFB30E3A1D488F4800D175D2 /* SBALoadingView.swift in Sources */,
 				FFCF385D1CE1172A0090452F /* NSPredicate+Utilities.swift in Sources */,
+				032D3E681F0EB09900AB8D33 /* SBAGenericPageStepViewController.swift in Sources */,
 				FFCF37B31CD94EC80090452F /* ORKOrderedTask+SBAExtension.m in Sources */,
 				FF27290F1D9203AD00956CFB /* SBASkipAction.swift in Sources */,
 				FF3075701DF7384F00F2B3EA /* SBAStepViewControllerProtocol.swift in Sources */,
@@ -1571,30 +1645,40 @@
 				FBE551691C6D9CBC00C9E1AA /* SBASurveyNavigationStep.swift in Sources */,
 				FF9425711E2821FC00FD8C24 /* SBAInfoManager.swift in Sources */,
 				FF641F291D945596001EE1BD /* SBATrackedDataStore.swift in Sources */,
+				032D3E6C1F0EB24000AB8D33 /* SBAStepHeaderView.swift in Sources */,
+				032D3E701F0EB2EC00AB8D33 /* SBAStepChoiceTableViewCell.swift in Sources */,
 				FF9425951E28594B00FD8C24 /* SBAProfileFormStep.swift in Sources */,
 				FF2729111D9203D700956CFB /* SBAURLLearnMoreAction.swift in Sources */,
 				FF77F4721D4AC5E10005503E /* SBAMultipleLineTableViewCell.swift in Sources */,
 				FB0C9EF31CAA52F700BA5B44 /* Date+Utilities.swift in Sources */,
 				FF64111C1CB34766007FB9E1 /* SBAMedication.m in Sources */,
 				FFE57F241E393EFA00CEC67F /* SBANavigationSubtaskStep.swift in Sources */,
+				032D3E8B1F0EE07400AB8D33 /* SBAUnderlinedButton.swift in Sources */,
+				032D3E731F0EB3C200AB8D33 /* SBAGenericStepDataSource.swift in Sources */,
 				FF9055EC1CE527890049D12A /* SBAProgressStep.swift in Sources */,
 				FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */,
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
 				FFCE30B31EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift in Sources */,
 				FF9425751E2823FA00FD8C24 /* SBAInfoManager.m in Sources */,
 				FF2729151D92050100956CFB /* SBATrackedStepSurveyItem+Dictionary.swift in Sources */,
+				032D3E6A1F0EB1DE00AB8D33 /* SBAStepNavigationView.swift in Sources */,
 				FF0A880E1E8ADF1D00708A69 /* SBANameDataSource.swift in Sources */,
 				FF2729131D92045A00956CFB /* SBATextChoice+SBATrackedDataObject.swift in Sources */,
 				FF9425441E2812F100FD8C24 /* SBAConsentSharingOptions+Dictionary.swift in Sources */,
+				032D3E9D1F0FF4CC00AB8D33 /* SBAFormStep.swift in Sources */,
+				032D3E6E1F0EB29700AB8D33 /* SBAStepProgressView.swift in Sources */,
 				FF80920F1D01FD35003FF617 /* ORKAnswerFormat+KeyboardUtilities.swift in Sources */,
 				FF9425961E28594B00FD8C24 /* SBAProfileInfoForm.swift in Sources */,
 				FF2729091D92003700956CFB /* SBAChoice+String.swift in Sources */,
 				FFA8E4AF1CBD7CDA00ED5399 /* SBALoadingViewPresenter.swift in Sources */,
 				FF94256F1E281BC000FD8C24 /* ORKStep+ResultsExtension.swift in Sources */,
+				032D3E891F0ED72700AB8D33 /* SBAShadowGradient.swift in Sources */,
 				FF2729051D91FED900956CFB /* SBAChoice+Dictionary.swift in Sources */,
 				FF5CDF351DDE8D3600117218 /* SBAAnswerFormatFinder.swift in Sources */,
+				032D3E8E1F0EE35600AB8D33 /* UIColor+BridgeKeyNames.swift in Sources */,
 				FF9055DB1CE3E09C0049D12A /* UserDefaults+Utilities.swift in Sources */,
 				FFAAF6391CC0A42A00500929 /* SBABorderedButton.swift in Sources */,
+				032D3E851F0EBED000AB8D33 /* SBARoundedButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
