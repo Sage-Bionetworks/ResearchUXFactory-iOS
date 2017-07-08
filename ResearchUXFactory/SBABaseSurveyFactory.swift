@@ -233,7 +233,7 @@ open class SBABaseSurveyFactory : NSObject {
             // If this is *not* a subtask step and it uses navigation then return a survey form step
             (!isSubtaskStep && inputItem.usesNavigation()) ? SBANavigationFormStep(inputItem: inputItem) :
             // Otherwise, use a form step
-            ORKFormStep(identifier: inputItem.identifier)
+            SBAFormStep(identifier: inputItem.identifier)
         
         inputItem.buildFormItems(with: step as! SBAFormStepProtocol, isSubtaskStep: isSubtaskStep, factory: self)
         inputItem.mapStepValues(with: step)
@@ -317,8 +317,7 @@ open class SBABaseSurveyFactory : NSObject {
         switch (subtype) {
             
         case .visual:
-            return ORKVisualConsentStep(identifier: inputItem.identifier,
-                                        document: self.consentDocument)
+            return SBAVisualConsentStep(identifier: inputItem.identifier, consentDocument: self.consentDocument)
             
         case .sharingOptions:
             let share = inputItem as! SBAConsentSharingOptions
