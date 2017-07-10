@@ -68,6 +68,11 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
      */
     open var learnMoreAction: SBALearnMoreAction?
     
+    /**
+     * Custom text for the continue button.
+     */
+    open var continueButtonTitle: String?
+    
     public override init(identifier: String) {
         super.init(identifier: identifier)
     }
@@ -95,6 +100,11 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             self.image = surveyItem.stepImage
             self.iconImage = surveyItem.iconImage
         }
+        
+        if let dictionary = inputItem as? [String : Any] {
+            let continueButtonTitleKey = #keyPath(continueButtonTitle)
+            self.continueButtonTitle = dictionary[continueButtonTitleKey] as? String
+        }
     }
     
     open override func stepViewControllerClass() -> AnyClass {
@@ -118,6 +128,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         step.learnMoreAction = self.learnMoreAction
         step.customTypeIdentifier = self.customTypeIdentifier
         step.isCompletionStep = self.isCompletionStep
+        step.continueButtonTitle = self.continueButtonTitle
         return step
     }
     
@@ -129,6 +140,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         self.learnMoreAction = aDecoder.decodeObject(forKey: #keyPath(learnMoreAction)) as? SBALearnMoreAction
         self.customTypeIdentifier = aDecoder.decodeObject(forKey: #keyPath(customTypeIdentifier)) as? String
         self.isCompletionStep = aDecoder.decodeBool(forKey: #keyPath(isCompletionStep))
+        self.continueButtonTitle = aDecoder.decodeObject(forKey: #keyPath(continueButtonTitle)) as? String
     }
     
     override open func encode(with aCoder: NSCoder){
@@ -137,6 +149,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         aCoder.encode(self.learnMoreAction, forKey: #keyPath(learnMoreAction))
         aCoder.encode(self.customTypeIdentifier, forKey: #keyPath(customTypeIdentifier))
         aCoder.encode(self.isCompletionStep, forKey: #keyPath(isCompletionStep))
+        aCoder.encode(self.continueButtonTitle, forKey: #keyPath(continueButtonTitle))
     }
     
     // MARK: Equality
@@ -147,6 +160,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             SBAObjectEquality(self.nextStepIdentifier, object.nextStepIdentifier) &&
             SBAObjectEquality(self.learnMoreAction, object.learnMoreAction) &&
             SBAObjectEquality(self.customTypeIdentifier, object.customTypeIdentifier) &&
+            SBAObjectEquality(self.continueButtonTitle, object.continueButtonTitle) &&
             (self.isCompletionStep == object.isCompletionStep)
     }
     
@@ -155,6 +169,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             SBAObjectHash(self.nextStepIdentifier) ^
             SBAObjectHash(learnMoreAction) ^
             SBAObjectHash(self.customTypeIdentifier) ^
+            SBAObjectHash(self.continueButtonTitle) ^
             self.isCompletionStep.hashValue
     }
 }
