@@ -233,6 +233,9 @@ extension ORKDateAnswerFormat : SBAQuestionResultMapping {
         if let date = answer as? Date {
             result.dateAnswer = date
         }
+        else if let dateString = answer as? String {
+            result.dateAnswer = NSDate(iso8601String: dateString) as Date?
+        }
         
         return result
     }
