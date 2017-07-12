@@ -40,31 +40,41 @@ import ResearchKit
 extension ORKStep {
     
     open func defaultStepResult() -> ORKStepResult {
-        return stepResult(with: nil)
+        return stepResult(with: nil, shouldSetDefault: true)
     }
     
     @objc(stepResultWithAnswerMap:)
-    open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+    public func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+        return self.stepResult(with: answerMap, shouldSetDefault: false)
+    }
+    
+    @objc(stepResultWithAnswerMap:shouldSetDefault:)
+    open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
         return ORKStepResult(stepIdentifier: self.identifier, results: nil)
     }
 }
 
 extension ORKFormStep {
-    override open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
-        let stepResult = super.stepResult(with: answerMap)
+    override open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
+        let stepResult = super.stepResult(with: answerMap, shouldSetDefault: shouldSetDefault)
         stepResult.results = self.formItems?.mapAndFilter({ (formItem) -> ORKResult? in
-            return formItem.questionResult(identifier: formItem.identifier, answer: answerMap?[formItem.identifier])
+            let answer = answerMap?[formItem.identifier]
+            guard answer != nil || shouldSetDefault else { return nil }
+            return formItem.questionResult(identifier: formItem.identifier, answer: answer)
         })
         return stepResult
     }
 }
 
 extension ORKQuestionStep {
-    override open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
-        let stepResult = super.stepResult(with: answerMap)
-        if let answerFormat = self.answerFormat as? SBAQuestionResultMapping,
-            let questionResult = answerFormat.questionResult(identifier: self.identifier, answer: answerMap?[self.identifier]) {
-            stepResult.results = [questionResult]
+    override open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
+        let stepResult = super.stepResult(with: answerMap, shouldSetDefault: shouldSetDefault)
+        if let answerFormat = self.answerFormat as? SBAQuestionResultMapping {
+            let answer = answerMap?[self.identifier]
+            if answer != nil || shouldSetDefault,
+                let questionResult = answerFormat.questionResult(identifier: self.identifier, answer: answer) {
+                stepResult.results = [questionResult]
+            }
         }
         return stepResult
     }
