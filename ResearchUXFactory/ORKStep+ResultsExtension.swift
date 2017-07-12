@@ -40,49 +40,59 @@ import ResearchKit
 extension ORKStep {
     
     open func defaultStepResult() -> ORKStepResult {
-        return stepResult(with: nil)
+        return stepResult(with: nil, shouldSetDefault: true)
     }
     
     @objc(stepResultWithAnswerMap:)
-    open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+    public func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
+        return self.stepResult(with: answerMap, shouldSetDefault: false)
+    }
+    
+    @objc(stepResultWithAnswerMap:shouldSetDefault:)
+    open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
         return ORKStepResult(stepIdentifier: self.identifier, results: nil)
     }
 }
 
 extension ORKFormStep {
-    override open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
-        let stepResult = super.stepResult(with: answerMap)
+    override open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
+        let stepResult = super.stepResult(with: answerMap, shouldSetDefault: shouldSetDefault)
         stepResult.results = self.formItems?.mapAndFilter({ (formItem) -> ORKResult? in
-            return formItem.questionResult(identifier: formItem.identifier, answer: answerMap?[formItem.identifier])
+            let answer = answerMap?[formItem.identifier]
+            guard answer != nil || shouldSetDefault else { return nil }
+            return formItem.questionResult(identifier: formItem.identifier, answer: answer)
         })
         return stepResult
     }
 }
 
 extension ORKQuestionStep {
-    override open func stepResult(with answerMap: [String: Any]?) -> ORKStepResult {
-        let stepResult = super.stepResult(with: answerMap)
-        if let answerFormat = self.answerFormat as? SBAQuestionResultMapping,
-            let questionResult = answerFormat.questionResult(identifier: self.identifier, answer: answerMap?[self.identifier]) {
-            stepResult.results = [questionResult]
+    override open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
+        let stepResult = super.stepResult(with: answerMap, shouldSetDefault: shouldSetDefault)
+        if let answerFormat = self.answerFormat as? SBAQuestionResultMapping {
+            let answer = answerMap?[self.identifier]
+            if answer != nil || shouldSetDefault,
+                let questionResult = answerFormat.questionResult(identifier: self.identifier, answer: answer) {
+                stepResult.results = [questionResult]
+            }
         }
         return stepResult
     }
 }
 
-protocol SBAQuestionResultMapping {
+public protocol SBAQuestionResultMapping {
     var questionType: ORKQuestionType { get }
     func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult?
 }
 
 extension ORKFormItem: SBAQuestionResultMapping {
     
-    internal var questionType: ORKQuestionType {
+    public var questionType: ORKQuestionType {
         return self.answerFormat?.questionType ?? .none
     }
     
     // Convenience method for adding a default answer or mapped answer for a given form item
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         guard let answerFormat = self.answerFormat as? SBAQuestionResultMapping,
             let questionResult = answerFormat.questionResult(identifier: identifier, answer: answer)
             else {
@@ -96,7 +106,7 @@ extension ORKFormItem: SBAQuestionResultMapping {
 
 extension ORKTextChoiceAnswerFormat: SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         // Exit early if there are no choices
         guard self.textChoices.count > 0 else { return nil }
@@ -138,7 +148,7 @@ extension ORKTextChoiceAnswerFormat: SBAQuestionResultMapping {
 
 extension ORKScaleAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKScaleQuestionResult(identifier: identifier)
         if let num = answer as? NSNumber {
@@ -154,7 +164,7 @@ extension ORKScaleAnswerFormat : SBAQuestionResultMapping {
 
 extension ORKBooleanAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKBooleanQuestionResult(identifier: identifier)
         if let num = answer as? NSNumber {
@@ -170,7 +180,7 @@ extension ORKBooleanAnswerFormat : SBAQuestionResultMapping {
 
 extension ORKHealthKitQuantityTypeAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKNumericQuestionResult(identifier: identifier)
         if let num = answer as? NSNumber {
@@ -187,7 +197,7 @@ extension ORKHealthKitQuantityTypeAnswerFormat : SBAQuestionResultMapping {
 
 extension ORKNumericAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKNumericQuestionResult(identifier: identifier)
         if let num = answer as? NSNumber {
@@ -201,7 +211,7 @@ extension ORKNumericAnswerFormat : SBAQuestionResultMapping {
 
 extension ORKTextAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKTextQuestionResult(identifier: identifier)
         if let text = answer as? String {
@@ -214,7 +224,7 @@ extension ORKTextAnswerFormat : SBAQuestionResultMapping {
 
 extension ORKEmailAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKTextQuestionResult(identifier: identifier)
         if let text = answer as? String {
@@ -227,11 +237,14 @@ extension ORKEmailAnswerFormat : SBAQuestionResultMapping {
 
 extension ORKDateAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKDateQuestionResult(identifier: identifier)
         if let date = answer as? Date {
             result.dateAnswer = date
+        }
+        else if let dateString = answer as? String {
+            result.dateAnswer = NSDate(iso8601String: dateString) as Date?
         }
         
         return result
@@ -239,7 +252,7 @@ extension ORKDateAnswerFormat : SBAQuestionResultMapping {
 }
 
 extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         guard let answerFormat = self.implied() as? SBAQuestionResultMapping
             else {
@@ -254,7 +267,7 @@ extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
 
 extension ORKMoodScaleAnswerFormat : SBAQuestionResultMapping {
     
-    func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
+    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
         
         let result = ORKMoodScaleQuestionResult(identifier: identifier)
         if let num = answer as? NSNumber {
