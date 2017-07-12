@@ -66,7 +66,7 @@ extension ORKQuestionStep: SBAFormStepProtocol {
     
     public var formItems: [ORKFormItem]? {
         get {
-            return [ORKFormItem(identifier: self.identifier, text: nil, answerFormat: self.answerFormat)]
+            return [ORKFormItem(identifier: self.identifier, text: nil, answerFormat: self.answerFormat, optional: self.isOptional)]
         }
         set {
             self.answerFormat = newValue?.find(withIdentifier: self.identifier)?.answerFormat
