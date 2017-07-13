@@ -285,6 +285,11 @@ extension SBAActiveTask {
                         let instructionStep = step as? ORKInstructionStep {
                         instructionStep.detailText = detail
                     }
+                    if let instructionItem = item as? SBAInstructionStepSurveyItem,
+                        let image = instructionItem.stepImage,
+                        let instructionStep = step as? ORKInstructionStep {
+                        instructionStep.image = image
+                    }
                     if let activeStep = step as? ORKActiveStep,
                         let activeItem = item as? SBAActiveStepSurveyItem {
                         if let spokenInstruction = activeItem.stepSpokenInstruction {
