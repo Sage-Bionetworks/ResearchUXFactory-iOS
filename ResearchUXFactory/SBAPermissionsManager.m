@@ -445,20 +445,34 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
 #pragma mark - CoreMotion
 //---------------------------------------------------------------
 
+- (BOOL)storedCoreMotionPermission {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:NSStringFromSelector(@selector(storedCoreMotionPermission))];
+}
+
+- (void)setStoredCoreMotionPermission:(BOOL)storedCoreMotionPermission {
+    return [[NSUserDefaults standardUserDefaults] setBool:storedCoreMotionPermission forKey:NSStringFromSelector(@selector(storedCoreMotionPermission))];
+}
+
 - (BOOL)isPermissionsGrantedForCoreMotion {
-    return [CMSensorRecorder isAuthorizedForRecording];
+    // Starting with iOS 10, the CMSensorRecorder authorization status cannot be used to determine if the permission
+    // has been granted. So instead, we need to check for it. If this is false, then the screen talking about permission
+    // access with display and permission will be asked if needed. If not, need to check if this has changed,
+    // but only on return to app foreground.
+    return [self storedCoreMotionPermission];
 }
 
 - (void)requestForPermissionCoreMotionWithCompletion:(SBAPermissionsBlock)completion {
-    // Usually this method is called on another thread, but since we are searching
-    // within same date to same date, it will return immediately, so put it on the main thread
-    [self.motionActivityManager queryActivityStartingFromDate:[NSDate date] toDate:[NSDate date] toQueue:[NSOperationQueue mainQueue] withHandler:^(NSArray * __unused activities, NSError *error) {
-        if (completion) {
-            BOOL success = (error == nil);
-            NSError *err = success ? nil : [SBAPermissionsManager permissionDeniedErrorForTypeIdentifier:SBAPermissionTypeIdentifierCoremotion];
-            completion(success, err);
-        }
-    }];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{    
+        [self.motionActivityManager queryActivityStartingFromDate:[NSDate dateWithTimeIntervalSinceNow:-100] toDate:[NSDate date] toQueue:[NSOperationQueue mainQueue] withHandler:^(NSArray * __unused activities, NSError *error) {
+            if (completion) {
+                BOOL success = (error == nil);
+                [self setStoredCoreMotionPermission:success];
+                NSError *err = success ? nil : [SBAPermissionsManager permissionDeniedErrorForTypeIdentifier:SBAPermissionTypeIdentifierCoremotion];
+                completion(success, err);
+            }
+        }];
+    });
 }
 
 
