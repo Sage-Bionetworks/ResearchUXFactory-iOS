@@ -693,7 +693,7 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         
-        let expectedCount = 7
+        let expectedCount = 9
         XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
         guard task.steps.count == expectedCount else { return }
         
@@ -705,39 +705,60 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(instructionStep.identifier, "instruction")
         XCTAssertEqual(instructionStep.text, "intended Use Description Text")
         
+        var idx = 1
+        
         // Step - Permissions
-        guard let permissions = task.steps[1] as? SBAPermissionsStep else {
-            XCTAssert(false, "\(task.steps[1]) not of expect class")
+        guard let permissions = task.steps[idx] as? SBAPermissionsStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
             return
         }
         XCTAssertEqual(permissions.permissionTypes.count, 1)
         XCTAssertEqual(permissions.permissionTypes.first?.identifier, "coremotion")
         
         // Step 2 - Detail Instruction
-        guard let instructionDetailStep = task.steps[2] as? ORKInstructionStep else {
-            XCTAssert(false, "\(task.steps[2]) not of expect class")
+        idx += 1
+        guard let instructionDetailStep = task.steps[idx] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
             return
         }
         XCTAssertEqual(instructionDetailStep.identifier, "instruction1")
         
+        idx += 1
+        guard let instructionDetailStep2 = task.steps[idx] as? ORKInstructionStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
+            return
+        }
+        XCTAssertEqual(instructionDetailStep2.identifier, "instruction2")
+        
         // Step 3 - Count down
-        guard let countStep = task.steps[3] as? ORKCountdownStep else {
-            XCTAssert(false, "\(task.steps[3]) not of expect class")
+        idx += 1
+        guard let countStep = task.steps[idx] as? ORKCountdownStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
             return
         }
         XCTAssertEqual(countStep.identifier, "countdown")
         
         // Step 4 - Walking
-        guard let walkingStep = task.steps[4] as? ORKWalkingTaskStep else {
-            XCTAssert(false, "\(task.steps[4]) not of expect class")
+        idx += 1
+        guard let walkingStep = task.steps[idx] as? ORKWalkingTaskStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
             return
         }
         XCTAssertEqual(walkingStep.identifier, "walking.outbound")
         XCTAssertEqual(walkingStep.stepDuration, 45.0)
         
         // Step 5 - Rest
-        guard let restStep = task.steps[5] as? ORKFitnessStep else {
-            XCTAssert(false, "\(task.steps[5]) not of expect class")
+        
+        idx += 1
+        guard let countStep1 = task.steps[idx] as? ORKCountdownStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
+            return
+        }
+        XCTAssertEqual(countStep1.identifier, "countdown1")
+        
+        idx += 1
+        guard let restStep = task.steps[idx] as? ORKFitnessStep else {
+            XCTAssert(false, "\(task.steps[idx]) not of expect class")
             return
         }
         XCTAssertEqual(restStep.identifier, "walking.rest")
@@ -841,7 +862,7 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         let actualTitles1 = progressStep1.items!.map({ $0.description })
-        let expectedTitles1 = ["\u{2705} Tapping Speed", "\u{2003}\u{2002} Voice", "\u{2003}\u{2002} Gait and Balance"]
+        let expectedTitles1 = ["\u{2705} Tapping Speed", "\u{2003}\u{2002} Voice", "\u{2003}\u{2002} Walk and Balance"]
         XCTAssertEqual(actualTitles1, expectedTitles1)
         
         
@@ -861,7 +882,7 @@ class SBAActiveTaskTests: XCTestCase {
             return
         }
         let actualTitles2 = progressStep2.items!.map({ $0.description })
-        let expectedTitles2 = ["\u{2705} Tapping Speed", "\u{2705} Voice", "\u{2003}\u{2002} Gait and Balance"]
+        let expectedTitles2 = ["\u{2705} Tapping Speed", "\u{2705} Voice", "\u{2003}\u{2002} Walk and Balance"]
         XCTAssertEqual(actualTitles2, expectedTitles2)
         
         // Step 5 - Walking Subtask
