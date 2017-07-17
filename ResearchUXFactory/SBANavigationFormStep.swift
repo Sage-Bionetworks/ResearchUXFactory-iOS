@@ -57,7 +57,7 @@ open class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep {
         super.init(identifier: identifier)
     }
     
-    init(inputItem: SBASurveyItem) {
+    public init(inputItem: SBASurveyItem) {
         super.init(identifier: inputItem.identifier)
         self.sharedCopyFromSurveyItem(inputItem)
     }
