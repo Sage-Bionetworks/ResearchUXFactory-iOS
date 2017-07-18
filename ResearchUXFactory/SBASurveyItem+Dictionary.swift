@@ -167,6 +167,10 @@ extension NSDictionary: SBAInstructionStepSurveyItem {
         return SBAResourceFinder.shared.image(forResource: imageNamed)
     }
     
+}
+
+extension NSDictionary: SBALearnMoreActionItem {
+
     public func learnMoreAction() -> SBALearnMoreAction? {
         
         // Get the action (if one is defined)

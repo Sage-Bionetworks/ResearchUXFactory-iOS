@@ -37,7 +37,7 @@ import ResearchKit
  `SBANavigationFormStep` is an implementation of the `SBASurveyNavigationStep`
  that implements the rules for an `ORKFormStep`
  */
-open class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep {
+open class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep, SBALearnMoreActionStep {
     
     public var surveyStepResultFilterPredicate: NSPredicate {
         return NSPredicate(format: "%K = %@", #keyPath(identifier), self.identifier)
@@ -53,11 +53,16 @@ open class SBANavigationFormStep: ORKFormStep, SBASurveyNavigationStep {
     public var rules: [SBASurveyRule]?
     public var failedSkipIdentifier: String?
     
+    /**
+     * The learn more action for this step
+     */
+    open var learnMoreAction: SBALearnMoreAction?
+    
     override public init(identifier: String) {
         super.init(identifier: identifier)
     }
     
-    init(inputItem: SBASurveyItem) {
+    public init(inputItem: SBASurveyItem) {
         super.init(identifier: inputItem.identifier)
         self.sharedCopyFromSurveyItem(inputItem)
     }

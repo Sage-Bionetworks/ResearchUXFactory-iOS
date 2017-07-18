@@ -35,7 +35,7 @@ import ResearchKit
 
 @objc
 public protocol SBALearnMoreActionStep : class {
-    var learnMoreAction: SBALearnMoreAction? { get }
+    var learnMoreAction: SBALearnMoreAction? { get set }
 }
 
 /**

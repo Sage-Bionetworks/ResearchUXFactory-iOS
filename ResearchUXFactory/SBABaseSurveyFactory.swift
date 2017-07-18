@@ -369,6 +369,9 @@ extension SBAFormStepSurveyItem {
     }
     
     func usesNavigation() -> Bool {
+        if let learnItem = self as? SBALearnMoreActionItem, learnItem.learnMoreAction() != nil {
+            return true
+        }
         guard let ruleGroup = self as? SBASurveyRuleGroup else { return false }
         return ruleGroup.hasNavigationRules()
     }

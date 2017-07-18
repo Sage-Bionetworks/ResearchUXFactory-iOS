@@ -37,7 +37,7 @@ import ResearchKit
  `SBANavigationQuestionStep` is an implementation of the `SBASurveyNavigationStep`
  that implements the rules for an `ORKQuestionStep`
  */
-open class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep {
+open class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep, SBALearnMoreActionStep {
     
     public var surveyStepResultFilterPredicate: NSPredicate {
         return NSPredicate(format: "%K = %@", #keyPath(identifier), self.identifier)
@@ -52,6 +52,11 @@ open class SBANavigationQuestionStep: ORKQuestionStep, SBASurveyNavigationStep {
     
     public var rules: [SBASurveyRule]?
     public var failedSkipIdentifier: String?
+    
+    /**
+     * The learn more action for this step
+     */
+    open var learnMoreAction: SBALearnMoreAction?
     
     override public init(identifier: String) {
         super.init(identifier: identifier)

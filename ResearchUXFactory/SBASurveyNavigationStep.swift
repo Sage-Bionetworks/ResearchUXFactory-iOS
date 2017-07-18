@@ -124,32 +124,54 @@ public extension SBASurveyNavigationStep {
         guard let step = copy as? SBASurveyNavigationStep else { return copy }
         step.rules = self.rules
         step.failedSkipIdentifier = self.failedSkipIdentifier
+        if let learnItem = self as? SBALearnMoreActionStep,
+            let learnStep = step as? SBALearnMoreActionStep {
+            learnStep.learnMoreAction = learnItem.learnMoreAction
+        }
         return step
     }
     
     func sharedDecoding(coder aDecoder: NSCoder) {
         self.rules = aDecoder.decodeObject(forKey: "rules") as? [SBASurveyRule]
         self.failedSkipIdentifier = aDecoder.decodeObject(forKey: "failedSkipIdentifier") as? String
+        if let learnStep = self as? SBALearnMoreActionStep {
+            learnStep.learnMoreAction = aDecoder.decodeObject(forKey: "learnMoreAction") as? SBALearnMoreAction
+        }
     }
     
     func sharedEncoding(_ aCoder: NSCoder) {
         aCoder.encode(self.rules, forKey: "rules")
         aCoder.encode(self.failedSkipIdentifier, forKey: "failedSkipIdentifier")
+        if let learnStep = self as? SBALearnMoreActionStep {
+            aCoder.encode(learnStep.learnMoreAction, forKey: "learnMoreAction")
+        }
     }
     
     func sharedCopyFromSurveyItem(_ surveyItem: Any) {
         guard let ruleGroup = surveyItem as? SBASurveyRuleGroup else { return }
         self.rules = ruleGroup.createSurveyRuleObjects()
         self.failedSkipIdentifier = ruleGroup.skipIfPassed ? nil : (ruleGroup.skipIdentifier ?? ORKNullStepIdentifier)
+        if let learnItem = surveyItem as? SBALearnMoreActionItem,
+            let learnStep = self as? SBALearnMoreActionStep {
+            learnStep.learnMoreAction = learnItem.learnMoreAction()
+        }
     }
     
     func sharedHash() -> Int {
-        return SBAObjectHash(self.rules) ^ SBAObjectHash(self.failedSkipIdentifier)
+        var hash = SBAObjectHash(self.rules) ^ SBAObjectHash(self.failedSkipIdentifier)
+        if let learnStep = self as? SBALearnMoreActionStep {
+            hash = hash ^ SBAObjectHash(learnStep.learnMoreAction)
+        }
+        return hash
     }
     
     func sharedEquality(_ object: Any?) -> Bool {
         guard let object = object as? SBASurveyNavigationStep else { return false }
-        return SBAObjectEquality(self.rules, object.rules) &&
+        var same = SBAObjectEquality(self.rules, object.rules) &&
             SBAObjectEquality(self.failedSkipIdentifier, object.failedSkipIdentifier)
+        if let learnStep = self as? SBALearnMoreActionStep, let other = object as? SBALearnMoreActionStep {
+            same = same && SBAObjectEquality(learnStep.learnMoreAction, other.learnMoreAction)
+        }
+        return same
     }
 }
