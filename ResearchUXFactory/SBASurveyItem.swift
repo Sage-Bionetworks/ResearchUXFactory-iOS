@@ -157,7 +157,7 @@ public protocol SBAFormStepSurveyItem: SBASurveyItem {
 /**
  Additional properties used in creating the appropriate subclass of an `ORKInstructionStep`.
  */
-public protocol SBAInstructionStepSurveyItem: SBASurveyItem {
+public protocol SBAInstructionStepSurveyItem: SBASurveyItem, SBALearnMoreActionItem {
     
     /**
      Additional detailed explanation for the instruction.
@@ -179,13 +179,15 @@ public protocol SBAInstructionStepSurveyItem: SBASurveyItem {
      Optional icon image to show above the title and text.
      */
     var iconImage: UIImage? { get }
+}
+
+public protocol SBALearnMoreActionItem: class {
     
     /**
      @return    An `SBALearnMoreAction` that can be attached to this step.
      */
     func learnMoreAction() -> SBALearnMoreAction?
 }
-
 
 /**
  Additional properties used when creating an `ORKTextFieldAnswerFormat`. This object
