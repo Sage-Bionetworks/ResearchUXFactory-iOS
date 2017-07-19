@@ -37,6 +37,7 @@ private let kStartDateKey = "startDate"
 private let kEndDateKey = "endDate"
 private let kIdentifierKey = "identifier"
 private let kAnswerMapKey = "answers"
+private let kUserInfoKey = "userInfo"
 
 private let kItemKey = "item"
 
@@ -135,6 +136,9 @@ extension ORKResult: BridgeUploadableData {
         asDict[kIdentifierKey] = self.identifier
         asDict[kStartDateKey]  = self.startDate
         asDict[kEndDateKey]    = self.endDate
+        if let info = self.userInfo, info.count > 0 {
+            asDict[kUserInfoKey] = info
+        }
 
         return asDict
     }
@@ -148,10 +152,10 @@ extension ORKResult: BridgeUploadableData {
     }
     
     open func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
+        
         // extend subclasses individually to override this as needed
         return ArchiveableResult(result: self.resultAsDictionary().jsonObject() as AnyObject, filename: self.filenameForArchive())
     }
-    
 }
 
 extension ORKStepResult {
