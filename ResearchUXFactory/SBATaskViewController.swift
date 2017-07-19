@@ -79,6 +79,20 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
     */
     open var hasUploadedResults: Bool = false
     
+    /**
+     The status bar style to use for the view controller currently being shown. This only works with projects
+     set with view-controller-based status bar style.
+    */
+    open var statusBarStyle: UIStatusBarStyle = .default {
+        didSet {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+
     open override var outputDirectory: URL? {
         get {
             if let superDirectory = super.outputDirectory {
