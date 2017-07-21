@@ -144,7 +144,7 @@ extension ORKResult: BridgeUploadableData {
     }
     
     func bridgifyFilename(_ filename: String) -> String {
-        return filename.replacingOccurrences(of: ".", with: "_")
+        return filename.replacingOccurrences(of: ".", with: "_").replacingOccurrences(of: " ", with: "_")
     }
     
     func filenameForArchive() -> String {
