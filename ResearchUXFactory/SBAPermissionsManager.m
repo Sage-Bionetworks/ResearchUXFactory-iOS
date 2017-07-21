@@ -466,7 +466,19 @@ static NSString * const SBAPermissionsManagerErrorDomain = @"SBAPermissionsManag
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{    
         [self.motionActivityManager queryActivityStartingFromDate:[NSDate dateWithTimeIntervalSinceNow:-100] toDate:[NSDate date] toQueue:[NSOperationQueue mainQueue] withHandler:^(NSArray * __unused activities, NSError *error) {
             if (completion) {
-                BOOL success = (error == nil);
+                
+                // Only check the error if it is an entitlement or not authorized return code.
+                // Other codes should be ignored and the app should continue to run.
+                BOOL success = YES;
+                if ((error.code == CMErrorMotionActivityNotEntitled) ||
+                    (error.code == CMErrorNotEntitled)) {
+                    success = NO;
+                    NSAssert(NO, @"App does not have required entitlement");
+                }
+                else if ((error.code == CMErrorMotionActivityNotAuthorized) ||
+                    (error.code == CMErrorNotAuthorized)) {
+                    success = NO;
+                }
                 [self setStoredCoreMotionPermission:success];
                 NSError *err = success ? nil : [SBAPermissionsManager permissionDeniedErrorForTypeIdentifier:SBAPermissionTypeIdentifierCoremotion];
                 completion(success, err);
