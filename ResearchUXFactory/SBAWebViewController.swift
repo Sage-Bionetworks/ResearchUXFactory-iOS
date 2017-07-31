@@ -67,7 +67,9 @@ open class SBAWebViewController: UIViewController, UIWebViewDelegate {
                 webView.loadRequest(request)
             }
             else if let html = self.html {
-                webView.loadHTMLString(html, baseURL: nil)
+                // Include main bundle resourceURL as the baseURL so any stylesheets and images from the 
+                // bundle that are referenced in the HTML will load in the UIWebView.
+                webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
             }
         }
     }
