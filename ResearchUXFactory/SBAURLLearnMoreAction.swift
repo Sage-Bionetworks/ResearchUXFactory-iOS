@@ -73,6 +73,10 @@ public final class SBAURLLearnMoreAction: SBALearnMoreAction {
         vc.url = learnMoreURL
         vc.html = learnMoreHTML
         vc.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: vc, action: #selector(vc.dismissViewController))
+        let doneButtonColor = UIColor.color(for: "learnMoreDoneButtonColor")
+        if (doneButtonColor != nil) {
+            vc.navigationItem.rightBarButtonItem?.tintColor = doneButtonColor
+        }
         let navVC = UINavigationController(rootViewController: vc)
         taskViewController.present(navVC, animated: true, completion: nil)
     }
