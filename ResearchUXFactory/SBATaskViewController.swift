@@ -58,6 +58,12 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
     open var scheduleIdentifier: String?
     
     /**
+     Pointer to the scheduleDate for tracking this task via `SBBScheduledActivity`
+     If nil, today's date will be used in conjunction with scheduleIdentifier
+     */
+    open var scheduleDate: Date?
+    
+    /**
      A localized string that represents the title of the Continue button.
      
      Most steps display a button that enables forward navigation. This button can have titles
