@@ -73,6 +73,11 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
      */
     open var continueButtonTitle: String?
     
+    /**
+     * Name of a .mp3 resource file to play when the step is shown.
+     */
+    open var startStepAudio: String?
+    
     public override init(identifier: String) {
         super.init(identifier: identifier)
     }
@@ -104,6 +109,9 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         if let dictionary = inputItem as? [String : Any] {
             let continueButtonTitleKey = #keyPath(continueButtonTitle)
             self.continueButtonTitle = dictionary[continueButtonTitleKey] as? String
+            
+            let startStepAudioKey = #keyPath(startStepAudio)
+            self.startStepAudio = dictionary[startStepAudioKey] as? String
         }
     }
     
@@ -129,6 +137,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         step.customTypeIdentifier = self.customTypeIdentifier
         step.isCompletionStep = self.isCompletionStep
         step.continueButtonTitle = self.continueButtonTitle
+        step.startStepAudio = self.startStepAudio
         return step
     }
     
@@ -141,6 +150,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         self.customTypeIdentifier = aDecoder.decodeObject(forKey: #keyPath(customTypeIdentifier)) as? String
         self.isCompletionStep = aDecoder.decodeBool(forKey: #keyPath(isCompletionStep))
         self.continueButtonTitle = aDecoder.decodeObject(forKey: #keyPath(continueButtonTitle)) as? String
+        self.startStepAudio = aDecoder.decodeObject(forKey: #keyPath(startStepAudio)) as? String
     }
     
     override open func encode(with aCoder: NSCoder){
@@ -150,6 +160,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
         aCoder.encode(self.customTypeIdentifier, forKey: #keyPath(customTypeIdentifier))
         aCoder.encode(self.isCompletionStep, forKey: #keyPath(isCompletionStep))
         aCoder.encode(self.continueButtonTitle, forKey: #keyPath(continueButtonTitle))
+        aCoder.encode(self.startStepAudio, forKey: #keyPath(startStepAudio))
     }
     
     // MARK: Equality
@@ -161,6 +172,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             SBAObjectEquality(self.learnMoreAction, object.learnMoreAction) &&
             SBAObjectEquality(self.customTypeIdentifier, object.customTypeIdentifier) &&
             SBAObjectEquality(self.continueButtonTitle, object.continueButtonTitle) &&
+            SBAObjectEquality(self.startStepAudio, object.startStepAudio) &&
             (self.isCompletionStep == object.isCompletionStep)
     }
     
@@ -170,6 +182,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             SBAObjectHash(learnMoreAction) ^
             SBAObjectHash(self.customTypeIdentifier) ^
             SBAObjectHash(self.continueButtonTitle) ^
+            SBAObjectHash(self.startStepAudio) ^
             self.isCompletionStep.hashValue
     }
 }

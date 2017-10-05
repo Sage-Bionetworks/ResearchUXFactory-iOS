@@ -282,6 +282,13 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBACond
                 let subRet = subtaskStep.subtask.providesBackgroundAudioPrompts , subRet {
                     return true
             }
+            
+            // Check if the step is an instruction step and if so, if it has a startStepAudio to play
+            if let instructionStep = step as? SBAInstructionStep,
+                let audio = instructionStep.startStepAudio,
+                !audio.isEmpty {
+                return true
+            }
         }
         return false
     }
