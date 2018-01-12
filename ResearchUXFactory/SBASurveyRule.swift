@@ -271,12 +271,12 @@ extension SBASurveyRuleGroup {
             
                 // Need a valid Form subtype and identifier and rule predicate
                 guard let subtype = rule.formSubtype ?? groupSubtype,
-                    let identifier = rule.resultIdentifier ?? self.identifier,
                     let rulePredicate = rule.rulePredicate(with: subtype)
                 else {
                     return nil
                 }
-                
+                let identifier = rule.resultIdentifier ?? self.identifier
+
                 let skipIdentifier = rule.skipIdentifier ?? self.skipIdentifier ?? ORKNullStepIdentifier
                 let ruleObject = SBASurveyRuleObject(identifier: identifier)
                 ruleObject.skipIdentifier = skipIdentifier

@@ -52,7 +52,7 @@ public protocol SBASurveyItem: SBAStepTransformer {
      A short string that uniquely identifies the item. This is used as the step identifier
      and, where appropriate, as the form item identifier or task identifier.
      */
-    var identifier: String! { get }
+    var identifier: String { get }
     
     /**
      The type of step that this item represents.

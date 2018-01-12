@@ -112,7 +112,7 @@ extension NSDictionary: SBAStepTransformer {
 
 extension NSDictionary: SBASurveyItem {
     
-    public var identifier: String! {
+    public var identifier: String {
         return (self[key(.identifier)] as? String) ?? self.schemaIdentifier
     }
     
