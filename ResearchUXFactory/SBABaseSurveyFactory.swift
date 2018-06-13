@@ -357,7 +357,7 @@ extension SBAInstructionStepSurveyItem {
 extension SBAFormStepSurveyItem {
     
     var isValidFormItem: Bool {
-        return (self.identifier != nil) && (self.surveyItemType.formSubtype() != nil)
+        return (self.surveyItemType.formSubtype() != nil)
     }
     
     var isBooleanToggle: Bool {

@@ -339,7 +339,7 @@ class SBASurveyNavigationTests: XCTestCase {
         let formItem = ORKFormItem(identifier: identifier, text: text, answerFormat: answerFormat, optional: optional)
         let rule = SBASurveyRuleObject(identifier: identifier)
         rule.skipIdentifier = "skip"
-        rule.rulePredicate = NSPredicate(format: "answer = %@", expectedAnswer as CVarArg)
+        rule.rulePredicate = NSPredicate(format: "answer = %@", NSNumber(value: expectedAnswer))
         return (formItem, rule)
     }
     

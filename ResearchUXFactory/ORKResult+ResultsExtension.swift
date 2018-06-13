@@ -40,6 +40,7 @@ private let kAnswerMapKey = "answers"
 private let kUserInfoKey = "userInfo"
 
 private let kItemKey = "item"
+private let kResultsKey = "results"
 
 private let kTappingViewSizeKey = "TappingViewSize"
 private let kButtonRectLeftKey = "ButtonRectLeft"
@@ -189,6 +190,19 @@ extension ORKStep {
         }
         
         return stepResult
+    }
+}
+
+extension ORKCollectionResult {
+    
+    public func consolidatedResult() -> ArchiveableResult? {
+        guard let results = self.results else { return nil }
+        
+        let filename = self.filenameForArchive()
+        var result: [String : Any] = [:]
+        result[kItemKey] = self.filenameForArchive()
+        result[kResultsKey] = results.compactMap { $0.bridgeData(self.identifier)?.result as? NSDictionary }
+        return ArchiveableResult(result: result as NSDictionary, filename: filename)
     }
 }
 

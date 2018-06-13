@@ -103,7 +103,7 @@ extension UIColor {
         let hexColor = hexString.substring(from: start)
         
         // If there aren't 6 characters in the hex color then drop through to return nil
-        if hexColor.characters.count == 6 {
+        if hexColor.count == 6 {
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             

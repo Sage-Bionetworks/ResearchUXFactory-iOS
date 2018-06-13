@@ -38,12 +38,15 @@ import UIKit
  */
 @objc
 public protocol SBAAlertPresenter: NSObjectProtocol {
-    func presentViewController(_ viewController: UIViewController,
+    func presentModalViewController(_ viewController: UIViewController,
                                animated: Bool,
                                completion: (() -> Void)?)
 }
 
 extension UIViewController: SBAAlertPresenter {
+    public func presentModalViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
+        self.present(viewController, animated: animated, completion: completion)
+    }
 }
 
 public extension SBAAlertPresenter {
@@ -71,7 +74,7 @@ public extension SBAAlertPresenter {
         for action in actions {
             alert.addAction(action)
         }
-        self.presentViewController(alert, animated: animated, completion: nil)
+        self.presentModalViewController(alert, animated: animated, completion: nil)
     }
 }
 
