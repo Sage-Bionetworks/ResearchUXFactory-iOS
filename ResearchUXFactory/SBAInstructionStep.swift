@@ -106,7 +106,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
             self.iconImage = surveyItem.iconImage
         }
         
-        if let dictionary = inputItem as? [String : Any] {
+        if let dictionary = inputItem as? NSDictionary {
             let continueButtonTitleKey = #keyPath(continueButtonTitle)
             self.continueButtonTitle = dictionary[continueButtonTitleKey] as? String
             
