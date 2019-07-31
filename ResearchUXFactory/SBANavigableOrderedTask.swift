@@ -199,11 +199,11 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBACond
         
         // Look for step in the ordered steps and lop off everything after this one
         if let previousIdentifier = step?.identifier,
-            let idx = self.orderedStepIdentifiers.index(of: previousIdentifier) , idx < self.orderedStepIdentifiers.endIndex {
+            let idx = self.orderedStepIdentifiers.firstIndex(of: previousIdentifier) , idx < self.orderedStepIdentifiers.endIndex {
                 self.orderedStepIdentifiers.removeSubrange(idx.advanced(by: 1) ..< self.orderedStepIdentifiers.endIndex)
         }
         if let identifier = returnStep?.identifier {
-            if let idx = self.orderedStepIdentifiers.index(of: identifier) {
+            if let idx = self.orderedStepIdentifiers.firstIndex(of: identifier) {
                 self.orderedStepIdentifiers.removeSubrange(idx ..< self.orderedStepIdentifiers.endIndex)
             }
             self.orderedStepIdentifiers += [identifier]
@@ -228,7 +228,7 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBACond
 
     override open func step(before step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
         guard let identifier = step?.identifier,
-            let idx = self.orderedStepIdentifiers.index(of: identifier) , idx > 0 else {
+            let idx = self.orderedStepIdentifiers.firstIndex(of: identifier) , idx > 0 else {
             return nil
         }
         let previousIdentifier = self.orderedStepIdentifiers[idx.advanced(by: -1)]

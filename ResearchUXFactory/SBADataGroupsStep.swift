@@ -104,10 +104,11 @@ extension SBADataGroupsChoiceStepProtocol {
     
     public func selectedDataGroups(with stepResult: ORKStepResult) -> [String] {
         let questionResult = stepResult.results?.first as? ORKChoiceQuestionResult
-        let choiceAnswers = questionResult?.choiceAnswers ?? []
-        let filter = NSPredicate(format: "choiceValue IN %@", choiceAnswers)
+        let choiceAnswers = (questionResult?.choiceAnswers ?? []) as NSArray
         let selectedGroups: [String] = self.choiceAnswerFormat?.choices.sba_mapAndFilter({ (choice) -> [String]? in
-            guard filter.evaluate(with: choice.choiceValue) else { return nil }
+            let value = choice.choiceValue
+            choiceAnswers.contains(value)
+            guard choiceAnswers.contains(value) else { return nil }
             return choice.choiceDataGroups
         }).flatMap({ $0 }) ?? []
         return selectedGroups

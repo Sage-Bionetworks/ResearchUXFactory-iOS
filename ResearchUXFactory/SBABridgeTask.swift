@@ -89,7 +89,7 @@ public extension SBABridgeTask {
         if activeSteps.count > 1 {
             let stepTitles = activeSteps.map({ $0.title! })
             for (idx, activeStep) in activeSteps.enumerated() {
-                if idx + 1 < activeSteps.count, let insertAfter = subtaskSteps.index(of: activeStep) {
+                if idx + 1 < activeSteps.count, let insertAfter = subtaskSteps.firstIndex(of: activeStep) {
                     let progressStep = SBAProgressStep(identifier: "progress", stepTitles: stepTitles, index: idx)
                     subtaskSteps.insert(progressStep, at: insertAfter.advanced(by: 1))
                 }
@@ -130,7 +130,7 @@ public extension SBABridgeTask {
         
         let insertIndex: Int = {
             guard let insertAfterIndentifier = self.insertAfter,
-                let index = subtaskSteps.index(where: { $0.identifier == insertAfterIndentifier })
+                let index = subtaskSteps.firstIndex(where: { $0.identifier == insertAfterIndentifier })
             else {
                 return 1
             }
