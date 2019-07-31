@@ -297,11 +297,11 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertEqual(trackNav.shouldSkipStep, expectedFrequencyIds.count == 0)
         
         for identifier in idList {
-            guard let item = items.find(withIdentifier: identifier) else {
+            guard let item = items.sba_find(withIdentifier: identifier) else {
                 XCTAssert(false, "Couldn't find item \(identifier)")
                 return
             }
-            let formItem = formStep.formItems?.find(withIdentifier: identifier)
+            let formItem = formStep.formItems?.sba_find(withIdentifier: identifier)
             if (expectedFrequencyIds.contains(item.identifier)) {
                 XCTAssertNotNil(formItem, "\(identifier)")
                 XCTAssertEqual(formItem?.text, item.text)
@@ -817,7 +817,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertFalse(dataStore.hasChanges);
         XCTAssertNotNil(dataStore.storedDefaults.object(forKey: "selectedItems"))
         XCTAssertNotNil(dataStore.lastTrackingSurveyDate)
-        XCTAssertEqualWithAccuracy(dataStore.lastTrackingSurveyDate?.timeIntervalSinceNow ?? 99.0, 0.0, accuracy: 2)
+        XCTAssertEqual(dataStore.lastTrackingSurveyDate?.timeIntervalSinceNow ?? 99.0, 0.0, accuracy: 2)
     }
     
     func testCommitChanges_OtherTrackedResult() {
@@ -835,7 +835,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertFalse(dataStore.hasChanges);
         XCTAssertNotNil(dataStore.storedDefaults.object(forKey: "results"))
         XCTAssertNotNil(dataStore.lastTrackingSurveyDate)
-        XCTAssertEqualWithAccuracy(dataStore.lastTrackingSurveyDate?.timeIntervalSinceNow ?? 99.0, 0.0, accuracy: 2)
+        XCTAssertEqual(dataStore.lastTrackingSurveyDate?.timeIntervalSinceNow ?? 99.0, 0.0, accuracy: 2)
     }
     
     func testCommitChanges_WithTrackedMedicationAndMomentInDayResult() {
@@ -1201,7 +1201,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         if choiceAnswers.count > 0 {
             answerMap.setValue(choiceAnswers, forKey: "choices")
             for key in choiceAnswers {
-                answerMap.setValue(UInt(key.characters.count), forKey: key)
+                answerMap.setValue(UInt(key.count), forKey: key)
             }
         }
         else {
@@ -1218,7 +1218,7 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         // check that the frequency values are set for the selected items
         for item in dataStore.selectedItems! {
             if (item.usesFrequencyRange) {
-                XCTAssertEqual(item.frequency, UInt(item.identifier.characters.count), "\(item.identifier)")
+                XCTAssertEqual(item.frequency, UInt(item.identifier.count), "\(item.identifier)")
             }
         }
         

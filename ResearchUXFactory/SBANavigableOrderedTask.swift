@@ -87,7 +87,7 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBACond
             return nil
         }
         // Parse out the subtask identifier and look in super for a step with that identifier
-        let subtaskStepIdentifier = identifier.substring(to: identifier.index(range.upperBound, offsetBy: -1))
+        let subtaskStepIdentifier = String(identifier[..<identifier.index(range.upperBound, offsetBy: -1)])
         guard let subtaskStep = super.step(withIdentifier: subtaskStepIdentifier) as? SBASubtaskStep else {
             return nil
         }

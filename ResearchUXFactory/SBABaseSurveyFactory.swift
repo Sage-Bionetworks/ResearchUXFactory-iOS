@@ -69,7 +69,7 @@ open class SBABaseSurveyFactory : NSObject {
     */
     public func mapSteps(with dictionary: NSDictionary) {
         if let steps = dictionary["steps"] as? [NSDictionary] {
-            self.steps = steps.mapAndFilter({ self.createSurveyStepWithDictionary($0) })
+            self.steps = steps.sba_mapAndFilter({ self.createSurveyStepWithDictionary($0) })
         }
     }
     
@@ -378,7 +378,7 @@ extension SBAFormStepSurveyItem {
     
     public func createSubtaskStep(with factory:SBABaseSurveyFactory) -> SBASubtaskStep {
         assert((self.items?.count ?? 0) > 0, "A subtask step requires items")
-        let steps = self.items?.mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
+        let steps = self.items?.sba_mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
         let step = self.usesNavigation() ?
             SBANavigationSubtaskStep(inputItem: self, steps: steps) :
             SBASubtaskStep(identifier: self.identifier, steps: steps)
@@ -460,7 +460,7 @@ extension SBAFormStepSurveyItem {
             }
             return range.createAnswerFormat(with: subtype)
         case .timingRange:
-            guard let textChoices = self.items?.mapAndFilter({ (obj) -> ORKTextChoice? in
+            guard let textChoices = self.items?.sba_mapAndFilter({ (obj) -> ORKTextChoice? in
                 guard let item = obj as? SBANumberRange else { return nil }
                 return item.createORKTextChoice()
             }) else { return nil }

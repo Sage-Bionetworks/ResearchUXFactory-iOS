@@ -277,7 +277,7 @@ extension SBAActiveTask {
         // base factory method defined
         if let items = self.localizedSteps {
             for item in items {
-                if let step = task.steps.find({ return $0.identifier == item.identifier }) {
+                if let step = task.steps.sba_find({ return $0.identifier == item.identifier }) {
                     step.title = item.stepTitle ?? step.title
                     step.text = item.stepText ?? step.text
                     if let instructionItem = item as? SBAInstructionStepSurveyItem,

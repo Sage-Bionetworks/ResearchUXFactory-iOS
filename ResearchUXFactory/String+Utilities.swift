@@ -50,7 +50,7 @@ extension String {
         guard self.hasPrefix(prefix) else { return nil }
         let prefixWithSeparator = prefix + separator
         guard let range = self.range(of: prefixWithSeparator) else { return "" }
-        return self.substring(from: range.upperBound)
+        return String(self[range.upperBound...])
     }
     
     public func removingNewlineCharacters() -> String {
@@ -68,10 +68,10 @@ extension String {
     public func replacingBreaklineHtmlTags() -> String {
         guard let trimmedString = trim() else { return "" }
         guard let range = trimmedString.htmlSearch(tag: "br", start: nil) else { return trimmedString }
-        var result = trimmedString.substring(to: range.open.lowerBound)
+        var result = String(trimmedString[..<range.open.lowerBound])
         if range.open.upperBound < trimmedString.endIndex {
             result.append("\n")
-            let remaining = trimmedString.substring(from: range.open.upperBound)
+            let remaining = String(trimmedString[ range.open.upperBound...])
             result.append(remaining.replacingBreaklineHtmlTags())
         }
         return result

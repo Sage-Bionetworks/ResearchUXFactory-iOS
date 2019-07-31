@@ -58,7 +58,7 @@ open class SBADataGroupTextChoice : ORKTextChoice {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.dataGroups = aDecoder.decodeObject(forKey: "dataGroups") as! [String]
+        self.dataGroups = (aDecoder.decodeObject(forKey: "dataGroups") as? [String]) ?? []
     }
     
     override open func encode(with aCoder: NSCoder) {

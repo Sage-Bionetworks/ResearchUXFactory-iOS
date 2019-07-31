@@ -237,10 +237,11 @@ public final class SBANotificationPermissionObjectType: SBAPermissionObjectType 
         return SBANotificationPermissionObjectType(permissionType: .notifications)
     }
     
-    override open func defaultIdentifierIfNil() -> String {
+    override public func defaultIdentifierIfNil() -> String {
         return SBAPermissionTypeIdentifier.notifications.rawValue
     }
     
+    @objc
     public var categories: Set<UIUserNotificationCategory>?
     
     @objc public dynamic var notificationTypes: UIUserNotificationType = [.alert, .badge, .sound]
@@ -287,7 +288,7 @@ public final class SBALocationPermissionObjectType: SBAPermissionObjectType {
         return Localization.localizedBundleString("NSLocationAlwaysUsageDescription") != nil
     }()
     
-    override open func defaultIdentifierIfNil() -> String {
+    override public func defaultIdentifierIfNil() -> String {
         return SBAPermissionTypeIdentifier.location.rawValue
     }
     
@@ -302,6 +303,7 @@ public final class SBALocationPermissionObjectType: SBAPermissionObjectType {
  The `SBAHealthKitPermissionObjectType` is used to define information for permission
  handling that is specific to requesting permission to access the user's health data.
  */
+@objc
 public final class SBAHealthKitPermissionObjectType: SBAPermissionObjectType {
     
     /**
@@ -309,22 +311,24 @@ public final class SBAHealthKitPermissionObjectType: SBAPermissionObjectType {
     */
     @objc public dynamic var healthKitTypes: [SBAHealthKitProfileObject]?
     
+    @objc
     public var writeTypes: Set<HKSampleType>? {
         guard let profileObjects = healthKitTypes else { return nil }
-        return Set(profileObjects.mapAndFilter({ (profileObject) -> HKSampleType? in
+        return Set(profileObjects.sba_mapAndFilter({ (profileObject) -> HKSampleType? in
             guard !profileObject.readonly else { return nil }
             return profileObject._hkObjectType as? HKSampleType
         }))
     }
     
+    @objc
     public var readTypes: Set<HKObjectType>? {
         guard let profileObjects = healthKitTypes else { return nil }
-        return Set(profileObjects.mapAndFilter({ (profileObject) -> HKObjectType? in
+        return Set(profileObjects.sba_mapAndFilter({ (profileObject) -> HKObjectType? in
             return profileObject._hkObjectType
         }))
     }
 
-    override open func defaultIdentifierIfNil() -> String {
+    override public func defaultIdentifierIfNil() -> String {
         return SBAPermissionTypeIdentifier.healthKit.rawValue
     }
     
@@ -339,7 +343,7 @@ public final class SBAHealthKitPermissionObjectType: SBAPermissionObjectType {
             
         case #keyPath(healthKitTypes):
             let items = value as? [Any]
-            healthKitTypes = items?.mapAndFilter({ (item) -> SBAHealthKitProfileObject? in
+            healthKitTypes = items?.sba_mapAndFilter({ (item) -> SBAHealthKitProfileObject? in
                 if let profileObject = item as? SBAHealthKitProfileObject {
                     return profileObject
                 }

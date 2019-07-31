@@ -106,7 +106,7 @@ extension SBADataGroupsChoiceStepProtocol {
         let questionResult = stepResult.results?.first as? ORKChoiceQuestionResult
         let choiceAnswers = questionResult?.choiceAnswers ?? []
         let filter = NSPredicate(format: "choiceValue IN %@", choiceAnswers)
-        let selectedGroups: [String] = self.choiceAnswerFormat?.choices.mapAndFilter({ (choice) -> [String]? in
+        let selectedGroups: [String] = self.choiceAnswerFormat?.choices.sba_mapAndFilter({ (choice) -> [String]? in
             guard filter.evaluate(with: choice.choiceValue) else { return nil }
             return choice.choiceDataGroups
         }).flatMap({ $0 }) ?? []
@@ -131,7 +131,7 @@ extension SBADataGroupsChoiceStepProtocol {
             // If there is no overlap then return nil
             guard currentSet.count > 0 else { return nil }
             // Otherwise, look for an answer that maps to the current set
-            return answerFormat.choices.mapAndFilter({ (choice) -> Any? in
+            return answerFormat.choices.sba_mapAndFilter({ (choice) -> Any? in
                 let value = Set(choice.convertValueToArray())
                 guard value.count > 0, currentSet.intersection(value) == value else { return nil }
                 return choice.choiceValue

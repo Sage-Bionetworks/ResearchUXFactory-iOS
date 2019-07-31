@@ -98,8 +98,13 @@ private let QuestionResultSurveyAnswerKey = "answer"
 private let NumericResultUnitKey = "unit"
 private let DateAndTimeResultTimeZoneKey = "timeZone"
 
+@objc
 public final class ArchiveableResult : NSObject {
-    public let result: AnyObject
+    
+    @objc
+    public let result: Any
+    
+    @objc
     public let filename: String
     
     public init(result: AnyObject, filename: String) {
@@ -163,7 +168,7 @@ extension ORKStepResult {
     override open func resultAsDictionary() -> NSMutableDictionary {
         let stepResult = super.resultAsDictionary()
         guard let results = self.results  else { return stepResult }
-        stepResult[kAnswerMapKey] = results.filteredDictionary({ (result) -> (String?, AnyObject?) in
+        stepResult[kAnswerMapKey] = results.sba_filteredDictionary({ (result) -> (String?, AnyObject?) in
             guard let questionResult = result as? ORKQuestionResultAnswerJSON,
                 let answer = questionResult.jsonSerializedAnswer() else {
                     return (result.identifier, self.resultAsDictionary().jsonObject() as AnyObject)
@@ -201,7 +206,7 @@ extension ORKCollectionResult {
         let filename = self.filenameForArchive()
         var result: [String : Any] = [:]
         result[kItemKey] = self.filenameForArchive()
-        result[kResultsKey] = results.mapAndFilter { $0.bridgeData(self.identifier)?.result as? NSDictionary }
+        result[kResultsKey] = results.sba_mapAndFilter { $0.bridgeData(self.identifier)?.result as? NSDictionary }
         return ArchiveableResult(result: result as NSDictionary, filename: filename)
     }
 }

@@ -100,7 +100,7 @@ extension UIColor {
                 }
             }
         }
-        let hexColor = hexString.substring(from: start)
+        let hexColor = String(hexString[start...])
         
         // If there aren't 6 characters in the hex color then drop through to return nil
         if hexColor.count == 6 {

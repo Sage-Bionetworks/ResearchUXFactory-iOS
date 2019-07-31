@@ -58,17 +58,17 @@ class SBASubtaskStepTests: XCTestCase {
         
         let step1 = navTask.step(after: nil, with: taskResult)
         XCTAssertNotNil(step1)
-        XCTAssertEqual(step1!.identifier, "intruction")
+        XCTAssertEqual(step1?.identifier, "intruction")
         taskResult.results = [ORKStepResult(identifier: "instruction")]
         
         let step2 = navTask.step(after: step1, with: taskResult)
         XCTAssertNotNil(step2)
-        XCTAssertEqual(step2!.identifier, "Mutating Task.intruction")
+        XCTAssertEqual(step2?.identifier, "Mutating Task.intruction")
         taskResult.results!.append(ORKStepResult(identifier: "Mutating Task.instruction"))
         
         let step3 = navTask.step(after: step2, with: taskResult)
         XCTAssertNotNil(step3)
-        XCTAssertEqual(step3!.identifier, "Mutating Task.question1")
+        XCTAssertEqual(step3?.identifier, "Mutating Task.question1")
         guard let formStep3 = step3 as? ORKFormStep else {
             XCTAssert(false, "\(String(describing: step3)) not of expected type")
             return
@@ -138,7 +138,7 @@ class SBASubtaskStepTests: XCTestCase {
         
         let factory = SBABaseSurveyFactory()
         let items = [inputIntro, inputQ1, inputQ2, conclusion]
-        let steps = items.mapAndFilter({ factory.createSurveyStepWithDictionary($0) })
+        let steps = items.sba_mapAndFilter({ factory.createSurveyStepWithDictionary($0) })
         let task = MutatedResultTask(identifier: "Mutating Task", steps: steps)
         let subtaskStep = SBASubtaskStep(subtask: task)
         

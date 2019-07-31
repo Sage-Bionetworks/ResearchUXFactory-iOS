@@ -109,16 +109,16 @@ class SBAActiveTaskTests: XCTestCase {
             XCTAssert(false, "\(task.steps[1]) not of expect class")
             return
         }
-        XCTAssertNotNil(permissions.permissionTypes.find(withIdentifier: "coremotion"), "\(permissions.permissionTypes)")
-        XCTAssertNotNil(permissions.permissionTypes.find(withIdentifier: "location"), "\(permissions.permissionTypes)")
-        XCTAssertNotNil(permissions.permissionTypes.find(withIdentifier: "camera"), "\(permissions.permissionTypes)")
-        let healthPermission = permissions.permissionTypes.find(withIdentifier: "healthKit") as? SBAHealthKitPermissionObjectType
+        XCTAssertNotNil(permissions.permissionTypes.sba_find(withIdentifier: "coremotion"), "\(permissions.permissionTypes)")
+        XCTAssertNotNil(permissions.permissionTypes.sba_find(withIdentifier: "location"), "\(permissions.permissionTypes)")
+        XCTAssertNotNil(permissions.permissionTypes.sba_find(withIdentifier: "camera"), "\(permissions.permissionTypes)")
+        let healthPermission = permissions.permissionTypes.sba_find(withIdentifier: "healthKit") as? SBAHealthKitPermissionObjectType
         XCTAssertNotNil(healthPermission, "\(permissions.permissionTypes)")
         if let healthKitTypes = healthPermission?.healthKitTypes {
-            XCTAssertNotNil(healthKitTypes.find(withIdentifier:"HKQuantityTypeIdentifierActiveEnergyBurned"))
-            XCTAssertNotNil(healthKitTypes.find(withIdentifier:"HKQuantityTypeIdentifierDistanceWalkingRunning"))
-            XCTAssertNotNil(healthKitTypes.find(withIdentifier:"HKWorkoutTypeIdentifier"))
-            XCTAssertNotNil(healthKitTypes.find(withIdentifier:"HKQuantityTypeIdentifierHeartRate"))
+            XCTAssertNotNil(healthKitTypes.sba_find(withIdentifier:"HKQuantityTypeIdentifierActiveEnergyBurned"))
+            XCTAssertNotNil(healthKitTypes.sba_find(withIdentifier:"HKQuantityTypeIdentifierDistanceWalkingRunning"))
+            XCTAssertNotNil(healthKitTypes.sba_find(withIdentifier:"HKWorkoutTypeIdentifier"))
+            XCTAssertNotNil(healthKitTypes.sba_find(withIdentifier:"HKQuantityTypeIdentifierHeartRate"))
         }
         else {
             XCTAssertNotNil(healthPermission?.healthKitTypes)

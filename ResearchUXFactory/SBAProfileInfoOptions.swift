@@ -135,7 +135,7 @@ public struct SBAProfileInfoOptions {
         // Map the includes
         var extendedOptions: [SBAProfileInfoOption : Any] = [:]
         var customItems: [Any] = []
-        var includes = items.mapAndFilter({ (obj) -> SBAProfileInfoOption? in
+        var includes = items.sba_mapAndFilter({ (obj) -> SBAProfileInfoOption? in
             if let str = obj as? String {
                 return SBAProfileInfoOption(rawValue: str)
             }

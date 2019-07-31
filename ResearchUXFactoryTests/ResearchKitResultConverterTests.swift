@@ -41,7 +41,7 @@ class MockResultConverter: NSObject, SBAResearchKitResultConverter {
     var results: [ORKResult] = []
     
     func findResult(for identifier: String) -> ORKResult? {
-        return results.find(withIdentifier: identifier)
+        return results.sba_find(withIdentifier: identifier)
     }
 }
 

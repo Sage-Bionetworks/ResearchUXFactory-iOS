@@ -102,7 +102,7 @@ extension NSDictionary: SBABridgeTask {
             return [self as SBAStepTransformer]
         }
         // otherwise, explicitly map the steps to SBASurveyItem
-        return steps.mapAndFilter({ return mapToStepTransformer($0) })
+        return steps.sba_mapAndFilter({ return mapToStepTransformer($0) })
     }
     
     public var insertAfter: String? {
@@ -115,7 +115,7 @@ extension NSDictionary: SBABridgeTask {
             return nil
         }
         // otherwise, explicitly map the steps to SBASurveyItem
-        return steps.mapAndFilter({ return mapToStepTransformer($0) })
+        return steps.sba_mapAndFilter({ return mapToStepTransformer($0) })
     }
     
     fileprivate func mapToStepTransformer(_ obj: AnyObject) -> SBAStepTransformer? {

@@ -39,6 +39,7 @@ import ResearchKit
  */
 extension ORKStep {
     
+    @objc
     open func defaultStepResult() -> ORKStepResult {
         return stepResult(with: nil, shouldSetDefault: true)
     }
@@ -57,7 +58,7 @@ extension ORKStep {
 extension ORKFormStep {
     override open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
         let stepResult = super.stepResult(with: answerMap, shouldSetDefault: shouldSetDefault)
-        stepResult.results = self.formItems?.mapAndFilter({ (formItem) -> ORKResult? in
+        stepResult.results = self.formItems?.sba_mapAndFilter({ (formItem) -> ORKResult? in
             let answer = answerMap?[formItem.identifier]
             guard answer != nil || shouldSetDefault else { return nil }
             return formItem.questionResult(identifier: formItem.identifier, answer: answer)

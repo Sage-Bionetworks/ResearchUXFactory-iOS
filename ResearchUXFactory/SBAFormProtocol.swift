@@ -55,7 +55,7 @@ extension SBAFormStepProtocol {
      @return                The form item (if found)
     */
     public func formItem(for identifier: String) -> ORKFormItem? {
-        return self.formItems?.find({ $0.identifier == identifier })
+        return self.formItems?.sba_find({ $0.identifier == identifier })
     }
 }
 
@@ -69,7 +69,7 @@ extension ORKQuestionStep: SBAFormStepProtocol {
             return [ORKFormItem(identifier: self.identifier, text: nil, answerFormat: self.answerFormat, optional: self.isOptional)]
         }
         set {
-            self.answerFormat = newValue?.find(withIdentifier: self.identifier)?.answerFormat
+            self.answerFormat = newValue?.sba_find(withIdentifier: self.identifier)?.answerFormat
         }
     }
 }

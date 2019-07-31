@@ -43,7 +43,7 @@ public final class SBAPopUpLearnMoreAction: SBALearnMoreAction {
     @objc public dynamic var learnMoreText: String!
     
     override public func dictionaryRepresentationKeys() -> [String] {
-        return super.dictionaryRepresentationKeys().appending(#keyPath(learnMoreText))
+        return super.dictionaryRepresentationKeys().sba_appending(#keyPath(learnMoreText))
     }
     
     override public func learnMoreAction(for step: SBALearnMoreActionStep, with taskViewController: ORKTaskViewController) {

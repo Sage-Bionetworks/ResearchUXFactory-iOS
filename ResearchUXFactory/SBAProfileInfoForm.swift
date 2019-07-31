@@ -56,11 +56,11 @@ public protocol SBAProfileInfoForm: SBAFormStepProtocol {
 extension SBAProfileInfoForm {
     
     public var options: [SBAProfileInfoOption]? {
-        return self.formItems?.mapAndFilter({ SBAProfileInfoOption(rawValue: $0.identifier) })
+        return self.formItems?.sba_mapAndFilter({ SBAProfileInfoOption(rawValue: $0.identifier) })
     }
     
     public func formItemForProfileInfoOption(_ profileInfoOption: SBAProfileInfoOption) -> ORKFormItem? {
-        return self.formItems?.find({ $0.identifier == profileInfoOption.rawValue })
+        return self.formItems?.sba_find({ $0.identifier == profileInfoOption.rawValue })
     }
     
     public func commonInit(inputItem: SBASurveyItem?, factory: SBABaseSurveyFactory?) {

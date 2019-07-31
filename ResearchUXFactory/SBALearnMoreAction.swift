@@ -48,7 +48,7 @@ open class SBALearnMoreAction: SBADataObject {
     @objc open dynamic var learnMoreButtonText: String?
     
     override open func dictionaryRepresentationKeys() -> [String] {
-        return super.dictionaryRepresentationKeys().appending(#keyPath(learnMoreButtonText))
+        return super.dictionaryRepresentationKeys().sba_appending(#keyPath(learnMoreButtonText))
     }
     
     @objc(learnMoreActionForStep:taskViewController:)

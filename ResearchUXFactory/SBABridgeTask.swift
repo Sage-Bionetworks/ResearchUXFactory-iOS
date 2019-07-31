@@ -71,7 +71,7 @@ public extension SBABridgeTask {
         let lastIndex = transformableSteps.count - 1
         
         // Map the step transformers to ORKSteps
-        var subtaskSteps: [ORKStep] = transformableSteps.enumerated().mapAndFilter({ (index, item) in
+        var subtaskSteps: [ORKStep] = transformableSteps.enumerated().sba_mapAndFilter({ (index, item) in
             let step = item.transformToStep(with: factory, isLastStep:(lastIndex == index))
             if let activeStep = step as? SBASubtaskStep,
                 let task = activeStep.subtask as? SBATaskExtension,
@@ -102,7 +102,7 @@ public extension SBABridgeTask {
     fileprivate func addInsertSteps(_ subtaskSteps: [ORKStep], factory: SBABaseSurveyFactory) -> [ORKStep] {
         
         // Map the insert steps
-        guard let insertSteps = self.insertSteps?.mapAndFilter({ $0.transformToStep(with: factory, isLastStep: false) }),
+        guard let insertSteps = self.insertSteps?.sba_mapAndFilter({ $0.transformToStep(with: factory, isLastStep: false) }),
             insertSteps.count > 0 else {
                 return subtaskSteps
         }

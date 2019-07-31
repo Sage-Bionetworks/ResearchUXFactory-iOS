@@ -422,10 +422,10 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         let questionResult = ORKBooleanQuestionResult(identifier:formItem.identifier)
         questionResult.booleanAnswer = true
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.booleanAnswer = false
-        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
     }
     
     func testFactory_IntegerQuestion() {
@@ -469,13 +469,13 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         let questionResult = ORKNumericQuestionResult(identifier:formItem.identifier)
         
         questionResult.numericAnswer = 18
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.numericAnswer = 19
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.numericAnswer = 17
-        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
     }
     
     func testFactory_SingleChoiceQuestion() {
@@ -523,10 +523,10 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         let questionResult = ORKChoiceQuestionResult(identifier:formItem.identifier)
         questionResult.choiceAnswers = ["b"]
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.choiceAnswers = ["c"]
-        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
     }
     
     
@@ -671,10 +671,10 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         let questionResult = ORKChoiceQuestionResult(identifier:formItem.identifier)
         questionResult.choiceAnswers = [true]
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.choiceAnswers = [false]
-        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
     }
     
@@ -748,13 +748,13 @@ class SBABaseSurveyFactoryTests: XCTestCase {
         
         let questionResult = ORKChoiceQuestionResult(identifier:formItem.identifier)
         questionResult.choiceAnswers = ["a"]
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.choiceAnswers = ["b"]
-        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertTrue(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
         questionResult.choiceAnswers = ["c"]
-        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(rule.rulePredicate)")
+        XCTAssertFalse(rule.rulePredicate.evaluate(with: questionResult), "\(String(describing: rule.rulePredicate))")
         
     }
     

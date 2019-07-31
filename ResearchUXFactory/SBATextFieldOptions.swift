@@ -58,7 +58,7 @@ open class SBATextFieldOptions: SBADataObject, SBATextFieldRange {
     @objc public dynamic var shouldConfirm: Bool = false
     
     override open func dictionaryRepresentationKeys() -> [String] {
-        return super.dictionaryRepresentationKeys().appending(contentsOf:[#keyPath(maximumLength),
+        return super.dictionaryRepresentationKeys().sba_appending(contentsOf:[#keyPath(maximumLength),
                                                                           #keyPath(minimumLength),
                                                                           #keyPath(validationRegex),
                                                                           #keyPath(invalidMessage),

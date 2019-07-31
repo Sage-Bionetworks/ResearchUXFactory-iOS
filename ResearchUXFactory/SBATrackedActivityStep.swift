@@ -50,7 +50,7 @@ extension SBATrackedActivitySurveyItem {
         
         if (self.trackEach) {
             // If tracking each then need to create a step for each item that is tracked
-            let steps = items.mapAndFilter({ (item) -> SBATrackedActivityFormStep? in
+            let steps = items.sba_mapAndFilter({ (item) -> SBATrackedActivityFormStep? in
                 guard item.tracking else { return nil }
                 return baseStep.copy(withIdentifier: item.identifier)
             })
@@ -191,7 +191,7 @@ open class SBATrackedActivityPageStep: ORKPageStep, SBATrackedNavigationStep {
         if shouldSkipStep { return nil }
         
         // Look for the next match
-        guard let nextIdentifier = selectedItemIdentifiers.nextMatch(identifier) else { return nil }
+        guard let nextIdentifier = selectedItemIdentifiers.sba_nextMatch(identifier) else { return nil }
         return step(withIdentifier: nextIdentifier)
     }
     
@@ -200,7 +200,7 @@ open class SBATrackedActivityPageStep: ORKPageStep, SBATrackedNavigationStep {
         if shouldSkipStep { return nil }
         
         // Look in reverse order through the selected identifiers
-        guard let nextIdentifier = selectedItemIdentifiers.reversed().nextMatch(identifier) else { return nil }
+        guard let nextIdentifier = selectedItemIdentifiers.reversed().sba_nextMatch(identifier) else { return nil }
         return step(withIdentifier: nextIdentifier)
     }
     
@@ -282,7 +282,7 @@ extension SBATrackedActivityPageStepController {
         
         // Get the choice answers
         var formIdentifier = self.step!.identifier
-        let choiceAnswers = pageStep.steps.mapAndFilter({ (step) -> AnyObject? in
+        let choiceAnswers = pageStep.steps.sba_mapAndFilter({ (step) -> AnyObject? in
             
             guard let formStep = step as? ORKFormStep,
                 let formItem = formStep.formItems?.first,
