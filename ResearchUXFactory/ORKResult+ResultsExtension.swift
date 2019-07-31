@@ -448,6 +448,8 @@ extension ORKQuestionType {
             return "Height"
         case .multiplePicker:
             return "Text"
+        @unknown default:
+            return "Text"
         }
     }
 }
