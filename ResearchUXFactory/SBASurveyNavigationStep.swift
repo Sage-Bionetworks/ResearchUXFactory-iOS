@@ -61,7 +61,7 @@ public protocol SBASurveyNavigationStep: SBAPredicateNavigationStep, SBANavigati
 
 public extension SBASurveyNavigationStep {
     
-    public func nextStepIdentifier(with taskResult: ORKTaskResult, and additionalTaskResults:[ORKTaskResult]?) -> String? {
+    func nextStepIdentifier(with taskResult: ORKTaskResult, and additionalTaskResults:[ORKTaskResult]?) -> String? {
         
         guard rules != nil else { return nil }
         

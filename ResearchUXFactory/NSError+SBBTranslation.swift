@@ -35,7 +35,7 @@ import Foundation
 
 public extension NSError {
     
-    public var localizedBridgeErrorMessage: String {
+    var localizedBridgeErrorMessage: String {
         guard let info = self.userInfo["SBBOriginalErrorKey"] as? NSDictionary,
             let message = info["message"] as? String else {
             return self.localizedFailureReason ?? self.localizedDescription

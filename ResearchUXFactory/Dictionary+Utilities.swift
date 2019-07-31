@@ -41,7 +41,7 @@ public extension Dictionary where Value : Equatable {
      
      @return        The `Key` if found, else `nil`.
     */
-    public func sba_key(for value: Value) -> Key? {
+    func sba_key(for value: Value) -> Key? {
         return self.filter { $1 == value }.map { $0.0 }.first
     }
 }
@@ -52,7 +52,7 @@ public extension Dictionary {
     /**
      All the keys in the dictionary.
     */
-    public var sba_allKeys: [Any]? {
+    var sba_allKeys: [Any]? {
         return self.map({ (key, _) -> Any in
             return key
         })
@@ -66,7 +66,7 @@ public extension Dictionary {
      
      @return        A `Dictionary` that merges the the dictionaries.
     */
-    public func sba_merge(from: Dictionary<Key,Value>) -> Dictionary<Key,Value> {
+    func sba_merge(from: Dictionary<Key,Value>) -> Dictionary<Key,Value> {
         var mutableCopy = self
         for (key, value) in from {
             mutableCopy[key] = value

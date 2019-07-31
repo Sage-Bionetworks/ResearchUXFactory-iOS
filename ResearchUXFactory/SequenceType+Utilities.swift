@@ -42,7 +42,7 @@ public extension Sequence {
      
     @return     An array of the transformed elements.
     */
-    public func sba_mapAndFilter<T>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
+    func sba_mapAndFilter<T>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
         var result = [T]()
         for element in self {
             if let t = try transform(element) {
@@ -60,7 +60,7 @@ public extension Sequence {
      
      @return  A dictionary of key/value pairs.
      */
-    public func sba_filteredDictionary<Hashable, T>(_ transform: (Self.Iterator.Element) throws -> (Hashable?, T?)) rethrows -> [Hashable: T] {
+    func sba_filteredDictionary<Hashable, T>(_ transform: (Self.Iterator.Element) throws -> (Hashable?, T?)) rethrows -> [Hashable: T] {
         var result = [Hashable:T]()
         for element in self {
             let (key, t) = try transform(element)
@@ -78,7 +78,7 @@ public extension Sequence {
      
      @return  The element that matchs the pattern.
     */
-    public func sba_find(_ evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
+    func sba_find(_ evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         for element in self {
             if try evaluate(element) {
                 return element
@@ -94,7 +94,7 @@ public extension Sequence {
      
      @return  The next element after the one that matchs the pattern.
      */
-    public func sba_next(_ evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
+    func sba_next(_ evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         var found = false
         for element in self {
             if found {
@@ -112,7 +112,7 @@ public extension Sequence {
      
      @return    The element with that identifier (if found).
     */
-    public func sba_find(withIdentifier identifier: String) -> Self.Iterator.Element? {
+    func sba_find(withIdentifier identifier: String) -> Self.Iterator.Element? {
         for element in self {
             if let obj = element as? NSObject,
                 let id = obj.value(forKey: "identifier") as? String, (id == identifier) {
@@ -129,7 +129,7 @@ public extension Sequence {
      
      @return    The element with that identifier (if found).
     */
-    public func sba_findLast(withIdentifier identifier: String) -> Self.Iterator.Element? {
+    func sba_findLast(withIdentifier identifier: String) -> Self.Iterator.Element? {
         for element in self.reversed() {
             if let obj = element as? NSObject,
                 let id = obj.value(forKey: "identifier") as? String, (id == identifier) {

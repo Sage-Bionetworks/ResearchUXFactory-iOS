@@ -51,13 +51,13 @@ extension UIViewController: SBAAlertPresenter {
 
 public extension SBAAlertPresenter {
     
-    public func showAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
+    func showAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
         
         let okAction = UIAlertAction(title:Localization.buttonOK(), style: .default, handler: actionHandler)
         showAlertWithActions(title: title, message: message, animated: true, actions: [okAction])
     }
     
-    public func showAlertWithYesNo(title: String?, message: String, actionHandler: @escaping ((Bool) -> Void)) {
+    func showAlertWithYesNo(title: String?, message: String, actionHandler: @escaping ((Bool) -> Void)) {
         
         let noAction = UIAlertAction(title: Localization.buttonNo(), style: .default, handler: { _ in
             actionHandler(false)
@@ -69,7 +69,7 @@ public extension SBAAlertPresenter {
         showAlertWithActions(title: title, message: message, animated: true, actions: [noAction, yesAction])
     }
     
-    public func showAlertWithActions(title: String?, message: String, animated: Bool, actions: [UIAlertAction]) {
+    func showAlertWithActions(title: String?, message: String, animated: Bool, actions: [UIAlertAction]) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         for action in actions {
             alert.addAction(action)
