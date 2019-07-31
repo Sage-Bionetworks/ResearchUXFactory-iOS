@@ -131,7 +131,7 @@ extension ORKResult: BridgeUploadableData {
         return jsonData
     }
     
-    open func resultAsDictionary() -> NSMutableDictionary {
+    @objc open func resultAsDictionary() -> NSMutableDictionary {
         let asDict = NSMutableDictionary()
         
         asDict[kIdentifierKey] = self.identifier
@@ -152,7 +152,7 @@ extension ORKResult: BridgeUploadableData {
         return bridgifyFilename(self.identifier) + ".json"
     }
     
-    open func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
+    @objc open func bridgeData(_ stepIdentifier: String) -> ArchiveableResult? {
         
         // extend subclasses individually to override this as needed
         return ArchiveableResult(result: self.resultAsDictionary().jsonObject() as AnyObject, filename: self.filenameForArchive())
@@ -201,7 +201,7 @@ extension ORKCollectionResult {
         let filename = self.filenameForArchive()
         var result: [String : Any] = [:]
         result[kItemKey] = self.filenameForArchive()
-        result[kResultsKey] = results.compactMap { $0.bridgeData(self.identifier)?.result as? NSDictionary }
+        result[kResultsKey] = results.mapAndFilter { $0.bridgeData(self.identifier)?.result as? NSDictionary }
         return ArchiveableResult(result: result as NSDictionary, filename: filename)
     }
 }
@@ -227,13 +227,13 @@ extension ORKTappingIntervalResult {
     override open func resultAsDictionary() -> NSMutableDictionary {
         let tappingResults = super.resultAsDictionary()
     
-        let tappingViewSize = NSStringFromCGSize(self.stepViewSize)
+        let tappingViewSize = NSCoder.string(for: self.stepViewSize)
         tappingResults[kTappingViewSizeKey] = tappingViewSize
     
-        let leftButtonRect = NSStringFromCGRect(self.buttonRect1)
+        let leftButtonRect = NSCoder.string(for: self.buttonRect1)
         tappingResults[kButtonRectLeftKey] = leftButtonRect;
     
-        let rightButtonRect = NSStringFromCGRect(self.buttonRect2)
+        let rightButtonRect = NSCoder.string(for: self.buttonRect2)
         tappingResults[kButtonRectRightKey] = rightButtonRect
     
         let sampleResults = self.samples?.map({ (sample) -> [String: AnyObject] in
@@ -241,7 +241,7 @@ extension ORKTappingIntervalResult {
             
             aSampleDictionary[kTapTimeStampKey]     = sample.timestamp as AnyObject?
             
-            aSampleDictionary[kTapCoordinateKey]   = NSStringFromCGPoint(sample.location) as AnyObject?
+            aSampleDictionary[kTapCoordinateKey]   = NSCoder.string(for: sample.location) as AnyObject?
             
             if (sample.buttonIdentifier == ORKTappingButtonIdentifier.none) {
                 aSampleDictionary[kTappedButtonIdKey] = kTappedButtonNoneKey as AnyObject?
@@ -316,7 +316,7 @@ extension ORKSpatialSpanMemoryResult {
             
             aTouchSample[kSpatialSpanMemoryTouchSampleTimeStampKey]   = sample.timestamp as AnyObject?
             aTouchSample[kSpatialSpanMemoryTouchSampleTargetIndexKey] = sample.targetIndex as AnyObject?
-            aTouchSample[kSpatialSpanMemoryTouchSampleLocationKey]    = NSStringFromCGPoint(sample.location) as AnyObject?
+            aTouchSample[kSpatialSpanMemoryTouchSampleLocationKey]    = NSCoder.string(for: sample.location) as AnyObject?
             aTouchSample[kSpatialSpanMemoryTouchSampleIsCorrectKey]   = sample.isCorrect as AnyObject?
             
             samples += [aTouchSample]
@@ -330,7 +330,7 @@ extension ORKSpatialSpanMemoryResult {
         
         for value: NSValue in targetRectangles {
             let rectangle = value.cgRectValue
-            let stringified = NSStringFromCGRect(rectangle)
+            let stringified = NSCoder.string(for: rectangle)
             rectangles += [stringified]
         }
         return  rectangles as NSArray
@@ -475,12 +475,12 @@ extension ORKQuestionResult: ORKQuestionResultAnswerJSON {
         return choiceQuestionResult
     }
     
-    open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
+    @objc open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
         let className = NSStringFromClass(self.classForCoder)
         fatalError("jsonSerializedAnswer not implemented for \(className)")
     }
     
-    open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
+    @objc open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
         let className = NSStringFromClass(self.classForCoder)
         fatalError("storedAnswer(with:) not implemented for \(className)")
     }

@@ -39,7 +39,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
     /**
     * For cases where this type of step is created as a placeholder for a custom step.
     */
-    open var customTypeIdentifier: String?
+    @objc open var customTypeIdentifier: String?
     
     /**
      * Pointer to the next step to show after this one. If nil, then the next step
@@ -61,7 +61,7 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
     /**
     * Indicates whether or not this step should use the completion step animation.
     */
-    open var isCompletionStep: Bool = false
+    @objc open var isCompletionStep: Bool = false
     
     /**
      * The learn more action for this step
@@ -71,12 +71,12 @@ open class SBAInstructionStep: ORKInstructionStep, SBADirectNavigationRule, SBAC
     /**
      * Custom text for the continue button.
      */
-    open var continueButtonTitle: String?
+    @objc open var continueButtonTitle: String?
     
     /**
      * Name of a .mp3 resource file to play when the step is shown.
      */
-    open var startStepAudio: String?
+    @objc open var startStepAudio: String?
     
     public override init(identifier: String) {
         super.init(identifier: identifier)

@@ -69,8 +69,8 @@ public protocol SBAConditionalExit: class, NSSecureCoding {
  */
 open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBAConditionalExit {
     
-    public var additionalTaskResults: [ORKTaskResult]?
-    public var conditionalRule: SBAConditionalRule?
+    @objc public var additionalTaskResults: [ORKTaskResult]?
+    @objc public var conditionalRule: SBAConditionalRule?
     
     @objc fileprivate var orderedStepIdentifiers: [String] = []
     
@@ -295,7 +295,7 @@ open class SBANavigableOrderedTask: ORKOrderedTask, ORKTaskResultSource, SBACond
     
     // MARK: ORKTaskResultSource
     
-    public var initialResult: ORKTaskResult?
+    @objc public var initialResult: ORKTaskResult?
     
     fileprivate var storedTaskResults: [ORKResult] {
         if (initialResult == nil) {

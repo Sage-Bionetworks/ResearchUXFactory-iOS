@@ -165,8 +165,8 @@ open class SBAPermissionObjectType: SBADataObject {
         return SBAPermissionTypeIdentifier(rawValue: self.identifier)
     }
     
-    open dynamic var title: String?
-    open dynamic var detail: String?
+    @objc open dynamic var title: String?
+    @objc open dynamic var detail: String?
     
     override open func dictionaryRepresentationKeys() -> [String] {
         var keys = super.dictionaryRepresentationKeys()
@@ -243,7 +243,7 @@ public final class SBANotificationPermissionObjectType: SBAPermissionObjectType 
     
     public var categories: Set<UIUserNotificationCategory>?
     
-    public dynamic var notificationTypes: UIUserNotificationType = [.alert, .badge, .sound]
+    @objc public dynamic var notificationTypes: UIUserNotificationType = [.alert, .badge, .sound]
     
     override public func dictionaryRepresentation() -> [AnyHashable : Any] {
         var dictionary = super.dictionaryRepresentation()
@@ -283,7 +283,7 @@ public final class SBANotificationPermissionObjectType: SBAPermissionObjectType 
  */
 public final class SBALocationPermissionObjectType: SBAPermissionObjectType {
     
-    public dynamic var always: Bool = {
+    @objc public dynamic var always: Bool = {
         return Localization.localizedBundleString("NSLocationAlwaysUsageDescription") != nil
     }()
     
@@ -307,7 +307,7 @@ public final class SBAHealthKitPermissionObjectType: SBAPermissionObjectType {
     /**
      The collection of health kit data types that are being requested.
     */
-    public dynamic var healthKitTypes: [SBAHealthKitProfileObject]?
+    @objc public dynamic var healthKitTypes: [SBAHealthKitProfileObject]?
     
     public var writeTypes: Set<HKSampleType>? {
         guard let profileObjects = healthKitTypes else { return nil }
@@ -375,8 +375,8 @@ public final class SBAHealthKitPermissionObjectType: SBAPermissionObjectType {
  */
 public final class SBAHealthKitProfileObject: SBADataObject {
     
-    public dynamic var profileKey: String?
-    public dynamic var readonly: Bool = false
+    @objc public dynamic var profileKey: String?
+    @objc public dynamic var readonly: Bool = false
     
     override public func dictionaryRepresentationKeys() -> [String] {
         var keys = super.dictionaryRepresentationKeys()

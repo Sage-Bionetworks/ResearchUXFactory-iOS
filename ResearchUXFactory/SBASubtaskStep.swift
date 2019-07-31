@@ -38,10 +38,10 @@ import ResearchKit
  */
 open class SBASubtaskStep: ORKStep, SBAConditionalExit {
     
-    open var taskIdentifier: String?
-    open var schemaIdentifier: String?
+    @objc open var taskIdentifier: String?
+    @objc open var schemaIdentifier: String?
     
-    open var subtask: ORKTask & NSCopying & NSSecureCoding {
+    @objc open var subtask: ORKTask & NSCopying & NSSecureCoding {
         return _subtask
     }
     fileprivate var _subtask: ORKTask & NSCopying & NSSecureCoding

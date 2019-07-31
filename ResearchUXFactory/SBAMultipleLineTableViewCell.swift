@@ -38,19 +38,19 @@ open class SBAMultipleLineTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
     
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
         // Add title
         let titleLabel = UILabel(frame: CGRect.zero)
-        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
         titleLabel.textAlignment = .center
         self.titleLabel = titleLabel
         self.contentView.addSubview(titleLabel)
         
         // Add subtitle
         let subtitleLabel = UILabel(frame: CGRect.zero)
-        subtitleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        subtitleLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
         subtitleLabel.numberOfLines = 0
         self.subtitleLabel = subtitleLabel
         self.contentView.addSubview(subtitleLabel)

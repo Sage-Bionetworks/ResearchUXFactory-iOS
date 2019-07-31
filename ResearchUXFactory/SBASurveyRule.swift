@@ -313,8 +313,8 @@ public class SBASurveyRuleObject: SBADataObject, SBASurveyRule {
         return self.identifier
     }
     
-    public dynamic var skipIdentifier: String!
-    public dynamic var rulePredicate: NSPredicate!
+    @objc public dynamic var skipIdentifier: String!
+    @objc public dynamic var rulePredicate: NSPredicate!
     
     override open func dictionaryRepresentationKeys() -> [String] {
         return super.dictionaryRepresentationKeys().appending(contentsOf: [#keyPath(skipIdentifier), #keyPath(rulePredicate)])

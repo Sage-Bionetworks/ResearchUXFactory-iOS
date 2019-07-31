@@ -378,7 +378,7 @@ open class SBATrackedSelectionFormStep: ORKFormStep, SBATrackedSelectionFilter, 
 
 open class SBATrackedFrequencyFormStep: ORKFormStep, SBATrackedNavigationStep, SBATrackedSelectionFilter, SBATrackedDataSelectedItemsProtocol {
     
-    var frequencyAnswerFormat: ORKAnswerFormat?
+    @objc var frequencyAnswerFormat: ORKAnswerFormat?
     
     init(surveyItem: SBAFormStepSurveyItem) {
         super.init(identifier: surveyItem.identifier)

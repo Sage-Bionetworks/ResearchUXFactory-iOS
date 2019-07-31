@@ -45,7 +45,7 @@ public protocol SBALearnMoreActionStep : class {
 @objc
 open class SBALearnMoreAction: SBADataObject {
     
-    open dynamic var learnMoreButtonText: String?
+    @objc open dynamic var learnMoreButtonText: String?
     
     override open func dictionaryRepresentationKeys() -> [String] {
         return super.dictionaryRepresentationKeys().appending(#keyPath(learnMoreButtonText))

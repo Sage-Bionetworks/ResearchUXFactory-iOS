@@ -42,27 +42,27 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
     
     // MARK: Dynamic properties 
     
-    lazy open dynamic var taskIdentifier: String! = {
+    @objc lazy open dynamic var taskIdentifier: String! = {
         return UUID().uuidString
     }()
     
-    lazy open dynamic var schemaIdentifier: String! = {
+    @objc lazy open dynamic var schemaIdentifier: String! = {
         return self.taskIdentifier
     }()
     
-    open dynamic var alwaysIncludeActivitySteps: Bool = false
+    @objc open dynamic var alwaysIncludeActivitySteps: Bool = false
     
-    open dynamic var itemsClassType: String!
+    @objc open dynamic var itemsClassType: String!
     
-    open dynamic var items: [SBATrackedDataObject]!
+    @objc open dynamic var items: [SBATrackedDataObject]!
     
-    open dynamic var steps: [Any]!
+    @objc open dynamic var steps: [Any]!
     
-    open dynamic var insertAfter: String?
+    @objc open dynamic var insertAfter: String?
 
-    open dynamic var trackingSurveyRepeatTimeInterval: TimeInterval = 30 * 24 * 60 * 60   // Every 30 days by default
+    @objc open dynamic var trackingSurveyRepeatTimeInterval: TimeInterval = 30 * 24 * 60 * 60   // Every 30 days by default
     
-    open dynamic var momentInDayRepeatTimeInterval: TimeInterval = 20 * 60   // Every 20 minutes by default
+    @objc open dynamic var momentInDayRepeatTimeInterval: TimeInterval = 20 * 60   // Every 20 minutes by default
     
     
     override open func dictionaryRepresentationKeys() -> [String] {

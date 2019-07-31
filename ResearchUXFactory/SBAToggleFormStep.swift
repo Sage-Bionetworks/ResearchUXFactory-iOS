@@ -60,7 +60,7 @@ public class SBAToggleFormStep: SBANavigationFormStep {
 }
 
 extension ORKAnswerFormat {
-    var isToggleAnswerFormat: Bool {
+    @objc var isToggleAnswerFormat: Bool {
         return false
     }
 }

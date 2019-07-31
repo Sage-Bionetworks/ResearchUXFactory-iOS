@@ -39,7 +39,7 @@ extension ORKTextChoice: SBATextChoice {
     public var choiceDetail: String? { return self.detailText }
     public var choiceValue: NSCoding & NSCopying & NSObjectProtocol { return self.value }
     
-    open var choiceDataGroups: [String] {
+    @objc open var choiceDataGroups: [String] {
         return convertValueToArray()
     }
 }
