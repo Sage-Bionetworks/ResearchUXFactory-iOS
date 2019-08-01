@@ -267,6 +267,20 @@ extension ORKHeightAnswerFormat : SBAQuestionResultMapping {
     }
 }
 
+extension ORKWeightAnswerFormat : SBAQuestionResultMapping {
+    
+    func instantiateQuestionResult(_ identifier: String, _ defaultAnswer: SBADefaultFormItemAnswer, _ answer: AnyObject?) -> ORKQuestionResult? {
+        
+        let result = ORKNumericQuestionResult(identifier: identifier)
+        if let num = answer as? NSNumber {
+            result.numericAnswer = num
+            result.unit = HKUnit.gramUnit(with: .kilo).unitString
+        }
+        
+        return result
+    }
+}
+
 extension ORKTimeOfDayAnswerFormat : SBAQuestionResultMapping {
     
     func instantiateQuestionResult(_ identifier: String, _ defaultAnswer: SBADefaultFormItemAnswer, _ answer: AnyObject?) -> ORKQuestionResult? {

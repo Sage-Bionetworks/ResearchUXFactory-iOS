@@ -127,7 +127,7 @@ class ResearchKitResultConverterTests: XCTestCase {
                                                             "bloodType" : ["HKBloodTypeBNegative"],
                                                             "wheelchairUse" : [true],
                                                             "height" : 158,
-                                                            "weight" : "120 lb",
+                                                            "weight" : 54,
                                                             "wakeTime" : wakeTime,
                                                             "sleepTime" : sleepTime])
         converter.results = stepResult.results!
@@ -146,7 +146,7 @@ class ResearchKitResultConverterTests: XCTestCase {
         let expectedHeight = HKQuantity(unit: HKUnit.meterUnit(with: .centi), doubleValue: 158)
         XCTAssertEqual(converter.height, expectedHeight)
         
-        let expectedWeight = HKQuantity(unit: HKUnit.pound(), doubleValue: 120)
+        let expectedWeight = HKQuantity(unit: HKUnit.gramUnit(with: .kilo), doubleValue: 54)
         XCTAssertEqual(converter.weight, expectedWeight)
         
         // -- Check that the stored result returns the same values 
