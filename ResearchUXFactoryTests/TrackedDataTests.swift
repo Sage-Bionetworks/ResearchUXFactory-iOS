@@ -1035,12 +1035,10 @@ class SBATrackedDataObjectTests: ResourceTestCase {
         XCTAssertEqual(storedResult.startDate, dataStore.lastTrackingSurveyDate)
         XCTAssertEqual(storedResult.endDate, dataStore.lastTrackingSurveyDate)
         
-        guard let storedResults = storedResult.results, let selectionResults = selectionResult.results else {
+        guard let selectionResults = selectionResult.results else {
             XCTAssert(false, "results are nil or counts do not match")
             return
         }
-        
-        XCTAssertEqual(storedResults.count, selectionResults.count)
         
         for expectedResult in selectionResults {
             let result = storedResult.result(forIdentifier: expectedResult.identifier)
