@@ -117,7 +117,8 @@ class SBAToggleFormStepViewController: ORKTableStepViewController, ORKTableStepS
     
     func updatePreferredCellHeight() {
         let itemCount = self.numberOfRows(inSection: 0)
-        if itemCount > 0, let tableView = self.tableView {
+        if itemCount > 0 {
+            let tableView = self.tableView
             let headerHeight = tableView.tableHeaderView?.bounds.height ?? 0
             let footerHeight = tableView.tableFooterView?.bounds.height ?? 0
             let overallHeight = tableView.bounds.size.height;
