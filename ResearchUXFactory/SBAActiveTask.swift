@@ -40,16 +40,16 @@ public enum SBAActiveTaskType {
     
     case activeTask(Identifier)
     public enum Identifier : String {
-        case cardio
         case goNoGo
-        case tapping
         case trailmaking
+    
+        // Deprecated
+        case cardio
+        case memory
+        case tapping
         case tremor
         case voice
         case walking
-    
-        // Deprecated
-        case memory
     }
     
     init(name: String?) {
