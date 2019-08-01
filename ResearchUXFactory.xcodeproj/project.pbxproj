@@ -285,13 +285,6 @@
 			remoteGlobalIDString = B183A4731A8535D100C76870;
 			remoteInfo = ResearchKit;
 		};
-		FF8630331E6FDCBF0077AC57 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF0395F21CFE283F00245DE3 /* ResearchKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF405E2E1E5393DB00002C19;
-			remoteInfo = "ResearchKit (watchOS)";
-		};
 		FF9425AE1E28977F00FD8C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 161479B81BD6CE8F0099A068 /* Project object */;
@@ -553,6 +546,8 @@
 		FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyRule.swift; sourceTree = "<group>"; };
 		FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationFormStep.swift; sourceTree = "<group>"; };
 		FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationSubtaskStep.swift; sourceTree = "<group>"; };
+		FFE8D40F22F26B7B00B9BD73 /* SBAHealthKitWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBAHealthKitWrapper.h; sourceTree = "<group>"; };
+		FFE8D41022F26B7B00B9BD73 /* SBAHealthKitWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBAHealthKitWrapper.m; sourceTree = "<group>"; };
 		FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1023,6 +1018,8 @@
 				FF94256A1E281BC000FD8C24 /* SBAResearchKitResultConverter.swift */,
 				FF94256B1E281BC000FD8C24 /* ORKResult+ResultsExtension.swift */,
 				FF94256C1E281BC000FD8C24 /* ORKStep+ResultsExtension.swift */,
+				FFE8D40F22F26B7B00B9BD73 /* SBAHealthKitWrapper.h */,
+				FFE8D41022F26B7B00B9BD73 /* SBAHealthKitWrapper.m */,
 			);
 			name = Results;
 			sourceTree = "<group>";
@@ -1177,7 +1174,6 @@
 			isa = PBXGroup;
 			children = (
 				FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */,
-				FF8630341E6FDCBF0077AC57 /* ResearchKit.framework */,
 				FFC160A11CFE672100C29AF7 /* ResearchKitTests.xctest */,
 			);
 			name = Products;
@@ -1360,13 +1356,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FF8630341E6FDCBF0077AC57 /* ResearchKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ResearchKit.framework;
-			remoteRef = FF8630331E6FDCBF0077AC57 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -2073,7 +2062,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ResearchUXFactory/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchUXFactory;
@@ -2101,7 +2090,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ResearchUXFactory/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchUXFactory;
 				SKIP_INSTALL = YES;
@@ -2158,7 +2147,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ObjCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2176,7 +2165,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ObjCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2194,7 +2183,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SwiftSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2214,7 +2203,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SwiftSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";

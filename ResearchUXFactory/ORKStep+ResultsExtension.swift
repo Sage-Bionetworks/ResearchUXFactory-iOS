@@ -266,25 +266,3 @@ extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
     }
 }
 
-extension ORKMoodScaleAnswerFormat : SBAQuestionResultMapping {
-    
-    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
-        if let num = answer as? NSNumber {
-            let result = ORKMoodScaleQuestionResult(identifier: identifier)
-            result.scaleAnswer = num
-            return result
-        }
-        else if let selected = answer as? [AnyObject] {
-            let result = ORKChoiceQuestionResult(identifier: identifier)
-            result.choiceAnswers = selected
-            return result
-        }
-        else if answer != nil {
-            let result = ORKChoiceQuestionResult(identifier: identifier)
-            result.choiceAnswers = [answer!]
-            return result
-        }
-        return ORKMoodScaleQuestionResult(identifier: identifier)
-    }
-}
-

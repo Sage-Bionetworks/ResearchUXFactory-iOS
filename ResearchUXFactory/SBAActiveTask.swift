@@ -42,7 +42,6 @@ public enum SBAActiveTaskType {
     public enum Identifier : String {
         case cardio
         case goNoGo
-        case moodSurvey
         case tapping
         case trailmaking
         case tremor
@@ -126,16 +125,6 @@ extension ORKTremorActiveTaskOption {
     }
 }
 
-extension ORKMoodSurveyFrequency {
-    init(name: String?) {
-        let name = name ?? "daily"
-        switch name {
-        case "weekly"   : self = .weekly
-        default         : self = .daily
-        }
-    }
-}
-
 public protocol SBAActiveTask: SBABridgeTask, SBAStepTransformer {
     var taskType: SBAActiveTaskType { get }
     var intendedUseDescription: String? { get }
@@ -164,9 +153,6 @@ extension SBAActiveTask {
 
             case .memory:
                 return memoryTask(predefinedExclusions)
-                
-            case .moodSurvey:
-                return moodSurveyTask(predefinedExclusions)
                 
             case .tapping:
                 return tappingTask(predefinedExclusions)
@@ -310,22 +296,11 @@ extension SBAActiveTask {
     public func cardioTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
         
         let opt = CardioChallengeTaskOptions(taskOptions: taskOptions)
-        
-        if #available(iOS 10.0, *) {
-            return ORKOrderedTask.cardioChallenge(withIdentifier: self.schemaIdentifier,
-                                                  intendedUseDescription: self.intendedUseDescription,
-                                                  walkDuration: opt.walkDuration,
-                                                  restDuration: opt.restDuration,
-                                                  relativeDistanceOnly: !SBAInfoManager.shared.currentParticipant.isTestUser,
-                                                  options: options)
-        }
-        else {
-            return ORKOrderedTask.fitnessCheck(withIdentifier: self.schemaIdentifier,
+        return ORKOrderedTask.fitnessCheck(withIdentifier: self.schemaIdentifier,
                                                intendedUseDescription: self.intendedUseDescription,
                                                walkDuration: opt.walkDuration,
                                                restDuration: opt.restDuration,
                                                options: options)
-        }
     }
     
     public func goNoGoTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
@@ -342,17 +317,6 @@ extension SBAActiveTask {
                                              successSound: opt.successSound,
                                              timeoutSound: opt.timeoutSound,
                                              failureSound: opt.failureSound,
-                                             options: options)
-    }
-    
-    public func moodSurveyTask(_ options: ORKPredefinedTaskOption) -> ORKOrderedTask {
-        
-        let opt = MoodSurveyTaskOptions(taskOptions: taskOptions)
-        
-        return ORKOrderedTask.moodSurvey(withIdentifier: self.schemaIdentifier,
-                                             intendedUseDescription: self.intendedUseDescription,
-                                             frequency: opt.frequency,
-                                             customQuestionText: opt.customQuestionText,
                                              options: options)
     }
     
@@ -498,17 +462,6 @@ public struct CardioChallengeTaskOptions {
             let participant: SBAParticipantInfo? = SBAInfoManager.shared.currentParticipant
             return participant?.isTestUser ?? false
         }()
-    }
-}
-
-public struct MoodSurveyTaskOptions {
-    
-    let frequency: ORKMoodSurveyFrequency
-    let customQuestionText: String?
-    
-    public init(taskOptions: [String : Any]?) {
-        frequency = ORKMoodSurveyFrequency(name: taskOptions?["frequency"] as? String)
-        customQuestionText = taskOptions?["customQuestionText"] as? String
     }
 }
 

@@ -52,8 +52,8 @@ open class SBADataGroupTextChoice : ORKTextChoice {
         return dataGroups
     }
     
-    public override init(text: String, detailText: String?, value: NSCoding & NSCopying & NSObjectProtocol, exclusive: Bool) {
-        super.init(text: text, detailText: detailText, value: value, exclusive: exclusive)
+    public override init(text: String?, primaryTextAttributedString: NSAttributedString?, detailText: String?, detailTextAttributedString: NSAttributedString?, value: NSCoding & NSCopying & NSObjectProtocol, exclusive: Bool) {
+        super.init(text: text, primaryTextAttributedString: primaryTextAttributedString, detailText: detailText, detailTextAttributedString: detailTextAttributedString, value: value, exclusive: exclusive)
     }
 
     public required init?(coder aDecoder: NSCoder) {

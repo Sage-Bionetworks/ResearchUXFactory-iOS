@@ -443,8 +443,6 @@ extension SBAFormStepSurveyItem {
             guard let textChoices = self.items?.map({createTextChoice(from: $0)}) else { return nil }
             let style: ORKChoiceAnswerStyle = (subtype == .singleChoice) ? .singleChoice : .multipleChoice
             return ORKTextChoiceAnswerFormat(style: style, textChoices: textChoices)
-        case .mood:
-            return self.createMoodScaleAnswerFormat()
         case .date, .dateTime:
             let style: ORKDateAnswerStyle = (subtype == .date) ? .date : .dateAndTime
             let range = self.range as? SBADateRange
@@ -478,19 +476,6 @@ extension SBAFormStepSurveyItem {
             return ORKTextChoice(text: "", detailText: nil, value: NSNull(), exclusive: false)
         }
         return textChoice.createORKTextChoice()
-    }
-    
-    public func createMoodScaleAnswerFormat(with defaultChoices:[ORKImageChoice]? = nil) -> ORKMoodScaleAnswerFormat {
-        let moodChoices = defaultChoices ?? ORKMoodScaleAnswerFormat(moodQuestionType: .custom).imageChoices
-        guard let items = self.items, moodChoices.count == items.count
-        else {
-            return ORKMoodScaleAnswerFormat(imageChoices: moodChoices)
-        }
-        let imageChoices = moodChoices.enumerated().map { (idx: Int, moodChoice: ORKImageChoice) -> ORKImageChoice in
-            guard let choice = items[idx] as? SBAImageChoice else { return moodChoice }
-            return choice.createORKImageChoice(with: moodChoice)
-        }
-        return ORKMoodScaleAnswerFormat(imageChoices: imageChoices)
     }
 }
 

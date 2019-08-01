@@ -448,6 +448,8 @@ extension ORKQuestionType {
             return "Height"
         case .multiplePicker:
             return "Text"
+        case .weight:
+            return "Weight"
         @unknown default:
             return "Text"
         }
@@ -521,18 +523,6 @@ extension ORKScaleQuestionResult {
         else {
             return self.scaleAnswer?.intValue
         }
-    }
-}
-
-extension ORKMoodScaleQuestionResult {
-    
-    override open func jsonSerializedAnswer() -> SBAAnswerKeyAndValue? {
-        guard let answer = self.scaleAnswer else { return nil }
-        return SBAAnswerKeyAndValue(key: "scaleAnswer", value: answer.jsonObject(), questionType: .scale)
-    }
-    
-    override open func storedAnswer(with answerFormat:ORKAnswerFormat) -> Any? {
-        return self.scaleAnswer?.intValue
     }
 }
 

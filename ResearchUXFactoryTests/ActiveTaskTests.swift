@@ -201,68 +201,6 @@ class SBAActiveTaskTests: XCTestCase {
         XCTAssertEqual(completionStep.detailText, "Detail Text 123")
     }
     
-    func testMoodSurveyTask() {
-        
-        let inputTask: NSDictionary = [
-            "taskIdentifier"            : "Mood Task",
-            "schemaIdentifier"          : "Mood",
-            "taskType"                  : "moodSurvey",
-            "intendedUseDescription"    : "intended Use Description Text",
-            "taskOptions"               : [
-                "frequency"             : "weekly",
-                "customQuestionText"    : "Custom Question Text"
-            ],
-            "localizedSteps"               : [[
-                "identifier" : "conclusion",
-                "title"      : "Title 123",
-                "text"       : "Text 123",
-                "detailText" : "Detail Text 123"
-                ]
-            ]
-        ]
-        
-        let result = inputTask.createORKTask()
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.identifier, "Mood")
-        
-        guard let task = result as? ORKOrderedTask else {
-            XCTAssert(false, "\(String(describing: result)) not of expect class")
-            return
-        }
-        
-        let expectedCount = 8
-        XCTAssertEqual(task.steps.count, expectedCount, "\(task.steps)")
-        guard task.steps.count == expectedCount else { return }
-        
-        print("\(task.steps)")
-        
-        // Step 1 - Overview
-        guard let instructionStep = task.steps.first as? ORKInstructionStep else {
-            XCTAssert(false, "\(String(describing: task.steps.first)) not of expect class")
-            return
-        }
-        XCTAssertEqual(instructionStep.identifier, "instruction")
-        XCTAssertEqual(instructionStep.title, "Weekly Check-In")
-        XCTAssertEqual(instructionStep.text, "intended Use Description Text")
-        
-        for ii in 1...(expectedCount - 2) {
-            let questionStep = task.steps[ii] as? ORKQuestionStep
-            XCTAssertNotNil(questionStep, "\(task.steps[ii])")
-            let answerFormat = questionStep?.answerFormat as? ORKMoodScaleAnswerFormat
-            XCTAssertNotNil(answerFormat, "\(task.steps[ii])")
-        }
-        
-        // Step - Completion
-        guard let completionStep = task.steps.last as? ORKCompletionStep else {
-            XCTAssert(false, "\(String(describing: task.steps.last)) not of expect class")
-            return
-        }
-        XCTAssertEqual(completionStep.identifier, "conclusion")
-        XCTAssertEqual(completionStep.title, "Title 123")
-        XCTAssertEqual(completionStep.text, "Text 123")
-        XCTAssertEqual(completionStep.detailText, "Detail Text 123")
-    }
-    
     func testTappingTask() {
         
         let inputTask: NSDictionary = [

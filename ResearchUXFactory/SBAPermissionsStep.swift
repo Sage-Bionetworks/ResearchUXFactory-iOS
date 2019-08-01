@@ -150,7 +150,7 @@ open class SBAPermissionsStep: ORKTableStep, SBANavigationSkipRule {
         return SBAPermissionsStepViewController.classForCoder()
     }
 
-    override open func isInstructionStep() -> Bool {
+    open func isInstructionStep() -> Bool {
         return true
     }
     
