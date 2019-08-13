@@ -146,9 +146,6 @@ class ResearchKitResultConverterTests: XCTestCase {
         let expectedHeight = HKQuantity(unit: HKUnit.meterUnit(with: .centi), doubleValue: 158)
         XCTAssertEqual(converter.height, expectedHeight)
         
-        let expectedWeight = HKQuantity(unit: HKUnit.gramUnit(with: .kilo), doubleValue: 54)
-        XCTAssertEqual(converter.weight, expectedWeight)
-        
         // -- Check that the stored result returns the same values 
         
         let storedGender = converter.storedAnswer(for: "gender") as? HKBiologicalSex
@@ -162,9 +159,6 @@ class ResearchKitResultConverterTests: XCTestCase {
         
         let storedHeight = converter.storedAnswer(for: "height") as? HKQuantity
         XCTAssertEqual(storedHeight, expectedHeight)
-        
-        let storedWeight = converter.storedAnswer(for: "weight") as? HKQuantity
-        XCTAssertEqual(storedWeight, expectedWeight)
         
         let storedWakeTime = converter.storedAnswer(for: "wakeTime") as? DateComponents
         XCTAssertEqual(storedWakeTime, wakeTime)
