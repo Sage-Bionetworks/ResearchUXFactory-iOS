@@ -267,7 +267,7 @@ extension ORKHeightAnswerFormat : SBAQuestionResultMapping {
     }
 }
 
-// TODO: syoung 08/01/31 Uncomment with transition to RK2
+// TODO: syoung 08/01/2019 Uncomment with transition to RK2
 //extension ORKWeightAnswerFormat : SBAQuestionResultMapping {
 //
 //    func instantiateQuestionResult(_ identifier: String, _ defaultAnswer: SBADefaultFormItemAnswer, _ answer: AnyObject?) -> ORKQuestionResult? {
