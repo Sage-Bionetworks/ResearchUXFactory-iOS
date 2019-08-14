@@ -53,7 +53,7 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
         
         // Create the steps with the *first* step as the selection step created from the inputItem
         let firstStep = SBATrackedSelectionFormStep(surveyItem: inputItem, items: trackedItems)
-        let additionalSteps:[ORKStep] = inputItem.items?.mapAndFilter({ (element) -> ORKStep? in
+        let additionalSteps:[ORKStep] = inputItem.items?.sba_mapAndFilter({ (element) -> ORKStep? in
             
             // If the item does not conform to survey item then return nil
             guard let surveyItem = element as? SBASurveyItem else { return nil }
@@ -133,7 +133,7 @@ open class SBATrackedSelectionStep: ORKPageStep, SBATrackedStep, SBATrackedDataS
     // MARK: Selection filtering
     
     public var trackedResultIdentifier: String? {
-        return self.steps.find({ (step) -> Bool in
+        return self.steps.sba_find({ (step) -> Bool in
             if let trackedStep = step as? SBATrackedStep , trackedStep.trackingType == .selection {
                 return true
             }
@@ -378,7 +378,7 @@ open class SBATrackedSelectionFormStep: ORKFormStep, SBATrackedSelectionFilter, 
 
 open class SBATrackedFrequencyFormStep: ORKFormStep, SBATrackedNavigationStep, SBATrackedSelectionFilter, SBATrackedDataSelectedItemsProtocol {
     
-    var frequencyAnswerFormat: ORKAnswerFormat?
+    @objc var frequencyAnswerFormat: ORKAnswerFormat?
     
     init(surveyItem: SBAFormStepSurveyItem) {
         super.init(identifier: surveyItem.identifier)
@@ -419,7 +419,7 @@ open class SBATrackedFrequencyFormStep: ORKFormStep, SBATrackedNavigationStep, S
     
     @objc(stepResultWithSelectedItems:)
     public func stepResult(selectedItems:[SBATrackedDataObject]?) -> ORKStepResult? {
-        let results = selectedItems?.mapAndFilter({ (item) -> ORKScaleQuestionResult? in
+        let results = selectedItems?.sba_mapAndFilter({ (item) -> ORKScaleQuestionResult? in
             guard item.usesFrequencyRange else { return nil }
             let scaleResult = ORKScaleQuestionResult(identifier: item.identifier)
             scaleResult.scaleAnswer = NSNumber(value: item.frequency)

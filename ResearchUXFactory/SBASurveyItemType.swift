@@ -58,7 +58,6 @@ public enum SBASurveyItemType {
         case boolean            = "boolean"             // ORKBooleanAnswerFormat
         case singleChoice       = "singleChoiceText"    // ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
         case multipleChoice     = "multipleChoiceText"  // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
-        case mood               = "mood"                // ORKMoodScaleAnswerFormat
         case text               = "textfield"           // ORKTextAnswerFormat
         case multipleLineText   = "multilineText"       // ORKTextAnswerFormat with multiple lines
         case date               = "datePicker"          // ORKDateAnswerFormat of style Date

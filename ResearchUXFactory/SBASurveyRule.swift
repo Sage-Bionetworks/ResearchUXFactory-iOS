@@ -287,7 +287,7 @@ extension SBASurveyRuleGroup {
             if let ruleObject = ruleObject {
                 let key = "\(ruleObject.resultIdentifier).\(ruleObject.skipIdentifier!)"
                 let subgroup: [SBASurveyRuleObject] = rulesMap[key] ?? []
-                rulesMap[key] = subgroup.appending(ruleObject)
+                rulesMap[key] = subgroup.sba_appending(ruleObject)
             }
         }
 
@@ -313,11 +313,11 @@ public class SBASurveyRuleObject: SBADataObject, SBASurveyRule {
         return self.identifier
     }
     
-    public dynamic var skipIdentifier: String!
-    public dynamic var rulePredicate: NSPredicate!
+    @objc public dynamic var skipIdentifier: String!
+    @objc public dynamic var rulePredicate: NSPredicate!
     
     override open func dictionaryRepresentationKeys() -> [String] {
-        return super.dictionaryRepresentationKeys().appending(contentsOf: [#keyPath(skipIdentifier), #keyPath(rulePredicate)])
+        return super.dictionaryRepresentationKeys().sba_appending(contentsOf: [#keyPath(skipIdentifier), #keyPath(rulePredicate)])
     }
 }
 

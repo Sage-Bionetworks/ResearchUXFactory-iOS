@@ -39,6 +39,7 @@ import ResearchKit
  */
 extension ORKStep {
     
+    @objc
     open func defaultStepResult() -> ORKStepResult {
         return stepResult(with: nil, shouldSetDefault: true)
     }
@@ -57,7 +58,7 @@ extension ORKStep {
 extension ORKFormStep {
     override open func stepResult(with answerMap: [String: Any]?, shouldSetDefault:Bool) -> ORKStepResult {
         let stepResult = super.stepResult(with: answerMap, shouldSetDefault: shouldSetDefault)
-        stepResult.results = self.formItems?.mapAndFilter({ (formItem) -> ORKResult? in
+        stepResult.results = self.formItems?.sba_mapAndFilter({ (formItem) -> ORKResult? in
             let answer = answerMap?[formItem.identifier]
             guard answer != nil || shouldSetDefault else { return nil }
             return formItem.questionResult(identifier: formItem.identifier, answer: answer)
@@ -262,28 +263,6 @@ extension ORKHealthKitCharacteristicTypeAnswerFormat: SBAQuestionResultMapping {
 
         return answerFormat.questionResult(identifier: identifier, answer: answer)
         
-    }
-}
-
-extension ORKMoodScaleAnswerFormat : SBAQuestionResultMapping {
-    
-    public func questionResult(identifier: String, answer: Any?) -> ORKQuestionResult? {
-        if let num = answer as? NSNumber {
-            let result = ORKMoodScaleQuestionResult(identifier: identifier)
-            result.scaleAnswer = num
-            return result
-        }
-        else if let selected = answer as? [AnyObject] {
-            let result = ORKChoiceQuestionResult(identifier: identifier)
-            result.choiceAnswers = selected
-            return result
-        }
-        else if answer != nil {
-            let result = ORKChoiceQuestionResult(identifier: identifier)
-            result.choiceAnswers = [answer!]
-            return result
-        }
-        return ORKMoodScaleQuestionResult(identifier: identifier)
     }
 }
 

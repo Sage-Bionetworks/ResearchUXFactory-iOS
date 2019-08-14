@@ -103,7 +103,7 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
             let path = (paths.last! as NSString).appendingPathComponent(self.taskRunUUID.uuidString)
             if !FileManager.default.fileExists(atPath: path) {
                 do {
-                    try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ FileAttributeKey.protectionKey.rawValue : FileProtectionType.completeUntilFirstUserAuthentication ])
+                    try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([ FileAttributeKey.protectionKey.rawValue : FileProtectionType.completeUntilFirstUserAuthentication ]))
                 } catch let error as NSError {
                     print ("Error creating file: \(error)")
                 }
@@ -325,4 +325,10 @@ open class SBATaskViewController: ORKTaskViewController, ORKTaskViewControllerDe
         _internalDelegate?.taskViewController?(taskViewController, didChange: result)
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalFileAttributeKeyDictionary(_ input: [String: Any]?) -> [FileAttributeKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (FileAttributeKey(rawValue: key), value)})
 }

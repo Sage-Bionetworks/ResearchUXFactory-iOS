@@ -271,7 +271,7 @@ extension NSDictionary: SBASurveyRuleGroup, SBASurveyRuleItem {
         }
         
         // else if the items include a value that can map to an expected answer
-        return self.items?.mapAndFilter({ (item) -> SBASurveyRuleItem? in
+        return self.items?.sba_mapAndFilter({ (item) -> SBASurveyRuleItem? in
             guard let rule = item as? SBASurveyRuleItem, rule.isValidRule() else { return nil }
             return rule
         })

@@ -1,8 +1,8 @@
 //
-//  SBALoadingViewPresenter.swift
+//  SBAHealthKitWrapper.h
 //  ResearchUXFactory
 //
-//  Copyright © 2016 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,40 +31,25 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#import <UIKit/UIKit.h>
 
-public protocol SBALoadingViewPresenter {
-    var view: UIView! { get }
-}
+NS_ASSUME_NONNULL_BEGIN
 
-extension SBALoadingViewPresenter {
-    
-    public var standardLoadingView: SBALoadingView? {
-        return self.view.subviews.sba_find({ $0 is SBALoadingView }) as? SBALoadingView
-    }
-    
-    public func showLoadingView() {
-        var loadingView: SBALoadingView? = self.standardLoadingView
-        if (loadingView == nil) {
-            // if nil, create and add the loading view
-            loadingView = SBALoadingView(frame: self.view.bounds)
-            loadingView!.isHidden = true
-            self.view.addSubview(loadingView!)
-            loadingView!.constrainToFillSuperview()
-        }
-        if (!loadingView!.isAnimating || loadingView!.isHidden) {
-            loadingView!.startAnimating()
-        }
-    }
-    
-    public func hideLoadingView(_ completion: (() -> Void)? = nil) {
-        guard let loadingView = standardLoadingView, loadingView.isAnimating else {
-            completion?()
-            return
-        }
-        loadingView.stopAnimating({
-            loadingView.removeFromSuperview()
-            completion?()
-        })
-    }
-}
+typedef NSString * ORKBiologicalSexIdentifier NS_STRING_ENUM;
+
+ORK_EXTERN ORKBiologicalSexIdentifier const ORKBiologicalSexIdentifierFemale;
+ORK_EXTERN ORKBiologicalSexIdentifier const ORKBiologicalSexIdentifierMale;
+ORK_EXTERN ORKBiologicalSexIdentifier const ORKBiologicalSexIdentifierOther;
+
+typedef NSString * ORKBloodTypeIdentifier NS_STRING_ENUM;
+
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierAPositive;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierANegative;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierBPositive;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierBNegative;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierABPositive;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierABNegative;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierOPositive;
+ORK_EXTERN ORKBloodTypeIdentifier const ORKBloodTypeIdentifierONegative;
+
+NS_ASSUME_NONNULL_END

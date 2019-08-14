@@ -35,11 +35,10 @@ import Foundation
 
 public extension UserDefaults {
     
-    public func flushUserDefaults() {
+    func flushUserDefaults() {
         for (key, _) in self.dictionaryRepresentation() {
             self.removeObject(forKey: key)
         }
         self.synchronize()
     }
-
 }

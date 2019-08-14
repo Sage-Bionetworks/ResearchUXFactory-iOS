@@ -35,7 +35,7 @@ import UIKit
 
 open class SBATrackedDataSelectionResult: ORKQuestionResult {
     
-    open var selectedItems: [SBATrackedDataObject]?
+    @objc open var selectedItems: [SBATrackedDataObject]?
     
     override init() {
         super.init()

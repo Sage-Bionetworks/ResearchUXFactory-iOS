@@ -133,9 +133,9 @@ open class SBAPermissionsStep: ORKTableStep, SBANavigationSkipRule {
         if self.items == nil {
             self.items = self.permissionsManager.defaultPermissionTypes
         }
-        else if let healthKitPermission = self.permissionTypes.find({ $0.permissionType == .healthKit }) as? SBAHealthKitPermissionObjectType,
+        else if let healthKitPermission = self.permissionTypes.sba_find({ $0.permissionType == .healthKit }) as? SBAHealthKitPermissionObjectType,
             (healthKitPermission.healthKitTypes == nil) || healthKitPermission.healthKitTypes!.count == 0,
-            let replacement = permissionsManager.defaultPermissionTypes.find({ $0.permissionType == .healthKit }) as? SBAHealthKitPermissionObjectType {
+            let replacement = permissionsManager.defaultPermissionTypes.sba_find({ $0.permissionType == .healthKit }) as? SBAHealthKitPermissionObjectType {
             // If this is a healthkit step and the permission types are not defined, 
             // then look in the default permission types for the default types to include.
             healthKitPermission.healthKitTypes = replacement.healthKitTypes
@@ -150,7 +150,7 @@ open class SBAPermissionsStep: ORKTableStep, SBANavigationSkipRule {
         return SBAPermissionsStepViewController.classForCoder()
     }
 
-    override open func isInstructionStep() -> Bool {
+    open override func isInstructionStep() -> Bool {
         return true
     }
     

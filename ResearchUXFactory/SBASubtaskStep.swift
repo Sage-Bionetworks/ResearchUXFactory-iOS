@@ -38,24 +38,27 @@ import ResearchKit
  */
 open class SBASubtaskStep: ORKStep, SBAConditionalExit {
     
-    open var taskIdentifier: String?
-    open var schemaIdentifier: String?
+    @objc open var taskIdentifier: String?
+    @objc open var schemaIdentifier: String?
     
-    open var subtask: ORKTask & NSCopying & NSSecureCoding {
+    @objc open var subtask: ORKTask & NSCopying & NSSecureCoding {
         return _subtask
     }
     fileprivate var _subtask: ORKTask & NSCopying & NSSecureCoding
     
+    @objc
     override public init(identifier: String) {
         _subtask = ORKOrderedTask(identifier: identifier, steps: nil)
         super.init(identifier: identifier)
     }
     
+    @objc
     public init(identifier: String, steps: [ORKStep]?) {
         _subtask = ORKOrderedTask(identifier: identifier, steps: steps)
         super.init(identifier: identifier);
     }
     
+    @objc
     public init(subtask: ORKTask & NSCopying & NSSecureCoding) {
         _subtask = subtask;
         super.init(identifier: subtask.identifier);
@@ -63,8 +66,7 @@ open class SBASubtaskStep: ORKStep, SBAConditionalExit {
     
     fileprivate func substepIdentifier(_ identifier: String) -> String? {
         guard let range = identifier.range(of: "\(self.subtask.identifier).") else { return nil }
-        let stepRange = range.upperBound ..< identifier.endIndex
-        let stepIdentifier = identifier.substring(with: stepRange)
+        let stepIdentifier = String(identifier[range.upperBound ..< identifier.endIndex])
         return stepIdentifier
     }
     
@@ -92,11 +94,11 @@ open class SBASubtaskStep: ORKStep, SBAConditionalExit {
         for inResult in inputResults {
             if (predicate.evaluate(with: inResult)) {
                 let stepResult = inResult.copy() as! ORKStepResult
-                stepResult.identifier = stepResult.identifier.substring(from: prefix.endIndex)
+                stepResult.identifier = String(stepResult.identifier[prefix.endIndex...])
                 if let stepResults = stepResult.results {
                     for result in stepResults {
                         if result.identifier.hasPrefix(prefix) {
-                            result.identifier = result.identifier.substring(from: prefix.endIndex)
+                            result.identifier = String(result.identifier[prefix.endIndex...])
                         }
                     }
                 }

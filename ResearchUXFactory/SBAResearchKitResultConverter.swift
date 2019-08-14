@@ -291,3 +291,44 @@ extension SBAResearchKitResultConverter {
     
 }
 
+extension ORKBiologicalSexIdentifier {
+    
+    public func healthKitBiologicalSex() -> HKBiologicalSex? {
+        switch (self) {
+        case ORKBiologicalSexIdentifier.female:
+            return HKBiologicalSex.female
+        case ORKBiologicalSexIdentifier.male:
+            return HKBiologicalSex.male
+        case ORKBiologicalSexIdentifier.other:
+            return HKBiologicalSex.other
+        default:
+            return nil
+        }
+    }
+}
+
+extension ORKBloodTypeIdentifier {
+    
+    public func healthKitBloodType() -> HKBloodType? {
+        switch (self) {
+        case ORKBloodTypeIdentifier.abNegative:
+            return HKBloodType.abNegative
+        case ORKBloodTypeIdentifier.abPositive:
+            return HKBloodType.abPositive
+        case ORKBloodTypeIdentifier.aNegative:
+            return HKBloodType.aNegative
+        case ORKBloodTypeIdentifier.aPositive:
+            return HKBloodType.aPositive
+        case ORKBloodTypeIdentifier.bNegative:
+            return HKBloodType.bNegative
+        case ORKBloodTypeIdentifier.bPositive:
+            return HKBloodType.bPositive
+        case ORKBloodTypeIdentifier.oNegative:
+            return HKBloodType.oNegative
+        case ORKBloodTypeIdentifier.oPositive:
+            return HKBloodType.oPositive
+        default:
+            return nil
+        }
+    }
+}

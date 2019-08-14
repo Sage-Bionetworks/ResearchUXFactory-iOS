@@ -69,7 +69,7 @@ open class SBABaseSurveyFactory : NSObject {
     */
     public func mapSteps(with dictionary: NSDictionary) {
         if let steps = dictionary["steps"] as? [NSDictionary] {
-            self.steps = steps.mapAndFilter({ self.createSurveyStepWithDictionary($0) })
+            self.steps = steps.sba_mapAndFilter({ self.createSurveyStepWithDictionary($0) })
         }
     }
     
@@ -378,7 +378,7 @@ extension SBAFormStepSurveyItem {
     
     public func createSubtaskStep(with factory:SBABaseSurveyFactory) -> SBASubtaskStep {
         assert((self.items?.count ?? 0) > 0, "A subtask step requires items")
-        let steps = self.items?.mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
+        let steps = self.items?.sba_mapAndFilter({ factory.createSurveyStep($0 as! SBASurveyItem, isSubtaskStep: true) })
         let step = self.usesNavigation() ?
             SBANavigationSubtaskStep(inputItem: self, steps: steps) :
             SBASubtaskStep(identifier: self.identifier, steps: steps)
@@ -443,8 +443,6 @@ extension SBAFormStepSurveyItem {
             guard let textChoices = self.items?.map({createTextChoice(from: $0)}) else { return nil }
             let style: ORKChoiceAnswerStyle = (subtype == .singleChoice) ? .singleChoice : .multipleChoice
             return ORKTextChoiceAnswerFormat(style: style, textChoices: textChoices)
-        case .mood:
-            return self.createMoodScaleAnswerFormat()
         case .date, .dateTime:
             let style: ORKDateAnswerStyle = (subtype == .date) ? .date : .dateAndTime
             let range = self.range as? SBADateRange
@@ -460,7 +458,7 @@ extension SBAFormStepSurveyItem {
             }
             return range.createAnswerFormat(with: subtype)
         case .timingRange:
-            guard let textChoices = self.items?.mapAndFilter({ (obj) -> ORKTextChoice? in
+            guard let textChoices = self.items?.sba_mapAndFilter({ (obj) -> ORKTextChoice? in
                 guard let item = obj as? SBANumberRange else { return nil }
                 return item.createORKTextChoice()
             }) else { return nil }
@@ -478,19 +476,6 @@ extension SBAFormStepSurveyItem {
             return ORKTextChoice(text: "", detailText: nil, value: NSNull(), exclusive: false)
         }
         return textChoice.createORKTextChoice()
-    }
-    
-    public func createMoodScaleAnswerFormat(with defaultChoices:[ORKImageChoice]? = nil) -> ORKMoodScaleAnswerFormat {
-        let moodChoices = defaultChoices ?? ORKMoodScaleAnswerFormat(moodQuestionType: .custom).imageChoices
-        guard let items = self.items, moodChoices.count == items.count
-        else {
-            return ORKMoodScaleAnswerFormat(imageChoices: moodChoices)
-        }
-        let imageChoices = moodChoices.enumerated().map { (idx: Int, moodChoice: ORKImageChoice) -> ORKImageChoice in
-            guard let choice = items[idx] as? SBAImageChoice else { return moodChoice }
-            return choice.createORKImageChoice(with: moodChoice)
-        }
-        return ORKMoodScaleAnswerFormat(imageChoices: imageChoices)
     }
 }
 

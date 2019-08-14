@@ -39,6 +39,7 @@ extension SBAInfoManager {
         return __shared()
     }
     
+    @objc
     public var resolvedSuiteName: String? {
         return self.suiteName
     }

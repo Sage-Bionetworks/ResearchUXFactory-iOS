@@ -46,7 +46,7 @@ class SBACheckmarkView: UIView {
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.timingFunction = timing
-        animation.fillMode = kCAFillModeBoth
+        animation.fillMode = CAMediaTimingFillMode.both
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 0.3
@@ -100,8 +100,8 @@ class SBACheckmarkView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.lineWidth = path.lineWidth
-        shapeLayer.lineCap = kCALineCapRound
-        shapeLayer.lineJoin = kCALineJoinRound
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
         shapeLayer.frame = self.layer.bounds
         shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.backgroundColor = UIColor.clear.cgColor
@@ -112,7 +112,7 @@ class SBACheckmarkView: UIView {
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        self.accessibilityTraits |= UIAccessibilityTraitImage
+        self.accessibilityTraits  = self.accessibilityTraits.union(.image)
         self.isAccessibilityElement = true
     }
     

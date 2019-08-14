@@ -112,7 +112,6 @@
 		FF6484151CB5E9BF0055B9E7 /* ResourceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6484141CB5E9BF0055B9E7 /* ResourceTestCase.swift */; };
 		FF6484171CB617790055B9E7 /* MedicationTracking.json in Resources */ = {isa = PBXBuildFile; fileRef = FF6484161CB617790055B9E7 /* MedicationTracking.json */; };
 		FF71A6321D71023D00A4EE8A /* ResearchUXFactory.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF71A6341D71023D00A4EE8A /* ResearchUXFactory.strings */; };
-		FF73B5731D38402E00E9D4BD /* EqualityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF73B5721D38402E00E9D4BD /* EqualityTests.m */; };
 		FF77F4721D4AC5E10005503E /* SBAMultipleLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF77F4711D4AC5E10005503E /* SBAMultipleLineTableViewCell.swift */; };
 		FF80920F1D01FD35003FF617 /* ORKAnswerFormat+KeyboardUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80920E1D01FD35003FF617 /* ORKAnswerFormat+KeyboardUtilities.swift */; };
 		FF8359231D6FACED0028B899 /* SBADirectNavigationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8359221D6FACED0028B899 /* SBADirectNavigationRule.swift */; };
@@ -239,6 +238,9 @@
 		FFCF37DE1CDA91520090452F /* SBALearnMoreAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37DD1CDA91520090452F /* SBALearnMoreAction.swift */; };
 		FFCF37E01CDA99120090452F /* UIView+LayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF37DF1CDA99120090452F /* UIView+LayoutExtensions.swift */; };
 		FFCF385D1CE1172A0090452F /* NSPredicate+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */; };
+		FFD19E2022F2303900011F76 /* SequenceType+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD19E1F22F2303900011F76 /* SequenceType+Utilities.swift */; };
+		FFD19E2222F2305700011F76 /* Array+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD19E2122F2305700011F76 /* Array+Utilities.swift */; };
+		FFD19E2422F2306500011F76 /* Dictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD19E2322F2306500011F76 /* Dictionary+Utilities.swift */; };
 		FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */; };
 		FFDECDFD1D077C2000434001 /* ConsentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDECDFC1D077C2000434001 /* ConsentTests.swift */; };
 		FFE57F1E1E38837400CEC67F /* SBASurveyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */; };
@@ -283,7 +285,7 @@
 			remoteGlobalIDString = B183A4731A8535D100C76870;
 			remoteInfo = ResearchKit;
 		};
-		FF8630331E6FDCBF0077AC57 /* PBXContainerItemProxy */ = {
+		FF854C0022F37D1600C134DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF0395F21CFE283F00245DE3 /* ResearchKit.xcodeproj */;
 			proxyType = 2;
@@ -450,7 +452,6 @@
 		FF6484141CB5E9BF0055B9E7 /* ResourceTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTestCase.swift; sourceTree = "<group>"; };
 		FF6484161CB617790055B9E7 /* MedicationTracking.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MedicationTracking.json; sourceTree = "<group>"; };
 		FF71A6331D71023D00A4EE8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/ResearchUXFactory.strings; sourceTree = "<group>"; };
-		FF73B5721D38402E00E9D4BD /* EqualityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualityTests.m; sourceTree = "<group>"; };
 		FF77F4711D4AC5E10005503E /* SBAMultipleLineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAMultipleLineTableViewCell.swift; sourceTree = "<group>"; };
 		FF78CEF71D00B5C4002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/consent_1welcome.html; sourceTree = "<group>"; };
 		FF78CF111D00B617002C456D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/consent_2quiz_headsup.html; sourceTree = "<group>"; };
@@ -544,11 +545,16 @@
 		FFCF37DD1CDA91520090452F /* SBALearnMoreAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBALearnMoreAction.swift; sourceTree = "<group>"; };
 		FFCF37DF1CDA99120090452F /* UIView+LayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutExtensions.swift"; sourceTree = "<group>"; };
 		FFCF385C1CE1172A0090452F /* NSPredicate+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Utilities.swift"; sourceTree = "<group>"; };
+		FFD19E1F22F2303900011F76 /* SequenceType+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SequenceType+Utilities.swift"; sourceTree = "<group>"; };
+		FFD19E2122F2305700011F76 /* Array+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Utilities.swift"; sourceTree = "<group>"; };
+		FFD19E2322F2306500011F76 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FFDA29EE1D3FF216005CD0D0 /* SBATrackedActivityStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SBATrackedActivityStep.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FFDECDFC1D077C2000434001 /* ConsentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTests.swift; sourceTree = "<group>"; };
 		FFE57F1D1E38837400CEC67F /* SBASurveyRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBASurveyRule.swift; sourceTree = "<group>"; };
 		FFE57F211E393E3D00CEC67F /* SBANavigationFormStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationFormStep.swift; sourceTree = "<group>"; };
 		FFE57F231E393EFA00CEC67F /* SBANavigationSubtaskStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBANavigationSubtaskStep.swift; sourceTree = "<group>"; };
+		FFE8D40F22F26B7B00B9BD73 /* SBAHealthKitWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBAHealthKitWrapper.h; sourceTree = "<group>"; };
+		FFE8D41022F26B7B00B9BD73 /* SBAHealthKitWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBAHealthKitWrapper.m; sourceTree = "<group>"; };
 		FFF05FAA1D5A4FCC007304FF /* SBAPermissionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBAPermissionsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -677,7 +683,6 @@
 				FFDECDFC1D077C2000434001 /* ConsentTests.swift */,
 				FF35B9041D9DABC800E0DF23 /* DataGroupsStepTests.swift */,
 				FF64113B1CB43EC6007FB9E1 /* DataObjectTests.swift */,
-				FF73B5721D38402E00E9D4BD /* EqualityTests.m */,
 				FBE551581C6D204B00C9E1AA /* NavigableOrderedTaskTests.m */,
 				FF5544991E2961F900A8E189 /* PermissionsTests.swift */,
 				FFBD87B81E93080700237109 /* ResearchKitResultConverterTests.swift */,
@@ -748,6 +753,9 @@
 		FBAE3CE61C86157E003CEC4A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FFD19E2322F2306500011F76 /* Dictionary+Utilities.swift */,
+				FFD19E2122F2305700011F76 /* Array+Utilities.swift */,
+				FFD19E1F22F2303900011F76 /* SequenceType+Utilities.swift */,
 				FF94259D1E28606300FD8C24 /* NSDate+ISO8601Format.h */,
 				FF94259E1E28606300FD8C24 /* NSDate+ISO8601Format.m */,
 				FF3A354D1CBDAFE600F44E6E /* UIColor+Utilities.swift */,
@@ -1017,6 +1025,8 @@
 				FF94256A1E281BC000FD8C24 /* SBAResearchKitResultConverter.swift */,
 				FF94256B1E281BC000FD8C24 /* ORKResult+ResultsExtension.swift */,
 				FF94256C1E281BC000FD8C24 /* ORKStep+ResultsExtension.swift */,
+				FFE8D40F22F26B7B00B9BD73 /* SBAHealthKitWrapper.h */,
+				FFE8D41022F26B7B00B9BD73 /* SBAHealthKitWrapper.m */,
 			);
 			name = Results;
 			sourceTree = "<group>";
@@ -1171,7 +1181,7 @@
 			isa = PBXGroup;
 			children = (
 				FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */,
-				FF8630341E6FDCBF0077AC57 /* ResearchKit.framework */,
+				FF854C0122F37D1600C134DA /* ResearchKit.framework */,
 				FFC160A11CFE672100C29AF7 /* ResearchKitTests.xctest */,
 			);
 			name = Products;
@@ -1299,16 +1309,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
 					801040B11C5A843D00D26E19 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1030;
 					};
 					801040BA1C5A843D00D26E19 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 						TestTargetID = FF5C26561E28043900A1D9E0;
 					};
@@ -1320,6 +1330,7 @@
 					FF5C26561E28043900A1D9E0 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 4B822CZK9N;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1329,6 +1340,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1352,11 +1364,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FF8630341E6FDCBF0077AC57 /* ResearchKit.framework */ = {
+		FF854C0122F37D1600C134DA /* ResearchKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ResearchKit.framework;
-			remoteRef = FF8630331E6FDCBF0077AC57 /* PBXContainerItemProxy */;
+			remoteRef = FF854C0022F37D1600C134DA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FFC1609F1CFE672100C29AF7 /* ResearchKit.framework */ = {
@@ -1530,6 +1542,7 @@
 				FF9312391DC93327001A9F86 /* SBAPermissionObjectType.swift in Sources */,
 				FF9E48961CF3A2F1005EE7E0 /* StaticUtilities.swift in Sources */,
 				FFDA29EF1D3FF216005CD0D0 /* SBATrackedActivityStep.swift in Sources */,
+				FFD19E2222F2305700011F76 /* Array+Utilities.swift in Sources */,
 				FF5544A11E296CFC00A8E189 /* SBAHealthKitCharacteristicTypeAnswerFormat.swift in Sources */,
 				FB84392F1C7519340086E961 /* SBASurveyItem.swift in Sources */,
 				FFB30EB11D4A8AB000D175D2 /* SBAPermissionsStep.swift in Sources */,
@@ -1551,6 +1564,7 @@
 				FF35B8EC1D9DA93C00E0DF23 /* SBADataGroupsStep.swift in Sources */,
 				FF2728881D91CFB900956CFB /* SBAClassTypeMap.swift in Sources */,
 				FF8359231D6FACED0028B899 /* SBADirectNavigationRule.swift in Sources */,
+				FFD19E2022F2303900011F76 /* SequenceType+Utilities.swift in Sources */,
 				FFF05FAB1D5A4FCC007304FF /* SBAPermissionsManager.swift in Sources */,
 				FFCF37DE1CDA91520090452F /* SBALearnMoreAction.swift in Sources */,
 				FF6410FA1CAF39B4007FB9E1 /* String+Utilities.swift in Sources */,
@@ -1578,6 +1592,7 @@
 				FF64111C1CB34766007FB9E1 /* SBAMedication.m in Sources */,
 				FFE57F241E393EFA00CEC67F /* SBANavigationSubtaskStep.swift in Sources */,
 				FF9055EC1CE527890049D12A /* SBAProgressStep.swift in Sources */,
+				FFD19E2422F2306500011F76 /* Dictionary+Utilities.swift in Sources */,
 				FF6411161CB341D0007FB9E1 /* SBATrackedDataObject.m in Sources */,
 				FF5E56E61D6F8469008BA2A8 /* SBACheckmarkView.swift in Sources */,
 				FFCE30B31EBCFF9B0086DCAA /* SBAChoiceAnswerFormatProtocol.swift in Sources */,
@@ -1611,7 +1626,6 @@
 				FF0158711DF6047600F417E1 /* AnswerFormatFinderTests.swift in Sources */,
 				FFB30E5D1D49537400D175D2 /* AccountTests.swift in Sources */,
 				FF08C9301DEE1EBC00235711 /* UtilityExtensionTests.swift in Sources */,
-				FF73B5731D38402E00E9D4BD /* EqualityTests.m in Sources */,
 				FFBB57311CACEADF0041F120 /* ActiveTaskTests.swift in Sources */,
 				FB8439201C7315030086E961 /* SurveyFactoryTests.swift in Sources */,
 				FFBD87B91E93080700237109 /* ResearchKitResultConverterTests.swift in Sources */,
@@ -1944,18 +1958,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1979,7 +2002,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -1993,18 +2016,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2022,7 +2054,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = iphoneos;
@@ -2047,14 +2079,14 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ResearchUXFactory/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchUXFactory;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2075,12 +2107,12 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ResearchUXFactory/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchUXFactory;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2094,12 +2126,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ResearchUXFactoryTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchUXFactoryTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResearchUXFactoryTests/ResearchUXFactoryTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftSample.app/SwiftSample";
 			};
 			name = Debug;
@@ -2112,11 +2144,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ResearchUXFactoryTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchUXFactoryTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResearchUXFactoryTests/ResearchUXFactoryTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftSample.app/SwiftSample";
 			};
 			name = Release;
@@ -2132,7 +2164,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ObjCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2150,7 +2182,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ObjCSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2168,12 +2200,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SwiftSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2188,11 +2220,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = ResearchUXFactorySample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SwiftSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

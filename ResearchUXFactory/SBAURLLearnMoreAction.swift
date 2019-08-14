@@ -72,8 +72,14 @@ public final class SBAURLLearnMoreAction: SBALearnMoreAction {
         let vc = SBAWebViewController()
         vc.url = learnMoreURL
         vc.html = learnMoreHTML
-        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: vc, action: #selector(vc.dismissViewController))
+        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: vc, action: #selector(vc.dismissSelf))
         let navVC = UINavigationController(rootViewController: vc)
         taskViewController.present(navVC, animated: true, completion: nil)
+    }
+}
+
+extension UIViewController {
+    @objc func dismissSelf() {
+        self.dismiss(animated: true) {}
     }
 }

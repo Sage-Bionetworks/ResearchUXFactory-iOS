@@ -61,7 +61,7 @@ public protocol SBASurveyNavigationStep: SBAPredicateNavigationStep, SBANavigati
 
 public extension SBASurveyNavigationStep {
     
-    public func nextStepIdentifier(with taskResult: ORKTaskResult, and additionalTaskResults:[ORKTaskResult]?) -> String? {
+    func nextStepIdentifier(with taskResult: ORKTaskResult, and additionalTaskResults:[ORKTaskResult]?) -> String? {
         
         guard rules != nil else { return nil }
         
@@ -69,7 +69,7 @@ public extension SBASurveyNavigationStep {
         let results = taskResult.consolidatedResults()
         guard results.count > 0 else { return nil }
         let predicate = self.surveyStepResultFilterPredicate
-        let matchingRules = results.mapAndFilter ({ (stepResult) -> [SBASurveyRule]? in
+        let matchingRules = results.sba_mapAndFilter ({ (stepResult) -> [SBASurveyRule]? in
     
             // Look to see if this step result matches a step for this navigation rule
             guard predicate.evaluate(with: stepResult),
@@ -79,7 +79,7 @@ public extension SBASurveyNavigationStep {
             }
             
             // Look for rules that map to the form items
-            return step.formItems?.mapAndFilter({ matchingRule(formItem: $0, stepResult: stepResult) })
+            return step.formItems?.sba_mapAndFilter({ matchingRule(formItem: $0, stepResult: stepResult) })
             
         }).flatMap({ $0 })
         

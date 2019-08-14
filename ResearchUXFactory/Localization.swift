@@ -33,13 +33,16 @@
 
 import UIKit
 
+@objc
 open class Localization: NSObject {
     
-    open class var allBundles: [Bundle] {
+    @objc
+    public class var allBundles: [Bundle] {
         return SBAInfoManager.shared.resourceBundles
     }
-        
-    open class func localizedString(_ key: String) -> String {
+    
+    @objc
+    public class func localizedString(_ key: String) -> String {
         // Look in these bundles for a localization for the given key
         for bundle in allBundles {
             let tableName = defaultTableNameForBundle(bundle)
@@ -53,7 +56,7 @@ open class Localization: NSObject {
         return key
     }
     
-    open class func defaultTableNameForBundle(_ bundle: Bundle) -> String? {
+    public class func defaultTableNameForBundle(_ bundle: Bundle) -> String? {
         return bundle.bundleIdentifier?.components(separatedBy: ".").last
     }
     
@@ -63,6 +66,7 @@ open class Localization: NSObject {
         } as String
     }
     
+    @objc
     public static func localizedJoin(textList: [String]) -> String {
         switch (textList.count) {
         case 0:
@@ -93,7 +97,7 @@ open class Localization: NSObject {
             
     // MARK: Localized App Name
     
-    open static let localizedAppName : String = {
+    public static let localizedAppName : String = {
         let mainBundle = Bundle.main
         if let bundleInfo = mainBundle.localizedInfoDictionary ?? mainBundle.infoDictionary {
             if let name = bundleInfo["CFBundleDisplayName"] as? String {

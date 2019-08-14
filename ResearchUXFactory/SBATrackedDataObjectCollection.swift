@@ -42,32 +42,32 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
     
     // MARK: Dynamic properties 
     
-    lazy open dynamic var taskIdentifier: String! = {
+    @objc lazy open dynamic var taskIdentifier: String! = {
         return UUID().uuidString
     }()
     
-    lazy open dynamic var schemaIdentifier: String! = {
+    @objc lazy open dynamic var schemaIdentifier: String! = {
         return self.taskIdentifier
     }()
     
-    open dynamic var alwaysIncludeActivitySteps: Bool = false
+    @objc open dynamic var alwaysIncludeActivitySteps: Bool = false
     
-    open dynamic var itemsClassType: String!
+    @objc open dynamic var itemsClassType: String!
     
-    open dynamic var items: [SBATrackedDataObject]!
+    @objc open dynamic var items: [SBATrackedDataObject]!
     
-    open dynamic var steps: [Any]!
+    @objc open dynamic var steps: [Any]!
     
-    open dynamic var insertAfter: String?
+    @objc open dynamic var insertAfter: String?
 
-    open dynamic var trackingSurveyRepeatTimeInterval: TimeInterval = 30 * 24 * 60 * 60   // Every 30 days by default
+    @objc open dynamic var trackingSurveyRepeatTimeInterval: TimeInterval = 30 * 24 * 60 * 60   // Every 30 days by default
     
-    open dynamic var momentInDayRepeatTimeInterval: TimeInterval = 20 * 60   // Every 20 minutes by default
+    @objc open dynamic var momentInDayRepeatTimeInterval: TimeInterval = 20 * 60   // Every 20 minutes by default
     
     
     override open func dictionaryRepresentationKeys() -> [String] {
         let keys = super.dictionaryRepresentationKeys().filter({ $0 != #keyPath(identifier)})
-        return keys.appending(contentsOf: [ #keyPath(taskIdentifier),
+        return keys.sba_appending(contentsOf: [ #keyPath(taskIdentifier),
                                             #keyPath(schemaIdentifier),
                                             #keyPath(alwaysIncludeActivitySteps),
                                             #keyPath(trackingSurveyRepeatTimeInterval),
@@ -87,7 +87,7 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
     
     override open func setValue(_ value: Any?, forKey key: String) {
         if (key == #keyPath(items)), let arr = value as? [Any] {
-            self.items = arr.mapAndFilter({ (obj) -> SBATrackedDataObject? in
+            self.items = arr.sba_mapAndFilter({ (obj) -> SBATrackedDataObject? in
                 if let item = obj as? SBATrackedDataObject {
                     return item
                 }
@@ -230,7 +230,7 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
         var trackedResults:[ORKStepResult] = []
         
         // Filter and map
-        let steps: [ORKStep] = self.steps.mapAndFilter { (element) -> ORKStep? in
+        let steps: [ORKStep] = self.steps.sba_mapAndFilter { (element) -> ORKStep? in
             
             // If the item is not of the expected protocol then ignore it
             guard let item = element as? SBASurveyItem else { return nil }
@@ -277,7 +277,7 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
     }
     
     open func findStep(_ trackingType: SBATrackingStepType) -> SBATrackedStepSurveyItem? {
-        return self.steps.find({ (obj) -> Bool in
+        return self.steps.sba_find({ (obj) -> Bool in
             guard let trackingItem = obj as? SBATrackedStepSurveyItem,
                 let type = trackingItem.trackingType else { return false }
             return type == trackingType
@@ -311,6 +311,6 @@ open class SBATrackedDataObjectCollection: SBADataObject, SBABridgeTask, SBAStep
         guard let selectedItems = self.dataStore.selectedItems else {
             return false
         }
-        return selectedItems.find({ $0.tracking }) != nil
+        return selectedItems.sba_find({ $0.tracking }) != nil
     }
 }

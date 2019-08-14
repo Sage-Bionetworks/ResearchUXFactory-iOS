@@ -43,22 +43,22 @@ import Foundation
  */
 open class SBATextFieldOptions: SBADataObject, SBATextFieldRange {
     
-    public dynamic var validationRegex: String?
+    @objc public dynamic var validationRegex: String?
     
-    public dynamic var invalidMessage: String?
+    @objc public dynamic var invalidMessage: String?
     
-    public dynamic var maximumLength: Int = 0
+    @objc public dynamic var maximumLength: Int = 0
     
-    public dynamic var minimumLength: Int = 0
+    @objc public dynamic var minimumLength: Int = 0
     
-    public dynamic var autocapitalizationType: UITextAutocapitalizationType = .none
+    @objc public dynamic var autocapitalizationType: UITextAutocapitalizationType = .none
     
-    public dynamic var keyboardType: UIKeyboardType = .default
+    @objc public dynamic var keyboardType: UIKeyboardType = .default
     
-    public dynamic var shouldConfirm: Bool = false
+    @objc public dynamic var shouldConfirm: Bool = false
     
     override open func dictionaryRepresentationKeys() -> [String] {
-        return super.dictionaryRepresentationKeys().appending(contentsOf:[#keyPath(maximumLength),
+        return super.dictionaryRepresentationKeys().sba_appending(contentsOf:[#keyPath(maximumLength),
                                                                           #keyPath(minimumLength),
                                                                           #keyPath(validationRegex),
                                                                           #keyPath(invalidMessage),

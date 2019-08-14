@@ -56,14 +56,17 @@ public protocol SBAResourceFinderDelegate: class, NSObjectProtocol {
     func path(forResource resourceName: String, ofType resourceType: String) -> String?
 }
 
+@objc
 open class SBAResourceFinder: NSObject {
     
+    @objc
     public static let shared = SBAResourceFinder()
     
     private func resourceBundles() -> [Bundle] {
         return SBAInfoManager.shared.resourceBundles
     }
     
+    @objc
     public func path(forResource resourceNamed: String, ofType: String, mainBundleOnly: Bool = false) -> String? {
         let path = Bundle.main.path(forResource: resourceNamed, ofType: ofType)
         if mainBundleOnly || (path != nil) {
@@ -79,6 +82,7 @@ open class SBAResourceFinder: NSObject {
         return nil
     }
     
+    @objc
     public func image(forResource resourceNamed: String) -> UIImage? {
         if let image = UIImage(named: resourceNamed) {
             return image
@@ -93,6 +97,7 @@ open class SBAResourceFinder: NSObject {
         return nil;
     }
     
+    @objc
     public func data(forResource resourceNamed: String, ofType: String, bundle: Bundle? = nil) -> Data? {
         if let path = bundle?.path(forResource: resourceNamed, ofType: ofType) ??
             self.path(forResource: resourceNamed, ofType: ofType) {
@@ -101,6 +106,7 @@ open class SBAResourceFinder: NSObject {
         return nil
     }
     
+    @objc
     public func html(forResource resourceNamed: String) -> String? {
         if let data = self.data(forResource: resourceNamed, ofType: "html"),
             let html = String(data: data, encoding: String.Encoding.utf8) {
@@ -126,7 +132,7 @@ open class SBAResourceFinder: NSObject {
                 let hrefRange = search("href", startRange.upperBound..<endRange.upperBound),
                 let fileStartRange = search("\"", hrefRange.upperBound..<endRange.upperBound),
                 let fileEndRange = search(".html\"", fileStartRange.upperBound..<endRange.upperBound) {
-                let resourceName = htmlString.substring(with: fileStartRange.upperBound..<fileEndRange.lowerBound)
+                let resourceName = String(htmlString[fileStartRange.upperBound..<fileEndRange.lowerBound])
                 if let importText = html(forResource: resourceName) {
                     keepGoing = true
                     htmlString.replaceSubrange(startRange.lowerBound..<endRange.upperBound, with: importText)
@@ -137,6 +143,7 @@ open class SBAResourceFinder: NSObject {
         return htmlString
     }
     
+    @objc
     public func json(forResource resourceNamed: String, bundle: Bundle? = nil) -> [String : Any]? {
         do {
             if let data = self.data(forResource: resourceNamed, ofType: "json", bundle: bundle) {
@@ -152,6 +159,7 @@ open class SBAResourceFinder: NSObject {
         return nil
     }
     
+    @objc
     public func plist(forResource resourceNamed: String, mainBundleOnly: Bool = false) -> [String : Any]? {
         if let path = self.path(forResource: resourceNamed, ofType: "plist", mainBundleOnly: mainBundleOnly),
             let dictionary = NSDictionary(contentsOfFile: path) {
@@ -160,16 +168,18 @@ open class SBAResourceFinder: NSObject {
         return nil
     }
     
+    @objc
     public func infoPlist(forResource resourceNamed: String) -> [String : Any]? {
         guard let dictionary = self.plist(forResource: resourceNamed, mainBundleOnly: true) else { return nil }
         var plist = dictionary
         // Look to see if there is a second plist source that includes private keys
         if let additionalInfo = self.plist(forResource: "\(resourceNamed)-private", mainBundleOnly: true) {
-            plist = plist.merge(from: additionalInfo)
+            plist = plist.sba_merge(from: additionalInfo)
         }
         return plist
     }
     
+    @objc
     public func url(forResource resourceNamed: String, withExtension: String) -> URL? {
         if let url = Bundle.main.url(forResource: resourceNamed, withExtension: withExtension),
             (url as NSURL).checkResourceIsReachableAndReturnError(nil) {
@@ -186,6 +196,7 @@ open class SBAResourceFinder: NSObject {
         return nil;
     }
     
+    @objc
     public func systemSoundID(forResource resourceNamed: String, withExtension: String = "aif") -> SystemSoundID {
         guard let url = self.url(forResource: resourceNamed, withExtension: withExtension),
             let sound = SystemSound(soundURL: url)
