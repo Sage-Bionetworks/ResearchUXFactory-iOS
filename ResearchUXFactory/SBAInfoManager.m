@@ -50,6 +50,15 @@ static id __instance;
     return __instance;
 }
 
+static NSString *SBAKeychainWrapperDefaultService() {
+    static NSString *defaultService;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultService = [[NSBundle mainBundle] bundleIdentifier];
+    });
+    return defaultService;
+}
+
 // Set singleton
 + (void)setInfoManager:(SBAInfoManager *)infoManager {
     __instance = infoManager;
@@ -78,7 +87,7 @@ static id __instance;
 }
 
 - (NSString *)keychainService {
-    return [self stringForKey:NSStringFromSelector(@selector(keychainService))];
+    return [self stringForKey:NSStringFromSelector(@selector(keychainService))] ?: SBAKeychainWrapperDefaultService();
 }
 
 - (NSString *)keychainAccessGroup {
